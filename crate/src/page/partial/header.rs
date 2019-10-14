@@ -105,7 +105,7 @@ fn view_nav_toggle() -> impl View<Msg> {
             C.lg__hidden
         ],
         button![
-            id!("nav-toggle"),
+            id!("nav_toggle"),
             class![
                 C.flex,
                 C.items_center,
@@ -144,7 +144,7 @@ fn view_nav_toggle() -> impl View<Msg> {
 
 fn view_nav_content(visible: bool) -> impl View<Msg> {
     div![
-        id!("nav-content"),
+        id!("nav_content"),
         class![
             C.w_full,
             C.flex_grow,
