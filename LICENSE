@@ -1,4 +1,12 @@
-Seed Quickstart with Webpack 'MartinKavik/seed-quickstart-webpack':
+Seed Website
+Copyright (c) 2019 Martin Kavík & David O'Connor
+
+Seed Website is based on:
+
+Help Article template
+Copyright (c) 2019 Tailwind Toolbox
+
+and Seed Quickstart with Webpack 'MartinKavik/seed-quickstart-webpack':
 Copyright (c) 2019 Martin Kavík
 
 Quickstart is based on 'rustwasm/rust-webpack-template':

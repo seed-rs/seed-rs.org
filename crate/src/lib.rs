@@ -167,19 +167,12 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
 // Notes:
 // - \u{00A0} is the non-breaking space
 //   - https://codepoints.net/U+00A0
-//
-// - "▶\u{fe0e}" - \u{fe0e} is the variation selector, it prevents ▶ to change to emoji in some browsers
-//   - https://codepoints.net/U+FE0E
 
 pub fn view(model: &Model) -> impl View<Msg> {
-    // @TODO: Setup `prerendered` properly once https://github.com/David-OConnor/seed/issues/223 is resolved
-    let prerendered = true;
     div![
         class![
-            C.fade_in => !prerendered,
-            C.min_h_screen,
-            C.flex,
-            C.flex_col,
+            C.bg_gray_100,
+            C.tracking_wider,
         ],
         match model.page {
             Page::Home => page::home::view().els(),
