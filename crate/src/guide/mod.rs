@@ -1,70 +1,77 @@
 
-pub struct Article {
-    pub menu_title: &'static str,
+#[derive(Clone, Copy)]
+pub struct Guide {
     pub slug: &'static str,
+    pub menu_title: &'static str,
     pub content: &'static str,
 }
 
-pub fn articles() -> Vec<Article> {
+impl PartialEq for Guide {
+    fn eq(&self, other: &Self) -> bool {
+        self.slug == other.slug
+    }
+}
+
+pub fn guides() -> Vec<Guide> {
     vec![
-        Article {
-            menu_title: "Quickstart",
+        Guide {
             slug: "quickstart",
+            menu_title: "Quickstart",
             content: include_str!("quickstart.md"),
         },
-        Article {
-            menu_title: "Prereqs",
+        Guide {
             slug: "prereqs",
+            menu_title: "Prereqs",
             content: include_str!("prereqs.md"),
         },
-        Article {
-            menu_title: "Structure",
+        Guide {
             slug: "structure",
+            menu_title: "Structure",
             content: include_str!("structure.md"),
         },
-        Article {
-            menu_title: "Events",
+        Guide {
             slug: "events",
+            menu_title: "Events",
             content: include_str!("events.md"),
         },
-        Article {
-            menu_title: "Components",
+        Guide {
             slug: "components",
+            menu_title: "Components",
             content: include_str!("components.md"),
         },
-        Article {
-            menu_title: "Http requests and state",
+        Guide {
             slug: "http-requests-and-state",
+            menu_title: "Http requests and state",
             content: include_str!("fetch.md"),
         },
-        Article {
-            menu_title: "Routing",
+        Guide {
             slug: "routing",
+            menu_title: "Routing",
             content: include_str!("routing.md"),
         },
-        Article {
-            menu_title: "Misc features",
+        Guide {
             slug: "misc-features",
+            menu_title: "Misc features",
             content: include_str!("misc.md"),
         },
-        Article {
-            menu_title: "Release and debugging",
+        Guide {
             slug: "release-and-debugging",
+            menu_title: "Release and debugging",
             content: include_str!("release_and_debugging.md"),
         },
-        Article {
-            menu_title: "Complex apps",
+        Guide {
             slug: "complex-apps",
+            menu_title: "Complex apps",
             content: include_str!("complex_apps.md"),
         },
-        Article {
-            menu_title: "Server integration",
+        Guide {
             slug: "server-integration",
+            menu_title: "Server integration",
             content: include_str!("server_integration.md"),
         },
-        Article {
-            menu_title: "About",
+        Guide {
             slug: "about",
+            menu_title: "About",
             content: include_str!("about.md"),
         },
     ]

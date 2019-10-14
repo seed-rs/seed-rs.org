@@ -7,13 +7,16 @@
 
 mod generated;
 mod page;
-mod article;
+mod guide;
 
 use fixed_vec_deque::FixedVecDeque;
 use generated::css_classes::C;
 use seed::{events::Listener, prelude::*, *};
 use Visibility::*;
-use article::Article;
+use guide::Guide;
+use std::{borrow::Cow, convert::TryFrom, fmt};
+use std::convert::TryInto;
+use crate::Route::Root;
 
 const TITLE_SUFFIX: &str = "Kavik.cz";
 // https://mailtolink.me/
@@ -52,32 +55,45 @@ pub struct Model {
     pub scroll_history: ScrollHistory,
     pub menu_visibility: Visibility,
     pub in_prerendering: bool,
-    pub articles: Vec<Article>,
+    pub guides: Vec<Guide>,
 }
 
-#[derive(Clone, Copy, Eq, PartialEq)]
+#[derive(Clone, Copy, PartialEq)]
 pub enum Page {
-    Home,
+    Guide(Guide),
     About,
     NotFound,
 }
 
 impl Page {
-    pub fn to_href(self) -> &'static str {
+    pub fn to_href(self) -> String {
         match self {
-            Self::Home => "/",
-            Self::About => "/about",
-            Self::NotFound => "/404",
+            Self::Guide(guide) => format!("/guide/{}", guide.slug),
+            Self::About => "/about".into(),
+            Self::NotFound => "/404".into(),
         }
     }
-}
 
-impl From<Url> for Page {
-    fn from(url: Url) -> Self {
-        match url.path.first().map(String::as_str) {
-            None | Some("") => Self::Home,
-            Some("about") => Self::About,
-            _ => Self::NotFound,
+    pub fn from_route_and_replace_history(route: &Route, guides: &[Guide]) -> Self {
+        match route {
+            Route::Root => {
+                match guides.first() {
+                    Some(guide) => {
+                        let page = Page::Guide(*guide);
+                        window().history().unwrap().replace_state_with_url(&JsValue::NULL, "", Some(&page.to_href()));
+                        page
+                    },
+                    None => Page::NotFound,
+                }
+            },
+            Route::Guide(slug) => {
+                match guides.iter().find(|guide| guide.slug == slug) {
+                    Some(guide) => Page::Guide(*guide),
+                    None => Page::NotFound,
+                }
+            },
+            Route::About => Page::About,
+            Route::Unknown => Page::NotFound,
         }
     }
 }
@@ -95,12 +111,14 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
 
     orders.send_msg(Msg::UpdatePageTitle);
 
+    let guides = guide::guides();
+
     Model {
-        page: url.into(),
+        page: Page::from_route_and_replace_history(&url.into(), &guides),
         scroll_history: ScrollHistory::new(),
         menu_visibility: Hidden,
         in_prerendering: is_in_prerendering(),
-        articles: article::articles()
+        guides,
     }
 }
 
@@ -120,7 +138,45 @@ pub fn routes(url: Url) -> Option<Msg> {
     if url.path.starts_with(&[STATIC_PATH.into()]) {
         return None;
     }
-    Some(Msg::RouteChanged(url))
+    Some(Msg::RouteChanged(url.into()))
+}
+
+#[derive(Clone)]
+pub enum Route {
+    Root,
+    Guide(String),
+    About,
+    Unknown,
+}
+
+impl From<Url> for Route {
+    fn from(url: Url) -> Self {
+        let mut path = url.path.into_iter();
+
+        match path.next().as_ref().map(String::as_str) {
+            None | Some("") => Route::Root,
+            Some("about") => Route::About,
+            Some("guide") => path.next().map(Route::Guide).unwrap_or(Route::Unknown),
+            _ => Route:: Unknown,
+        }
+    }
+}
+
+impl Route {
+    pub fn path(&self) -> Vec<&str> {
+        match self {
+            Route::Root => vec![],
+            Route::About => vec!["about"],
+            Route::Guide(slug) => vec!["guide", slug.as_str()],
+            Route::Unknown => vec!["404"],
+        }
+    }
+}
+
+impl fmt::Display for Route {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "/{}", self.path().join("/"))
+    }
 }
 
 // ------ ------
@@ -129,7 +185,7 @@ pub fn routes(url: Url) -> Option<Msg> {
 
 #[derive(Clone)]
 pub enum Msg {
-    RouteChanged(Url),
+    RouteChanged(Route),
     UpdatePageTitle,
     ScrollToTop,
     Scrolled(i32),
@@ -139,13 +195,13 @@ pub enum Msg {
 
 pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
-        Msg::RouteChanged(url) => {
-            model.page = url.into();
+        Msg::RouteChanged(route) => {
+            model.page = Page::from_route_and_replace_history(&route, &model.guides);
             orders.send_msg(Msg::UpdatePageTitle);
         },
         Msg::UpdatePageTitle => {
             let title = match model.page {
-                Page::Home => TITLE_SUFFIX.to_owned(),
+                Page::Guide(_) => TITLE_SUFFIX.to_owned(),
                 Page::About => format!("About - {}", TITLE_SUFFIX),
                 Page::NotFound => format!("404 - {}", TITLE_SUFFIX),
             };
@@ -179,7 +235,7 @@ pub fn view(model: &Model) -> impl View<Msg> {
             C.tracking_wider,
         ],
         match model.page {
-            Page::Home => page::home::view(model).els(),
+            Page::Guide(guide) => page::guide::view(&guide, model).els(),
             Page::About => page::about::view().els(),
             Page::NotFound => page::not_found::view().els(),
         },

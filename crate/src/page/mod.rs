@@ -1,4 +1,4 @@
 pub mod about;
-pub mod home;
+pub mod guide;
 pub mod not_found;
 pub mod partial;

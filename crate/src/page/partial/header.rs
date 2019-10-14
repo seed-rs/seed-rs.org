@@ -1,7 +1,7 @@
 use crate::{
     asset_path,
     generated::css_classes::C,
-    image_src, Model, Msg, Page, ScrollHistory,
+    image_src, Model, Msg, Page, ScrollHistory, Route,
     Visibility::{self, *},
 };
 use seed::{prelude::*, *};
@@ -88,7 +88,7 @@ fn view_logo() -> impl View<Msg> {
                 C.text_xl,
             ],
             attrs!{
-                At::Href => Page::Home.to_href()
+                At::Href => Route::Root.to_string()
             },
             "Help Article"
         ]

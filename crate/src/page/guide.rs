@@ -1,11 +1,11 @@
 use crate::{
-    generated::css_classes::C, image_src, Msg, Page, MAIL_TO_HELLWEB, Model, Article,
+    generated::css_classes::C, image_src, Msg, Page, MAIL_TO_HELLWEB, Model, Guide, Route,
     MAIL_TO_KAVIK,
 };
 use seed::{prelude::*, *};
 use crate::Visibility::Hidden;
 
-pub fn view(model: &Model) -> impl View<Msg> {
+pub fn view(guide: &Guide, model: &Model) -> impl View<Msg> {
     div![
         class![
             C.container,
@@ -19,13 +19,13 @@ pub fn view(model: &Model) -> impl View<Msg> {
             // lg__
             C.lg__pt_16,
         ],
-        view_menu(model).els(),
-        view_content(model).els(),
+        view_menu(guide, model).els(),
+        view_content(guide, model).els(),
         view_back_link().els(),
     ]
 }
 
-fn view_menu(model: &Model) -> impl View<Msg> {
+fn view_menu(guide: &Guide, model: &Model) -> impl View<Msg> {
     div![
         class![
             C.w_full,
@@ -48,7 +48,7 @@ fn view_menu(model: &Model) -> impl View<Msg> {
             "Menu",
         ],
         view_menu_toggle().els(),
-        view_menu_items(model).els(),
+        view_menu_items(guide, model).els(),
     ]
 }
 
@@ -97,7 +97,7 @@ fn view_menu_toggle() -> impl View<Msg> {
     ]
 }
 
-fn view_menu_items(model: &Model) -> impl View<Msg> {
+fn view_menu_items(selected_guide: &Guide, model: &Model) -> impl View<Msg> {
     div![
         id!("menu_items"),
         class![
@@ -126,12 +126,12 @@ fn view_menu_items(model: &Model) -> impl View<Msg> {
             St::Top => em(5),
         },
         ul![
-            model.articles.iter().map(|article| view_menu_item(article, false).els())
+            model.guides.iter().map(|guide| view_menu_item(guide, guide == selected_guide).els())
         ]
     ]
 }
 
-fn view_menu_item(article: &Article, active: bool) -> impl View<Msg> {
+fn view_menu_item(guide: &Guide, active: bool) -> impl View<Msg> {
     li![
         class![
             C.py_2,
@@ -156,7 +156,7 @@ fn view_menu_item(article: &Article, active: bool) -> impl View<Msg> {
                 if active { C.lg__hover__border_purple_500 } else { C.lg__hover__border_purple_400 },
             ],
             attrs! {
-                At::Href => "",
+                At::Href => Route::Guide(guide.slug.to_owned()).to_string(),
             },
             span![
                 class![
@@ -168,15 +168,13 @@ fn view_menu_item(article: &Article, active: bool) -> impl View<Msg> {
                     // md__
                     C.md__pb_0,
                 ],
-                article.menu_title,
+                guide.menu_title,
             ]
         ]
     ]
 }
 
-fn view_content(model: &Model) -> impl View<Msg> {
-    let article = &model.articles[0];
-
+fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
     div![
         class![
             C.w_full,
@@ -193,7 +191,7 @@ fn view_content(model: &Model) -> impl View<Msg> {
             C.lg__mt_0,
         ],
         view_content_top_back_link().els(),
-        view_content_markdown(article.content).els(),
+        view_content_markdown(guide.content).els(),
     ]
 }
 
