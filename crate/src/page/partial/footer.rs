@@ -46,8 +46,8 @@ fn view_left_col() -> impl View<Msg> {
                 class![
                     C.font_bold,
                     C.text_gray_900,
-                    "About",
-                ]
+                ],
+                "About",
             ],
             p![
                 class![
@@ -93,9 +93,7 @@ fn view_right_col() -> impl View<Msg> {
                         class![
                             C.inline_block,
                             C.text_gray_600,
-                            C.no_underline,
                             C.hover__text_gray_900,
-                            C.hover__underline,
                             C.py_1,
                         ],
                         attrs!{

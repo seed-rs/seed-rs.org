@@ -84,8 +84,6 @@ fn view_logo() -> impl View<Msg> {
             class![
                 C.text_gray_900,
                 C.text_base,
-                C.no_underline,
-                C.hover__no_underline,
                 C.font_extrabold,
                 C.text_xl,
             ],
@@ -266,7 +264,6 @@ fn view_link(title: &str, active: bool) -> impl View<Msg> {
                 C.hover__text_gray_900 => !active,
                 C.hover__underline => !active,
                 C.font_bold,
-                C.no_underline,
                 C.focus__outline_none,
             ],
             attrs!{

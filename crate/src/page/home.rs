@@ -150,10 +150,10 @@ fn view_menu_item(title: &str, active: bool) -> impl View<Msg> {
                 C.pl_4,
                 C.align_middle,
                 C.text_gray_700,
-                C.no_underline,
                 C.hover__text_purple_500,
                 C.border_l_4,
                 C.border_transparent,
+                C.focus__outline_none,
                 // lg__
                 C.lg__border_purple_500 => active,
                 if active { C.lg__hover__border_purple_500 } else { C.lg__hover__border_purple_400 },
@@ -180,8 +180,79 @@ fn view_menu_item(title: &str, active: bool) -> impl View<Msg> {
 fn view_content() -> impl View<Msg> {
     div![
         class![
-            
+            C.w_full,
+            C.p_8,
+            C.mt_6,
+            C.text_gray_900,
+            C.leading_normal,
+            C.bg_white,
+            C.border,
+            C.border_gray_400,
+            C.rounded,
+            // lg__
+            C.lg__w_4of5,
+            C.lg__mt_0,
+        ],
+        view_content_title().els(),
+        view_content_markdown().els(),
+    ]
+}
+
+fn view_content_title() -> impl View<Msg> {
+    div![
+        class![
+            C.font_sans,
+        ],
+        span![
+            class![
+                C.text_base,
+                C.text_purple_500,
+                C.font_bold,
+            ],
+            "« ",
+            a![
+                class![
+                    C.text_base,
+                    C.text_purple_500,
+                    C.font_bold,
+                    C.hover__underline,
+                    // md__
+                    C.md__text_sm,
+                ],
+                attrs!{
+                    At::Href => "",
+                },
+                "Back link",
+            ]
+        ],
+        h1![
+            class![
+                C.font_sans,
+                C.break_normal,
+                C.text_gray_900,
+                C.pt_6,
+                C.pb_2,
+                C.text_xl,
+                C.font_bold,
+            ],
+            "Help page title",
+        ],
+        hr![
+            class![
+                C.border_gray_400,
+            ]
         ]
+    ]
+}
+
+fn view_content_markdown() -> impl View<Msg> {
+    let markdown = "# TITTTLE";
+
+    div![
+        class![
+            "markdown"
+        ],
+        md!(markdown)
     ]
 }
 
@@ -205,13 +276,12 @@ fn view_back_link() -> impl View<Msg> {
                 C.text_purple_500,
                 C.font_bold,
             ],
-            "<",
+            "< ",
             a![
                 class![
                     C.text_base,
                     C.text_purple_500,
                     C.font_bold,
-                    C.no_underline,
                     C.hover__underline,
                     // md__
                     C.md__text_sm,
@@ -219,7 +289,7 @@ fn view_back_link() -> impl View<Msg> {
                 attrs!{
                     At::Href => "",
                 },
-                " Back to Help"
+                "Back to Help"
             ],
         ]
     ]
