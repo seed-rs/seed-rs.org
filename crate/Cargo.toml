@@ -9,8 +9,13 @@ license = "MIT"
 readme = "./README.md"
 edition = "2018"
 
+build = "build.rs"
+
 [lib]
 crate-type = ["cdylib"]
+
+[build-dependencies]
+pulldown-cmark = "^0.6.0"
 
 [dev-dependencies]
 wasm-bindgen-test = "^0.2.50" # sync with `wasm-bindgen`
