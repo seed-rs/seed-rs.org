@@ -7,11 +7,13 @@
 
 mod generated;
 mod page;
+mod article;
 
 use fixed_vec_deque::FixedVecDeque;
 use generated::css_classes::C;
 use seed::{events::Listener, prelude::*, *};
 use Visibility::*;
+use article::Article;
 
 const TITLE_SUFFIX: &str = "Kavik.cz";
 // https://mailtolink.me/
@@ -50,6 +52,7 @@ pub struct Model {
     pub scroll_history: ScrollHistory,
     pub menu_visibility: Visibility,
     pub in_prerendering: bool,
+    pub articles: Vec<Article>,
 }
 
 #[derive(Clone, Copy, Eq, PartialEq)]
@@ -97,6 +100,7 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
         scroll_history: ScrollHistory::new(),
         menu_visibility: Hidden,
         in_prerendering: is_in_prerendering(),
+        articles: article::articles()
     }
 }
 
@@ -175,7 +179,7 @@ pub fn view(model: &Model) -> impl View<Msg> {
             C.tracking_wider,
         ],
         match model.page {
-            Page::Home => page::home::view().els(),
+            Page::Home => page::home::view(model).els(),
             Page::About => page::about::view().els(),
             Page::NotFound => page::not_found::view().els(),
         },

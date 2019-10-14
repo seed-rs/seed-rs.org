@@ -1,10 +1,11 @@
 use crate::{
-    generated::css_classes::C, image_src, Msg, Page, MAIL_TO_HELLWEB,
+    generated::css_classes::C, image_src, Msg, Page, MAIL_TO_HELLWEB, Model, Article,
     MAIL_TO_KAVIK,
 };
 use seed::{prelude::*, *};
+use crate::Visibility::Hidden;
 
-pub fn view() -> impl View<Msg> {
+pub fn view(model: &Model) -> impl View<Msg> {
     div![
         class![
             C.container,
@@ -18,13 +19,13 @@ pub fn view() -> impl View<Msg> {
             // lg__
             C.lg__pt_16,
         ],
-        view_menu().els(),
-        view_content().els(),
+        view_menu(model).els(),
+        view_content(model).els(),
         view_back_link().els(),
     ]
 }
 
-fn view_menu() -> impl View<Msg> {
+fn view_menu(model: &Model) -> impl View<Msg> {
     div![
         class![
             C.w_full,
@@ -47,7 +48,7 @@ fn view_menu() -> impl View<Msg> {
             "Menu",
         ],
         view_menu_toggle().els(),
-        view_menu_items(false).els(),
+        view_menu_items(model).els(),
     ]
 }
 
@@ -96,14 +97,14 @@ fn view_menu_toggle() -> impl View<Msg> {
     ]
 }
 
-fn view_menu_items(visible: bool) -> impl View<Msg> {
+fn view_menu_items(model: &Model) -> impl View<Msg> {
     div![
         id!("menu_items"),
         class![
             C.w_full,
             C.sticky,
             C.inset_0,
-            C.hidden => !visible,
+            C.hidden => model.menu_visibility == Hidden,
             C.h_64,
             C.overflow_x_hidden,
             C.overflow_y_auto,
@@ -125,16 +126,12 @@ fn view_menu_items(visible: bool) -> impl View<Msg> {
             St::Top => em(5),
         },
         ul![
-            view_menu_item("Home", true).els(),
-            view_menu_item("Tasks", false).els(),
-            view_menu_item("Messages", false).els(),
-            view_menu_item("Analytics", false).els(),
-            view_menu_item("Payments", false).els(),
+            model.articles.iter().map(|article| view_menu_item(article, false).els())
         ]
     ]
 }
 
-fn view_menu_item(title: &str, active: bool) -> impl View<Msg> {
+fn view_menu_item(article: &Article, active: bool) -> impl View<Msg> {
     li![
         class![
             C.py_2,
@@ -171,13 +168,15 @@ fn view_menu_item(title: &str, active: bool) -> impl View<Msg> {
                     // md__
                     C.md__pb_0,
                 ],
-                title,
+                article.menu_title,
             ]
         ]
     ]
 }
 
-fn view_content() -> impl View<Msg> {
+fn view_content(model: &Model) -> impl View<Msg> {
+    let article = &model.articles[0];
+
     div![
         class![
             C.w_full,
@@ -193,12 +192,12 @@ fn view_content() -> impl View<Msg> {
             C.lg__w_4of5,
             C.lg__mt_0,
         ],
-        view_content_title().els(),
-        view_content_markdown().els(),
+        view_content_top_back_link().els(),
+        view_content_markdown(article.content).els(),
     ]
 }
 
-fn view_content_title() -> impl View<Msg> {
+fn view_content_top_back_link() -> impl View<Msg> {
     div![
         class![
             C.font_sans,
@@ -225,34 +224,15 @@ fn view_content_title() -> impl View<Msg> {
                 "Back link",
             ]
         ],
-        h1![
-            class![
-                C.font_sans,
-                C.break_normal,
-                C.text_gray_900,
-                C.pt_6,
-                C.pb_2,
-                C.text_xl,
-                C.font_bold,
-            ],
-            "Help page title",
-        ],
-        hr![
-            class![
-                C.border_gray_400,
-            ]
-        ]
     ]
 }
 
-fn view_content_markdown() -> impl View<Msg> {
-    let markdown = "# TITTTLE";
-
+fn view_content_markdown(content: &str) -> impl View<Msg> {
     div![
         class![
             "markdown"
         ],
-        md!(markdown)
+        md!(content)
     ]
 }
 
