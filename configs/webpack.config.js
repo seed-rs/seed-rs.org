@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const Critters = require('critters-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, argv) => {
@@ -46,16 +45,11 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "../entries/index.hbs")
       }),
-      // Inline the critical part of styles, preload remainder.
-      new Critters({
-        logLevel: "warn",
-        // https://github.com/GoogleChromeLabs/critters/issues/34
-        pruneSource: false,
-      }),
       // Compile Rust.
       new WasmPackPlugin({
         crateDirectory: path.resolve(__dirname, "../crate"),
-        outDir: path.resolve(__dirname, "../crate/pkg")
+        outDir: path.resolve(__dirname, "../crate/pkg"),
+        watchDirectories: [path.resolve(__dirname, "../crate/guides")],
       }),
 
       // You can find files from folder `../static` on url `http://my-site.com/static/`.

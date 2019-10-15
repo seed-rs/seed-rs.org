@@ -17,62 +17,62 @@ pub fn guides() -> Vec<Guide> {
         Guide {
             slug: "quickstart",
             menu_title: "Quickstart",
-            content: include_str!(concat!("../guides/generated_html/", "quickstart.html")),
+            content: include_str!(concat!("../generated_guides/", "quickstart.html")),
         },
         Guide {
             slug: "prereqs",
             menu_title: "Prereqs",
-            content: include_str!(concat!("../guides/generated_html/", "prereqs.html")),
+            content: include_str!(concat!("../generated_guides/", "prereqs.html")),
         },
         Guide {
             slug: "structure",
             menu_title: "Structure",
-            content: include_str!(concat!("../guides/generated_html/", "structure.html")),
+            content: include_str!(concat!("../generated_guides/", "structure.html")),
         },
         Guide {
             slug: "events",
             menu_title: "Events",
-            content: include_str!(concat!("../guides/generated_html/", "events.html")),
+            content: include_str!(concat!("../generated_guides/", "events.html")),
         },
         Guide {
             slug: "components",
             menu_title: "Components",
-            content: include_str!(concat!("../guides/generated_html/", "components.html")),
+            content: include_str!(concat!("../generated_guides/", "components.html")),
         },
         Guide {
             slug: "http-requests-and-state",
             menu_title: "Http requests and state",
-            content: include_str!(concat!("../guides/generated_html/", "fetch.html")),
+            content: include_str!(concat!("../generated_guides/", "fetch.html")),
         },
         Guide {
             slug: "routing",
             menu_title: "Routing",
-            content: include_str!(concat!("../guides/generated_html/", "routing.html")),
+            content: include_str!(concat!("../generated_guides/", "routing.html")),
         },
         Guide {
             slug: "misc-features",
             menu_title: "Misc features",
-            content: include_str!(concat!("../guides/generated_html/", "misc.html")),
+            content: include_str!(concat!("../generated_guides/", "misc.html")),
         },
         Guide {
             slug: "release-and-debugging",
             menu_title: "Release and debugging",
-            content: include_str!(concat!("../guides/generated_html/", "release_and_debugging.html")),
+            content: include_str!(concat!("../generated_guides/", "release_and_debugging.html")),
         },
         Guide {
             slug: "complex-apps",
             menu_title: "Complex apps",
-            content: include_str!(concat!("../guides/generated_html/", "complex_apps.html")),
+            content: include_str!(concat!("../generated_guides/", "complex_apps.html")),
         },
         Guide {
             slug: "server-integration",
             menu_title: "Server integration",
-            content: include_str!(concat!("../guides/generated_html/", "server_integration.html")),
+            content: include_str!(concat!("../generated_guides/", "server_integration.html")),
         },
         Guide {
             slug: "about",
             menu_title: "About",
-            content: include_str!(concat!("../guides/generated_html/", "about.html")),
+            content: include_str!(concat!("../generated_guides/", "about.html")),
         },
     ]
 }
