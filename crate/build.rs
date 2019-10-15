@@ -1,4 +1,4 @@
-use pulldown_cmark::{self, Event, Tag};
+use pulldown_cmark::{self, Event, Tag, CowStr};
 use std::fs;
 use std::path::PathBuf;
 
@@ -56,19 +56,34 @@ fn highlight_syntax<'a, I>(parser: I) -> impl Iterator<Item = Event<'a>>
     where
         I: Iterator<Item = Event<'a>>,
 {
-    parser
-//    parser.map(|event| {
-//        match event {
-////            Event::Start(Tag::CodeBlock(code_block)) => {
-////                Event::Start(Tag::CodeBlock("ZXC".into()))
-////            }
-//            Event::Text(text) => {
-//                Event::Text("VBN".into())
-//            }
-//            _ => event
-//        }
-//    })
+    parser.scan(None, |state_code_lang: &mut Option<CowStr>, event| {
+        Some(match event {
+            Event::Start(Tag::CodeBlock(code_lang)) => {
+                *state_code_lang = Some(code_lang.clone());
+                Event::Start(Tag::CodeBlock(code_lang))
+            }
+            Event::End(Tag::CodeBlock(code_lang)) => {
+                *state_code_lang = None;
+                Event::End(Tag::CodeBlock(code_lang))
+            }
+            Event::Text(text) => {
+                match state_code_lang {
+                    Some(code_lang) => Event::Text(highlight_line(text, code_lang)),
+                    None => Event::Text(text)
+                }
+            }
+            _ => event
+        })
+    })
 }
+
+fn highlight_line<'a>(line: CowStr<'a>, code_lang: &CowStr) -> CowStr<'a> {
+    format!("{}X",line).into()
+}
+
+//fn highlight_line(line: String, code_lang: String) -> String {
+//    line.into_string()
+//}
 
 
 
