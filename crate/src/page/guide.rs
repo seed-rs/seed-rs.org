@@ -230,7 +230,7 @@ fn view_content_markdown(content: &str) -> impl View<Msg> {
         class![
             "markdown"
         ],
-        md!(content)
+        raw!(content)
     ]
 }
 
