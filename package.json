@@ -50,5 +50,8 @@
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1",
     "webpackbar": "^4.0.0"
+  },
+  "dependencies": {
+    "lit-element": "^2.2.1"
   }
 }

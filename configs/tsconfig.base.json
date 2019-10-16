@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "esNext",
     "lib": ["dom", "es2015"],
+    "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
     "sourceMap": true,
@@ -20,7 +21,8 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true
   },
   "include": ["../**/*/"]
 }

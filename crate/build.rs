@@ -57,33 +57,29 @@ fn highlight_syntax<'a, I>(parser: I) -> impl Iterator<Item = Event<'a>>
         I: Iterator<Item = Event<'a>>,
 {
     parser.scan(None, |state_code_lang: &mut Option<CowStr>, event| {
-        Some(match event {
+        match event {
             Event::Start(Tag::CodeBlock(code_lang)) => {
                 *state_code_lang = Some(code_lang.clone());
-                Event::Start(Tag::CodeBlock(code_lang))
+//                Some(Event::Start(Tag::CodeBlock(code_lang)))
+//                None
+                Some(Event::Html("<code-block>".into()))
             }
             Event::End(Tag::CodeBlock(code_lang)) => {
                 *state_code_lang = None;
-                Event::End(Tag::CodeBlock(code_lang))
+//                Some(Event::End(Tag::CodeBlock(code_lang)))
+//                None
+                Some(Event::Html("</code-block>".into()))
             }
             Event::Text(text) => {
                 match state_code_lang {
-                    Some(code_lang) => Event::Text(highlight_line(text, code_lang)),
-                    None => Event::Text(text)
+//                    Some(code_lang) => Some(Event::Html(text)),
+                    Some(code_lang) => Some(Event::Text(text)),
+                    None => Some(Event::Text(text))
                 }
             }
-            _ => event
-        })
+            _ => Some(event)
+        }
     })
 }
-
-fn highlight_line<'a>(line: CowStr<'a>, code_lang: &CowStr) -> CowStr<'a> {
-    format!("{}X",line).into()
-}
-
-//fn highlight_line(line: String, code_lang: String) -> String {
-//    line.into_string()
-//}
-
 
 

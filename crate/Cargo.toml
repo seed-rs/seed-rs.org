@@ -16,7 +16,6 @@ crate-type = ["cdylib"]
 
 [build-dependencies]
 pulldown-cmark = "^0.6.0"
-#syntect = "3.3.0"
 
 [dev-dependencies]
 wasm-bindgen-test = "^0.2.50" # sync with `wasm-bindgen`
