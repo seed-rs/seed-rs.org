@@ -102,7 +102,7 @@ impl Page {
 //     Init
 // ------ ------
 
-pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
+pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
     // @TODO: Seed can't hydrate prerendered html (yet).
     // https://github.com/David-OConnor/seed/issues/223
     if let Some(mount_point_element) = document().get_element_by_id("app") {
@@ -113,13 +113,13 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
 
     let guides = guide::guides();
 
-    Model {
+    Init::new_with_url_handling(Model {
         page: Page::from_route_and_replace_history(&url.into(), &guides),
         scroll_history: ScrollHistory::new(),
         menu_visibility: Hidden,
         in_prerendering: is_in_prerendering(),
         guides,
-    }
+    }, UrlHandling::None)
 }
 
 fn is_in_prerendering() -> bool {

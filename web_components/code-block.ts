@@ -1,13 +1,19 @@
 import { LitElement, html, customElement } from 'lit-element';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 
 @customElement('code-block')
 export class CodeBlock extends LitElement {
   // @property() name = 'World';
 
   render() {
-    console.log("sefsef");
-
-    // return html`<p>Hello, ${this.name}!</p>`;
-    return html`<p>Hello!</p>`;
+    const code = this.shadowRoot!.host.innerHTML;
+    const highlightedCode = (window as any).hljs.highlightAuto(code).value;
+    return html`
+    <style>
+      :host {
+      }
+    </style>
+      ${unsafeHTML(highlightedCode)}
+    `;
   }
 }
