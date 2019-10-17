@@ -1,4 +1,4 @@
-use pulldown_cmark::{self, Event, Tag, CowStr};
+use pulldown_cmark::{self, Event, Tag};
 use std::fs;
 use std::path::PathBuf;
 
@@ -46,38 +46,29 @@ fn markdown_files() -> Vec<PathBuf> {
 
 fn markdown_to_html(markdown: &str) -> String {
     let parser = pulldown_cmark::Parser::new(markdown);
-    let parser_with_syntax_highlighting = highlight_syntax(parser);
     let mut html = String::new();
-    pulldown_cmark::html::push_html(&mut html, parser_with_syntax_highlighting);
+    pulldown_cmark::html::push_html(&mut html, transform_code_blocks(parser));
     html
 }
 
-fn highlight_syntax<'a, I>(parser: I) -> impl Iterator<Item = Event<'a>>
+fn transform_code_blocks<'a, I>(parser: I) -> impl Iterator<Item = Event<'a>>
     where
         I: Iterator<Item = Event<'a>>,
 {
-    parser.scan(None, |state_code_lang: &mut Option<CowStr>, event| {
+    parser.map(|event| {
         match event {
             Event::Start(Tag::CodeBlock(code_lang)) => {
-                *state_code_lang = Some(code_lang.clone());
-//                Some(Event::Start(Tag::CodeBlock(code_lang)))
-//                None
-                Some(Event::Html("<code-block>".into()))
+                let lang = if code_lang.is_empty() {
+                    String::new()
+                } else {
+                    format!(" lang=\"{}\"", code_lang)
+                };
+                Event::Html(format!("<code-block{}>", lang).into())
             }
-            Event::End(Tag::CodeBlock(code_lang)) => {
-                *state_code_lang = None;
-//                Some(Event::End(Tag::CodeBlock(code_lang)))
-//                None
-                Some(Event::Html("</code-block>".into()))
+            Event::End(Tag::CodeBlock(_)) => {
+                Event::Html("</code-block>".into())
             }
-            Event::Text(text) => {
-                match state_code_lang {
-//                    Some(code_lang) => Some(Event::Html(text)),
-                    Some(code_lang) => Some(Event::Text(text)),
-                    None => Some(Event::Text(text))
-                }
-            }
-            _ => Some(event)
+            _ => event
         }
     })
 }

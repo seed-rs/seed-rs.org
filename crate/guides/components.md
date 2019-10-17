@@ -2,19 +2,19 @@
 The analog of components in frameworks like React are normal Rust functions that that return
 [Node](https://docs.rs/seed/0.1.8/seed/dom_types/enum.Node.html) s.
 These functions take parameters that are not treated in a way equivalent
-to attributes on native DOM elements; they just provide a way to 
+to attributes on native DOM elements; they just provide a way to
 organize your code. In practice, they're used in a way similar to components in React.
 
 For example, you could organize one of the examples in the Structure section of the guide like this:
 ```rust
-    fn text_display(text: &str) -> Node<Msg> {
-        h3![ text ]
-    }  
-    
-    div![ style!{St::Display => "flex"; St::FlexDirection => "column"},
-        text_display("Some things"),
-        button![ simple_ev("click", Msg::SayHi), "Click me!" ]
-    ]
+fn text_display(text: &str) -> Node<Msg> {
+    h3![ text ]
+}
+
+div![ style!{St::Display => "flex"; St::FlexDirection => "column"},
+    text_display("Some things"),
+    button![ simple_ev("click", Msg::SayHi), "Click me!" ]
+]
 ```
 
 The text_display component returns a single `Node` that is inserted into its parents'
@@ -23,7 +23,7 @@ functions that return `Vec`s of`Node`s, which you can incorporate into other `No
 using normal Rust code. See the Fragments section below. Rust's type system
 ensures that only `Node`s  can end up as children, so if your app compiles,
 you haven't violated any rules.
- 
+
 Unlike in JSX, there's a clear syntax delineation between natural DOM
 elements (element macros), and custom components (function calls): We called text_display
 above as `text_display("Some things")`, not `text_display![ "Some things" ]`.
@@ -31,8 +31,8 @@ above as `text_display("Some things")`, not `text_display![ "Some things" ]`.
 ## Fragments
 Fragments (`<>...</>` syntax in React and Yew) are components that represent multiple
 elements without a parent. They're useful to avoid
-unecessary divs, which clutter teh DOM, and breaks things like tables and CSS-grid. 
-There's no special fragment syntax: have your component return a `Vec` of `Node`s instead of 
+unecessary divs, which clutter teh DOM, and breaks things like tables and CSS-grid.
+There's no special fragment syntax: have your component return a `Vec` of `Node`s instead of
 one. Add it to the parent's element macro:
 ```rust
 fn cols() -> Vec<Node<Msg>> {
@@ -73,7 +73,7 @@ fn items() -> Node<Msg> {
 ## Dummy elements
 When performing ternary operations inside an element macro, all
 branches must return an `Node` (Or `Vec` of `Node`s) to satisfy Rust's type system. Seed provides the
-[empty](https://docs.rs/seed/0.1.8/seed/fn.empty.html) function, which creates a `Node` that will not be 
+[empty](https://docs.rs/seed/0.1.8/seed/fn.empty.html) function, which creates a `Node` that will not be
 rendered, and its `empty![]` macro alias, which is more concise and consistent:
 ```rust
 div![
