@@ -19,13 +19,13 @@ pub fn view(guide: &Guide, model: &Model) -> impl View<Msg> {
             // lg__
             C.lg__pt_16,
         ],
-        view_menu(guide, model).els(),
+        view_guide_list(guide, model).els(),
         view_content(guide, model).els(),
         view_back_link().els(),
     ]
 }
 
-fn view_menu(guide: &Guide, model: &Model) -> impl View<Msg> {
+fn view_guide_list(guide: &Guide, model: &Model) -> impl View<Msg> {
     div![
         class![
             C.w_full,
@@ -36,23 +36,12 @@ fn view_menu(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.lg__w_1of5,
             C.lg__px_6,
         ],
-        p![
-            class![
-                C.text_base,
-                C.font_bold,
-                C.py_2,
-                // lg__
-                C.lg__pb_6,
-                C.text_gray_700,
-            ],
-            "Menu",
-        ],
-        view_menu_toggle().els(),
-        view_menu_items(guide, model).els(),
+        view_guide_list_toggle(guide).els(),
+        view_guide_list_items(guide, model).els(),
     ]
 }
 
-fn view_menu_toggle() -> impl View<Msg> {
+fn view_guide_list_toggle(selected_guide: &Guide) -> impl View<Msg> {
     div![
         class![
             C.sticky,
@@ -61,12 +50,12 @@ fn view_menu_toggle() -> impl View<Msg> {
             C.lg__hidden,
         ],
         button![
-            id!("menu_toggle"),
+            id!("guide_list_toggle"),
             class![
                 C.flex,
                 C.w_full,
-                C.justify_end,
-                C.px_3,
+                C.justify_between,
+                C.px_4,
                 C.py_3,
                 C.bg_white,
                 C.border,
@@ -75,13 +64,17 @@ fn view_menu_toggle() -> impl View<Msg> {
                 C.hover__border_purple_500,
                 C.appearance_none,
                 C.focus__outline_none,
+                C.text_sm,
+                C.font_bold,
                 // lg__
                 C.lg__bg_transparent,
             ],
+            simple_ev(Ev::Click, Msg::ToggleGuideList),
+            selected_guide.menu_title,
             svg![
                 class![
                     C.fill_current,
-                    C.h_3,
+                    C.h_5,
                     C.float_right,
                 ],
                 attrs!{
@@ -97,15 +90,13 @@ fn view_menu_toggle() -> impl View<Msg> {
     ]
 }
 
-fn view_menu_items(selected_guide: &Guide, model: &Model) -> impl View<Msg> {
+fn view_guide_list_items(selected_guide: &Guide, model: &Model) -> impl View<Msg> {
     div![
         id!("menu_items"),
         class![
             C.w_full,
-            C.sticky,
             C.inset_0,
-            C.hidden => model.menu_visibility == Hidden,
-            C.h_64,
+            C.hidden => model.guide_list_visibility == Hidden,
             C.overflow_x_hidden,
             C.overflow_y_auto,
             C.mt_0,
@@ -115,7 +106,7 @@ fn view_menu_items(selected_guide: &Guide, model: &Model) -> impl View<Msg> {
             C.shadow,
             C.z_20,
             // lg__
-            C.lg__h_auto,
+            C.lg__sticky,
             C.lg__overflow_y_hidden,
             C.lg__border_transparent,
             C.lg__shadow_none,
@@ -123,18 +114,17 @@ fn view_menu_items(selected_guide: &Guide, model: &Model) -> impl View<Msg> {
             C.lg__block,
         ],
         style! {
-            St::Top => em(5),
+            St::Top => em(7),
         },
         ul![
-            model.guides.iter().map(|guide| view_menu_item(guide, guide == selected_guide).els())
+            model.guides.iter().map(|guide| view_guide_list_item(guide, guide == selected_guide).els())
         ]
     ]
 }
 
-fn view_menu_item(guide: &Guide, active: bool) -> impl View<Msg> {
+fn view_guide_list_item(guide: &Guide, active: bool) -> impl View<Msg> {
     li![
         class![
-            C.py_2,
             C.hover__bg_purple_100,
             // md__
             C.md__my_0,
@@ -144,6 +134,7 @@ fn view_menu_item(guide: &Guide, active: bool) -> impl View<Msg> {
         a![
             class![
                 C.block,
+                C.py_2,
                 C.pl_4,
                 C.align_middle,
                 C.text_gray_700,
@@ -158,6 +149,7 @@ fn view_menu_item(guide: &Guide, active: bool) -> impl View<Msg> {
             attrs! {
                 At::Href => Route::Guide(guide.slug.to_owned()).to_string(),
             },
+            simple_ev(Ev::Click, Msg::HideGuideList),
             span![
                 class![
                     C.block,

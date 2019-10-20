@@ -53,6 +53,7 @@ type ScrollHistory = FixedVecDeque<[i32; 3]>;
 pub struct Model {
     pub page: Page,
     pub scroll_history: ScrollHistory,
+    pub guide_list_visibility: Visibility,
     pub menu_visibility: Visibility,
     pub in_prerendering: bool,
     pub guides: Vec<Guide>,
@@ -116,6 +117,7 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
     Init::new_with_url_handling(Model {
         page: Page::from_route_and_replace_history(&url.into(), &guides),
         scroll_history: ScrollHistory::new(),
+        guide_list_visibility: Hidden,
         menu_visibility: Hidden,
         in_prerendering: is_in_prerendering(),
         guides,
@@ -189,6 +191,8 @@ pub enum Msg {
     UpdatePageTitle,
     ScrollToTop,
     Scrolled(i32),
+    ToggleGuideList,
+    HideGuideList,
     ToggleMenu,
     HideMenu,
 }
@@ -197,6 +201,7 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
         Msg::RouteChanged(route) => {
             model.page = Page::from_route_and_replace_history(&route, &model.guides);
+            orders.send_msg(Msg::ScrollToTop);
             orders.send_msg(Msg::UpdatePageTitle);
         },
         Msg::UpdatePageTitle => {
@@ -212,6 +217,10 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         ),
         Msg::Scrolled(position) => {
             *model.scroll_history.push_back() = position;
+        },
+        Msg::ToggleGuideList => model.guide_list_visibility.toggle(),
+        Msg::HideGuideList => {
+            model.guide_list_visibility = Hidden;
         },
         Msg::ToggleMenu => model.menu_visibility.toggle(),
         Msg::HideMenu => {

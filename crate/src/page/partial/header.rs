@@ -50,9 +50,10 @@ pub fn view(model: &Model) -> impl View<Msg> {
                 C.mt_0,
                 C.py_4,
             ],
+            view_guide_list_toggle().els(),
             view_logo().els(),
-            view_nav_toggle().els(),
-            view_nav_content(false).els(),
+            view_menu_toggle().els(),
+            view_menu_content(model.menu_visibility).els(),
         ]
     ]
 }
@@ -60,25 +61,10 @@ pub fn view(model: &Model) -> impl View<Msg> {
 fn view_logo() -> impl View<Msg> {
     div![
         class![
-            C.pl_4,
             C.flex,
             C.items_center,
-        ],
-        svg![
-            class![
-                C.h_5,
-                C.pr_3,
-                C.fill_current,
-                C.text_purple_500,
-            ],
-            attrs!{
-                At::ViewBox => "0 0 20 20",
-            },
-            path![
-                attrs!{
-                    At::D => "M0 2C0 .9.9 0 2 0h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm14 12h4V2H2v12h4c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2zM5 9l2-2 2 2 4-4 2 2-6 6-4-4z"
-                }
-            ]
+            // lg__
+            C.lg__pl_4,
         ],
         a![
             class![
@@ -90,20 +76,21 @@ fn view_logo() -> impl View<Msg> {
             attrs!{
                 At::Href => Route::Root.to_string()
             },
-            "Help Article"
+            "Seed"
         ]
     ]
 }
 
-fn view_nav_toggle() -> impl View<Msg> {
+fn view_guide_list_toggle() -> impl View<Msg> {
     div![
         class![
-            C.pr_4,
+            C.pl_4,
+            C.flex,
             // lg__
             C.lg__hidden
         ],
         button![
-            id!("nav_toggle"),
+            id!("view_guide_list_toggle"),
             class![
                 C.flex,
                 C.items_center,
@@ -118,35 +105,50 @@ fn view_nav_toggle() -> impl View<Msg> {
                 C.appearance_none,
                 C.focus__outline_none,
             ],
-            svg![
-                class![
-                    C.fill_current,
-                    C.h_3,
-                    C.w_3,
-                ],
-                attrs!{
-                    At::ViewBox => "0 0 20 20",
-                },
-                title![
-                    "Menu"
-                ],
-                path![
-                    attrs!{
-                        At::D => "M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"
-                    }
-                ],
-            ]
+            simple_ev(Ev::Click, Msg::ScrollToTop),
+            simple_ev(Ev::Click, Msg::ToggleGuideList),
+            "Guides",
         ]
     ]
 }
 
-fn view_nav_content(visible: bool) -> impl View<Msg> {
+fn view_menu_toggle() -> impl View<Msg> {
     div![
-        id!("nav_content"),
+        class![
+            C.pr_4,
+            C.flex,
+            // lg__
+            C.lg__hidden
+        ],
+        button![
+            id!("menu_toggle"),
+            class![
+                C.flex,
+                C.items_center,
+                C.px_3,
+                C.py_2,
+                C.border,
+                C.rounded,
+                C.text_gray_500,
+                C.border_gray_600,
+                C.hover__text_gray_900,
+                C.hover__border_purple_500,
+                C.appearance_none,
+                C.focus__outline_none,
+            ],
+            simple_ev(Ev::Click, Msg::ToggleMenu),
+            "Menu",
+        ]
+    ]
+}
+
+fn view_menu_content(menu_visibility: Visibility) -> impl View<Msg> {
+    div![
+        id!("menu_content"),
         class![
             C.w_full,
             C.flex_grow,
-            C.hidden => !visible,
+            C.hidden => menu_visibility == Hidden,
             C.mt_2,
             C.z_20,
             // lg__
