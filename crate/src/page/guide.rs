@@ -183,7 +183,7 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.lg__mt_0,
         ],
         view_content_top_back_link().els(),
-        view_content_markdown(guide.content).els(),
+        view_content_markdown(guide.html).els(),
     ]
 }
 

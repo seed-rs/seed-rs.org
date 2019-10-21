@@ -10,6 +10,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, argv) => {
   return {
+  // Don't show `asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).`
+    performance: { hints: false },
     entry: {
       // Bundle root with name `app.js`.
       app: path.resolve(__dirname, "../entries/index.ts")
