@@ -56,28 +56,32 @@ fn markdown_to_html_and_text_parts(markdown: &str) -> (String, Vec<String>) {
     let text_parts = Rc::new(RefCell::new(Vec::<String>::new()));
 
     let parser = transform_code_blocks(parser);
-    let parser = extract_text(parser, text_parts.clone());
+    let parser = extract_lowercase_text(parser, text_parts.clone());
 
     pulldown_cmark::html::push_html(&mut html, parser);
     (html, text_parts.replace(Vec::new()))
 }
 
-fn extract_text<'a, I>(parser: I, text_parts: Rc<RefCell<Vec<String>>>) -> impl Iterator<Item = Event<'a>>
+fn extract_lowercase_text<'a, I>(parser: I, text_parts: Rc<RefCell<Vec<String>>>) -> impl Iterator<Item = Event<'a>>
     where
         I: Iterator<Item = Event<'a>>,
 {
+    let push_to_text_parts = move |text: &str| {
+        text_parts.borrow_mut().push(text.to_lowercase().to_string());
+    };
+
     parser.map(move |event| {
         match event {
             Event::Text(text) => {
-                text_parts.borrow_mut().push(text.to_string());
+                push_to_text_parts(&text);
                 Event::Text(text)
             },
             Event::Code(code) => {
-                text_parts.borrow_mut().push(code.to_string());
+                push_to_text_parts(&code);
                 Event::Code(code)
             },
             Event::FootnoteReference(reference) => {
-                text_parts.borrow_mut().push(reference.to_string());
+                push_to_text_parts(&reference);
                 Event::FootnoteReference(reference)
             },
             _ => event

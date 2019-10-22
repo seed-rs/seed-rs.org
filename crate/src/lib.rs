@@ -57,6 +57,8 @@ pub struct Model {
     pub menu_visibility: Visibility,
     pub in_prerendering: bool,
     pub guides: Vec<Guide>,
+    pub search_query: String,
+    pub matched_guides: Vec<Guide>,
 }
 
 #[derive(Clone, Copy, PartialEq)]
@@ -121,6 +123,8 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
         menu_visibility: Hidden,
         in_prerendering: is_in_prerendering(),
         guides,
+        search_query: "".to_string(),
+        matched_guides: vec![],
     }, UrlHandling::None)
 }
 
@@ -195,6 +199,7 @@ pub enum Msg {
     HideGuideList,
     ToggleMenu,
     HideMenu,
+    SearchQueryChanged(String),
 }
 
 pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
@@ -226,7 +231,22 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::HideMenu => {
             model.menu_visibility = Hidden;
         },
+        Msg::SearchQueryChanged(query) => {
+            model.matched_guides = search(&model.guides, &query);
+            model.search_query = query;
+        }
     }
+}
+
+fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
+    let query = query.to_lowercase();
+    guides.iter().filter_map(|guide|{
+        if guide.lowercase_text.contains(&query) {
+            Some(*guide)
+        } else {
+            None
+        }
+    }).collect()
 }
 
 // ------ ------

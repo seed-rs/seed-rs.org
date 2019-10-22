@@ -53,7 +53,7 @@ pub fn view(model: &Model) -> impl View<Msg> {
             view_guide_list_toggle().els(),
             view_logo().els(),
             view_menu_toggle().els(),
-            view_menu_content(model.menu_visibility).els(),
+            view_menu_content(model).els(),
         ]
     ]
 }
@@ -142,13 +142,13 @@ fn view_menu_toggle() -> impl View<Msg> {
     ]
 }
 
-fn view_menu_content(menu_visibility: Visibility) -> impl View<Msg> {
+fn view_menu_content(model: &Model) -> impl View<Msg> {
     div![
         id!("menu_content"),
         class![
             C.w_full,
             C.flex_grow,
-            C.hidden => menu_visibility == Hidden,
+            C.hidden => model.menu_visibility == Hidden,
             C.mt_2,
             C.z_20,
             // lg__
@@ -158,12 +158,12 @@ fn view_menu_content(menu_visibility: Visibility) -> impl View<Msg> {
             C.lg__w_auto,
             C.lg__mt_0,
         ],
-        view_search().els(),
+        view_search(model).els(),
         view_links().els(),
     ]
 }
 
-fn view_search() -> impl View<Msg> {
+fn view_search(model: &Model) -> impl View<Msg> {
     div![
         class![
             C.flex_1,
@@ -203,7 +203,9 @@ fn view_search() -> impl View<Msg> {
                 attrs!{
                     At::Type => "search",
                     At::Placeholder => "Search",
-                }
+                    At::Value => model.search_query,
+                },
+                input_ev(Ev::Input, Msg::SearchQueryChanged),
             ],
             div![
                 class![
