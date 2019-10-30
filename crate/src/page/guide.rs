@@ -11,10 +11,9 @@ pub fn view(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.flex_wrap,
             C.mx_auto,
             C.px_2,
-            C.pt_8,
-            C.mt_16,
+            C.pt_24,
             // lg__
-            C.lg__pt_16,
+            C.lg__pt_24,
         ],
         view_guide_list(guide, model).els(),
         view_content(guide, model).els(),

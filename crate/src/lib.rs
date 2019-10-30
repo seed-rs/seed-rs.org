@@ -279,8 +279,10 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
 pub fn view(model: &Model) -> impl View<Msg> {
     div![
         class![
+            C.min_h_screen,
             C.bg_gray_100,
             C.tracking_wider,
+            C.pb_16,
         ],
         match model.page {
             Page::Guide(guide) => page::guide::view(&guide, model).els(),
@@ -288,7 +290,6 @@ pub fn view(model: &Model) -> impl View<Msg> {
             Page::NotFound => page::not_found::view().els(),
         },
         page::partial::header::view(model).els(),
-        page::partial::footer::view().els(),
     ]
 }
 
