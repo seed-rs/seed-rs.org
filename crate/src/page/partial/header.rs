@@ -169,13 +169,16 @@ fn view_links() -> impl View<Msg> {
             // lg__
             C.lg__flex,
         ],
-        view_link("Active", true).els(),
-        view_link("link", false).els(),
-        view_link("link", false).els(),
+        view_link("Rust Quickstart", "https://github.com/David-OConnor/seed-quickstart").els(),
+        view_link("Webpack QS", "https://github.com/MartinKavik/seed-quickstart-webpack").els(),
+        view_link("Docs.rs", "https://docs.rs/seed/0.4.1/seed/").els(),
+        view_link("Crates.io", "https://crates.io/crates/seed").els(),
+        view_link("Awesome List", "https://github.com/MartinKavik/awesome-seed-rs").els(),
+        view_link("GitHub.com", "https://github.com/David-OConnor/seed").els(),
     ]
 }
 
-fn view_link(title: &str, active: bool) -> impl View<Msg> {
+fn view_link(title: &str, link: &str) -> impl View<Msg> {
     li![
         class![
             C.mr_3,
@@ -188,14 +191,14 @@ fn view_link(title: &str, active: bool) -> impl View<Msg> {
                 C.inline_block,
                 C.py_2,
                 C.px_4,
-                if active { C.text_gray_900 } else { C.text_gray_600 },
-                C.hover__text_gray_900 => !active,
-                C.hover__underline => !active,
+                C.text_gray_600,
+                C.hover__text_gray_900,
+                C.hover__underline,
                 C.font_bold,
                 C.focus__outline_none,
             ],
             attrs!{
-                At::Href => "",
+                At::Href => link,
             },
             title
         ]

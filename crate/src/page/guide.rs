@@ -87,6 +87,22 @@ fn view_guide_list_toggle(selected_guide: &Guide) -> impl View<Msg> {
 }
 
 fn view_guide_list_items(selected_guide: &Guide, model: &Model) -> impl View<Msg> {
+    let mut guide_list: Vec<Node<Msg>> =
+        model
+            .guides
+            .iter()
+            .map(|guide| {
+                let guide_is_selected = guide == selected_guide;
+                let guide_is_matched = model.matched_guides.contains(guide);
+                view_guide_list_item(guide, guide_is_selected, guide_is_matched).els()
+            })
+            .flatten()
+            .collect();
+
+    // section divider
+    // @TODO: refactor
+    guide_list.insert(12, hr![]);
+
     div![
         id!("menu_items"),
         class![
@@ -114,11 +130,7 @@ fn view_guide_list_items(selected_guide: &Guide, model: &Model) -> impl View<Msg
         },
         view_search(model).els(),
         ul![
-            model.guides.iter().map(|guide| {
-                let guide_is_selected = guide == selected_guide;
-                let guide_is_matched = model.matched_guides.contains(guide);
-                view_guide_list_item(guide, guide_is_selected, guide_is_matched).els()
-            })
+           guide_list
         ]
     ]
 }
@@ -262,40 +274,6 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
         view_content_markdown(guide.html).els(),
         view_browsing_links(guide, &model.guides).els(),
     ]
-}
-
-fn view_content_top_back_link(selected_guide: &Guide, guides: &[Guide]) -> impl View<Msg> {
-    if let Some(previous_guide) = previous_guide(selected_guide, guides) {
-        div![
-            class![
-                C.font_sans,
-            ],
-            span![
-                class![
-                    C.text_base,
-                    C.text_purple_500,
-                    C.font_bold,
-                ],
-                "< ",
-                a![
-                    class![
-                        C.text_base,
-                        C.text_purple_500,
-                        C.font_bold,
-                        C.hover__underline,
-                        // md__
-                        C.md__text_sm,
-                    ],
-                    attrs! {
-                        At::Href => Route::Guide(previous_guide.slug.to_owned()).to_string(),
-                    },
-                    previous_guide.menu_title,
-                ]
-            ],
-        ]
-    } else {
-        empty![]
-    }
 }
 
 fn view_content_markdown(content: &str) -> impl View<Msg> {

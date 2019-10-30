@@ -16,6 +16,12 @@ impl PartialEq for Guide {
 pub fn guides() -> Vec<Guide> {
     vec![
         Guide {
+            slug: "about",
+            menu_title: "About",
+            html: include_str!(concat!("../generated_guides/", "about.html")),
+            lowercase_text: include_str!(concat!("../generated_guides/", "about.txt")),
+        },
+        Guide {
             slug: "quickstart",
             menu_title: "Quickstart",
             html: include_str!(concat!("../generated_guides/", "quickstart.html")),
@@ -82,10 +88,10 @@ pub fn guides() -> Vec<Guide> {
             lowercase_text: include_str!(concat!("../generated_guides/", "server_integration.txt")),
         },
         Guide {
-            slug: "about",
-            menu_title: "About",
-            html: include_str!(concat!("../generated_guides/", "about.html")),
-            lowercase_text: include_str!(concat!("../generated_guides/", "about.txt")),
+            slug: "changelog",
+            menu_title: "Changelog",
+            html: include_str!(concat!("../generated_guides/", "changelog.html")),
+            lowercase_text: include_str!(concat!("../generated_guides/", "changelog.txt")),
         },
     ]
 }
