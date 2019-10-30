@@ -1,7 +1,4 @@
-use crate::{
-    generated::css_classes::C, image_src, Msg, Page, MAIL_TO_HELLWEB, Model, Guide, Route,
-    MAIL_TO_KAVIK,
-};
+use crate::{generated::css_classes::C, image_src, Msg, Page, MAIL_TO_HELLWEB, Model, Guide, Route, MAIL_TO_KAVIK, previous_guide, next_guide};
 use seed::{prelude::*, *};
 use crate::Visibility::Hidden;
 
@@ -21,7 +18,6 @@ pub fn view(guide: &Guide, model: &Model) -> impl View<Msg> {
         ],
         view_guide_list(guide, model).els(),
         view_content(guide, model).els(),
-        view_back_link().els(),
     ]
 }
 
@@ -116,20 +112,100 @@ fn view_guide_list_items(selected_guide: &Guide, model: &Model) -> impl View<Msg
         style! {
             St::Top => em(7),
         },
+        view_search(model).els(),
         ul![
-            model.guides.iter().map(|guide| view_guide_list_item(guide, guide == selected_guide).els())
+            model.guides.iter().map(|guide| {
+                let guide_is_selected = guide == selected_guide;
+                let guide_is_matched = model.matched_guides.contains(guide);
+                view_guide_list_item(guide, guide_is_selected, guide_is_matched).els()
+            })
         ]
     ]
 }
 
-fn view_guide_list_item(guide: &Guide, active: bool) -> impl View<Msg> {
+fn view_search(model: &Model) -> impl View<Msg> {
+    div![
+        class![
+            C.flex_1,
+            C.w_full,
+            C.mx_auto,
+            C.max_w_sm,
+            C.content_center,
+            C.py_4,
+            // lg__
+            C.lg__py_0,
+        ],
+        div![
+            class![
+                C.relative,
+                C.pl_4,
+                C.pr_4,
+                // md__
+                C.md__pr_0,
+            ],
+            input![
+                class![
+                    C.w_full,
+                    C.bg_gray_100,
+                    C.text_sm,
+                    C.text_gray_800,
+                    C.placeholder_gray_800,
+                    C.border,
+                    C.focus__outline_none,
+                    C.focus__border_purple_500,
+                    C.rounded,
+                    C.py_1,
+                    C.px_2,
+                    C.pl_10,
+                    C.appearance_none,
+                    C.leading_normal,
+                ],
+                attrs!{
+                    At::Type => "search",
+                    At::Placeholder => "Search",
+                    At::Value => model.search_query,
+                },
+                input_ev(Ev::Input, Msg::SearchQueryChanged),
+            ],
+            div![
+                class![
+                    C.absolute,
+                ],
+                style!{
+                    St::Top => rem(0.375),
+                    St::Left => rem(1.75),
+                },
+                svg![
+                    class![
+                        C.fill_current,
+                        C.pointer_events_none,
+                        C.text_gray_800,
+                        C.w_4,
+                        C.h_4,
+                    ],
+                    attrs!{
+                        At::ViewBox => "0 0 20 20",
+                    },
+                    path![
+                        attrs!{
+                            At::D => "M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zM12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z",
+                        }
+                    ]
+                ],
+            ]
+        ]
+    ]
+}
+
+fn view_guide_list_item(guide: &Guide, active: bool, matched: bool) -> impl View<Msg> {
     li![
         class![
-            C.hover__bg_purple_100,
+            C.hover__bg_purple_100 => !matched,
+            C.bg_purple_200 => matched,
             // md__
             C.md__my_0,
             // lg__
-            C.lg__hover__bg_transparent,
+            C.lg__hover__bg_transparent => !matched,
         ],
         a![
             class![
@@ -182,39 +258,44 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.lg__w_4of5,
             C.lg__mt_0,
         ],
-        view_content_top_back_link().els(),
+        view_browsing_links(guide, &model.guides).els(),
         view_content_markdown(guide.html).els(),
+        view_browsing_links(guide, &model.guides).els(),
     ]
 }
 
-fn view_content_top_back_link() -> impl View<Msg> {
-    div![
-        class![
-            C.font_sans,
-        ],
-        span![
+fn view_content_top_back_link(selected_guide: &Guide, guides: &[Guide]) -> impl View<Msg> {
+    if let Some(previous_guide) = previous_guide(selected_guide, guides) {
+        div![
             class![
-                C.text_base,
-                C.text_purple_500,
-                C.font_bold,
+                C.font_sans,
             ],
-            "« ",
-            a![
+            span![
                 class![
                     C.text_base,
                     C.text_purple_500,
                     C.font_bold,
-                    C.hover__underline,
-                    // md__
-                    C.md__text_sm,
                 ],
-                attrs!{
-                    At::Href => "",
-                },
-                "Back link",
-            ]
-        ],
-    ]
+                "< ",
+                a![
+                    class![
+                        C.text_base,
+                        C.text_purple_500,
+                        C.font_bold,
+                        C.hover__underline,
+                        // md__
+                        C.md__text_sm,
+                    ],
+                    attrs! {
+                        At::Href => Route::Guide(previous_guide.slug.to_owned()).to_string(),
+                    },
+                    previous_guide.menu_title,
+                ]
+            ],
+        ]
+    } else {
+        empty![]
+    }
 }
 
 fn view_content_markdown(content: &str) -> impl View<Msg> {
@@ -226,41 +307,80 @@ fn view_content_markdown(content: &str) -> impl View<Msg> {
     ]
 }
 
-fn view_back_link() -> impl View<Msg> {
+fn view_browsing_links(selected_guide: &Guide, guides: &[Guide]) -> impl View<Msg> {
     div![
         class![
             C.w_full,
             C.text_gray_500,
             C.px_4,
             C.py_6,
+            C.flex,
+            C.justify_between,
             // md__
             C.md__text_sm,
             // lg__
-            C.lg__w_4of5,
             C.lg__ml_auto,
             C.text_base,
         ],
-        span![
-            class![
-                C.text_base,
-                C.text_purple_500,
-                C.font_bold,
-            ],
-            "< ",
-            a![
+        if let Some(previous_guide) = previous_guide(selected_guide, guides) {
+            div![
                 class![
                     C.text_base,
                     C.text_purple_500,
                     C.font_bold,
-                    C.hover__underline,
-                    // md__
-                    C.md__text_sm,
+                    C.flex,
                 ],
-                attrs!{
-                    At::Href => "",
-                },
-                "Back to Help"
-            ],
-        ]
+                span!["<"],
+                a![
+                    class![
+                        C.text_base,
+                        C.text_purple_500,
+                        C.font_bold,
+                        C.hover__underline,
+                        // md__
+                        C.md__text_sm,
+                    ],
+                    attrs! {
+                        At::Href => Route::Guide(previous_guide.slug.to_owned()).to_string(),
+                    },
+                    previous_guide.menu_title,
+                ],
+            ]
+        } else {
+            empty![]
+        },
+        // spacer
+        div![
+            class![
+                C.w_5,
+            ]
+        ],
+        if let Some(next_guide) = next_guide(selected_guide, guides) {
+            div![
+                class![
+                    C.text_base,
+                    C.text_purple_500,
+                    C.font_bold,
+                    C.flex,
+                ],
+                a![
+                    class![
+                        C.text_base,
+                        C.text_purple_500,
+                        C.font_bold,
+                        C.hover__underline,
+                        // md__
+                        C.md__text_sm,
+                    ],
+                    attrs! {
+                        At::Href => Route::Guide(next_guide.slug.to_owned()).to_string(),
+                    },
+                    next_guide.menu_title,
+                ],
+                span![">"],
+            ]
+        } else {
+            empty![]
+        }
     ]
 }

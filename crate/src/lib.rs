@@ -101,6 +101,20 @@ impl Page {
     }
 }
 
+pub fn previous_guide<'a>(selected_guide: &Guide, guides: &'a [Guide]) -> Option<&'a Guide> {
+    let selected_guide_index =
+        guides.iter().position(|guide| guide == selected_guide)?;
+
+    selected_guide_index.checked_sub(1).and_then(|index| guides.get(index))
+}
+
+pub fn next_guide<'a>(selected_guide: &Guide, guides: &'a [Guide]) -> Option<&'a Guide> {
+    let selected_guide_index =
+        guides.iter().position(|guide| guide == selected_guide)?;
+
+    selected_guide_index.checked_add(1).and_then(|index| guides.get(index))
+}
+
 // ------ ------
 //     Init
 // ------ ------
@@ -239,7 +253,12 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
 }
 
 fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
+    if query.is_empty() {
+        return Vec::new()
+    }
+
     let query = query.to_lowercase();
+
     guides.iter().filter_map(|guide|{
         if guide.lowercase_text.contains(&query) {
             Some(*guide)

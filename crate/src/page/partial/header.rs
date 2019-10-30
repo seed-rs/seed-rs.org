@@ -147,7 +147,6 @@ fn view_menu_content(model: &Model) -> impl View<Msg> {
         id!("menu_content"),
         class![
             C.w_full,
-            C.flex_grow,
             C.hidden => model.menu_visibility == Hidden,
             C.mt_2,
             C.z_20,
@@ -158,82 +157,7 @@ fn view_menu_content(model: &Model) -> impl View<Msg> {
             C.lg__w_auto,
             C.lg__mt_0,
         ],
-        view_search(model).els(),
         view_links().els(),
-    ]
-}
-
-fn view_search(model: &Model) -> impl View<Msg> {
-    div![
-        class![
-            C.flex_1,
-            C.w_full,
-            C.mx_auto,
-            C.max_w_sm,
-            C.content_center,
-            C.py_4,
-            // lg__
-            C.lg__py_0,
-        ],
-        div![
-            class![
-                C.relative,
-                C.pl_4,
-                C.pr_4,
-                // md__
-                C.md__pr_0,
-            ],
-            input![
-                class![
-                    C.w_full,
-                    C.bg_gray_100,
-                    C.text_sm,
-                    C.text_gray_800,
-                    C.placeholder_gray_800,
-                    C.border,
-                    C.focus__outline_none,
-                    C.focus__border_purple_500,
-                    C.rounded,
-                    C.py_1,
-                    C.px_2,
-                    C.pl_10,
-                    C.appearance_none,
-                    C.leading_normal,
-                ],
-                attrs!{
-                    At::Type => "search",
-                    At::Placeholder => "Search",
-                    At::Value => model.search_query,
-                },
-                input_ev(Ev::Input, Msg::SearchQueryChanged),
-            ],
-            div![
-                class![
-                    C.absolute,
-                ],
-                style!{
-                    St::Top => rem(0.375),
-                    St::Left => rem(1.75),
-                },
-                svg![
-                    class![
-                        C.fill_current,
-                        C.pointer_events_none,
-                        C.text_gray_800,
-                        C.w_4,
-                        C.h_4,
-                    ],
-                    attrs!{
-                        At::ViewBox => "0 0 20 20",
-                    },
-                    path![
-                        attrs!{
-                            At::D => "M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zM12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z",
-                        }
-                    ]
-                ],
-            ]
-        ]
     ]
 }
 
