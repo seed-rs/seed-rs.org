@@ -64,6 +64,7 @@ pub struct Model {
 #[derive(Clone, Copy, PartialEq)]
 pub enum Page {
     Guide(Guide),
+    // @TODO remove about
     About,
     NotFound,
 }
@@ -277,20 +278,20 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
 //   - https://codepoints.net/U+00A0
 
 pub fn view(model: &Model) -> impl View<Msg> {
-    div![
-        class![
-            C.min_h_screen,
-            C.bg_gray_100,
-            C.tracking_wider,
-            C.pb_16,
-        ],
-        match model.page {
-            Page::Guide(guide) => page::guide::view(&guide, model).els(),
-            Page::About => page::about::view().els(),
-            Page::NotFound => page::not_found::view().els(),
-        },
-        page::partial::header::view(model).els(),
-    ]
+        div![
+            class![
+                C.min_h_screen,
+                C.bg_gray_100,
+                C.tracking_wider,
+                C.pb_16,
+            ],
+            match model.page {
+                Page::Guide(guide) => page::guide::view(&guide, model).els(),
+                Page::About => page::about::view().els(),
+                Page::NotFound => page::not_found::view().els(),
+            },
+            page::partial::header::view(model).els(),
+        ]
 }
 
 pub fn image_src(image: &str) -> String {

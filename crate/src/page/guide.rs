@@ -143,6 +143,7 @@ fn view_search(model: &Model) -> impl View<Msg> {
             C.max_w_sm,
             C.content_center,
             C.py_4,
+            C.mb_6,
             // lg__
             C.lg__py_0,
         ],
@@ -167,7 +168,7 @@ fn view_search(model: &Model) -> impl View<Msg> {
                     C.rounded,
                     C.py_1,
                     C.px_2,
-                    C.pl_10,
+                    C.pl_8,
                     C.appearance_none,
                     C.leading_normal,
                 ],
@@ -183,8 +184,8 @@ fn view_search(model: &Model) -> impl View<Msg> {
                     C.absolute,
                 ],
                 style!{
-                    St::Top => rem(0.375),
-                    St::Left => rem(1.75),
+                    St::Top => rem(0.7),
+                    St::Left => rem(1.5),
                 },
                 svg![
                     class![
@@ -307,7 +308,7 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide]) -> impl View<Ms
                     C.font_bold,
                     C.flex,
                 ],
-                span!["<"],
+                view_previous_icon().els(),
                 a![
                     class![
                         C.text_base,
@@ -354,10 +355,47 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide]) -> impl View<Ms
                     },
                     next_guide.menu_title,
                 ],
-                span![">"],
+                view_next_icon().els(),
             ]
         } else {
             empty![]
         }
+    ]
+}
+
+fn view_previous_icon() -> impl View<Msg> {
+    div![
+        class![
+            C.h_8,
+        ],
+        style!{
+            St::Transform => "rotate(180deg)",
+        },
+        next_icon_svg().els()
+    ]
+}
+
+fn view_next_icon() -> impl View<Msg> {
+    div![
+        class![
+            C.h_8,
+        ],
+        next_icon_svg().els()
+    ]
+}
+
+fn next_icon_svg() -> impl View<Msg> {
+    raw![
+        r#"
+            <svg width="100%" height="100%" viewBox="0 0 27 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+                <g transform="matrix(1,0,0,1,-8363.26,-3858.28)">
+                    <g transform="matrix(0.739583,0,0,3.93945,4533.22,0)">
+                        <g transform="matrix(0.580448,0,0,0.242691,2561.61,518.56)">
+                            <path d="M4508.65,1921.38L4554.22,1921.38L4524.11,1898.85L4539.16,1898.85L4569.27,1921.38L4539.16,1943.91L4524.11,1943.91L4554.22,1921.38L4508.65,1921.38Z" style="fill:currentColor;"/>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+        "#
     ]
 }
