@@ -260,6 +260,7 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
     div![
         class![
             C.w_full,
+            C.min_h_screen,
             C.p_8,
             C.mt_6,
             C.text_gray_900,
