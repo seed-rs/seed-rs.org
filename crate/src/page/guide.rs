@@ -11,9 +11,6 @@ pub fn view(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.flex_wrap,
             C.mx_auto,
             C.px_2,
-            C.pt_24,
-            // lg__
-            C.lg__pt_24,
         ],
         view_guide_list(guide, model).els(),
         view_content(guide, model).els(),
@@ -25,7 +22,6 @@ fn view_guide_list(guide: &Guide, model: &Model) -> impl View<Msg> {
         class![
             C.w_full,
             C.text_xl,
-            C.text_gray_800,
             C.leading_normal,
             // lg__
             C.lg__w_1of5,
@@ -98,10 +94,6 @@ fn view_guide_list_items(selected_guide: &Guide, model: &Model) -> impl View<Msg
             .flatten()
             .collect();
 
-    // section divider
-    // @TODO: refactor
-    guide_list.insert(12, hr![]);
-
     div![
         id!("menu_items"),
         class![
@@ -129,7 +121,7 @@ fn view_guide_list_items(selected_guide: &Guide, model: &Model) -> impl View<Msg
         },
         view_search(model).els(),
         ul![
-           guide_list
+            guide_list
         ]
     ]
 }
@@ -158,15 +150,15 @@ fn view_search(model: &Model) -> impl View<Msg> {
             input![
                 class![
                     C.w_full,
-                    C.bg_gray_100,
+                    C.bg_green_100,
                     C.text_sm,
-                    C.text_gray_800,
-                    C.placeholder_gray_800,
-                    C.border,
+                    C.text_green_800,
+                    C.placeholder_green_800,
+                    C.border_b_4,
+                    C.border_green_500,
                     C.focus__outline_none,
-                    C.focus__border_purple_500,
-                    C.rounded,
-                    C.py_1,
+                    C.pt_2,
+                    C.pb_2,
                     C.px_2,
                     C.pl_8,
                     C.appearance_none,
@@ -184,14 +176,14 @@ fn view_search(model: &Model) -> impl View<Msg> {
                     C.absolute,
                 ],
                 style!{
-                    St::Top => rem(0.55),
+                    St::Top => rem(0.6),
                     St::Left => rem(1.5),
                 },
                 svg![
                     class![
                         C.fill_current,
                         C.pointer_events_none,
-                        C.text_gray_800,
+                        C.text_green_800,
                         C.w_4,
                         C.h_4,
                     ],
@@ -212,27 +204,37 @@ fn view_search(model: &Model) -> impl View<Msg> {
 fn view_guide_list_item(guide: &Guide, active: bool, matched: bool) -> impl View<Msg> {
     li![
         class![
-            C.hover__bg_purple_100 => !matched,
-            C.bg_purple_200 => matched,
+            C.hover__bg_green_100 => !matched,
+            C.bg_green_200 => matched,
             // md__
             C.md__my_0,
             // lg__
             C.lg__hover__bg_transparent => !matched,
         ],
+        if guide.prepend_menu_divider {
+            hr![
+                class![
+                    C.border_t,
+                    C.border_green_300,
+                ]
+            ]
+        } else {
+            empty![]
+        },
         a![
             class![
                 C.block,
                 C.py_2,
                 C.pl_4,
                 C.align_middle,
-                C.text_gray_700,
-                C.hover__text_purple_500,
+                C.text_green_800,
+                C.hover__text_green_500,
                 C.border_l_4,
                 C.border_transparent,
                 C.focus__outline_none,
                 // lg__
-                C.lg__border_purple_500 => active,
-                if active { C.lg__hover__border_purple_500 } else { C.lg__hover__border_purple_400 },
+                C.lg__border_green_500 => active,
+                if active { C.lg__hover__border_green_500 } else { C.lg__hover__border_green_400 },
             ],
             attrs! {
                 At::Href => Route::Guide(guide.slug.to_owned()).to_string(),
@@ -243,7 +245,7 @@ fn view_guide_list_item(guide: &Guide, active: bool, matched: bool) -> impl View
                     C.block,
                     C.pb_1,
                     C.text_sm,
-                    C.text_gray_900 => active,
+                    C.text_green_900 => active,
                     C.font_bold => active,
                     // md__
                     C.md__pb_0,
@@ -263,12 +265,12 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.text_gray_900,
             C.leading_normal,
             C.bg_white,
-            C.border,
-            C.border_gray_400,
-            C.rounded,
+            C.border_l_4,
+            C.border_green_500,
             // lg__
             C.lg__w_4of5,
             C.lg__mt_0,
+            C.lg__pt_24,
         ],
         view_browsing_links(guide, &model.guides, Position::Top).els(),
         view_content_markdown(guide.html).els(),
@@ -279,7 +281,7 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
 fn view_content_markdown(content: &str) -> impl View<Msg> {
     div![
         class![
-            "markdown"
+            "markdown",
         ],
         raw!(content)
     ]
@@ -296,23 +298,21 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
         class![
             if position == Position::Top { C.mb_6 } else { C.mt_6 },
             C.w_full,
-            C.text_gray_500,
             C.flex,
             C.justify_between,
+            C.text_green_500,
             // md__
             C.md__text_sm,
             // lg__
             C.lg__ml_auto,
-            C.text_base,
         ],
         if let Some(previous_guide) = previous_guide(selected_guide, guides) {
             a![
                 class![
-                    C.text_base,
-                    C.text_purple_500,
-                    C.font_bold,
                     C.flex,
                     C.hover__underline,
+                    C.hover__text_green_700,
+                    C.focus__outline_none,
                 ],
                 attrs! {
                     At::Href => Route::Guide(previous_guide.slug.to_owned()).to_string(),
@@ -320,8 +320,6 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                 view_previous_icon().els(),
                 div![
                     class![
-                        C.text_base,
-                        C.text_purple_500,
                         C.font_bold,
                         C.m_auto,
                         C.pb_1,
@@ -341,27 +339,24 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
             ]
         ],
         if let Some(next_guide) = next_guide(selected_guide, guides) {
-            div![
+            a![
                 class![
-                    C.text_base,
-                    C.text_purple_500,
-                    C.font_bold,
                     C.flex,
+                    C.hover__underline,
+                    C.hover__text_green_700,
+                    C.focus__outline_none,
                 ],
-                a![
+                attrs! {
+                    At::Href => Route::Guide(next_guide.slug.to_owned()).to_string(),
+                },
+                div![
                     class![
-                        C.text_base,
-                        C.text_purple_500,
                         C.font_bold,
-                        C.hover__underline,
                         C.m_auto,
                         C.pb_1,
                         // md__
                         C.md__text_sm,
                     ],
-                    attrs! {
-                        At::Href => Route::Guide(next_guide.slug.to_owned()).to_string(),
-                    },
                     next_guide.menu_title,
                 ],
                 view_next_icon().els(),

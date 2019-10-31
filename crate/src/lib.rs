@@ -281,9 +281,7 @@ pub fn view(model: &Model) -> impl View<Msg> {
         div![
             class![
                 C.min_h_screen,
-                C.bg_gray_100,
                 C.tracking_wider,
-                C.pb_16,
                 C.font_body,
             ],
             match model.page {

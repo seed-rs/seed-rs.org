@@ -6,27 +6,7 @@ use crate::{
 };
 use seed::{prelude::*, *};
 
-//fn header_visibility(
-//    menu_visibility: Visibility,
-//    scroll_history: &ScrollHistory,
-//) -> Visibility {
-//    let menu_is_visible = menu_visibility == Visible;
-//    // You can go higher on the mobile phones.
-//    let at_the_top_or_higher = *scroll_history.back().unwrap_or(&0) <= 0;
-//    let scrolling_up = scroll_history.front() >= scroll_history.back();
-//
-//    if menu_is_visible || at_the_top_or_higher || scrolling_up {
-//        Visible
-//    } else {
-//        Hidden
-//    }
-//}
-
 pub fn view(model: &Model) -> impl View<Msg> {
-//    let show_header =
-//        header_visibility(model.menu_visibility, &model.scroll_history)
-//            == Visible;
-
     nav![
         id!("header"),
         class![
@@ -35,11 +15,10 @@ pub fn view(model: &Model) -> impl View<Msg> {
             C.z_10,
             C.top_0,
             C.bg_white,
-            C.border_b,
-            C.border_gray_400,
         ],
         div![
             class![
+                C.relative,
                 C.w_full,
                 C.container,
                 C.mx_auto,
@@ -48,12 +27,24 @@ pub fn view(model: &Model) -> impl View<Msg> {
                 C.items_center,
                 C.justify_between,
                 C.mt_0,
-                C.py_4,
+                C.pt_2,
+                C.pb_2,
             ],
             view_guide_list_toggle().els(),
             view_logo().els(),
             view_menu_toggle().els(),
             view_menu_content(model).els(),
+            div![
+                class![
+                    C.absolute,
+                    C.right_0,
+                    C.top_0,
+                    C.h_full,
+                    C.w_9of12,
+                    C.border_b_4,
+                    C.border_blue_500,
+                ]
+            ],
         ]
     ]
 }
@@ -63,12 +54,14 @@ fn view_logo() -> impl View<Msg> {
         class![
             C.flex,
             C.items_center,
+            C.mt_1,
             // lg__
-            C.lg__pl_12,
+            C.lg__pl_16,
         ],
         a![
             class![
                 C.w_32,
+                C.focus__outline_none,
             ],
             attrs!{
                 At::Href => Route::Root.to_string()
@@ -232,8 +225,8 @@ fn view_link(title: &str, link: &str) -> impl View<Msg> {
                 C.inline_block,
                 C.py_2,
                 C.px_4,
-                C.text_gray_600,
-                C.hover__text_gray_900,
+                C.text_blue_500,
+                C.hover__text_blue_700,
                 C.hover__underline,
                 C.font_bold,
                 C.focus__outline_none,
