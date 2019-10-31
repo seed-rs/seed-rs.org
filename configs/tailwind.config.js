@@ -19,6 +19,21 @@ module.exports = {
 //  }, {})
 //});
 //
+
+
+module.exports = {
+  theme: {
+    fontFamily: {
+      display: ['Metropolis', 'sans-serif'],
+      body: ['Inter', 'sans-serif'],
+      sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial',
+          'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji']
+    },
+  }
+}
+
+
+
 //module.exports = {
 //  theme: {
 //    screens: {

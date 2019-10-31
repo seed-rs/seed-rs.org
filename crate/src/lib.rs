@@ -284,6 +284,7 @@ pub fn view(model: &Model) -> impl View<Msg> {
                 C.bg_gray_100,
                 C.tracking_wider,
                 C.pb_16,
+                C.font_body,
             ],
             match model.page {
                 Page::Guide(guide) => page::guide::view(&guide, model).els(),

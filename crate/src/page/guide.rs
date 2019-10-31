@@ -184,7 +184,7 @@ fn view_search(model: &Model) -> impl View<Msg> {
                     C.absolute,
                 ],
                 style!{
-                    St::Top => rem(0.7),
+                    St::Top => rem(0.55),
                     St::Left => rem(1.5),
                 },
                 svg![
@@ -270,9 +270,9 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.lg__w_4of5,
             C.lg__mt_0,
         ],
-        view_browsing_links(guide, &model.guides).els(),
+        view_browsing_links(guide, &model.guides, Position::Top).els(),
         view_content_markdown(guide.html).els(),
-        view_browsing_links(guide, &model.guides).els(),
+        view_browsing_links(guide, &model.guides, Position::Bottom).els(),
     ]
 }
 
@@ -285,13 +285,18 @@ fn view_content_markdown(content: &str) -> impl View<Msg> {
     ]
 }
 
-fn view_browsing_links(selected_guide: &Guide, guides: &[Guide]) -> impl View<Msg> {
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Position {
+    Top,
+    Bottom
+}
+
+fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Position) -> impl View<Msg> {
     div![
         class![
+            if position == Position::Top { C.mb_6 } else { C.mt_6 },
             C.w_full,
             C.text_gray_500,
-            C.px_4,
-            C.py_6,
             C.flex,
             C.justify_between,
             // md__
@@ -301,26 +306,28 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide]) -> impl View<Ms
             C.text_base,
         ],
         if let Some(previous_guide) = previous_guide(selected_guide, guides) {
-            div![
+            a![
                 class![
                     C.text_base,
                     C.text_purple_500,
                     C.font_bold,
                     C.flex,
+                    C.hover__underline,
                 ],
+                attrs! {
+                    At::Href => Route::Guide(previous_guide.slug.to_owned()).to_string(),
+                },
                 view_previous_icon().els(),
-                a![
+                div![
                     class![
                         C.text_base,
                         C.text_purple_500,
                         C.font_bold,
-                        C.hover__underline,
+                        C.m_auto,
+                        C.pb_1,
                         // md__
                         C.md__text_sm,
                     ],
-                    attrs! {
-                        At::Href => Route::Guide(previous_guide.slug.to_owned()).to_string(),
-                    },
                     previous_guide.menu_title,
                 ],
             ]
@@ -347,6 +354,8 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide]) -> impl View<Ms
                         C.text_purple_500,
                         C.font_bold,
                         C.hover__underline,
+                        C.m_auto,
+                        C.pb_1,
                         // md__
                         C.md__text_sm,
                     ],
