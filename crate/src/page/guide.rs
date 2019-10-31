@@ -282,7 +282,7 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
 fn view_content_markdown(content: &str) -> impl View<Msg> {
     div![
         class![
-            "markdown",
+            "md",
         ],
         raw!(content)
     ]
