@@ -180,8 +180,13 @@ fn view_menu_content(model: &Model) -> impl View<Msg> {
             C.hidden => model.menu_visibility == Hidden,
             C.mt_2,
             C.z_20,
+            C.flex,
+            C.flex_col,
+            C.items_end,
+            C.text_right,
             // lg__
             C.lg__flex,
+            C.lg__flex_row,
             C.lg__content_center,
             C.lg__items_center,
             C.lg__w_auto,
@@ -195,8 +200,12 @@ fn view_menu_content(model: &Model) -> impl View<Msg> {
 fn view_github_mark() -> impl View<Msg> {
     a![
         class![
-            C.ml_3,
-            C.mr_3,
+            C.mt_4,
+            C.mb_8,
+            C.mr_8,
+            // lg__
+            C.lg__mx_3,
+            C.lg__my_0,
         ],
         attrs!{
             At::Href => "https://github.com/David-OConnor/seed",
