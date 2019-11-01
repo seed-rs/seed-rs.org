@@ -1,6 +1,6 @@
-use crate::{generated::css_classes::C, image_src, Msg, Page, MAIL_TO_HELLWEB, Model, Guide, Route, MAIL_TO_KAVIK, previous_guide, next_guide};
+use crate::{generated::css_classes::C, image_src, Msg, Page, MAIL_TO_HELLWEB, Model, Guide, Route, MAIL_TO_KAVIK, previous_guide, next_guide, Visibility};
 use seed::{prelude::*, *};
-use crate::Visibility::Hidden;
+use crate::Visibility::{Hidden, Visible};
 
 pub fn view(guide: &Guide, model: &Model) -> impl View<Msg> {
     div![
@@ -11,6 +11,9 @@ pub fn view(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.flex_wrap,
             C.mx_auto,
             C.px_2,
+            C.mt_16,
+            // lg__
+            C.lg__mt_0,
         ],
         view_guide_list(guide, model).els(),
         view_content(guide, model).els(),
@@ -25,16 +28,18 @@ fn view_guide_list(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.lg__w_1of5,
             C.lg__px_6,
         ],
-        view_guide_list_toggle(guide).els(),
+        view_guide_list_toggle(guide, model.guide_list_visibility).els(),
         view_guide_list_items(guide, model).els(),
     ]
 }
 
-fn view_guide_list_toggle(selected_guide: &Guide) -> impl View<Msg> {
+fn view_guide_list_toggle(selected_guide: &Guide, guide_list_visibility: Visibility) -> impl View<Msg> {
     div![
         class![
             C.sticky,
             C.inset_0,
+            C.border_l_4,
+            C.border_green_500,
             // lg__
             C.lg__hidden,
         ],
@@ -44,28 +49,31 @@ fn view_guide_list_toggle(selected_guide: &Guide) -> impl View<Msg> {
                 C.flex,
                 C.w_full,
                 C.justify_between,
-                C.px_4,
+                C.pl_8,
+                C.pr_8,
                 C.py_3,
                 C.bg_white,
-                C.border,
                 C.rounded,
-                C.border_gray_600,
-                C.hover__border_purple_500,
+                C.text_white,
+                C.hover__text_green_200,
                 C.appearance_none,
                 C.focus__outline_none,
-                C.text_sm,
                 C.font_bold,
-                // lg__
-                C.lg__bg_transparent,
+                C.rounded_full,
+                C.bg_green_500,
             ],
             simple_ev(Ev::Click, Msg::ToggleGuideList),
             selected_guide.menu_title,
             svg![
                 class![
+                    C.mt_1,
                     C.fill_current,
                     C.h_5,
                     C.float_right,
                 ],
+                style!{
+                    St::Transform => if guide_list_visibility == Visible { "rotate(180deg)" } else { "none" }
+                },
                 attrs!{
                     At::ViewBox => "0 0 20 20",
                 },
@@ -95,22 +103,23 @@ fn view_guide_list_items(selected_guide: &Guide, model: &Model) -> impl View<Msg
     div![
         id!("menu_items"),
         class![
-            C.w_full,
+            C.w_11of12,
             C.inset_0,
+            C.m_auto,
             C.hidden => model.guide_list_visibility == Hidden,
             C.overflow_x_hidden,
             C.overflow_y_auto,
             C.mt_0,
-            C.border,
-            C.border_gray_400,
+            C.border_4,
+            C.border_t_0,
+            C.border_green_500,
             C.bg_white,
-            C.shadow,
             C.z_20,
             // lg__
+            C.lg__w_full,
             C.lg__sticky,
             C.lg__overflow_y_hidden,
             C.lg__border_transparent,
-            C.lg__shadow_none,
             C.lg__bg_transparent,
             C.lg__block,
         ],
@@ -132,10 +141,10 @@ fn view_search(model: &Model) -> impl View<Msg> {
             C.mx_auto,
             C.max_w_sm,
             C.content_center,
-            C.py_4,
+            C.pt_4,
             C.mb_6,
             // lg__
-            C.lg__py_0,
+            C.lg__pt_0,
         ],
         div![
             class![
