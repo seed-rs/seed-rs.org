@@ -1,4 +1,4 @@
-use crate::{generated::css_classes::C, image_src, Msg, Page, MAIL_TO_HELLWEB, Model, Guide, Route, MAIL_TO_KAVIK, previous_guide, next_guide, Visibility};
+use crate::{generated::css_classes::C, Msg, Page, Model, Guide, Route, previous_guide, next_guide, Visibility};
 use seed::{prelude::*, *};
 use crate::Visibility::{Hidden, Visible};
 
@@ -334,8 +334,8 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
         // spacer
         div![
             class![
-                C.w_5,
-            ]
+                C.w_5
+            ],
         ],
         if let Some(next_guide) = next_guide(selected_guide, guides) {
             a![

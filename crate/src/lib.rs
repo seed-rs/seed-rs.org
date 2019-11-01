@@ -19,13 +19,7 @@ use std::convert::TryInto;
 use crate::Route::Root;
 
 const TITLE_SUFFIX: &str = "Kavik.cz";
-// https://mailtolink.me/
-const MAIL_TO_KAVIK: &str = "mailto:martin@kavik.cz?subject=Something%20for%20Martin&body=Hi!%0A%0AI%20am%20Groot.%20I%20like%20trains.";
-const MAIL_TO_HELLWEB: &str =
-    "mailto:martin@hellweb.app?subject=Hellweb%20-%20pain&body=Hi!%0A%0AI%20hate";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
-const STATIC_PATH: &str = "static";
-const IMAGES_PATH: &str = "static/images";
 
 #[derive(Clone, Copy, Eq, PartialEq)]
 pub enum Visibility {
@@ -46,13 +40,8 @@ impl Visibility {
 //     Model
 // ------ ------
 
-// We need at least 3 last values to detect scroll direction,
-// because neighboring ones are sometimes equal.
-type ScrollHistory = FixedVecDeque<[i32; 3]>;
-
 pub struct Model {
     pub page: Page,
-    pub scroll_history: ScrollHistory,
     pub guide_list_visibility: Visibility,
     pub menu_visibility: Visibility,
     pub in_prerendering: bool,
@@ -64,8 +53,6 @@ pub struct Model {
 #[derive(Clone, Copy, PartialEq)]
 pub enum Page {
     Guide(Guide),
-    // @TODO remove about
-    About,
     NotFound,
 }
 
@@ -73,7 +60,6 @@ impl Page {
     pub fn to_href(self) -> String {
         match self {
             Self::Guide(guide) => format!("/guide/{}", guide.slug),
-            Self::About => "/about".into(),
             Self::NotFound => "/404".into(),
         }
     }
@@ -96,7 +82,6 @@ impl Page {
                     None => Page::NotFound,
                 }
             },
-            Route::About => Page::About,
             Route::Unknown => Page::NotFound,
         }
     }
@@ -133,7 +118,6 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
 
     Init::new_with_url_handling(Model {
         page: Page::from_route_and_replace_history(&url.into(), &guides),
-        scroll_history: ScrollHistory::new(),
         guide_list_visibility: Hidden,
         menu_visibility: Hidden,
         in_prerendering: is_in_prerendering(),
@@ -155,10 +139,6 @@ fn is_in_prerendering() -> bool {
 // ------ ------
 
 pub fn routes(url: Url) -> Option<Msg> {
-    // Urls which start with `static` are files => treat them as external links.
-    if url.path.starts_with(&[STATIC_PATH.into()]) {
-        return None;
-    }
     Some(Msg::RouteChanged(url.into()))
 }
 
@@ -166,7 +146,6 @@ pub fn routes(url: Url) -> Option<Msg> {
 pub enum Route {
     Root,
     Guide(String),
-    About,
     Unknown,
 }
 
@@ -176,7 +155,6 @@ impl From<Url> for Route {
 
         match path.next().as_ref().map(String::as_str) {
             None | Some("") => Route::Root,
-            Some("about") => Route::About,
             Some("guide") => path.next().map(Route::Guide).unwrap_or(Route::Unknown),
             _ => Route:: Unknown,
         }
@@ -187,7 +165,6 @@ impl Route {
     pub fn path(&self) -> Vec<&str> {
         match self {
             Route::Root => vec![],
-            Route::About => vec!["about"],
             Route::Guide(slug) => vec!["guide", slug.as_str()],
             Route::Unknown => vec!["404"],
         }
@@ -209,7 +186,6 @@ pub enum Msg {
     RouteChanged(Route),
     UpdatePageTitle,
     ScrollToTop,
-    Scrolled(i32),
     ToggleGuideList,
     HideGuideList,
     ToggleMenu,
@@ -227,7 +203,6 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::UpdatePageTitle => {
             let title = match model.page {
                 Page::Guide(_) => TITLE_SUFFIX.to_owned(),
-                Page::About => format!("About - {}", TITLE_SUFFIX),
                 Page::NotFound => format!("404 - {}", TITLE_SUFFIX),
             };
             document().set_title(&title);
@@ -235,9 +210,6 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::ScrollToTop => window().scroll_to_with_scroll_to_options(
             web_sys::ScrollToOptions::new().top(0.),
         ),
-        Msg::Scrolled(position) => {
-            *model.scroll_history.push_back() = position;
-        },
         Msg::ToggleGuideList => model.guide_list_visibility.toggle(),
         Msg::HideGuideList => {
             model.guide_list_visibility = Hidden;
@@ -284,38 +256,10 @@ pub fn view(model: &Model) -> impl View<Msg> {
             ],
             match model.page {
                 Page::Guide(guide) => page::guide::view(&guide, model).els(),
-                Page::About => page::about::view().els(),
                 Page::NotFound => page::not_found::view().els(),
             },
             page::partial::header::view(model).els(),
         ]
-}
-
-pub fn image_src(image: &str) -> String {
-    format!("{}/{}", IMAGES_PATH, image)
-}
-
-pub fn asset_path(asset: &str) -> String {
-    format!("{}/{}", STATIC_PATH, asset)
-}
-
-// ------ ------
-// Window Events
-// ------ ------
-
-pub fn window_events(_: &Model) -> Vec<Listener<Msg>> {
-    vec![raw_ev(Ev::Scroll, |_| {
-        // Some browsers use `document.body.scrollTop`
-        // and other ones `document.documentElement.scrollTop`.
-        let mut position = body().scroll_top();
-        if position == 0 {
-            position = document()
-                .document_element()
-                .expect("cannot get document element")
-                .scroll_top()
-        }
-        Msg::Scrolled(position)
-    })]
 }
 
 // ------ ------
@@ -328,7 +272,6 @@ pub fn run() {
 
     App::build(init, update, view)
         .routes(routes)
-        .window_events(window_events)
         .finish()
         .run();
 

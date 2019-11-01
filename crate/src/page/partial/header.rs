@@ -1,7 +1,6 @@
 use crate::{
-    asset_path,
     generated::css_classes::C,
-    image_src, Model, Msg, Page, ScrollHistory, Route,
+    Model, Msg, Page, Route,
     Visibility::{self, *},
 };
 use seed::{prelude::*, *};
