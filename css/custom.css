@@ -1,8 +1,5 @@
-
-
-.md h1 {
-    font-size: 3rem;
-    text-align: center;
+.markdown-body ol, .markdown-body ul {
+    list-style-type: unset;
 }
 
 

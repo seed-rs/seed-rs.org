@@ -281,8 +281,6 @@ pub fn view(model: &Model) -> impl View<Msg> {
         div![
             class![
                 C.min_h_screen,
-                C.tracking_wider,
-                C.font_body,
             ],
             match model.page {
                 Page::Guide(guide) => page::guide::view(&guide, model).els(),

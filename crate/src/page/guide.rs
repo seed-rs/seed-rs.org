@@ -21,8 +21,6 @@ fn view_guide_list(guide: &Guide, model: &Model) -> impl View<Msg> {
     div![
         class![
             C.w_full,
-            C.text_xl,
-            C.leading_normal,
             // lg__
             C.lg__w_1of5,
             C.lg__px_6,
@@ -162,7 +160,6 @@ fn view_search(model: &Model) -> impl View<Msg> {
                     C.px_2,
                     C.pl_8,
                     C.appearance_none,
-                    C.leading_normal,
                 ],
                 attrs!{
                     At::Type => "search",
@@ -244,11 +241,8 @@ fn view_guide_list_item(guide: &Guide, active: bool, matched: bool) -> impl View
                 class![
                     C.block,
                     C.pb_1,
-                    C.text_sm,
                     C.text_green_900 => active,
                     C.font_bold => active,
-                    // md__
-                    C.md__pb_0,
                 ],
                 guide.menu_title,
             ]
@@ -264,7 +258,6 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.p_8,
             C.mt_6,
             C.text_gray_900,
-            C.leading_normal,
             C.bg_white,
             C.border_l_4,
             C.border_green_500,
@@ -282,7 +275,8 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
 fn view_content_markdown(content: &str) -> impl View<Msg> {
     div![
         class![
-            "md",
+            // it has to be "markdown-body" so it's content is styled by Github CSS
+            "markdown-body",
         ],
         raw!(content)
     ]
@@ -297,11 +291,12 @@ enum Position {
 fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Position) -> impl View<Msg> {
     div![
         class![
-            if position == Position::Top { C.mb_6 } else { C.mt_6 },
+            if position == Position::Top { C.mb_8 } else { C.mt_8 },
             C.w_full,
             C.flex,
             C.justify_between,
             C.text_green_500,
+            C.tracking_wider,
             // md__
             C.md__text_sm,
             // lg__
