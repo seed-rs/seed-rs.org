@@ -256,14 +256,11 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.w_full,
             C.min_h_screen,
             C.p_8,
-            C.mt_6,
-            C.text_gray_900,
             C.bg_white,
             C.border_l_4,
             C.border_green_500,
             // lg__
             C.lg__w_4of5,
-            C.lg__mt_0,
             C.lg__pt_24,
         ],
         view_browsing_links(guide, &model.guides, Position::Top).els(),
@@ -297,8 +294,7 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
             C.justify_between,
             C.text_green_500,
             C.tracking_wider,
-            // md__
-            C.md__text_sm,
+            C.text_sm,
             // lg__
             C.lg__ml_auto,
         ],
@@ -319,8 +315,9 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                         C.font_bold,
                         C.m_auto,
                         C.pb_1,
-                        // md__
-                        C.md__text_sm,
+                        C.hidden,
+                        // sm__,
+                        C.sm__block,
                     ],
                     previous_guide.menu_title,
                 ],
@@ -350,8 +347,9 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                         C.font_bold,
                         C.m_auto,
                         C.pb_1,
-                        // md__
-                        C.md__text_sm,
+                        C.hidden,
+                        // sm__,
+                        C.sm__block,
                     ],
                     next_guide.menu_title,
                 ],

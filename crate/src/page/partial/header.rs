@@ -15,6 +15,9 @@ pub fn view(model: &Model) -> impl View<Msg> {
             C.z_10,
             C.top_0,
             C.bg_white,
+            C.shadow,
+            // lg__
+            C.lg__shadow_none,
         ],
         div![
             class![
@@ -30,21 +33,23 @@ pub fn view(model: &Model) -> impl View<Msg> {
                 C.pt_2,
                 C.pb_2,
             ],
-            view_guide_list_toggle().els(),
-            view_logo().els(),
-            view_menu_toggle().els(),
-            view_menu_content(model).els(),
             div![
                 class![
                     C.absolute,
                     C.right_0,
                     C.top_0,
                     C.h_full,
-                    C.w_9of12,
-                    C.border_b_4,
-                    C.border_blue_500,
+                    C.w_11of12,
+                    // lg__
+                    C.lg__w_9of12,
+                    C.lg__border_b_4,
+                    C.lg__border_blue_500,
                 ]
             ],
+            view_guide_list_toggle().els(),
+            view_logo().els(),
+            view_menu_toggle().els(),
+            view_menu_content(model).els(),
         ]
     ]
 }
@@ -52,16 +57,21 @@ pub fn view(model: &Model) -> impl View<Msg> {
 fn view_logo() -> impl View<Msg> {
     div![
         class![
+            C.relative,
             C.flex,
             C.items_center,
-            C.mt_1,
+            C.pb_px,
             // lg__
+            C.lg__pb_0,
+            C.lg__mt_1,
             C.lg__pl_16,
         ],
         a![
             class![
-                C.w_32,
+                C.w_24,
                 C.focus__outline_none,
+                // lg__
+                C.lg__w_32,
             ],
             attrs!{
                 At::Href => Route::Root.to_string()
@@ -95,6 +105,7 @@ fn seed_logo_svg() -> impl View<Msg> {
 fn view_guide_list_toggle() -> impl View<Msg> {
     div![
         class![
+            C.relative,
             C.pl_4,
             C.flex,
             // lg__
@@ -107,14 +118,17 @@ fn view_guide_list_toggle() -> impl View<Msg> {
                 C.items_center,
                 C.px_3,
                 C.py_2,
-                C.border,
-                C.rounded,
-                C.text_gray_500,
-                C.border_gray_600,
-                C.hover__text_gray_900,
-                C.hover__border_purple_500,
+                C.font_bold,
+                C.border_2,
+                C.rounded_full,
+                C.tracking_wider,
+                C.text_green_500,
+                C.hover__text_green_700,
+                C.border_green_500,
+                C.hover__border_green_700,
                 C.appearance_none,
                 C.focus__outline_none,
+                C.hover__underline,
             ],
             simple_ev(Ev::Click, Msg::ScrollToTop),
             simple_ev(Ev::Click, Msg::ToggleGuideList),
@@ -126,6 +140,7 @@ fn view_guide_list_toggle() -> impl View<Msg> {
 fn view_menu_toggle() -> impl View<Msg> {
     div![
         class![
+            C.relative,
             C.pr_4,
             C.flex,
             // lg__
@@ -138,14 +153,17 @@ fn view_menu_toggle() -> impl View<Msg> {
                 C.items_center,
                 C.px_3,
                 C.py_2,
-                C.border,
-                C.rounded,
-                C.text_gray_500,
-                C.border_gray_600,
-                C.hover__text_gray_900,
-                C.hover__border_purple_500,
+                C.font_bold,
+                C.border_2,
+                C.rounded_full,
+                C.tracking_wider,
+                C.text_blue_500,
+                C.hover__text_blue_700,
+                C.border_blue_500,
+                C.hover__border_blue_700,
                 C.appearance_none,
                 C.focus__outline_none,
+                C.hover__underline,
             ],
             simple_ev(Ev::Click, Msg::ToggleMenu),
             "Menu",
