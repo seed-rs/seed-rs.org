@@ -38,8 +38,6 @@ fn view_guide_list_toggle(selected_guide: &Guide, guide_list_visibility: Visibil
         class![
             C.sticky,
             C.inset_0,
-            C.border_l_4,
-            C.border_green_500,
             // lg__
             C.lg__hidden,
         ],
@@ -103,7 +101,7 @@ fn view_guide_list_items(selected_guide: &Guide, model: &Model) -> impl View<Msg
     div![
         id!("menu_items"),
         class![
-            C.w_11of12,
+            C.w_10of12,
             C.inset_0,
             C.m_auto,
             C.hidden => model.guide_list_visibility == Hidden,
@@ -266,11 +264,11 @@ fn view_content(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.min_h_screen,
             C.p_8,
             C.bg_white,
-            C.border_l_4,
-            C.border_green_500,
             // lg__
             C.lg__w_4of5,
             C.lg__pt_24,
+            C.lg__border_l_4,
+            C.lg__border_green_500,
         ],
         view_browsing_links(guide, &model.guides, Position::Top).els(),
         view_content_markdown(guide.html).els(),
@@ -302,7 +300,6 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
             C.flex,
             C.justify_between,
             C.text_green_500,
-            C.tracking_wider,
             C.text_sm,
             // lg__
             C.lg__ml_auto,
