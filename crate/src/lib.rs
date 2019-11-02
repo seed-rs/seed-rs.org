@@ -10,12 +10,10 @@ mod page;
 mod guide;
 
 use generated::css_classes::C;
-use seed::{events::Listener, prelude::*, *};
+use seed::{prelude::*, *};
 use Visibility::*;
 use guide::Guide;
-use std::{borrow::Cow, convert::TryFrom, fmt};
-use std::convert::TryInto;
-use crate::Route::Root;
+use std::fmt;
 
 const TITLE_SUFFIX: &str = "Seed";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
@@ -51,14 +49,14 @@ pub struct Model {
 
 #[derive(Clone, Copy, PartialEq)]
 pub enum Page {
-    Guide(Guide),
+    Guide { guide: Guide, show_intro: bool },
     NotFound,
 }
 
 impl Page {
     pub fn to_href(self) -> String {
         match self {
-            Self::Guide(guide) => format!("/guide/{}", guide.slug),
+            Self::Guide { guide, ..} => format!("/guide/{}", guide.slug),
             Self::NotFound => "/404".into(),
         }
     }
@@ -67,17 +65,13 @@ impl Page {
         match route {
             Route::Root => {
                 match guides.first() {
-                    Some(guide) => {
-                        let page = Page::Guide(*guide);
-                        window().history().unwrap().replace_state_with_url(&JsValue::NULL, "", Some(&page.to_href()));
-                        page
-                    },
+                    Some(guide) => Page::Guide { guide: *guide, show_intro: true },
                     None => Page::NotFound,
                 }
             },
             Route::Guide(slug) => {
                 match guides.iter().find(|guide| guide.slug == slug) {
-                    Some(guide) => Page::Guide(*guide),
+                    Some(guide) => Page::Guide { guide: *guide, show_intro: false },
                     None => Page::NotFound,
                 }
             },
@@ -115,7 +109,7 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
 
     let guides = guide::guides();
 
-    Init::new_with_url_handling(Model {
+    let model = Model {
         page: Page::from_route_and_replace_history(&url.into(), &guides),
         guide_list_visibility: Hidden,
         menu_visibility: Hidden,
@@ -123,7 +117,12 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
         guides,
         search_query: "".to_string(),
         matched_guides: vec![],
-    }, UrlHandling::None)
+    };
+
+    Init::new_with_url_handling(
+        model,
+        UrlHandling::None,
+    )
 }
 
 fn is_in_prerendering() -> bool {
@@ -201,7 +200,7 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         },
         Msg::UpdatePageTitle => {
             let title = match model.page {
-                Page::Guide(_) => TITLE_SUFFIX.to_owned(),
+                Page::Guide {..} => TITLE_SUFFIX.to_owned(),
                 Page::NotFound => format!("404 - {}", TITLE_SUFFIX),
             };
             document().set_title(&title);
@@ -254,7 +253,7 @@ pub fn view(model: &Model) -> impl View<Msg> {
                 C.min_h_screen,
             ],
             match model.page {
-                Page::Guide(guide) => page::guide::view(&guide, model).els(),
+                Page::Guide { guide, show_intro } => page::guide::view(&guide, model, show_intro).els(),
                 Page::NotFound => page::not_found::view().els(),
             },
             page::partial::header::view(model).els(),

@@ -1,7 +1,7 @@
 use crate::{
     generated::css_classes::C,
-    Model, Msg, Page, Route,
-    Visibility::{self, *},
+    Model, Msg, Route,
+    Visibility::Hidden,
 };
 use seed::{prelude::*, *};
 
