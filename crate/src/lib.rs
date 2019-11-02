@@ -9,7 +9,6 @@ mod generated;
 mod page;
 mod guide;
 
-use fixed_vec_deque::FixedVecDeque;
 use generated::css_classes::C;
 use seed::{events::Listener, prelude::*, *};
 use Visibility::*;
@@ -18,7 +17,7 @@ use std::{borrow::Cow, convert::TryFrom, fmt};
 use std::convert::TryInto;
 use crate::Route::Root;
 
-const TITLE_SUFFIX: &str = "Kavik.cz";
+const TITLE_SUFFIX: &str = "Seed";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
 
 #[derive(Clone, Copy, Eq, PartialEq)]

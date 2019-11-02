@@ -88,11 +88,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fixed-vec-deque"
-version = "0.1.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
 name = "futures"
 version = "0.1.29"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -148,7 +143,6 @@ dependencies = [
 name = "kavik_cz"
 version = "0.1.0"
 dependencies = [
- "fixed-vec-deque 0.1.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "pulldown-cmark 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "seed 0.4.1 (git+https://github.com/David-OConnor/seed)",
  "wasm-bindgen 0.2.53 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -504,7 +498,6 @@ dependencies = [
 "checksum enclose 1.1.8 (registry+https://github.com/rust-lang/crates.io-index)" = "1056f553da426e9c025a662efa48b52e62e0a3a7648aa2d15aeaaf7f0d329357"
 "checksum failure 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "f8273f13c977665c5db7eb2b99ae520952fe5ac831ae4cd09d80c4c7042b5ed9"
 "checksum failure_derive 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "0bc225b78e0391e4b8683440bf2e63c2deeeb2ce5189eab46e2b68c6d3725d08"
-"checksum fixed-vec-deque 0.1.8 (registry+https://github.com/rust-lang/crates.io-index)" = "02e36842ebc7fbe443d67ee1dafcab81103d5566b03c336a73439620d3723743"
 "checksum futures 0.1.29 (registry+https://github.com/rust-lang/crates.io-index)" = "1b980f2816d6ee8673b6517b52cb0e808a180efc92e5c19d02cdda79066703ef"
 "checksum getopts 0.2.21 (registry+https://github.com/rust-lang/crates.io-index)" = "14dbbfd5c71d70241ecf9e6f13737f7b5ce823821063188d7e46c41d371eebd5"
 "checksum gloo-timers 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "31e1136fb2586cee1d7eeea23a85eab15f9336294bb8fccafac62fa3410a1f28"
