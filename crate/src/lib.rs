@@ -45,6 +45,22 @@ pub struct Model {
     pub guides: Vec<Guide>,
     pub search_query: String,
     pub matched_guides: Vec<Guide>,
+    pub mode: Mode,
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum Mode {
+    Light,
+    Dark
+}
+
+impl Mode {
+    pub fn toggle(&mut self) {
+        *self = match self {
+            Self::Light => Self::Dark,
+            Self::Dark => Self::Light,
+        }
+    }
 }
 
 #[derive(Clone, Copy, PartialEq)]
@@ -117,6 +133,7 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
         guides,
         search_query: "".to_string(),
         matched_guides: vec![],
+        mode: Mode::Light,
     };
 
     Init::new_with_url_handling(
@@ -189,6 +206,7 @@ pub enum Msg {
     ToggleMenu,
     HideMenu,
     SearchQueryChanged(String),
+    ToggleMode,
 }
 
 pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
@@ -219,7 +237,8 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::SearchQueryChanged(query) => {
             model.matched_guides = search(&model.guides, &query);
             model.search_query = query;
-        }
+        },
+        Msg::ToggleMode => model.mode.toggle(),
     }
 }
 

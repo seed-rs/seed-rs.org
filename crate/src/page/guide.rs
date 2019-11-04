@@ -1,4 +1,4 @@
-use crate::{generated::css_classes::C, Msg, Model, Guide, Route, previous_guide, next_guide, Visibility};
+use crate::{generated::css_classes::C, Msg, Model, Guide, Route, previous_guide, next_guide, Visibility, Mode};
 use seed::{prelude::*, *};
 use crate::Visibility::{Hidden, Visible};
 
@@ -266,9 +266,9 @@ fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> impl View<Msg
             C.lg__border_green_500,
         ],
         if show_intro { view_intro().els() } else { vec![] },
-        view_browsing_links(guide, &model.guides, Position::Top).els(),
+        view_browsing_links(guide, &model.guides, Position::Top, model.mode).els(),
         view_content_markdown(guide.html).els(),
-        view_browsing_links(guide, &model.guides, Position::Bottom).els(),
+        view_browsing_links(guide, &model.guides, Position::Bottom, model.mode).els(),
     ]
 }
 
@@ -412,6 +412,8 @@ fn view_testimonials() -> impl View<Msg> {
             // md__
             C.md__mb_0,
             C.md__flex,
+            // lg__
+            C.lg__mb_5,
         ],
         ul![
             testimonials_1.iter().map(view_testimonial)
@@ -479,10 +481,9 @@ enum Position {
     Bottom
 }
 
-fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Position) -> impl View<Msg> {
+fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Position, mode: Mode) -> impl View<Msg> {
     let previous_guide = previous_guide(selected_guide, guides);
     let next_guide = next_guide(selected_guide, guides);
-
 
     div![
         class![
@@ -496,73 +497,140 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
             C.lg__ml_auto,
         ],
         if let Some(previous_guide) = previous_guide {
-            a![
+            div![
                 class![
+                    C.flex_1,
                     C.flex,
-                    C.hover__underline,
-                    C.hover__text_green_700,
-                    C.focus__outline_none,
+                    C.justify_start,
                 ],
-                attrs! {
-                    At::Href => Route::Guide(previous_guide.slug.to_owned()).to_string(),
-                },
-                view_previous_icon().els(),
+                a![
+                    class![
+                        C.flex,
+                        C.hover__underline,
+                        C.hover__text_green_700,
+                        C.focus__outline_none,
+                    ],
+                    attrs! {
+                        At::Href => Route::Guide(previous_guide.slug.to_owned()).to_string(),
+                    },
+                    view_previous_icon().els(),
+                    div![
+                        class![
+                            C.font_bold,
+                            C.m_auto,
+                            C.pb_1,
+                            C.hidden,
+                            // sm__,
+                            C.sm__block,
+                        ],
+                        previous_guide.menu_title,
+                    ],
+                ]
+            ]
+        } else {
+            div![
+                class![
+                    C.flex_1,
+                ]
+            ]
+        },
+        if position == Position::Top {
+            div![
+                class![
+                    C.flex_1,
+                    C.flex,
+                    C.justify_center,
+                ],
                 div![
                     class![
-                        C.font_bold,
-                        C.m_auto,
+                        C.flex,
+                        C.items_center,
+                        C.px_3,
                         C.pb_1,
-                        C.hidden,
-                        // sm__,
-                        C.sm__block,
+                        C.text_gray_500,
+                        C.border,
+                        C.border_gray_400,
+                        C.cursor_pointer,
+                        C.rounded_full,
+                        C.hover__underline,
+                        C.hover__text_gray_700,
+                        C.hover__border_gray_600,
                     ],
-                    previous_guide.menu_title,
-                ],
+                    simple_ev(Ev::Click, Msg::ToggleMode),
+                    span![
+                        class![
+                            C.whitespace_no_wrap,
+                        ],
+                        format!("{} mode", match mode {
+                            Mode::Light => "Dark",
+                            Mode::Dark => "Light",
+                        }),
+                    ]
+                ]
             ]
         } else {
-            div![]
-        },
-        if position == Position::Bottom {
-            a![
+            div![
                 class![
-                    C.text_blue_500,
-                    C.hover__underline,
-                    C.hover__text_blue_700,
+                    C.flex_1,
+                    C.flex,
+                    C.justify_center,
                 ],
-                attrs!{
-                    At::Href => selected_guide.edit_url,
-                },
-                "Edit this page",
+                a![
+                    class![
+                        C.flex,
+                        C.items_center,
+                        C.pb_1,
+                        C.text_blue_500,
+                        C.whitespace_no_wrap,
+                        C.hover__underline,
+                        C.hover__text_blue_700,
+                    ],
+                    attrs!{
+                        At::Href => selected_guide.edit_url,
+                    },
+                    span![
+                        "Edit this page",
+                    ]
+                ]
             ]
-        } else {
-            empty![]
         },
         if let Some(next_guide) = next_guide {
-            a![
+            div![
                 class![
+                    C.flex_1,
                     C.flex,
-                    C.hover__underline,
-                    C.hover__text_green_700,
-                    C.focus__outline_none,
+                    C.justify_end,
                 ],
-                attrs! {
-                    At::Href => Route::Guide(next_guide.slug.to_owned()).to_string(),
-                },
-                div![
+                a![
                     class![
-                        C.font_bold,
-                        C.m_auto,
-                        C.pb_1,
-                        C.hidden,
-                        // sm__,
-                        C.sm__block,
+                        C.flex,
+                        C.hover__underline,
+                        C.hover__text_green_700,
+                        C.focus__outline_none,
                     ],
-                    next_guide.menu_title,
-                ],
-                view_next_icon().els(),
+                    attrs! {
+                        At::Href => Route::Guide(next_guide.slug.to_owned()).to_string(),
+                    },
+                    div![
+                        class![
+                            C.font_bold,
+                            C.m_auto,
+                            C.pb_1,
+                            C.hidden,
+                            // sm__,
+                            C.sm__block,
+                        ],
+                        next_guide.menu_title,
+                    ],
+                    view_next_icon().els(),
+                ]
             ]
         } else {
-            div![]
+            div![
+                class![
+                    C.flex_1,
+                ]
+            ]
         }
     ]
 }
