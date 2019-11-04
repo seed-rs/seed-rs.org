@@ -480,6 +480,10 @@ enum Position {
 }
 
 fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Position) -> impl View<Msg> {
+    let previous_guide = previous_guide(selected_guide, guides);
+    let next_guide = next_guide(selected_guide, guides);
+
+
     div![
         class![
             if position == Position::Top { C.mb_8 } else { C.mt_8 },
@@ -491,7 +495,7 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
             // lg__
             C.lg__ml_auto,
         ],
-        if let Some(previous_guide) = previous_guide(selected_guide, guides) {
+        if let Some(previous_guide) = previous_guide {
             a![
                 class![
                     C.flex,
@@ -516,15 +520,24 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                 ],
             ]
         } else {
+            div![]
+        },
+        if position == Position::Bottom {
+            a![
+                class![
+                    C.text_blue_500,
+                    C.hover__underline,
+                    C.hover__text_blue_700,
+                ],
+                attrs!{
+                    At::Href => selected_guide.edit_url,
+                },
+                "Edit this page",
+            ]
+        } else {
             empty![]
         },
-        // spacer
-        div![
-            class![
-                C.w_5
-            ],
-        ],
-        if let Some(next_guide) = next_guide(selected_guide, guides) {
+        if let Some(next_guide) = next_guide {
             a![
                 class![
                     C.flex,
@@ -549,7 +562,7 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                 view_next_icon().els(),
             ]
         } else {
-            empty![]
+            div![]
         }
     ]
 }
