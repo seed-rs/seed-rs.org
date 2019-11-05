@@ -1,8 +1,4 @@
-use crate::{
-    generated::css_classes::C,
-    Model, Msg, Route,
-    Visibility::Hidden,
-};
+use crate::{generated::css_classes::C, Model, Msg, Route, Visibility::Hidden, Page};
 use seed::{prelude::*, *};
 
 pub fn view(model: &Model) -> impl View<Msg> {
@@ -45,7 +41,7 @@ pub fn view(model: &Model) -> impl View<Msg> {
                     C.lg__border_blue_500,
                 ]
             ],
-            view_guide_list_toggle().els(),
+            view_guide_list_toggle(model.page).els(),
             view_logo().els(),
             view_menu_toggle().els(),
             view_menu_content(model).els(),
@@ -101,7 +97,30 @@ fn seed_logo_svg() -> impl View<Msg> {
     ]
 }
 
-fn view_guide_list_toggle() -> impl View<Msg> {
+fn view_guide_list_toggle(page: Page) -> impl View<Msg> {
+    let toggle = button![
+        id!("view_guide_list_toggle"),
+        class![
+            C.flex,
+            C.items_center,
+            C.px_3,
+            C.py_2,
+            C.font_bold,
+            C.border_2,
+            C.rounded_full,
+            C.text_green_500,
+            C.hover__text_green_700,
+            C.border_green_500,
+            C.hover__border_green_700,
+            C.appearance_none,
+            C.focus__outline_none,
+            C.hover__underline,
+        ],
+        simple_ev(Ev::Click, Msg::ScrollToTop),
+        simple_ev(Ev::Click, Msg::ToggleGuideList),
+        "Guides",
+    ];
+
     div![
         class![
             C.relative,
@@ -110,28 +129,16 @@ fn view_guide_list_toggle() -> impl View<Msg> {
             // lg__
             C.lg__hidden
         ],
-        button![
-            id!("view_guide_list_toggle"),
-            class![
-                C.flex,
-                C.items_center,
-                C.px_3,
-                C.py_2,
-                C.font_bold,
-                C.border_2,
-                C.rounded_full,
-                C.text_green_500,
-                C.hover__text_green_700,
-                C.border_green_500,
-                C.hover__border_green_700,
-                C.appearance_none,
-                C.focus__outline_none,
-                C.hover__underline,
-            ],
-            simple_ev(Ev::Click, Msg::ScrollToTop),
-            simple_ev(Ev::Click, Msg::ToggleGuideList),
-            "Guides",
-        ]
+        if let Page::Guide {..} = page {
+            toggle
+        } else {
+            a![
+                attrs!{
+                    At::Href => Route::Root.to_string()
+                },
+                toggle,
+            ]
+        }
     ]
 }
 
