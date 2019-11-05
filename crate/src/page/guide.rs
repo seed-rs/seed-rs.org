@@ -546,7 +546,6 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                         C.flex,
                         C.items_center,
                         C.px_3,
-                        C.pb_1,
                         C.text_gray_500,
                         C.border,
                         C.border_gray_400,
@@ -579,7 +578,6 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                     class![
                         C.flex,
                         C.items_center,
-                        C.pb_1,
                         C.text_blue_500,
                         C.whitespace_no_wrap,
                         C.hover__underline,
