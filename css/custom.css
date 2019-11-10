@@ -2,6 +2,15 @@
     list-style-type: unset;
 }
 
+.blend-difference {
+    mix-blend-mode: difference;
+}
+
+/* image colors shouldn't be blended in dark-mode */
+img {
+    z-index: 25;
+}
+
 
 /* ====== ====== ANIMATIONS ====== ====== */
 

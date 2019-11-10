@@ -1,4 +1,4 @@
-use crate::{generated::css_classes::C, Model, Msg, Route, Visibility::Hidden, Page};
+use crate::{generated::css_classes::C, Model, Msg, Route, Visibility::Hidden, Page, Mode};
 use seed::{prelude::*, *};
 
 pub fn view(model: &Model) -> impl View<Msg> {
@@ -7,13 +7,27 @@ pub fn view(model: &Model) -> impl View<Msg> {
         class![
             C.fixed,
             C.w_full,
-            C.z_10,
+            C.z_30,
             C.top_0,
             C.bg_white,
             C.shadow,
             // lg__
             C.lg__shadow_none,
         ],
+        if model.mode == Mode::Dark {
+            div![
+                class![
+                    C.absolute,
+                    C.inset_0,
+                    C.bg_white,
+                    C.blend_difference,
+                    C.pointer_events_none,
+                    C.z_40,
+                ]
+            ]
+        } else {
+            empty![]
+        },
         div![
             class![
                 C.relative,

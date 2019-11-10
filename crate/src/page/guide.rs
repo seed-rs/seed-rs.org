@@ -651,6 +651,7 @@ fn view_previous_icon() -> impl View<Msg> {
     div![
         class![
             C.h_8,
+            C.w_8,
         ],
         style!{
             St::Transform => "rotate(180deg)",
@@ -663,6 +664,7 @@ fn view_next_icon() -> impl View<Msg> {
     div![
         class![
             C.h_8,
+            C.w_8,
         ],
         next_icon_svg().els()
     ]

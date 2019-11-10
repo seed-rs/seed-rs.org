@@ -291,15 +291,32 @@ fn local_storage() -> storage::Storage {
 // ------ ------
 
 pub fn view(model: &Model) -> impl View<Msg> {
-        div![
-            class![
-                C.min_h_screen,
+        vec![
+            div![
+                class![
+                    C.min_h_screen,
+                    C.bg_white,
+                ],
+                match model.page {
+                    Page::Guide { guide, show_intro } => page::guide::view(&guide, model, show_intro).els(),
+                    Page::NotFound => page::not_found::view().els(),
+                },
+                page::partial::header::view(model).els(),
             ],
-            match model.page {
-                Page::Guide { guide, show_intro } => page::guide::view(&guide, model, show_intro).els(),
-                Page::NotFound => page::not_found::view().els(),
-            },
-            page::partial::header::view(model).els(),
+            if model.mode == Mode::Dark {
+                div![
+                    class![
+                        C.fixed,
+                        C.inset_0,
+                        C.bg_white,
+                        C.blend_difference,
+                        C.pointer_events_none,
+                        C.z_20,
+                    ]
+                ]
+            } else {
+                empty![]
+            }
         ]
 }
 
