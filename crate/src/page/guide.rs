@@ -1,6 +1,8 @@
 use crate::{generated::css_classes::C, Msg, Model, Guide, Route, previous_guide, next_guide, Visibility, Mode};
 use seed::{prelude::*, *};
-use crate::Visibility::{Hidden, Visible};
+use crate::Visibility::Hidden;
+
+const SEED_VERSION: &str = "0.4.2 (Nov 05, 2019)";
 
 pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> impl View<Msg> {
     div![
@@ -28,12 +30,12 @@ fn view_guide_list(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.lg__w_1of5,
             C.lg__px_6,
         ],
-        view_guide_list_toggle(guide, model.guide_list_visibility).els(),
+        view_guide_list_toggle(guide).els(),
         view_guide_list_items(guide, model).els(),
     ]
 }
 
-fn view_guide_list_toggle(selected_guide: &Guide, guide_list_visibility: Visibility) -> impl View<Msg> {
+fn view_guide_list_toggle(selected_guide: &Guide) -> impl View<Msg> {
     div![
         class![
             C.sticky,
@@ -62,26 +64,19 @@ fn view_guide_list_toggle(selected_guide: &Guide, guide_list_visibility: Visibil
             ],
             simple_ev(Ev::Click, Msg::ToggleGuideList),
             selected_guide.menu_title,
-            svg![
-                class![
-                    C.mt_1,
-                    C.fill_current,
-                    C.h_5,
-                    C.float_right,
-                ],
-                style!{
-                    St::Transform => if guide_list_visibility == Visible { "rotate(180deg)" } else { "none" }
-                },
-                attrs!{
-                    At::ViewBox => "0 0 20 20",
-                },
-                path![
-                    attrs!{
-                        At::D => "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z",
-                    }
-                ]
-            ],
+            view_hamburger().els(),
         ]
+    ]
+}
+
+fn view_hamburger() -> impl View<Msg> {
+    div![
+        class![
+            C.text_2xl,
+            C.leading_none,
+        ],
+        // TRIGRAM FOR HEAVEN - https://www.fileformat.info/info/unicode/char/2630/index.htm
+        "\u{2630}"
     ]
 }
 
@@ -284,20 +279,39 @@ fn view_intro() -> impl View<Msg> {
                 C.sm__items_center,
             ],
             view_logo().els(),
-            h2![
+            div![
                 class![
-                    C.font_semibold,
-                    C.text_right,
-                    C.mt_2,
-                    // sm__
-                    C.sm__text_xl,
-                    C.sm__mt_0,
-                    C.sm__ml_12,
+                    C.flex,
+                    C.flex_col,
                 ],
-                "Rust framework for creating",
-                br![],
-                "fast and reliable web apps",
-            ],
+                h2![
+                    class![
+                        C.font_semibold,
+                        C.text_right,
+                        C.mt_2,
+                        // sm__
+                        C.sm__text_xl,
+                        C.sm__mt_0,
+                        C.sm__ml_12,
+                    ],
+                    "Rust framework for creating",
+                    br![],
+                    "fast and reliable web apps",
+                ],
+                a![
+                    class![
+                        C.mt_2,
+                        C.text_right,
+                        C.text_blue_600,
+                        C.hover__text_blue_800,
+                        C.hover__underline,
+                    ],
+                    attrs!{
+                        At::Href => Route::Guide("changelog".to_owned())
+                    },
+                    SEED_VERSION
+                ]
+            ]
         ],
         view_testimonials().els(),
     ]
@@ -319,7 +333,7 @@ fn view_logo() -> impl View<Msg> {
                 At::Href => Route::Root.to_string()
             },
             seed_logo_svg().els(),
-        ]
+        ],
     ]
 }
 
