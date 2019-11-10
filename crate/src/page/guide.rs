@@ -483,7 +483,7 @@ fn view_content_markdown(content: &str) -> impl View<Msg> {
     div![
         class![
             // it has to be "markdown-body" so it's content is styled by Github CSS
-            "markdown-body",
+            C.markdown_body,
         ],
         raw!(content)
     ]
