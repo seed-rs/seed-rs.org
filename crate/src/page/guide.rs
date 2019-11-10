@@ -1,4 +1,4 @@
-use crate::{generated::css_classes::C, Msg, Model, Guide, Route, previous_guide, next_guide, Visibility, Mode};
+use crate::{generated::css_classes::C, Msg, Model, Guide, Route, previous_guide, next_guide, Mode};
 use seed::{prelude::*, *};
 use crate::Visibility::Hidden;
 

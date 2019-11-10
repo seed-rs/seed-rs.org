@@ -289,8 +289,7 @@ pub fn run() {
 
     App::build(init, update, view)
         .routes(routes)
-        .finish()
-        .run();
+        .build_and_start();
 
     log!("App started.");
 }
