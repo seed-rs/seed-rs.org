@@ -159,17 +159,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "kavik_cz"
-version = "0.1.0"
-dependencies = [
- "pulldown-cmark 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "seed 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "wasm-bindgen 0.2.53 (registry+https://github.com/rust-lang/crates.io-index)",
- "wasm-bindgen-test 0.2.50 (registry+https://github.com/rust-lang/crates.io-index)",
- "web-sys 0.3.30 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "lazy_static"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -304,6 +293,17 @@ dependencies = [
  "version_check 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "wasm-bindgen 0.2.53 (registry+https://github.com/rust-lang/crates.io-index)",
  "wasm-bindgen-futures 0.3.27 (registry+https://github.com/rust-lang/crates.io-index)",
+ "web-sys 0.3.30 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "seed_rs_org"
+version = "0.1.0"
+dependencies = [
+ "pulldown-cmark 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "seed 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "wasm-bindgen 0.2.53 (registry+https://github.com/rust-lang/crates.io-index)",
+ "wasm-bindgen-test 0.2.50 (registry+https://github.com/rust-lang/crates.io-index)",
  "web-sys 0.3.30 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
