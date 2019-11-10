@@ -14,7 +14,11 @@ use seed::{prelude::*, *};
 use Visibility::*;
 use guide::Guide;
 use std::fmt;
+use serde::{Serialize, Deserialize};
+use serde_json;
+use std::convert::identity;
 
+const STORAGE_KEY: &str = "seed";
 const TITLE_SUFFIX: &str = "Seed";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
 
@@ -33,6 +37,11 @@ impl Visibility {
     }
 }
 
+#[derive(Default, Serialize, Deserialize)]
+pub struct Config {
+    mode: Mode,
+}
+
 // ------ ------
 //     Model
 // ------ ------
@@ -48,7 +57,7 @@ pub struct Model {
     pub mode: Mode,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Mode {
     Light,
     Dark
@@ -60,6 +69,12 @@ impl Mode {
             Self::Light => Self::Dark,
             Self::Dark => Self::Light,
         }
+    }
+}
+
+impl Default for Mode {
+    fn default() -> Self {
+        Mode::Light
     }
 }
 
@@ -119,6 +134,14 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
 
     let guides = guide::guides();
 
+    let config: Config = local_storage()
+        .get_item(STORAGE_KEY)
+        .ok()
+        .and_then(identity) // @TODO replace with `.flatten()` once stable
+        .and_then(|serialized_config| {
+            serde_json::from_str(&serialized_config).ok()
+        }).unwrap_or_default();
+
     let model = Model {
         page: Page::from_route_and_replace_history(&url.into(), &guides),
         guide_list_visibility: Hidden,
@@ -127,7 +150,7 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
         guides,
         search_query: "".to_string(),
         matched_guides: vec![],
-        mode: Mode::Light,
+        mode: config.mode,
     };
 
     Init {
@@ -233,7 +256,12 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
             model.matched_guides = search(&model.guides, &query);
             model.search_query = query;
         },
-        Msg::ToggleMode => model.mode.toggle(),
+        Msg::ToggleMode => {
+            model.mode.toggle();
+
+            let config = Config { mode: model.mode };
+            storage::store_data(&local_storage(), STORAGE_KEY, &config);
+        }
     }
 }
 
@@ -252,6 +280,11 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
         }
     }).collect()
 }
+
+fn local_storage() -> storage::Storage {
+    storage::get_storage().expect("get local storage failed")
+}
+
 
 // ------ ------
 //     View
