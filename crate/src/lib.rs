@@ -11,15 +11,23 @@ mod page;
 
 use generated::css_classes::C;
 use guide::Guide;
+use page::partial::blender;
 use seed::{prelude::*, *};
 use serde::{Deserialize, Serialize};
 use serde_json;
 use std::{convert::identity, fmt};
 use Visibility::*;
 
-const STORAGE_KEY: &str = "seed";
+const SEED_VERSION: &str = "0.4.2 (Nov 05, 2019)";
 const TITLE_SUFFIX: &str = "Seed";
+const STORAGE_KEY: &str = "seed";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
+
+// ------ ------
+//    Common
+// ------ ------
+
+// ------ Visibility  ------
 
 #[derive(Clone, Copy, Eq, PartialEq)]
 pub enum Visibility {
@@ -36,9 +44,17 @@ impl Visibility {
     }
 }
 
+// ------ Config ------
+
 #[derive(Default, Serialize, Deserialize)]
 pub struct Config {
     mode: Mode,
+}
+
+// ------ local_storage ------
+
+fn local_storage() -> storage::Storage {
+    storage::get_storage().expect("get local storage")
 }
 
 // ------ ------
@@ -55,6 +71,8 @@ pub struct Model {
     pub matched_guides: Vec<Guide>,
     pub mode: Mode,
 }
+
+// ------ Mode  ------
 
 #[derive(Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Mode {
@@ -76,6 +94,8 @@ impl Default for Mode {
         Self::Light
     }
 }
+
+// ------ Page ------
 
 #[derive(Clone, Copy, PartialEq)]
 pub enum Page {
@@ -123,45 +143,12 @@ impl Page {
     }
 }
 
-pub fn previous_guide<'a>(
-    selected_guide: &Guide,
-    guides: &'a [Guide],
-) -> Option<&'a Guide> {
-    let selected_guide_index =
-        guides.iter().position(|guide| guide == selected_guide)?;
-
-    selected_guide_index.checked_sub(1).and_then(|index| guides.get(index))
-}
-
-pub fn next_guide<'a>(
-    selected_guide: &Guide,
-    guides: &'a [Guide],
-) -> Option<&'a Guide> {
-    let selected_guide_index =
-        guides.iter().position(|guide| guide == selected_guide)?;
-
-    selected_guide_index.checked_add(1).and_then(|index| guides.get(index))
-}
-
 // ------ ------
 //     Init
 // ------ ------
 
 pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
-    orders.send_msg(Msg::UpdatePageTitle);
-
     let guides = guide::guides();
-
-    // @TODO `.and_then(identity)` replace with `.flatten()` once stable
-    let config: Config = local_storage()
-        .get_item(STORAGE_KEY)
-        .ok()
-        .and_then(identity)
-        .and_then(|serialized_config| {
-            serde_json::from_str(&serialized_config).ok()
-        })
-        .unwrap_or_default();
-
     let model = Model {
         page: Page::from_route_and_replace_history(&url.into(), &guides),
         guide_list_visibility: Hidden,
@@ -170,8 +157,10 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
         guides,
         search_query: "".to_string(),
         matched_guides: vec![],
-        mode: config.mode,
+        mode: load_config().mode,
     };
+
+    orders.send_msg(Msg::UpdatePageTitle);
 
     Init {
         model,
@@ -180,9 +169,20 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
     }
 }
 
+fn load_config() -> Config {
+    // @TODO `.and_then(identity)` replace with `.flatten()` once stable
+    local_storage()
+        .get_item(STORAGE_KEY)
+        .ok()
+        .and_then(identity)
+        .and_then(|serialized_config| {
+            serde_json::from_str(&serialized_config).ok()
+        })
+        .unwrap_or_default()
+}
+
 fn is_in_prerendering() -> bool {
     let user_agent = window().navigator().user_agent().expect("get user agent");
-
     user_agent == USER_AGENT_FOR_PRERENDERING
 }
 
@@ -259,8 +259,9 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::UpdatePageTitle => {
             let title = match model.page {
                 Page::Guide {
+                    guide,
                     ..
-                } => TITLE_SUFFIX.to_owned(),
+                } => format!("{} - {}", guide.menu_title, TITLE_SUFFIX),
                 Page::NotFound => format!("404 - {}", TITLE_SUFFIX),
             };
             document().set_title(&title);
@@ -295,9 +296,7 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
     if query.is_empty() {
         return Vec::new();
     }
-
     let query = query.to_lowercase();
-
     guides
         .iter()
         .filter_map(|guide| {
@@ -310,48 +309,24 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
         .collect()
 }
 
-fn local_storage() -> storage::Storage {
-    storage::get_storage().expect("get local storage failed")
-}
-
 // ------ ------
 //     View
 // ------ ------
 
 pub fn view(model: &Model) -> impl View<Msg> {
-    vec![
-        div![
-            class![C.min_h_screen, C.bg_white,],
-            match model.page {
-                Page::Guide {
-                    guide,
-                    show_intro,
-                } => page::guide::view(&guide, model, show_intro).els(),
-                Page::NotFound => page::not_found::view().els(),
-            },
-            page::partial::header::view(model).els(),
-        ],
-        if model.mode == Mode::Dark {
-            div![class![
-                C.fixed,
-                C.inset_0,
-                C.bg_white,
-                C.blend_difference,
-                C.pointer_events_none,
-                C.z_20,
-            ]]
-        } else {
-            empty![]
+    let mut nodes = vec![div![
+        class![C.min_h_screen, C.bg_white,],
+        match model.page {
+            Page::Guide {
+                guide,
+                show_intro,
+            } => page::guide::view(&guide, model, show_intro).els(),
+            Page::NotFound => page::not_found::view().els(),
         },
-    ]
-}
-
-pub fn spinner_svg() -> impl View<Msg> {
-    raw![
-        r###############"
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><path stroke="none" d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50" fill="currentColor"></path></svg>
-        "###############
-    ]
+        page::partial::header::view(model).els(),
+    ]];
+    nodes.append(&mut blender::view_for_content(model.mode).els());
+    nodes
 }
 
 // ------ ------
