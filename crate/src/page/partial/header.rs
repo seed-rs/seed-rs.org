@@ -1,4 +1,7 @@
-use crate::{generated::css_classes::C, Model, Msg, Route, Visibility::Hidden, Page, Mode, spinner_svg};
+use crate::{
+    generated::css_classes::C, spinner_svg, Mode, Model, Msg, Page, Route,
+    Visibility::Hidden,
+};
 use seed::{prelude::*, *};
 
 pub fn view(model: &Model) -> impl View<Msg> {
@@ -15,16 +18,14 @@ pub fn view(model: &Model) -> impl View<Msg> {
             C.lg__shadow_none,
         ],
         if model.mode == Mode::Dark {
-            div![
-                class![
-                    C.absolute,
-                    C.inset_0,
-                    C.bg_white,
-                    C.blend_difference,
-                    C.pointer_events_none,
-                    C.z_40,
-                ]
-            ]
+            div![class![
+                C.absolute,
+                C.inset_0,
+                C.bg_white,
+                C.blend_difference,
+                C.pointer_events_none,
+                C.z_40,
+            ]]
         } else {
             empty![]
         },
@@ -42,19 +43,17 @@ pub fn view(model: &Model) -> impl View<Msg> {
                 C.pt_2,
                 C.pb_2,
             ],
-            div![
-                class![
-                    C.absolute,
-                    C.right_0,
-                    C.top_0,
-                    C.h_full,
-                    C.w_11of12,
-                    // lg__
-                    C.lg__w_9of12,
-                    C.lg__border_b_4,
-                    C.lg__border_blue_500,
-                ]
-            ],
+            div![class![
+                C.absolute,
+                C.right_0,
+                C.top_0,
+                C.h_full,
+                C.w_11of12,
+                // lg__
+                C.lg__w_9of12,
+                C.lg__border_b_4,
+                C.lg__border_blue_500,
+            ]],
             view_guide_list_toggle(model.page, model.in_prerendering).els(),
             view_logo().els(),
             view_menu_toggle(model.in_prerendering).els(),
@@ -82,7 +81,7 @@ fn view_logo() -> impl View<Msg> {
                 // lg__
                 C.lg__w_32,
             ],
-            attrs!{
+            attrs! {
                 At::Href => Route::Root.to_string()
             },
             seed_logo_svg().els(),
@@ -133,18 +132,9 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> impl View<Msg> {
         simple_ev(Ev::Click, Msg::ScrollToTop),
         simple_ev(Ev::Click, Msg::ToggleGuideList),
         if in_prerendering {
-            div![
-                class![
-                    C.h_6,
-                    C.w_6,
-                    C.rotate,
-                ],
-                spinner_svg().els()
-            ]
+            div![class![C.h_6, C.w_6, C.rotate,], spinner_svg().els()]
         } else {
-            span![
-                "Guides",
-            ]
+            span!["Guides",]
         }
     ];
 
@@ -156,11 +146,14 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> impl View<Msg> {
             // lg__
             C.lg__hidden
         ],
-        if let Page::Guide {..} = page {
+        if let Page::Guide {
+            ..
+        } = page
+        {
             toggle
         } else {
             a![
-                attrs!{
+                attrs! {
                     At::Href => Route::Root.to_string()
                 },
                 toggle,
@@ -198,18 +191,9 @@ fn view_menu_toggle(in_prerendering: bool) -> impl View<Msg> {
             ],
             simple_ev(Ev::Click, Msg::ToggleMenu),
             if in_prerendering {
-                div![
-                    class![
-                        C.h_6,
-                        C.w_6,
-                        C.rotate,
-                    ],
-                    spinner_svg().els()
-                ]
+                div![class![C.h_6, C.w_6, C.rotate,], spinner_svg().els()]
             } else {
-                span![
-                    "Menu",
-                ]
+                span!["Menu",]
             }
         ]
     ]
@@ -244,14 +228,10 @@ fn view_menu_content(model: &Model) -> impl View<Msg> {
 fn view_github_mark() -> impl View<Msg> {
     a![
         class![
-            C.mt_4,
-            C.mb_8,
-            C.mr_8,
-            // lg__
-            C.lg__mx_3,
-            C.lg__my_0,
+            C.mt_4, C.mb_8, C.mr_8, // lg__
+            C.lg__mx_3, C.lg__my_0,
         ],
-        attrs!{
+        attrs! {
             At::Href => "https://github.com/David-OConnor/seed",
         },
         github_mark_svg().els()
@@ -274,21 +254,31 @@ fn view_links() -> impl View<Msg> {
             // lg__
             C.lg__flex,
         ],
-        view_link("Rust Quickstart", "https://github.com/David-OConnor/seed-quickstart").els(),
-        view_link("Webpack QS", "https://github.com/MartinKavik/seed-quickstart-webpack").els(),
+        view_link(
+            "Rust Quickstart",
+            "https://github.com/David-OConnor/seed-quickstart"
+        )
+        .els(),
+        view_link(
+            "Webpack QS",
+            "https://github.com/MartinKavik/seed-quickstart-webpack"
+        )
+        .els(),
         view_link("Docs.rs", "https://docs.rs/seed/0.4.1/seed/").els(),
         view_link("Crates.io", "https://crates.io/crates/seed").els(),
-        view_link("Awesome List", "https://github.com/MartinKavik/awesome-seed-rs").els(),
-//        view_link("GitHub.com", "https://github.com/David-OConnor/seed").els(),
+        view_link(
+            "Awesome List",
+            "https://github.com/MartinKavik/awesome-seed-rs"
+        )
+        .els(),
+        /* view_link("GitHub.com", "https://github.com/David-OConnor/seed").els(), */
     ]
 }
 
 fn view_link(title: &str, link: &str) -> impl View<Msg> {
     li![
         class![
-            C.mr_3,
-            C.py_2,
-            // lg__
+            C.mr_3, C.py_2, // lg__
             C.lg__py_0,
         ],
         a![
@@ -302,7 +292,7 @@ fn view_link(title: &str, link: &str) -> impl View<Msg> {
                 C.font_bold,
                 C.focus__outline_none,
             ],
-            attrs!{
+            attrs! {
                 At::Href => link,
             },
             title

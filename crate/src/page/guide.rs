@@ -1,6 +1,8 @@
-use crate::{generated::css_classes::C, Msg, Model, Guide, Route, previous_guide, next_guide, Mode, spinner_svg};
+use crate::{
+    generated::css_classes::C, next_guide, previous_guide, spinner_svg, Guide,
+    Mode, Model, Msg, Route, Visibility::Hidden,
+};
 use seed::{prelude::*, *};
-use crate::Visibility::Hidden;
 
 const SEED_VERSION: &str = "0.4.2 (Nov 05, 2019)";
 
@@ -35,7 +37,10 @@ fn view_guide_list(guide: &Guide, model: &Model) -> impl View<Msg> {
     ]
 }
 
-fn view_guide_list_toggle(selected_guide: &Guide, in_prerendering: bool) -> impl View<Msg> {
+fn view_guide_list_toggle(
+    selected_guide: &Guide,
+    in_prerendering: bool,
+) -> impl View<Msg> {
     div![
         class![
             C.sticky,
@@ -65,16 +70,7 @@ fn view_guide_list_toggle(selected_guide: &Guide, in_prerendering: bool) -> impl
             simple_ev(Ev::Click, Msg::ToggleGuideList),
             selected_guide.menu_title,
             if in_prerendering {
-                vec![
-                    div![
-                        class![
-                            C.h_6,
-                            C.w_6,
-                            C.rotate,
-                        ],
-                        spinner_svg().els()
-                    ]
-                ]
+                vec![div![class![C.h_6, C.w_6, C.rotate,], spinner_svg().els()]]
             } else {
                 view_hamburger().els()
             }
@@ -84,16 +80,16 @@ fn view_guide_list_toggle(selected_guide: &Guide, in_prerendering: bool) -> impl
 
 fn view_hamburger() -> impl View<Msg> {
     div![
-        class![
-            C.text_2xl,
-            C.leading_none,
-        ],
+        class![C.text_2xl, C.leading_none,],
         // TRIGRAM FOR HEAVEN - https://www.fileformat.info/info/unicode/char/2630/index.htm
         "\u{2630}"
     ]
 }
 
-fn view_guide_list_items(selected_guide: &Guide, model: &Model) -> impl View<Msg> {
+fn view_guide_list_items(
+    selected_guide: &Guide,
+    model: &Model,
+) -> impl View<Msg> {
     div![
         id!("menu_items"),
         class![
@@ -121,16 +117,12 @@ fn view_guide_list_items(selected_guide: &Guide, model: &Model) -> impl View<Msg
             St::Top => em(7),
         },
         view_search(model).els(),
-        ul![
-            model
-                .guides
-                .iter()
-                .map(|guide| {
-                    let guide_is_selected = guide == selected_guide;
-                    let guide_is_matched = model.matched_guides.contains(guide);
-                    view_guide_list_item(guide, guide_is_selected, guide_is_matched).els()
-                })
-        ]
+        ul![model.guides.iter().map(|guide| {
+            let guide_is_selected = guide == selected_guide;
+            let guide_is_matched = model.matched_guides.contains(guide);
+            view_guide_list_item(guide, guide_is_selected, guide_is_matched)
+                .els()
+        })]
     ]
 }
 
@@ -149,10 +141,7 @@ fn view_search(model: &Model) -> impl View<Msg> {
         ],
         div![
             class![
-                C.relative,
-                C.pl_4,
-                C.pr_4,
-                // md__
+                C.relative, C.pl_4, C.pr_4, // md__
                 C.md__pr_0,
             ],
             input![
@@ -171,7 +160,7 @@ fn view_search(model: &Model) -> impl View<Msg> {
                     C.pl_8,
                     C.appearance_none,
                 ],
-                attrs!{
+                attrs! {
                     At::Type => "search",
                     At::Placeholder => "Search",
                     At::Value => model.search_query,
@@ -179,10 +168,8 @@ fn view_search(model: &Model) -> impl View<Msg> {
                 input_ev(Ev::Input, Msg::SearchQueryChanged),
             ],
             div![
-                class![
-                    C.absolute,
-                ],
-                style!{
+                class![C.absolute,],
+                style! {
                     St::Top => rem(0.6),
                     St::Left => rem(1.5),
                 },
@@ -194,21 +181,23 @@ fn view_search(model: &Model) -> impl View<Msg> {
                         C.w_4,
                         C.h_4,
                     ],
-                    attrs!{
+                    attrs! {
                         At::ViewBox => "0 0 20 20",
                     },
-                    path![
-                        attrs!{
-                            At::D => "M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zM12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z",
-                        }
-                    ]
+                    path![attrs! {
+                        At::D => "M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zM12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z",
+                    }]
                 ],
             ]
         ]
     ]
 }
 
-fn view_guide_list_item(guide: &Guide, active: bool, matched: bool) -> impl View<Msg> {
+fn view_guide_list_item(
+    guide: &Guide,
+    active: bool,
+    matched: bool,
+) -> impl View<Msg> {
     li![
         class![
             C.hover__bg_green_100 => !matched,
@@ -219,12 +208,7 @@ fn view_guide_list_item(guide: &Guide, active: bool, matched: bool) -> impl View
             C.lg__hover__bg_transparent => !matched,
         ],
         if guide.prepend_menu_divider {
-            hr![
-                class![
-                    C.border_t,
-                    C.border_green_300,
-                ]
-            ]
+            hr![class![C.border_t, C.border_green_300,]]
         } else {
             empty![]
         },
@@ -260,7 +244,11 @@ fn view_guide_list_item(guide: &Guide, active: bool, matched: bool) -> impl View
     ]
 }
 
-fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> impl View<Msg> {
+fn view_content(
+    guide: &Guide,
+    model: &Model,
+    show_intro: bool,
+) -> impl View<Msg> {
     div![
         class![
             C.w_full,
@@ -273,10 +261,28 @@ fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> impl View<Msg
             C.lg__border_l_4,
             C.lg__border_green_500,
         ],
-        if show_intro { view_intro().els() } else { vec![] },
-        view_browsing_links(guide, &model.guides, Position::Top, model.mode, model.in_prerendering).els(),
+        if show_intro {
+            view_intro().els()
+        } else {
+            vec![]
+        },
+        view_browsing_links(
+            guide,
+            &model.guides,
+            Position::Top,
+            model.mode,
+            model.in_prerendering
+        )
+        .els(),
         view_content_markdown(guide.html).els(),
-        view_browsing_links(guide, &model.guides, Position::Bottom, model.mode, model.in_prerendering).els(),
+        view_browsing_links(
+            guide,
+            &model.guides,
+            Position::Bottom,
+            model.mode,
+            model.in_prerendering
+        )
+        .els(),
     ]
 }
 
@@ -293,10 +299,7 @@ fn view_intro() -> impl View<Msg> {
             ],
             view_logo().els(),
             div![
-                class![
-                    C.flex,
-                    C.flex_col,
-                ],
+                class![C.flex, C.flex_col,],
                 h2![
                     class![
                         C.font_semibold,
@@ -319,7 +322,7 @@ fn view_intro() -> impl View<Msg> {
                         C.hover__text_blue_800,
                         C.hover__underline,
                     ],
-                    attrs!{
+                    attrs! {
                         At::Href => Route::Guide("changelog".to_owned())
                     },
                     SEED_VERSION
@@ -332,9 +335,7 @@ fn view_intro() -> impl View<Msg> {
 
 fn view_logo() -> impl View<Msg> {
     div![
-        class![
-            C.flex,
-        ],
+        class![C.flex,],
         a![
             class![
                 C.w_48,
@@ -342,7 +343,7 @@ fn view_logo() -> impl View<Msg> {
                 // lg__
                 C.lg__w_64,
             ],
-            attrs!{
+            attrs! {
                 At::Href => Route::Root.to_string()
             },
             seed_logo_svg().els(),
@@ -370,7 +371,6 @@ fn seed_logo_svg() -> impl View<Msg> {
         "#
     ]
 }
-
 
 struct Testimonial {
     quote: &'static str,
@@ -432,19 +432,15 @@ fn view_testimonials() -> impl View<Msg> {
         }
     ];
 
-    let (testimonials_1, testimonials_2) = testimonials.split_at(testimonials.len() / 2);
+    let (testimonials_1, testimonials_2) =
+        testimonials.split_at(testimonials.len() / 2);
     div![
         class![
-            C.mb_10,
-            // md__
-            C.md__mb_0,
-            C.md__flex,
-            // lg__
+            C.mb_10, // md__
+            C.md__mb_0, C.md__flex, // lg__
             C.lg__mb_5,
         ],
-        ul![
-            testimonials_1.iter().map(view_testimonial)
-        ],
+        ul![testimonials_1.iter().map(view_testimonial)],
         ul![
             class![
                 // md__
@@ -455,41 +451,29 @@ fn view_testimonials() -> impl View<Msg> {
     ]
 }
 
-
 fn view_testimonial(testimonial: &Testimonial) -> Node<Msg> {
-    li![
-        a![
-            class![
-                C.flex,
-                C.my_5,
-                C.items_center,
-                C.hover__underline,
-                C.hover__text_green_900,
-                C.text_green_700,
-            ],
-            attrs!{
-                At::Href => testimonial.url,
-            },
-            img![
-                class![
-                    C.object_contain,
-                    C.flex_shrink_0,
-                    C.rounded_full,
-                ],
-                attrs!{
-                    At::Src => format!("{}{}", testimonial.author_image_url, "?v=4&s=48"),
-                    At::Height => 48,
-                    At::Width => 48,
-                },
-            ],
-            div![
-                class![
-                    C.mx_2,
-                ],
-                testimonial.quote,
-            ],
+    li![a![
+        class![
+            C.flex,
+            C.my_5,
+            C.items_center,
+            C.hover__underline,
+            C.hover__text_green_900,
+            C.text_green_700,
         ],
-    ]
+        attrs! {
+            At::Href => testimonial.url,
+        },
+        img![
+            class![C.object_contain, C.flex_shrink_0, C.rounded_full,],
+            attrs! {
+                At::Src => format!("{}{}", testimonial.author_image_url, "?v=4&s=48"),
+                At::Height => 48,
+                At::Width => 48,
+            },
+        ],
+        div![class![C.mx_2,], testimonial.quote,],
+    ],]
 }
 
 fn view_content_markdown(content: &str) -> impl View<Msg> {
@@ -505,16 +489,26 @@ fn view_content_markdown(content: &str) -> impl View<Msg> {
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum Position {
     Top,
-    Bottom
+    Bottom,
 }
 
-fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Position, mode: Mode, in_prerendering: bool) -> impl View<Msg> {
+fn view_browsing_links(
+    selected_guide: &Guide,
+    guides: &[Guide],
+    position: Position,
+    mode: Mode,
+    in_prerendering: bool,
+) -> impl View<Msg> {
     let previous_guide = previous_guide(selected_guide, guides);
     let next_guide = next_guide(selected_guide, guides);
 
     div![
         class![
-            if position == Position::Top { C.mb_8 } else { C.mt_8 },
+            if position == Position::Top {
+                C.mb_8
+            } else {
+                C.mt_8
+            },
             C.w_full,
             C.flex,
             C.justify_between,
@@ -525,11 +519,7 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
         ],
         if let Some(previous_guide) = previous_guide {
             div![
-                class![
-                    C.flex_1,
-                    C.flex,
-                    C.justify_start,
-                ],
+                class![C.flex_1, C.flex, C.justify_start,],
                 a![
                     class![
                         C.flex,
@@ -555,19 +545,11 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                 ]
             ]
         } else {
-            div![
-                class![
-                    C.flex_1,
-                ]
-            ]
+            div![class![C.flex_1,]]
         },
         if position == Position::Top {
             div![
-                class![
-                    C.flex_1,
-                    C.flex,
-                    C.justify_center,
-                ],
+                class![C.flex_1, C.flex, C.justify_center,],
                 div![
                     class![
                         C.flex,
@@ -584,40 +566,28 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                     ],
                     simple_ev(Ev::Click, Msg::ToggleMode),
                     span![
-                        class![
-                            C.whitespace_no_wrap,
-                            C.flex,
-                            C.items_center,
-                        ],
+                        class![C.whitespace_no_wrap, C.flex, C.items_center,],
                         if in_prerendering {
                             div![
-                                class![
-                                    C.mr_1,
-                                    C.h_4,
-                                    C.w_4,
-                                    C.rotate,
-                                ],
+                                class![C.mr_1, C.h_4, C.w_4, C.rotate,],
                                 spinner_svg().els()
                             ]
                         } else {
                             empty![]
                         },
-                        span![
-                            format!("{} mode", match mode {
+                        span![format!(
+                            "{} mode",
+                            match mode {
                                 Mode::Light => "Dark",
                                 Mode::Dark => "Light",
-                            }),
-                        ]
+                            }
+                        ),]
                     ]
                 ]
             ]
         } else {
             div![
-                class![
-                    C.flex_1,
-                    C.flex,
-                    C.justify_center,
-                ],
+                class![C.flex_1, C.flex, C.justify_center,],
                 a![
                     class![
                         C.flex,
@@ -627,22 +597,16 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                         C.hover__underline,
                         C.hover__text_blue_700,
                     ],
-                    attrs!{
+                    attrs! {
                         At::Href => selected_guide.edit_url,
                     },
-                    span![
-                        "Edit this page",
-                    ]
+                    span!["Edit this page",]
                 ]
             ]
         },
         if let Some(next_guide) = next_guide {
             div![
-                class![
-                    C.flex_1,
-                    C.flex,
-                    C.justify_end,
-                ],
+                class![C.flex_1, C.flex, C.justify_end,],
                 a![
                     class![
                         C.flex,
@@ -668,22 +632,15 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                 ]
             ]
         } else {
-            div![
-                class![
-                    C.flex_1,
-                ]
-            ]
+            div![class![C.flex_1,]]
         }
     ]
 }
 
 fn view_previous_icon() -> impl View<Msg> {
     div![
-        class![
-            C.h_8,
-            C.w_8,
-        ],
-        style!{
+        class![C.h_8, C.w_8,],
+        style! {
             St::Transform => "rotate(180deg)",
         },
         next_icon_svg().els()
@@ -691,13 +648,7 @@ fn view_previous_icon() -> impl View<Msg> {
 }
 
 fn view_next_icon() -> impl View<Msg> {
-    div![
-        class![
-            C.h_8,
-            C.w_8,
-        ],
-        next_icon_svg().els()
-    ]
+    div![class![C.h_8, C.w_8,], next_icon_svg().els()]
 }
 
 fn next_icon_svg() -> impl View<Msg> {

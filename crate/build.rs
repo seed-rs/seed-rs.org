@@ -1,8 +1,5 @@
 use pulldown_cmark::{self, Event, Tag};
-use std::fs;
-use std::path::PathBuf;
-use std::cell::RefCell;
-use std::rc::Rc;
+use std::{cell::RefCell, fs, path::PathBuf, rc::Rc};
 
 fn main() {
     for path in html_and_text_files() {
@@ -13,10 +10,16 @@ fn main() {
         let markdown = fs::read_to_string(&path).unwrap();
         let (html, text_parts) = markdown_to_html_and_text_parts(&markdown);
 
-        let html_path = format!("generated_guides/{}.html", path.file_stem().unwrap().to_str().unwrap());
+        let html_path = format!(
+            "generated_guides/{}.html",
+            path.file_stem().unwrap().to_str().unwrap()
+        );
         fs::write(html_path, html).unwrap();
 
-        let text_path = format!("generated_guides/{}.txt", path.file_stem().unwrap().to_str().unwrap());
+        let text_path = format!(
+            "generated_guides/{}.txt",
+            path.file_stem().unwrap().to_str().unwrap()
+        );
         fs::write(text_path, text_parts.join(" ")).unwrap();
     }
 }
@@ -62,53 +65,48 @@ fn markdown_to_html_and_text_parts(markdown: &str) -> (String, Vec<String>) {
     (html, text_parts.replace(Vec::new()))
 }
 
-fn extract_lowercase_text<'a, I>(parser: I, text_parts: Rc<RefCell<Vec<String>>>) -> impl Iterator<Item = Event<'a>>
-    where
-        I: Iterator<Item = Event<'a>>,
+fn extract_lowercase_text<'a, I>(
+    parser: I,
+    text_parts: Rc<RefCell<Vec<String>>>,
+) -> impl Iterator<Item = Event<'a>>
+where
+    I: Iterator<Item = Event<'a>>,
 {
     let push_to_text_parts = move |text: &str| {
         text_parts.borrow_mut().push(text.to_lowercase().to_string());
     };
 
-    parser.map(move |event| {
-        match event {
-            Event::Text(text) => {
-                push_to_text_parts(&text);
-                Event::Text(text)
-            },
-            Event::Code(code) => {
-                push_to_text_parts(&code);
-                Event::Code(code)
-            },
-            Event::FootnoteReference(reference) => {
-                push_to_text_parts(&reference);
-                Event::FootnoteReference(reference)
-            },
-            _ => event
-        }
+    parser.map(move |event| match event {
+        Event::Text(text) => {
+            push_to_text_parts(&text);
+            Event::Text(text)
+        },
+        Event::Code(code) => {
+            push_to_text_parts(&code);
+            Event::Code(code)
+        },
+        Event::FootnoteReference(reference) => {
+            push_to_text_parts(&reference);
+            Event::FootnoteReference(reference)
+        },
+        _ => event,
     })
 }
 
 fn transform_code_blocks<'a, I>(parser: I) -> impl Iterator<Item = Event<'a>>
-    where
-        I: Iterator<Item = Event<'a>>,
+where
+    I: Iterator<Item = Event<'a>>,
 {
-    parser.map(|event| {
-        match event {
-            Event::Start(Tag::CodeBlock(code_lang)) => {
-                let lang = if code_lang.is_empty() {
-                    String::new()
-                } else {
-                    format!(" lang=\"{}\"", code_lang)
-                };
-                Event::Html(format!("<code-block{}>", lang).into())
-            }
-            Event::End(Tag::CodeBlock(_)) => {
-                Event::Html("</code-block>".into())
-            }
-            _ => event
-        }
+    parser.map(|event| match event {
+        Event::Start(Tag::CodeBlock(code_lang)) => {
+            let lang = if code_lang.is_empty() {
+                String::new()
+            } else {
+                format!(" lang=\"{}\"", code_lang)
+            };
+            Event::Html(format!("<code-block{}>", lang).into())
+        },
+        Event::End(Tag::CodeBlock(_)) => Event::Html("</code-block>".into()),
+        _ => event,
     })
 }
-
-

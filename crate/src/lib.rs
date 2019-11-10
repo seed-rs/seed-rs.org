@@ -6,17 +6,16 @@
 #![allow(clippy::enum_glob_use)]
 
 mod generated;
-mod page;
 mod guide;
+mod page;
 
 use generated::css_classes::C;
-use seed::{prelude::*, *};
-use Visibility::*;
 use guide::Guide;
-use std::fmt;
-use serde::{Serialize, Deserialize};
+use seed::{prelude::*, *};
+use serde::{Deserialize, Serialize};
 use serde_json;
-use std::convert::identity;
+use std::{convert::identity, fmt};
+use Visibility::*;
 
 const STORAGE_KEY: &str = "seed";
 const TITLE_SUFFIX: &str = "Seed";
@@ -60,7 +59,7 @@ pub struct Model {
 #[derive(Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Mode {
     Light,
-    Dark
+    Dark,
 }
 
 impl Mode {
@@ -74,51 +73,70 @@ impl Mode {
 
 impl Default for Mode {
     fn default() -> Self {
-        Mode::Light
+        Self::Light
     }
 }
 
 #[derive(Clone, Copy, PartialEq)]
 pub enum Page {
-    Guide { guide: Guide, show_intro: bool },
+    Guide {
+        guide: Guide,
+        show_intro: bool,
+    },
     NotFound,
 }
 
 impl Page {
     pub fn to_href(self) -> String {
         match self {
-            Self::Guide { guide, ..} => format!("/guide/{}", guide.slug),
+            Self::Guide {
+                guide,
+                ..
+            } => format!("/guide/{}", guide.slug),
             Self::NotFound => "/404".into(),
         }
     }
 
-    pub fn from_route_and_replace_history(route: &Route, guides: &[Guide]) -> Self {
+    pub fn from_route_and_replace_history(
+        route: &Route,
+        guides: &[Guide],
+    ) -> Self {
         match route {
-            Route::Root => {
-                match guides.first() {
-                    Some(guide) => Page::Guide { guide: *guide, show_intro: true },
-                    None => Page::NotFound,
-                }
+            Route::Root => match guides.first() {
+                Some(guide) => Self::Guide {
+                    guide: *guide,
+                    show_intro: true,
+                },
+                None => Self::NotFound,
             },
             Route::Guide(slug) => {
                 match guides.iter().find(|guide| guide.slug == slug) {
-                    Some(guide) => Page::Guide { guide: *guide, show_intro: false },
-                    None => Page::NotFound,
+                    Some(guide) => Self::Guide {
+                        guide: *guide,
+                        show_intro: false,
+                    },
+                    None => Self::NotFound,
                 }
             },
-            Route::Unknown => Page::NotFound,
+            Route::Unknown => Self::NotFound,
         }
     }
 }
 
-pub fn previous_guide<'a>(selected_guide: &Guide, guides: &'a [Guide]) -> Option<&'a Guide> {
+pub fn previous_guide<'a>(
+    selected_guide: &Guide,
+    guides: &'a [Guide],
+) -> Option<&'a Guide> {
     let selected_guide_index =
         guides.iter().position(|guide| guide == selected_guide)?;
 
     selected_guide_index.checked_sub(1).and_then(|index| guides.get(index))
 }
 
-pub fn next_guide<'a>(selected_guide: &Guide, guides: &'a [Guide]) -> Option<&'a Guide> {
+pub fn next_guide<'a>(
+    selected_guide: &Guide,
+    guides: &'a [Guide],
+) -> Option<&'a Guide> {
     let selected_guide_index =
         guides.iter().position(|guide| guide == selected_guide)?;
 
@@ -134,13 +152,15 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
 
     let guides = guide::guides();
 
+    // @TODO `.and_then(identity)` replace with `.flatten()` once stable
     let config: Config = local_storage()
         .get_item(STORAGE_KEY)
         .ok()
-        .and_then(identity) // @TODO replace with `.flatten()` once stable
+        .and_then(identity)
         .and_then(|serialized_config| {
             serde_json::from_str(&serialized_config).ok()
-        }).unwrap_or_default();
+        })
+        .unwrap_or_default();
 
     let model = Model {
         page: Page::from_route_and_replace_history(&url.into(), &guides),
@@ -161,8 +181,7 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
 }
 
 fn is_in_prerendering() -> bool {
-    let user_agent =
-        window().navigator().user_agent().expect("cannot get user agent");
+    let user_agent = window().navigator().user_agent().expect("get user agent");
 
     user_agent == USER_AGENT_FOR_PRERENDERING
 }
@@ -187,9 +206,11 @@ impl From<Url> for Route {
         let mut path = url.path.into_iter();
 
         match path.next().as_ref().map(String::as_str) {
-            None | Some("") => Route::Root,
-            Some("guide") => path.next().map(Route::Guide).unwrap_or(Route::Unknown),
-            _ => Route:: Unknown,
+            None | Some("") => Self::Root,
+            Some("guide") => {
+                path.next().map(Self::Guide).unwrap_or(Self::Unknown)
+            },
+            _ => Self::Unknown,
         }
     }
 }
@@ -197,9 +218,9 @@ impl From<Url> for Route {
 impl Route {
     pub fn path(&self) -> Vec<&str> {
         match self {
-            Route::Root => vec![],
-            Route::Guide(slug) => vec!["guide", slug.as_str()],
-            Route::Unknown => vec!["404"],
+            Self::Root => vec![],
+            Self::Guide(slug) => vec!["guide", slug.as_str()],
+            Self::Unknown => vec!["404"],
         }
     }
 }
@@ -230,13 +251,16 @@ pub enum Msg {
 pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
         Msg::RouteChanged(route) => {
-            model.page = Page::from_route_and_replace_history(&route, &model.guides);
+            model.page =
+                Page::from_route_and_replace_history(&route, &model.guides);
             orders.send_msg(Msg::ScrollToTop);
             orders.send_msg(Msg::UpdatePageTitle);
         },
         Msg::UpdatePageTitle => {
             let title = match model.page {
-                Page::Guide {..} => TITLE_SUFFIX.to_owned(),
+                Page::Guide {
+                    ..
+                } => TITLE_SUFFIX.to_owned(),
                 Page::NotFound => format!("404 - {}", TITLE_SUFFIX),
             };
             document().set_title(&title);
@@ -259,32 +283,36 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::ToggleMode => {
             model.mode.toggle();
 
-            let config = Config { mode: model.mode };
+            let config = Config {
+                mode: model.mode,
+            };
             storage::store_data(&local_storage(), STORAGE_KEY, &config);
-        }
+        },
     }
 }
 
 fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
     if query.is_empty() {
-        return Vec::new()
+        return Vec::new();
     }
 
     let query = query.to_lowercase();
 
-    guides.iter().filter_map(|guide|{
-        if guide.lowercase_text.contains(&query) {
-            Some(*guide)
-        } else {
-            None
-        }
-    }).collect()
+    guides
+        .iter()
+        .filter_map(|guide| {
+            if guide.lowercase_text.contains(&query) {
+                Some(*guide)
+            } else {
+                None
+            }
+        })
+        .collect()
 }
 
 fn local_storage() -> storage::Storage {
     storage::get_storage().expect("get local storage failed")
 }
-
 
 // ------ ------
 //     View
@@ -293,30 +321,28 @@ fn local_storage() -> storage::Storage {
 pub fn view(model: &Model) -> impl View<Msg> {
     vec![
         div![
-            class![
-                C.min_h_screen,
-                C.bg_white,
-            ],
+            class![C.min_h_screen, C.bg_white,],
             match model.page {
-                Page::Guide { guide, show_intro } => page::guide::view(&guide, model, show_intro).els(),
+                Page::Guide {
+                    guide,
+                    show_intro,
+                } => page::guide::view(&guide, model, show_intro).els(),
                 Page::NotFound => page::not_found::view().els(),
             },
             page::partial::header::view(model).els(),
         ],
         if model.mode == Mode::Dark {
-            div![
-                class![
-                    C.fixed,
-                    C.inset_0,
-                    C.bg_white,
-                    C.blend_difference,
-                    C.pointer_events_none,
-                    C.z_20,
-                ]
-            ]
+            div![class![
+                C.fixed,
+                C.inset_0,
+                C.bg_white,
+                C.blend_difference,
+                C.pointer_events_none,
+                C.z_20,
+            ]]
         } else {
             empty![]
-        }
+        },
     ]
 }
 
@@ -334,7 +360,5 @@ pub fn spinner_svg() -> impl View<Msg> {
 
 #[wasm_bindgen(start)]
 pub fn run() {
-    App::build(init, update, view)
-        .routes(routes)
-        .build_and_start();
+    App::build(init, update, view).routes(routes).build_and_start();
 }

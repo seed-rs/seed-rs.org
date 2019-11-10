@@ -3,11 +3,7 @@ use seed::{prelude::*, *};
 
 pub fn view() -> impl View<Msg> {
     div![
-        class![
-            C.mt_32,
-            C.flex,
-            C.justify_center,
-        ],
+        class![C.mt_32, C.flex, C.justify_center,],
         div![
             class![
                 C.text_2xl,
@@ -16,18 +12,8 @@ pub fn view() -> impl View<Msg> {
                 // lg__
                 C.lg__text_6xl,
             ],
-            div![
-                class![
-                    C.font_bold,
-                ],
-                "404",
-            ],
-            div![
-                class![
-                    C.my_12,
-                ],
-                "Page not found"
-            ],
+            div![class![C.font_bold,], "404",],
+            div![class![C.my_12,], "Page not found"],
             a![
                 class![
                     C.block,
@@ -36,7 +22,7 @@ pub fn view() -> impl View<Msg> {
                     C.hover__underline,
                     C.hover__text_green_700,
                 ],
-                attrs!{
+                attrs! {
                     At::Href => Route::Root.to_string()
                 },
                 "Home"
