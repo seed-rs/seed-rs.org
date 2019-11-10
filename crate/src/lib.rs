@@ -115,12 +115,6 @@ pub fn next_guide<'a>(selected_guide: &Guide, guides: &'a [Guide]) -> Option<&'a
 // ------ ------
 
 pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
-    // @TODO: Seed can't hydrate prerendered html (yet).
-    // https://github.com/David-OConnor/seed/issues/223
-    if let Some(mount_point_element) = document().get_element_by_id("app") {
-        mount_point_element.set_inner_html("");
-    }
-
     orders.send_msg(Msg::UpdatePageTitle);
 
     let guides = guide::guides();
@@ -136,10 +130,11 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
         mode: Mode::Light,
     };
 
-    Init::new_with_url_handling(
+    Init {
         model,
-        UrlHandling::None,
-    )
+        url_handling: UrlHandling::None,
+        mount_type: MountType::Takeover,
+    }
 }
 
 fn is_in_prerendering() -> bool {
@@ -262,10 +257,6 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
 //     View
 // ------ ------
 
-// Notes:
-// - \u{00A0} is the non-breaking space
-//   - https://codepoints.net/U+00A0
-
 pub fn view(model: &Model) -> impl View<Msg> {
         div![
             class![
@@ -285,11 +276,7 @@ pub fn view(model: &Model) -> impl View<Msg> {
 
 #[wasm_bindgen(start)]
 pub fn run() {
-    log!("Starting app...");
-
     App::build(init, update, view)
         .routes(routes)
         .build_and_start();
-
-    log!("App started.");
 }
