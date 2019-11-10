@@ -20,21 +20,21 @@ To set up the initial routing, pass a `routes` function describing how to handle
 routing, to [App::build](https://docs.rs/seed/0.2.5/seed/struct.App.html#method.build)'s 
 `routes` method.
 ```rust
-fn routes(url: &seed::Url) -> Option<Msg> {
+fn routes(url: Url) -> Option<Msg> {
     if url.path.is_empty() {
-        return Msg::ChangePage(0)
+        return Some(Msg::ChangePage(0))
     }
 
     Some(match url.path[0].as_ref() {
         "guide" => {
             // Determine if we're at the main guide page, or a subpage
             match url.path.get(1).as_ref() {
-                Some(page) => Msg::ChangeGuidePage(page.parse::<usize>().unwrap()),
-                None => Msg::ChangePage(0)
+                Some(page) => Some(Msg::ChangeGuidePage(page.parse::<usize>().unwrap())),
+                None => Some(Msg::ChangePage(0))
             }
         },
         "changelog" => Msg::ChangePage(1),
-        _ => Msg::ChangePage(0),
+        _ => Some(Msg::ChangePage(0)),
     })
 }
 
@@ -111,7 +111,6 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         // This is separate, because nagivating the route triggers state updates, which would
         // trigger an additional push state.
         Msg::ChangePage(page) => model.page = page,
-        Msg::ChangeGuidePage(guide_page) => Render(Model {guide_page, page: Page::Guide, ..model}),
         Msg::ChangeGuidePage(guide_page) => {
             model.guide_page = page;
             model.page = Page::Guide;
@@ -145,25 +144,14 @@ the action associated with routing, while `RoutePage` updates our route history,
 recursively calls `ChangePage`. If you were to attempt this in the same message, each
 browser navigation event would add a redundant route history entry, interfering with navigation. `
 
-We call routing messages from in-app navigation events, like this:
+We can call routing messages from in-app navigation events, like this:
 
 ```rust
 h2![ simple_ev(Ev::Click, Msg::RoutePage(0)), "Guide" ]
 ```
 
-Or programatically using lifecycle hooks:
-
-```rust
-    did_mount(move |_| {
-        if model.logged_in {
-            state.update(Msg::RoutePage(0))
-        }
-    })
-```
-
 To make landing-page routing work, configure your server so that all relevant paths towards the 
 root or html file,
- instead of returning an error. The `serve.py` script
-included in the quickstart repo and examples is set up for this. Once this is configured, intial 
-routing on page load will work as expected: The page will initialize with the default state, then immediately 
-update based on the message returned by the `routes` function.
+ instead of returning an error. Running `cargo make serve` from the quickstart repo and examples is 
+ set up for this. The page will initialize with the default state, 
+then immediately update based on the message returned by the `routes` function.

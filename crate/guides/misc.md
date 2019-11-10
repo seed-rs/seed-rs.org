@@ -9,14 +9,14 @@ in a similar way, equivalent to JS's `console.error()`.
 ## Custom tags
 Seed generally retricts the element tags allowed by using Enums for the tags, and
 a predefined set of element-creation macros. If you wish to use a custom tag, you can
-use using `Tag::Custom` (`El` and `Tag` are
+use using `Tag::from` (`El` and `Tag` are
 exposed in the prelude), either with the `El::empty` constructor, or using the `custom!`
 element-construction macro, where we pass our custom tag as an argument:
 ```rust
 let mut custom_el = El::empty(Tag::Custom("mytag".to_string()));
 custom_el.set_text("Words");
 
-custom![ Tag::Custom("anothertag".into())
+custom![ Tag::from("anothertag".into())
     custom_el,
 ]
 ```
@@ -112,7 +112,7 @@ Where we've given the element we wish to query id `my_el`.
 
 
 ## Some convenience functions
-You can use `seed::document` and `seed::window` to access the `web_sys` document
+You can use `seed::document()` and `seed::window()` to access the `web_sys` document
 and window functions. Example:
 ```rust
 fn view(model: &Model) -> Vec<Node<Msg>> {
@@ -128,37 +128,13 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
 }
 ```
 
+Additionally, use `seed::html_document()` in the same way, to return a 
+[HtmlDocument](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.HtmlDocument.html)
+
+You can call `seed::cookies()` to retrieve all cookies from the current `HtmlDocument`.
+
 ## Input elements are controlled
-`input`, `textarea`, and `select` elements are always controlled, in the vein of React.
+`input`, `textarea`, and `select` elements are always controlled, in the vein of `React`.
 This means that even if there's no event associated with user input to these fields, their
 value will always stay in sync with the model, which may mean ignoring text input if
 not set up with a `Ev::Input` event.
-
-
-## SVG
-Inline SVGs can be rendered using `El::from_html`, or by using element-creation macros, ie `svg!`,
-`path!` etc. Setting the `xmlns` attribute isn't required; it's set automatically when using the macro. Example:
-
-```rust
-fn view(model: &Model) -> Vec<Node<Msg>> {
-    vec![
-        svg![
-            attrs!{
-                At::Width => "100%";
-                At::Height => "100%";
-                At::ViewBox => "0 0 512 512";
-            },
-            path![ 
-                attrs!{
-                    At::Fill => "lightgrey";
-                    At::D => "M345.863,281.853c19.152-8.872,38.221-15.344,56.1"  // etc
-                }
-            ],
-            // More elements as required, eg mesh, polyline, circle
-        ]
-    ]
-}
-
-
-
-```
