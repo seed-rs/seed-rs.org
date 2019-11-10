@@ -1,4 +1,4 @@
-use crate::{generated::css_classes::C, Model, Msg, Route, Visibility::Hidden, Page, Mode};
+use crate::{generated::css_classes::C, Model, Msg, Route, Visibility::Hidden, Page, Mode, spinner_svg};
 use seed::{prelude::*, *};
 
 pub fn view(model: &Model) -> impl View<Msg> {
@@ -55,9 +55,9 @@ pub fn view(model: &Model) -> impl View<Msg> {
                     C.lg__border_blue_500,
                 ]
             ],
-            view_guide_list_toggle(model.page).els(),
+            view_guide_list_toggle(model.page, model.in_prerendering).els(),
             view_logo().els(),
-            view_menu_toggle().els(),
+            view_menu_toggle(model.in_prerendering).els(),
             view_menu_content(model).els(),
         ]
     ]
@@ -111,7 +111,7 @@ fn seed_logo_svg() -> impl View<Msg> {
     ]
 }
 
-fn view_guide_list_toggle(page: Page) -> impl View<Msg> {
+fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> impl View<Msg> {
     let toggle = button![
         id!("view_guide_list_toggle"),
         class![
@@ -132,7 +132,20 @@ fn view_guide_list_toggle(page: Page) -> impl View<Msg> {
         ],
         simple_ev(Ev::Click, Msg::ScrollToTop),
         simple_ev(Ev::Click, Msg::ToggleGuideList),
-        "Guides",
+        if in_prerendering {
+            div![
+                class![
+                    C.h_6,
+                    C.w_6,
+                    C.rotate,
+                ],
+                spinner_svg().els()
+            ]
+        } else {
+            span![
+                "Guides",
+            ]
+        }
     ];
 
     div![
@@ -156,7 +169,7 @@ fn view_guide_list_toggle(page: Page) -> impl View<Msg> {
     ]
 }
 
-fn view_menu_toggle() -> impl View<Msg> {
+fn view_menu_toggle(in_prerendering: bool) -> impl View<Msg> {
     div![
         class![
             C.relative,
@@ -184,7 +197,20 @@ fn view_menu_toggle() -> impl View<Msg> {
                 C.hover__underline,
             ],
             simple_ev(Ev::Click, Msg::ToggleMenu),
-            "Menu",
+            if in_prerendering {
+                div![
+                    class![
+                        C.h_6,
+                        C.w_6,
+                        C.rotate,
+                    ],
+                    spinner_svg().els()
+                ]
+            } else {
+                span![
+                    "Menu",
+                ]
+            }
         ]
     ]
 }

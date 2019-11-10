@@ -1,4 +1,4 @@
-use crate::{generated::css_classes::C, Msg, Model, Guide, Route, previous_guide, next_guide, Mode};
+use crate::{generated::css_classes::C, Msg, Model, Guide, Route, previous_guide, next_guide, Mode, spinner_svg};
 use seed::{prelude::*, *};
 use crate::Visibility::Hidden;
 
@@ -30,12 +30,12 @@ fn view_guide_list(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.lg__w_1of5,
             C.lg__px_6,
         ],
-        view_guide_list_toggle(guide).els(),
+        view_guide_list_toggle(guide, model.in_prerendering).els(),
         view_guide_list_items(guide, model).els(),
     ]
 }
 
-fn view_guide_list_toggle(selected_guide: &Guide) -> impl View<Msg> {
+fn view_guide_list_toggle(selected_guide: &Guide, in_prerendering: bool) -> impl View<Msg> {
     div![
         class![
             C.sticky,
@@ -64,7 +64,20 @@ fn view_guide_list_toggle(selected_guide: &Guide) -> impl View<Msg> {
             ],
             simple_ev(Ev::Click, Msg::ToggleGuideList),
             selected_guide.menu_title,
-            view_hamburger().els(),
+            if in_prerendering {
+                vec![
+                    div![
+                        class![
+                            C.h_6,
+                            C.w_6,
+                            C.rotate,
+                        ],
+                        spinner_svg().els()
+                    ]
+                ]
+            } else {
+                view_hamburger().els()
+            }
         ]
     ]
 }
@@ -261,9 +274,9 @@ fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> impl View<Msg
             C.lg__border_green_500,
         ],
         if show_intro { view_intro().els() } else { vec![] },
-        view_browsing_links(guide, &model.guides, Position::Top, model.mode).els(),
+        view_browsing_links(guide, &model.guides, Position::Top, model.mode, model.in_prerendering).els(),
         view_content_markdown(guide.html).els(),
-        view_browsing_links(guide, &model.guides, Position::Bottom, model.mode).els(),
+        view_browsing_links(guide, &model.guides, Position::Bottom, model.mode, model.in_prerendering).els(),
     ]
 }
 
@@ -495,7 +508,7 @@ enum Position {
     Bottom
 }
 
-fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Position, mode: Mode) -> impl View<Msg> {
+fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Position, mode: Mode, in_prerendering: bool) -> impl View<Msg> {
     let previous_guide = previous_guide(selected_guide, guides);
     let next_guide = next_guide(selected_guide, guides);
 
@@ -573,11 +586,28 @@ fn view_browsing_links(selected_guide: &Guide, guides: &[Guide], position: Posit
                     span![
                         class![
                             C.whitespace_no_wrap,
+                            C.flex,
+                            C.items_center,
                         ],
-                        format!("{} mode", match mode {
-                            Mode::Light => "Dark",
-                            Mode::Dark => "Light",
-                        }),
+                        if in_prerendering {
+                            div![
+                                class![
+                                    C.mr_1,
+                                    C.h_4,
+                                    C.w_4,
+                                    C.rotate,
+                                ],
+                                spinner_svg().els()
+                            ]
+                        } else {
+                            empty![]
+                        },
+                        span![
+                            format!("{} mode", match mode {
+                                Mode::Light => "Dark",
+                                Mode::Dark => "Light",
+                            }),
+                        ]
                     ]
                 ]
             ]

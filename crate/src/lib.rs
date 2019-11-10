@@ -291,33 +291,41 @@ fn local_storage() -> storage::Storage {
 // ------ ------
 
 pub fn view(model: &Model) -> impl View<Msg> {
-        vec![
+    vec![
+        div![
+            class![
+                C.min_h_screen,
+                C.bg_white,
+            ],
+            match model.page {
+                Page::Guide { guide, show_intro } => page::guide::view(&guide, model, show_intro).els(),
+                Page::NotFound => page::not_found::view().els(),
+            },
+            page::partial::header::view(model).els(),
+        ],
+        if model.mode == Mode::Dark {
             div![
                 class![
-                    C.min_h_screen,
+                    C.fixed,
+                    C.inset_0,
                     C.bg_white,
-                ],
-                match model.page {
-                    Page::Guide { guide, show_intro } => page::guide::view(&guide, model, show_intro).els(),
-                    Page::NotFound => page::not_found::view().els(),
-                },
-                page::partial::header::view(model).els(),
-            ],
-            if model.mode == Mode::Dark {
-                div![
-                    class![
-                        C.fixed,
-                        C.inset_0,
-                        C.bg_white,
-                        C.blend_difference,
-                        C.pointer_events_none,
-                        C.z_20,
-                    ]
+                    C.blend_difference,
+                    C.pointer_events_none,
+                    C.z_20,
                 ]
-            } else {
-                empty![]
-            }
-        ]
+            ]
+        } else {
+            empty![]
+        }
+    ]
+}
+
+pub fn spinner_svg() -> impl View<Msg> {
+    raw![
+        r###############"
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><path stroke="none" d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50" fill="currentColor"></path></svg>
+        "###############
+    ]
 }
 
 // ------ ------
