@@ -92,52 +92,52 @@ fn view_testimonials() -> impl View<Msg> {
     let testimonials = vec![
         Testimonial {
             quote: "Awesome, awesome framework!",
-            url: "https://github.com/David-OConnor/seed/issues/193#issue-479188076",
+            url: "https://github.com/seed-rs/seed/issues/193#issue-479188076",
             author_image_url: "https://avatars.githubusercontent.com/u/16214",
         },
         Testimonial {
             quote: "Seed rocks",
-            url: "https://github.com/MartinKavik/seed-rs-realworld/issues/1#issuecomment-525413644",
+            url: "https://github.com/seed-rs/seed-rs-realworld/issues/1#issuecomment-525413644",
             author_image_url: "https://avatars.githubusercontent.com/u/48671239",
         },
         Testimonial {
             quote: "I’m super stoked about this framework.",
-            url: "https://github.com/David-OConnor/seed/issues/11#issuecomment-457477672",
+            url: "https://github.com/seed-rs/seed/issues/11#issuecomment-457477672",
             author_image_url: "https://avatars.githubusercontent.com/u/2380740",
         },
         Testimonial {
             quote: "cool, Elm but in Rust!",
-            url: "https://github.com/David-OConnor/seed/issues/52#issue-412081499",
+            url: "https://github.com/seed-rs/seed/issues/52#issue-412081499",
             author_image_url: "https://avatars.githubusercontent.com/u/38404589",
         },
         Testimonial {
             quote: "this is a pretty cool Rust web framework!",
-            url: "https://github.com/David-OConnor/seed/issues/16#issue-395014777",
+            url: "https://github.com/seed-rs/seed/issues/16#issue-395014777",
             author_image_url: "https://avatars.githubusercontent.com/u/139499",
         },
         Testimonial {
             quote: "I'm very new to Rust and Seed is the only frontend framework I find accessible.",
-            url: "https://github.com/David-OConnor/seed/issues/31#issue-403427680",
+            url: "https://github.com/seed-rs/seed/issues/31#issue-403427680",
             author_image_url: "https://avatars.githubusercontent.com/u/45914742",
         },
         Testimonial {
             quote: "this framework looks very promising and the getting-started experience was very smooth thanks to the excellent documentation!",
-            url: "https://github.com/David-OConnor/seed/issues/5#issue-392002515",
+            url: "https://github.com/seed-rs/seed/issues/5#issue-392002515",
             author_image_url: "https://avatars.githubusercontent.com/u/16122",
         },
         Testimonial {
             quote: "I love it",
-            url: "https://github.com/David-OConnor/seed/issues/192#issuecomment-518190059",
+            url: "https://github.com/seed-rs/seed/issues/192#issuecomment-518190059",
             author_image_url: "https://avatars.githubusercontent.com/u/16864501",
         },
         Testimonial {
             quote: "It composes really well and feels very Rusty :)",
-            url: "https://github.com/David-OConnor/seed/issues/193#issuecomment-536255691",
+            url: "https://github.com/seed-rs/seed/issues/193#issuecomment-536255691",
             author_image_url: "https://avatars.githubusercontent.com/u/7584365",
         },
         Testimonial {
             quote: "I like it and hope it become the wide-using wasm webapp dev framework.",
-            url: "https://github.com/David-OConnor/seed/issues/111#issue-443462538",
+            url: "https://github.com/seed-rs/seed/issues/111#issue-443462538",
             author_image_url: "https://avatars.githubusercontent.com/u/163317",
         }
     ];

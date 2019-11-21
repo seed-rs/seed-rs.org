@@ -22,7 +22,7 @@ macro_rules! guide {
             html: include_str!(concat!("../generated_guides/", concat!($file_name, ".html"))),
             lowercase_text: include_str!(concat!("../generated_guides/", concat!($file_name, ".txt"))),
             prepend_menu_divider: $prepend_menu_divider,
-            edit_url: concat!("https://github.com/MartinKavik/seed-rs.org/tree/master/crate/guides/", concat!($file_name, ".md")),
+            edit_url: concat!("https://github.com/seed-rs/seed-rs.org/tree/master/crate/guides/", concat!($file_name, ".md")),
         }
     }
 }

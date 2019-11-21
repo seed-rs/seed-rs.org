@@ -45,6 +45,7 @@ fn view_content(
         content_control_panel::view(guide, Top, model).els(),
         view_guide_html(guide.html).els(),
         content_control_panel::view(guide, Bottom, model).els(),
+        view_netlify_logo().els()
     ]
 }
 
@@ -55,5 +56,21 @@ fn view_guide_html(content: &str) -> impl View<Msg> {
             C.markdown_body,
         ],
         raw!(content)
+    ]
+}
+
+fn view_netlify_logo() -> impl View<Msg> {
+    a![
+        class! {
+            C.flex,
+            C.mt_5,
+            C.justify_center,
+        },
+        attrs! {
+            At::Href => "https://www.netlify.com",
+        },
+        img![attrs! {
+            At::Src => "https://www.netlify.com/img/global/badges/netlify-light.svg",
+        }],
     ]
 }

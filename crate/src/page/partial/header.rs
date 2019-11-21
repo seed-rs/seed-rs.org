@@ -222,21 +222,18 @@ fn view_links() -> impl View<Msg> {
         ],
         view_link(
             "Rust Quickstart",
-            "https://github.com/David-OConnor/seed-quickstart"
+            "https://github.com/seed-rs/seed-quickstart"
         )
         .els(),
         view_link(
             "Webpack QS",
-            "https://github.com/MartinKavik/seed-quickstart-webpack"
+            "https://github.com/seed-rs/seed-quickstart-webpack"
         )
         .els(),
         view_link("Docs.rs", "https://docs.rs/seed/0.4.1/seed/").els(),
         view_link("Crates.io", "https://crates.io/crates/seed").els(),
-        view_link(
-            "Awesome List",
-            "https://github.com/MartinKavik/awesome-seed-rs"
-        )
-        .els(),
+        view_link("Awesome List", "https://github.com/seed-rs/awesome-seed-rs")
+            .els(),
     ]
 }
 
@@ -272,7 +269,7 @@ fn view_github_mark() -> impl View<Msg> {
             C.lg__mx_3, C.lg__my_0,
         ],
         attrs! {
-            At::Href => "https://github.com/David-OConnor/seed",
+            At::Href => "https://github.com/seed-rs/seed",
         },
         image::github_mark_svg().els()
     ]
