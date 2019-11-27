@@ -1,4 +1,4 @@
-## Building a release version
+# Building a release version
 The build commands in the Building and Running section are intended
 for development: They produce large `.wasm` file sizes, and unoptimized performance.
 To build a release version, run `cargo make build_release` instead of `cargo make build`.
