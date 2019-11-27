@@ -334,6 +334,27 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
 }
 ```
 
+## Canvas (unreleased; for now, you can use `web_sys` directly.
+
+Seed provides helper functions for use with `Canvas`:
+```rust
+fn draw() {
+    let canvas = seed::canvas("canvas").unwrap();
+    let ctx = seed::canvas_context_2d(&canvas);
+
+    ctx.move_to(0., 0.);
+    ctx.line_to(200., 100.);
+    ctx.stroke();
+}
+```
+
+#[wasm_bindgen(start)]
+pub fn render() {
+    seed::App::build(|_, _| Init::new(Model {}), update, view).build_and_start();
+    draw();
+}
+
+
 ##  Components
 The analog of components in frameworks like React are normal Rust functions that that return
 [Node](https://docs.rs/seed/0.1.8/seed/dom_types/enum.Node.html) s.

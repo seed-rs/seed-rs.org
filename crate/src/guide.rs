@@ -38,6 +38,7 @@ pub fn guides() -> Vec<Guide> {
         guide!(slug: "http-requests-and-state", menu_title: "Http requests and state", file_name: "fetch", prepend_menu_divider: false),
         guide!(slug: "routing", menu_title: "Routing", file_name: "routing", prepend_menu_divider: false),
         guide!(slug: "misc-features", menu_title: "Misc features", file_name: "misc", prepend_menu_divider: false),
+        guide!(slug: "javascript-interaction", menu_title: "Javascript interaction", file_name: "js", prepend_menu_divider: false),
         guide!(slug: "release-and-debugging", menu_title: "Release and debugging", file_name: "release_and_debugging", prepend_menu_divider: false),
         guide!(slug: "complex-apps", menu_title: "Complex apps", file_name: "complex_apps", prepend_menu_divider: false),
         guide!(slug: "server-integration", menu_title: "Server integration", file_name: "server_integration", prepend_menu_divider: false),

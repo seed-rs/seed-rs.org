@@ -131,10 +131,13 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
 Additionally, use `seed::html_document()` in the same way, to return a 
 [HtmlDocument](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.HtmlDocument.html)
 
+We also include `seed::canvas()`, and `seed::canvas_context()`. (Unreleased)
+
 You can call `seed::cookies()` to retrieve all cookies from the current `HtmlDocument`.
 
 ## Input elements are controlled
-`input`, `textarea`, and `select` elements are always controlled, in the vein of `React`.
+`input`, `textarea`, and `select` elements are always controlled, in the vein of `React`'s
+[controlled components](https://reactjs.org/docs/forms.html#controlled-components).
 This means that even if there's no event associated with user input to these fields, their
 value will always stay in sync with the model, which may mean ignoring text input if
 not set up with a `Ev::Input` event.

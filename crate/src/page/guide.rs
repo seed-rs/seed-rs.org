@@ -1,7 +1,7 @@
 use crate::{
     generated::css_classes::C,
     page::partial::{content_control_panel, guide_list, intro},
-    Guide, Model, Msg
+    Guide, Model, Msg,
 };
 use seed::{prelude::*, *};
 
@@ -70,7 +70,7 @@ fn view_netlify_logo() -> impl View<Msg> {
             At::Href => "https://www.netlify.com",
         },
         img![
-            class!{
+            class! {
                 C.z_auto,
             },
             attrs! {
