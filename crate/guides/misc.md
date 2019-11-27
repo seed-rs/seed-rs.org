@@ -20,7 +20,7 @@ custom![ Tag::from("anothertag".into())
     custom_el,
 ]
 ```
-An example is provided as part of the [window_events](https://github.com/David-OConnor/seed/tree/master/examples/todomvc)
+An example is provided as part of the [window_events](https://github.com/seed-rs/seed/tree/master/examples/todomvc)
 example.
 
 ## Local storage

@@ -12,8 +12,8 @@ And cargo-make: `cargo install --force cargo-make`
 
 ## The theoretical minimum
 
-To start, clone [the quickstart repo](https://github.com/David-OConnor/seed-quickstart):
-`git clone https://github.com/david-oconnor/seed-quickstart.git`,
+To start, clone [the quickstart repo](https://github.com/seed-rs/seed-quickstart):
+`git clone https://github.com/seed-rs/seed-quickstart.git`,
 run `cargo make build` in a terminal to build the app, and `cargo make serve` to start a dev server
 on `127.0.0.0:8000`. If you'd like the compiler to automatically check and recompile when you 
 make changes, run `cargo make watch` instead of `cargo make build`.
@@ -61,7 +61,7 @@ wasm-bindgen = "^0.2.50"
 ## A short example
 
 Here's an example demonstrating structure and syntax; it can be found in working form
-in the [counter example](https://github.com/David-OConnor/seed/tree/master/examples/counter)
+in the [counter example](https://github.com/seed-rs/seed/tree/master/examples/counter)
 Descriptions of its parts are in the
 Guide section below. Its structure follows [The Elm Architecture](https://guide.elm-lang.org/architecture/).
 
@@ -166,17 +166,17 @@ pub fn render() {
 }
 ```
 
-For a truly minimimal example, see [lib.rs in the quickstart repo](https://github.com/David-OConnor/seed-quickstart/blob/master/src/lib.rs)
+For a truly minimimal example, see [lib.rs in the quickstart repo](https://github.com/seed-rs/seed-quickstart/blob/master/src/lib.rs)
 
 ## Building and running
 
 To build your app, run `cargo make build`, and to host on a dev server, run `cargo make serve`.
 
-For a more robust starting setup, check out Martin Kavik's [seed-quickstart-webpack repo](https://github.com/MartinKavik/seed-quickstart-webpack).
+For a more robust starting setup, check out Martin Kavik's [seed-quickstart-webpack repo](https://github.com/seed-rs/seed-quickstart-webpack).
 
 ## Running included examples
 
-To run an example located in the [examples folder](https://github.com/David-OConnor/seed/tree/master/examples),
+To run an example located in the [examples folder](https://github.com/seed-rs/seed/tree/master/examples),
 run `cargo make start example_name`, where you replace `example_name` with the example name. Eg:
 `cargo make start counter`.
 
@@ -185,6 +185,6 @@ Some examples also require to run API server in another terminal window - `cargo
 When server(s) are running, open [127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
 
 ## Resources
-- [Awesome-seed-rs](https://github.com/MartinKavik/awesome-seed-rs): A curated list of resources
-- [Seed Realworld](https://github.com/MartinKavik/seed-rs-realworld): A detailed realworld example site
+- [Awesome-seed-rs](https://github.com/seed-rs/awesome-seed-rs): A curated list of resources
+- [Seed Realworld](https://github.com/seed-rs/seed-rs-realworld): A detailed realworld example site
 - [Engineering Rust Web Applications](https://erwabook.com/): A book describing full-stack Rust web-development, using Seed for the frontend

@@ -8,7 +8,7 @@ is standalone: It can be used with any wasm-bindgen program.
 ## Receiving data
 
 Example, where we update the state on initial load (similar to the 
-[server_interaction example](https://github.com/David-OConnor/seed/tree/master/examples/server_interaction)
+[server_interaction example](https://github.com/seed-rs/seed/tree/master/examples/server_interaction)
 ) from a server. It demonstrates a `GET` request, and deserializing JSON data. The `server_interaction`
 example contains more sample code.
 
@@ -34,7 +34,7 @@ enum Msg {
 }
 
 fn fetch_data() -> impl Future<Item = Msg, Error = Msg> {
-    let url = "https://api.github.com/repos/david-oconnor/seed/branches/master";
+    let url = "https://api.github.com/repos/seed-rs/seed/branches/master";
     Request::new(url.into()).fetch_json_data(Msg::DataFetched)
 }
 

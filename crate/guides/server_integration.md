@@ -2,7 +2,7 @@
 
 If pairing Seed with a Rust backend server, we can simplify passing data between
 server and frontend using a layout like that in the 
-[server_integration example](https://github.com/David-OConnor/seed/tree/master/examples/server_integration)
+[server_integration example](https://github.com/seed-rs/seed/tree/master/examples/server_integration)
 
 A key advantage of this approach is that you can reuse data structures, and code that
 operates on them on both client and server. We use `Serde` to elegantly, and mostly transparently,

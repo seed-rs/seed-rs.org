@@ -2,7 +2,7 @@
   "author": "Martin Kavík <martin@kavik.cz>",
   "name": "seed-quickstart-webpack",
   "version": "0.3.0",
-  "repository": "https://github.com/MartinKavik/seed-quickstart-webpack",
+  "repository": "https://github.com/seed-rs/seed-quickstart-webpack",
   "license": "MIT",
   "scripts": {
     "start": "yarn generate:css_classes && webpack-dev-server --config configs/webpack.config.js -d",

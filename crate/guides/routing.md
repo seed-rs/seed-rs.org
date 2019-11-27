@@ -4,8 +4,8 @@ Seed includes flexible routing, inspired by
 You can trigger state changes that update the address bar,
  and can be nagivated to/from using forward and back buttons. This works for landing-page
 routing as well, provided your server is configured to support. See the
- [homepage](https://github.com/David-OConnor/seed/tree/master/examples/homepage) and
-[todomvc](https://github.com/David-OConnor/seed/tree/master/examples/todomvc) examples.
+ [homepage](https://github.com/seed-rs/seed/tree/master/examples/homepage) and
+[todomvc](https://github.com/seed-rs/seed/tree/master/examples/todomvc) examples.
   
 Let's say our site the following pages:
 a guide, which can have subpages, and a changelog, accessible by `http://seed-rs.org/changelog`,

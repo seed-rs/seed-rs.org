@@ -95,7 +95,7 @@ be more efficient, or appeal to specific aesthetics. While the example above
 it straightforward, this becomes important with more complex updates.
 
 More detailed example, from the 
-[todoMVC example](https://github.com/David-OConnor/seed/tree/master/examples/todomvc):
+[todoMVC example](https://github.com/seed-rs/seed/tree/master/examples/todomvc):
 ```rust
 fn update(msg: Msg, model: &mut Model, _orders: &mut impl Orders<Msg>) {
     match msg {
@@ -130,7 +130,7 @@ is used.
 is a `Future`, ie `Future<Item = Ms, Error = Ms> + 'static`.
 
 For an example of how to use orders, see the 
-[orders example](https://github.com/David-OConnor/seed/blob/master/examples/orders/src/lib.rs).
+[orders example](https://github.com/seed-rs/seed/blob/master/examples/orders/src/lib.rs).
 
 As with the model, only one update function is passed to the app, but it may be split into 
 sub-functions to aid code organization.

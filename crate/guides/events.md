@@ -169,9 +169,9 @@ Where `id` is a value defined earlier.
 
 Event syntax may be improved later with the addition of a single macro that infers what the type of event 
 is based on the trigger, and avoids the use of manually creating a `Vec` to store the
-`Listener`s. For examples of all of the above (except raw_ev), check out the [todomvc example](https://github.com/David-OConnor/seed/tree/master/examples/todomvc).
+`Listener`s. For examples of all of the above (except raw_ev), check out the [todomvc example](https://github.com/seed-rs/seed/tree/master/examples/todomvc).
 
-The [todomvc example](https://github.com/David-OConnor/seed/tree/master/examples/todomvc) has a number of event-handling examples, including use of raw_ev, 
+The [todomvc example](https://github.com/seed-rs/seed/tree/master/examples/todomvc) has a number of event-handling examples, including use of raw_ev, 
 where it handles text input triggered by a key press, and uses prevent_default().
 
 ## Window events
@@ -179,7 +179,7 @@ We handle events triggered by the overall window specially, since it doesn't fit
 into our virtual DOM. We pass to `Seed::App::build::window_events()` a function that accepts a
  ref to `Model`, and returns a `Vec<devents::Listener>`. We use it to control
 which listeners are attached to the window based on the model. Excerpt from the
-[window_events](https://github.com/David-OConnor/seed/blob/master/examples/window_events/src/lib.rs)
+[window_events](https://github.com/seed-rs/seed/blob/master/examples/window_events/src/lib.rs)
 example:
 ```rust
 #[derive(Clone)]

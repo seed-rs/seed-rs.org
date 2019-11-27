@@ -6,7 +6,7 @@ Seed Website is based on:
 Help Article template
 Copyright (c) 2019 Tailwind Toolbox
 
-and Seed Quickstart with Webpack 'MartinKavik/seed-quickstart-webpack':
+and Seed Quickstart with Webpack 'seed-rs/seed-quickstart-webpack':
 Copyright (c) 2019 Martin Kavík
 
 Quickstart is based on 'rustwasm/rust-webpack-template':
