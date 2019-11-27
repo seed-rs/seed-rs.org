@@ -6,8 +6,7 @@ dependencies = ["fmt", "clippy", "test_h_firefox"]
 
 [tasks.verify_only]
 description = "Like `verify`, but fails if the code isn't formatted. Primarily for CI."
-#dependencies = ["fmt_check", "clippy", "test_h_firefox"]
-dependencies = ["clippy", "test_h_firefox"]
+dependencies = ["fmt_check", "clippy", "test_h_firefox"]
 
 # ---- TEST ----
 

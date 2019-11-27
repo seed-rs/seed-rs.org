@@ -6,43 +6,48 @@ env:
   RUST_BACKTRACE: 1
 
 jobs:
-  test:
+  build_test_deploy:
     runs-on: ubuntu-latest
-    steps:       
-      - uses: actions-rs/toolchain@v1
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v1
+
+      - name: Install nightly Rust and rustfmt
+        uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: nightly
           components: rustfmt
-      - uses: actions-rs/toolchain@v1
+
+      - name: Install stable Rust
+        uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
-      - uses: davidB/rust-cargo-make@v1
-      - uses: actions/checkout@v1
+
+      - name: Install cargo-make
+        uses: davidB/rust-cargo-make@v1
+
+      - name: Install Node dependencies
+        run: yarn
+
+      - name: Build & prerender
+        run: yarn build:prerender
+
       - name: Run tests
         run: cargo make verify_only
         working-directory: ./crate
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [test]
-    if: github.ref == 'refs/heads/master'
-    steps:       
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-      - uses: actions/checkout@v1
-      - name: Run build
-        run: |
-          yarn
-          yarn build:prerender
-         
-      - name: Run deploy
+      - name: Install Netlify CLI
+        if: github.ref == 'refs/heads/master'
+        run: sudo npm install netlify-cli -g
+
+      - name: Deploy
+        if: github.ref == 'refs/heads/master'
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_ACCESS_TOKEN: ${{ secrets.NETLIFY_ACCESS_TOKEN }}
-        run: | 
-          yarn global add netlify-cli
-          netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN -p --dir ./dist
+        run: netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN -p --dir ./dist
+
+         
+
