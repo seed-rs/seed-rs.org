@@ -230,7 +230,7 @@ fn view_links() -> impl View<Msg> {
             "https://github.com/seed-rs/seed-quickstart-webpack"
         )
         .els(),
-        view_link("Docs.rs", "https://docs.rs/seed/0.4.1/seed/").els(),
+        view_link("Docs.rs", "https://docs.rs/seed/latest/seed").els(),
         view_link("Crates.io", "https://crates.io/crates/seed").els(),
         view_link("Awesome List", "https://github.com/seed-rs/awesome-seed-rs")
             .els(),

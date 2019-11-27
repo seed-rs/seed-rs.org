@@ -62,7 +62,7 @@ args = ["fmt", "--all"]
 [tasks.fmt_check]
 extend = "fmt"
 description = "Check format with nightly rustfmt"
-args = ["fmt", "--all", "--", "--check", "--verbose"]
+args = ["fmt", "--all", "--", "--check"]
 
 [tasks.clippy]
 description = "Lint with Clippy"
