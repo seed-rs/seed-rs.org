@@ -1,3 +1,5 @@
-Based on https://github.com/MartinKavik/seed-quickstart-webpack
+## Seed's official website
 
-https://seed-rs.netlify.com/
+https://seed-rs.org/
+
+Based on https://github.com/seed-rs/seed-quickstart-webpack
