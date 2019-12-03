@@ -97,7 +97,7 @@ fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> impl View<Msg> {
     ]
 }
 
-// ------ view edit this page ------
+// ------ view edit this page & feedback ------
 
 fn view_edit_this_page(edit_url: &str) -> impl View<Msg> {
     div![
@@ -115,6 +115,21 @@ fn view_edit_this_page(edit_url: &str) -> impl View<Msg> {
                 At::Href => edit_url,
             },
             span!["Edit this page",]
+        ],
+        span![class![C.flex, C.mx_1, C.items_center,], "|"],
+        a![
+            class![
+                C.flex,
+                C.items_center,
+                C.text_blue_500,
+                C.whitespace_no_wrap,
+                C.hover__underline,
+                C.hover__text_blue_700,
+            ],
+            attrs! {
+                At::Href => "https://github.com/seed-rs/seed/issues/303",
+            },
+            span!["Feedback",]
         ]
     ]
 }
