@@ -18,7 +18,7 @@ use serde_json;
 use std::{convert::identity, fmt};
 use Visibility::*;
 
-const SEED_VERSION: &str = "0.4.2 (Nov 05, 2019)";
+const SEED_VERSION: &str = "0.5.0 (Dec 04, 2019)";
 const TITLE_SUFFIX: &str = "Seed";
 const STORAGE_KEY: &str = "seed";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
@@ -55,6 +55,14 @@ pub struct Config {
 
 fn local_storage() -> storage::Storage {
     storage::get_storage().expect("get local storage")
+}
+
+// ------ ------
+// Before Mount
+// ------ ------
+
+fn before_mount(_: Url) -> BeforeMount {
+    BeforeMount::new().mount_type(MountType::Takeover)
 }
 
 // ------ ------
@@ -144,10 +152,13 @@ impl Page {
 }
 
 // ------ ------
-//     Init
+//  After Mount
 // ------ ------
 
-pub fn after_mount(url: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model> {
+pub fn after_mount(
+    url: Url,
+    orders: &mut impl Orders<Msg>,
+) -> AfterMount<Model> {
     let guides = guide::guides();
     let model = Model {
         page: Page::from_route_and_replace_history(&url.into(), &guides),
@@ -162,11 +173,7 @@ pub fn after_mount(url: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model>
 
     orders.send_msg(Msg::UpdatePageTitle);
 
-    AfterMount {
-        model,
-        url_handling: UrlHandling::None,
-//        mount_type: MountType::Takeover,
-    }
+    AfterMount::new(model).url_handling(UrlHandling::None)
 }
 
 fn load_config() -> Config {
@@ -335,7 +342,9 @@ pub fn view(model: &Model) -> impl View<Msg> {
 
 #[wasm_bindgen(start)]
 pub fn run() {
-    App::builder(update, view).routes(routes)
+    App::builder(update, view)
+        .before_mount(before_mount)
         .after_mount(after_mount)
+        .routes(routes)
         .build_and_start();
 }

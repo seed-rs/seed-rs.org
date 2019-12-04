@@ -14,7 +14,7 @@ way to handle it. We're also using Typescript.
 
 ## React
 
-```typescript
+```jsx
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 
@@ -54,9 +54,7 @@ ReactDOM.render(<Main />, document.getElementById("app"))
 ## Seed
 From the Seed quickstart repo
 ```rust
-#[macro_use]
-extern crate seed;
-use seed::prelude::*;
+use seed::{*, prelude::*};
 
 struct Model {
     pub val: i32,
