@@ -58,6 +58,14 @@ fn local_storage() -> storage::Storage {
 }
 
 // ------ ------
+// Before Mount
+// ------ ------
+
+fn before_mount(_: Url) -> BeforeMount {
+    BeforeMount::new().mount_type(MountType::Takeover)
+}
+
+// ------ ------
 //     Model
 // ------ ------
 
@@ -144,10 +152,13 @@ impl Page {
 }
 
 // ------ ------
-//     Init
+//  After Mount
 // ------ ------
 
-pub fn after_mount(url: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model> {
+pub fn after_mount(
+    url: Url,
+    orders: &mut impl Orders<Msg>,
+) -> AfterMount<Model> {
     let guides = guide::guides();
     let model = Model {
         page: Page::from_route_and_replace_history(&url.into(), &guides),
@@ -162,11 +173,7 @@ pub fn after_mount(url: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model>
 
     orders.send_msg(Msg::UpdatePageTitle);
 
-    AfterMount {
-        model,
-        url_handling: UrlHandling::None,
-//        mount_type: MountType::Takeover,
-    }
+    AfterMount::new(model).url_handling(UrlHandling::None)
 }
 
 fn load_config() -> Config {
@@ -335,7 +342,9 @@ pub fn view(model: &Model) -> impl View<Msg> {
 
 #[wasm_bindgen(start)]
 pub fn run() {
-    App::builder(update, view).routes(routes)
+    App::builder(update, view)
+        .before_mount(before_mount)
         .after_mount(after_mount)
+        .routes(routes)
         .build_and_start();
 }
