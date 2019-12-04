@@ -388,7 +388,7 @@ above as `text_display("Some things")`, not `text_display![ "Some things" ]`.
 ## Fragments
 Fragments (`<>...</>` syntax in React and Yew) are components that represent multiple
 elements without a parent. They're useful to avoid
-unecessary divs, which clutter teh DOM, and breaks things like tables and CSS-grid. 
+unecessary divs, which clutter the DOM, and breaks things like tables and CSS-grid. 
 There's no special fragment syntax: have your component return a `Vec` of `Node`s instead of 
 one. Add it to the parent's element macro:
 ```rust
