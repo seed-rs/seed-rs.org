@@ -53,6 +53,7 @@ ReactDOM.render(<Main />, document.getElementById("app"))
 
 ## Seed
 From the Seed quickstart repo
+
 ```rust
 use seed::{*, prelude::*};
 
@@ -93,11 +94,47 @@ pub fn render() {
 }
 ```
 
-## Attributes and styles
+## A component with attributes, styles, and events
 
-## Events
+## React
 
-## Reusable UI items
+```jsx
+const Button = ({name, color, doIt}: {name: string, color: string, doIt: Function}) {
+    const style: CSSProperties = {fontSize: 12, color: color}
+
+    return (
+        <button
+            className="buttons"
+            title="Click me!"
+            style={style}
+            onClick={() => doIt()}
+        >
+            {name}
+        </button>
+    )
+}
+```
+
+## Seed
+
+```rust
+fn button(name: &str, color: &str) -> Node<Msg> {
+    let style = style!{St::fontSize => px(12), St::Color => color};    
+
+    button![
+        class!("buttons"),
+        attrs!{At::Title => "Click me!"},
+        style,
+        simple_ev(Ev::Click, Msg::DoIt)
+        name,
+    ]
+
+}
+```
+
+## Events (todo)
+
+## Reusable UI items (todo)
 
 ## HTTP Requests (todo)
 
