@@ -30,6 +30,7 @@ macro_rules! guide {
 pub fn guides() -> Vec<Guide> {
     vec![
         guide!(slug: "about", menu_title: "About", file_name: "about", prepend_menu_divider: false),
+        guide!(slug: "code-comparison", menu_title: "Code comparison", file_name: "code_comparison", prepend_menu_divider: false),
         guide!(slug: "quickstart", menu_title: "Quickstart", file_name: "quickstart", prepend_menu_divider: false),
         guide!(slug: "prereqs", menu_title: "Prereqs", file_name: "prereqs", prepend_menu_divider: false),
         guide!(slug: "structure", menu_title: "Structure", file_name: "structure", prepend_menu_divider: false),
