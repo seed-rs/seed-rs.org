@@ -147,7 +147,7 @@ impl Page {
 //     Init
 // ------ ------
 
-pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
+pub fn after_mount(url: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model> {
     let guides = guide::guides();
     let model = Model {
         page: Page::from_route_and_replace_history(&url.into(), &guides),
@@ -162,10 +162,10 @@ pub fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
 
     orders.send_msg(Msg::UpdatePageTitle);
 
-    Init {
+    AfterMount {
         model,
         url_handling: UrlHandling::None,
-        mount_type: MountType::Takeover,
+//        mount_type: MountType::Takeover,
     }
 }
 
@@ -335,5 +335,7 @@ pub fn view(model: &Model) -> impl View<Msg> {
 
 #[wasm_bindgen(start)]
 pub fn run() {
-    App::build(init, update, view).routes(routes).build_and_start();
+    App::builder(update, view).routes(routes)
+        .after_mount(after_mount)
+        .build_and_start();
 }

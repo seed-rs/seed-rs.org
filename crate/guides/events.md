@@ -211,10 +211,9 @@ fn window_events(model: &Model) -> Vec<seed::events::Listener<Msg>> {
 
 #[wasm_bindgen]
 pub fn render() {
-    seed::App::build(Init::new(Model::default()), update, view)
+    seed::App::builder(update, view)
         .window_events(window_events)
-        .finish()
-        .run();
+        .build_and_start()
 }
 ```
 If `model.watching` is `true`, the window listens for keyboard and mouse events, then 

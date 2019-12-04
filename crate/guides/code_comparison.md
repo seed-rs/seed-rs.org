@@ -62,7 +62,7 @@ struct Model {
     pub val: i32,
 }
 
-impl Default for Model {
+impl Default for Model {  // In this case, we could derive `Default` instead.
     fn default() -> Self {
         Self {
             val: 0,

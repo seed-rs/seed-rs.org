@@ -131,7 +131,7 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
 Additionally, use `seed::html_document()` in the same way, to return a 
 [HtmlDocument](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.HtmlDocument.html)
 
-We also include `seed::canvas()`, and `seed::canvas_context()`. (Unreleased)
+We also include `seed::canvas()`, and `seed::canvas_context()`.
 
 You can call `seed::cookies()` to retrieve all cookies from the current `HtmlDocument`.
 

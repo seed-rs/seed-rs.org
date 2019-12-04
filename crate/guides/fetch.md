@@ -59,15 +59,15 @@ fn view(model: &Model) -> Node<Msg> {
     )]
 }
 
-fn init(_: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
+fn after_mount(_: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model> {
     orders.perform_cmd(fetch_data());
-    Init::new(Model::default())
+    AfterMount::default()
 }
 
 #[wasm_bindgen]
 pub fn render() {
-    let app = seed::App::build(init, update, view)
-        .finish()
+    let app = seed::App::builder(update, view)
+        .after_mount(after_mount)
         .run();
 
     app.update(Msg::FetchData);
