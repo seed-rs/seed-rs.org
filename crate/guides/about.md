@@ -63,7 +63,7 @@ this framework will in most cases be easier, and require less config and setup o
 with JS frameworks. You may appreciate Rust's compile-time error-checking, and built-in testing.
 
 You may choose this approach over Elm if you're already comfortable with Rust,
-or don't want to code business logic in a purely-functional langauge.
+or don't want to code business logic in a purely-functional language.
 
 Compared with React, you may appreciate the consistency of how to write apps:
 There's no distinction between logic and display code; no restrictions on comments;
