@@ -20,7 +20,7 @@ a visual layout with minimal repetition. The macros used are thin wrappers
 for constructors, and don't conceal much.
 
 Specifically, the element-creation macros
-allow for accepting a variable number and order of parameters, and the attrs/style marcros are
+allow for accepting a variable number and order of parameters, and the attrs/style macros are
 essentially HashMap literals, with wrappers that let element macros know how to distinguish
 them.
 
@@ -63,7 +63,7 @@ this framework will in most cases be easier, and require less config and setup o
 with JS frameworks. You may appreciate Rust's compile-time error-checking, and built-in testing.
 
 You may choose this approach over Elm if you're already comfortable with Rust,
-or don't want to code business logic in a purely-functional langauge.
+or don't want to code business logic in a purely-functional language.
 
 Compared with React, you may appreciate the consistency of how to write apps:
 There's no distinction between logic and display code; no restrictions on comments;

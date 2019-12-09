@@ -77,7 +77,7 @@ pub fn render() {
 On page load, we trigger an update in the `init` function using `Msg::FetchData`, 
 which points the `update` via `orders.perform_cmd` and a function we've created
 called `fetch_data`. This allows state to be
-update asynchronosly, when the request is complete. `skip()` is a convenience method that
+update asynchronously, when the request is complete. `skip()` is a convenience method that
 sets `Update::ShouldRender` to `Skip`; sending the request doesn't trigger a render.
 We pattern-match the response in the `update` function's`DataFetched` arm: If successful, we update the model.
 If not, we display an error in the console using the `error!` macro.
