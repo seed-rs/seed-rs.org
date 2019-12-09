@@ -40,7 +40,7 @@ fn routes(url: Url) -> Option<Msg> {
 
 #[wasm_bindgen(start)]
 pub fn render() {
-    seed::App::builder(update, view)
+    App::builder(update, view)
         .routes(routes)
         .build_and_start();
 }

@@ -32,9 +32,7 @@ Rust data structure that implements serde's Serialize. Example use:
 
 ```rust
 extern crate serde;
-#[macro_use]
-extern crate serde_derive;
-extern crate serde_json;
+use seed::{*, prelude::*};
 
 // ...
 #[derive(Serialize, Deserialize)]

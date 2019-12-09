@@ -68,7 +68,7 @@ enum Msg {
 ```
  
 The update [function]( https://doc.rust-lang.org/book/ch03-03-how-functions-work.html) 
-you pass to `seed::App::builder(` describes how the state should change, upon
+you pass to `App::builder(` describes how the state should change, upon
 receiving each type of message. It's the only place where the model is changed. It accepts a message, 
 and model as parameters, and returns an `Update` struct. `Update` contains `ShouldRender` and `Effect`
 enums. `ShouldRender` and its variants are imported in the prelude, 
@@ -141,7 +141,7 @@ See the [view section](https://seed-rs.org/guide/view) for details.
 
 
 ## Initializing
-To start your app, call the `seed::App::build` method, which takes the following parameters:
+To start your app, call the `App::builder` method, which takes the following parameters:
 
 - An `init` function which accepts an initial routing, initial orders, and outputs 
 an [Init struct](https://docs.rs/seed/0.4.1/seed/struct.Init.html) (imported in the prelude),
@@ -160,16 +160,16 @@ And must must complete with the method `.build_and_start();`.
 
 `.mount()` takes a single argument, which can be the id of the element you wish to mount in,
 a `web_sys::Element`, or a `web_sys::HtmlElement`. Examples:
-`seed::App::builder(update, view).mount(seed::body())`
-`seed::App::builder(update, view).mount('a_div_id`)`
+`App::builder(update, view).mount(seed::body())`
+`App::builder(update, view).mount('a_div_id`)`
 
 ```
-seed::App::builder(update, view).mount(
+App::builder(update, view).mount(
     seed::body().querySelector("section").unwrap().unwrap()
 )
 ```
 
-The `seed::App::build` call must be wrapped in a function with the `#[wasm_bindgen(start)]` invocation.
+The `App::builder` call must be wrapped in a function with the `#[wasm_bindgen(start)]` invocation.
 
 This will render your app to the element holding the id you passed; in the case of this example,
 "main". The only part of the web page Seed will interact with is that element, so you can
@@ -179,7 +179,7 @@ Example, with optional methods:
 ```rust
 #[wasm_bindgen(start)]
 pub fn render() {
-    seed::App::builder(update, view)
+    App::builder(update, view)
         .mount("main")
         .routes(routes)
         .window_events(window_events)
@@ -195,7 +195,7 @@ fn after_mount(url: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model> {
 
 #[wasm_bindgen(start)]
 pub fn render() {
-    seed::App::builder(update, view)
+    App::builder(update, view)
         .after_mount(after_mount)
         .build_and_start();
 }

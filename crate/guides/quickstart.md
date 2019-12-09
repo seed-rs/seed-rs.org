@@ -67,7 +67,6 @@ Guide section below. Its structure follows [The Elm Architecture](https://guide.
 _lib.rs_:
 
 ```rust
-#[macro_use]
 use seed::{*, prelude::*};
 
 // Model
@@ -158,7 +157,7 @@ fn view(model: &Model) -> impl View<Msg> {
 
 #[wasm_bindgen(start)]
 pub fn render() {
-    seed::App::builder(update, view)
+    App::builder(update, view)
         .build_and_start();
 }
 ```
