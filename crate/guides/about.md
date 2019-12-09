@@ -32,7 +32,9 @@ are worth it.
 
 ## Where to start if you're familiar with existing frontend frameworks
 
-The [todomvc example](https://github.com/seed-rs/seed/tree/master/examples/todomvc) is an implementation of the [TodoMVC project](http://todomvc.com/),
+Check out the (Code comparison)[https://seed-rs.org/guide/code-comarison]) section of this guide. Additionally,
+the [todomvc example](https://github.com/seed-rs/seed/tree/master/examples/todomvc) is an implementation of 
+the [TodoMVC project](https://todomvc.com/),
 which has example code in other frameworks that produce identitcal apps. Compare the example in this
 project to one on that page that uses a framework you're familiar with.
 

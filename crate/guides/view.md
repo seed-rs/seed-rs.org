@@ -6,11 +6,11 @@ is represented by a macro, eg `div![]`. These act as functions that accept an ar
 number of parameters, in any order: They handle the parameters based exclusively on type.
 
 The view's defined by a function that's passed to 
-[seed::App::build](https://docs.rs/seed/0.4.2/seed/struct.App.html#method.build). This takes a `&Model`
+[App::builder](https://docs.rs/seed/0.4.2/seed/struct.App.html#method.build). This takes a `&Model`
 as its parameter, and outputs something that implements the ` View` trait, which is imported in the prelude.
 Usually, this is a `Node`, or `Vec<Node>`, representing all nodes that will be inserted as children
 on the top-level one. (The top-level `Node` is in the html file, and specified with
-[seed::App::build.mount()](https://docs.rs/seed/0.4.2/seed/struct.AppBuilder.html#method.mount), 
+[App::builder.mount()](https://docs.rs/seed/0.4.2/seed/struct.AppBuilder.html#method.mount), 
 or as a default, the element with id `app`).
  It may composed into sub-functions, which can be thought of like components in other frameworks. 
 
@@ -48,8 +48,7 @@ Created using the `empty![]` macro, or `seed::empty()`.
 Elements are created using macros, named by the lowercase name of
 each element, and imported into the global namespace. Eg `div!` above. We use this code to import them:
 ```rust
-#[macro_use]
-extern crate seed;
+use seed::{*, prelude::*};
 ```
 
 These macros accept any combination of the following parameters:
@@ -346,13 +345,13 @@ fn draw() {
     ctx.line_to(200., 100.);
     ctx.stroke();
 }
-```
 
 #[wasm_bindgen(start)]
 pub fn render() {
-    seed::App::build(|_, _| Init::new(Model {}), update, view).build_and_start();
+    App::builder(update, view).build_and_start();
     draw();
 }
+```
 
 
 ##  Components

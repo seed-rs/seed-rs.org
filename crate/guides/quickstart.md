@@ -39,8 +39,7 @@ The subsequent ones load your app's wasm modules.
 The quickstart repo includes this file. You will eventually need to modify it to
 change the page's title, add a description, favicon, stylesheet etc.
 
-`Cargo.toml`, which is a file created by Cargo that describes your app, needs `wasm-bindgen`, `web-sys`, and `seed` as depdendencies,
-and crate-type
+`Cargo.toml`, which is a file created by Cargo that describes your app, needs `wasm-bindgen`, `web-sys`, and `seed` as dependencies, and crate-type
 of `"cdylib"`. The version in the quickstart repo has these set up already. Example:
 
 ```toml
@@ -54,24 +53,21 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-seed = "^0.4.1"
+seed = "^0.5.0"
 wasm-bindgen = "^0.2.50"
 ```
 
 ## A short example
 
 Here's an example demonstrating structure and syntax; it can be found in working form
-in the [counter example](https://github.com/seed-rs/seed/tree/master/examples/counter)
+in the [counter example](https://github.com/seed-rs/seed/tree/master/examples/counter).
 Descriptions of its parts are in the
 Guide section below. Its structure follows [The Elm Architecture](https://guide.elm-lang.org/architecture/).
 
 _lib.rs_:
 
 ```rust
-#[macro_use]
-extern crate seed;
-use seed::prelude::*;
-
+use seed::{*, prelude::*};
 
 // Model
 
@@ -161,7 +157,7 @@ fn view(model: &Model) -> impl View<Msg> {
 
 #[wasm_bindgen(start)]
 pub fn render() {
-    seed::App::build(|_, _| Init::new(Model::default()), update, view)
+    App::builder(update, view)
         .build_and_start();
 }
 ```

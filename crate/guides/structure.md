@@ -68,7 +68,7 @@ enum Msg {
 ```
  
 The update [function]( https://doc.rust-lang.org/book/ch03-03-how-functions-work.html) 
-you pass to `seed::App::build(` describes how the state should change, upon
+you pass to `App::builder(` describes how the state should change, upon
 receiving each type of message. It's the only place where the model is changed. It accepts a message, 
 and model as parameters, and returns an `Update` struct. `Update` contains `ShouldRender` and `Effect`
 enums. `ShouldRender` and its variants are imported in the prelude, 
@@ -141,7 +141,7 @@ See the [view section](https://seed-rs.org/guide/view) for details.
 
 
 ## Initializing
-To start your app, call the `seed::App::build` method, which takes the following parameters:
+To start your app, call the `App::builder` method, which takes the following parameters:
 
 - An `init` function which accepts an initial routing, initial orders, and outputs 
 an [Init struct](https://docs.rs/seed/0.4.1/seed/struct.Init.html) (imported in the prelude),
@@ -160,16 +160,16 @@ And must must complete with the method `.build_and_start();`.
 
 `.mount()` takes a single argument, which can be the id of the element you wish to mount in,
 a `web_sys::Element`, or a `web_sys::HtmlElement`. Examples:
-`seed::App::build(|_, _| Model::default(), update, view).mount(seed::body())`
-`seed::App::build(|_, _| Model::default(), update, view).mount('a_div_id`)`
+`App::builder(update, view).mount(seed::body())`
+`App::builder(update, view).mount('a_div_id`)`
 
 ```
-seed::App::build(|_, _| Model::default(), update, view).mount(
+App::builder(update, view).mount(
     seed::body().querySelector("section").unwrap().unwrap()
 )
 ```
 
-The `seed::App::build` call must be wrapped in a function with the `#[wasm_bindgen(start)]` invocation.
+The `App::builder` call must be wrapped in a function with the `#[wasm_bindgen(start)]` invocation.
 
 This will render your app to the element holding the id you passed; in the case of this example,
 "main". The only part of the web page Seed will interact with is that element, so you can
@@ -179,7 +179,7 @@ Example, with optional methods:
 ```rust
 #[wasm_bindgen(start)]
 pub fn render() {
-    seed::App::build(|_, _| Init::new(Model::default()), update, view)
+    App::builder(update, view)
         .mount("main")
         .routes(routes)
         .window_events(window_events)
@@ -187,31 +187,27 @@ pub fn render() {
 }
 ```
 
-Example of using a standalone `init` function:
+Example of using an `after_mount` function:
 ```rust
-fn init(url: Url, orders: &mut impl Orders<Msg>) -> Init<Model> {
-    Init::new(Model::default())
+fn after_mount(url: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model> {
+    AfterMount::default()
 }
 
 #[wasm_bindgen(start)]
 pub fn render() {
-    seed::App::build(init, update, view)
+    App::builder(update, view)
+        .after_mount(after_mount)
         .build_and_start();
 }
 ```
 
-`Init` has the following fields:
+`AfterMount` has the following fields:
     - `model`: The initial model
     - `url_handling`: A [Urlhandling](https://docs.rs/seed/0.4.1/seed/enum.UrlHandling.html)  enum, which has 
     variants `PassToRoutes`: default with `Init::new()`),
     and `None`
-    - `mount_type`: A [MountType](https://docs.rs/seed/0.4.1/seed/enum.MountType.html)  enum, which has variants `Append`: default with `Init::new()`,
-    Leave the previously existing elements in the mount alone. This does not make guarantees of
-    elements added after the `App` has been mounted),
-    and `Takeover`:  Take control of previously existing elements in the mount. This does not make guarantees of
-    elements added after the `App` has been mounted. Note that existing elements in the DOM will 
-    be recreated. This can be dangerous for script tags and other, similar tags.
 
-`Init::new()` covers the most common use-cases of the `Init`, but pass an `Init` literal if you'd
-like to use `url_handling` or `mount_type`. `UrlHandling` and `MountType` are imported in the prelude.
 
+`AfterMount::default()` covers the most common use-cases, where the model is initialized with its 
+ `default::Default` implementation. (This is also true if we don't use the `.after_mount()` method.
+ You can pass a different model by using `after_mount::new(model)`, where `model` here is your model.
