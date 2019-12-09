@@ -20,7 +20,7 @@ a visual layout with minimal repetition. The macros used are thin wrappers
 for constructors, and don't conceal much.
 
 Specifically, the element-creation macros
-allow for accepting a variable number and order of parameters, and the attrs/style marcros are
+allow for accepting a variable number and order of parameters, and the attrs/style macros are
 essentially HashMap literals, with wrappers that let element macros know how to distinguish
 them.
 
