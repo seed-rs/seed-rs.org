@@ -68,9 +68,7 @@ _lib.rs_:
 
 ```rust
 #[macro_use]
-extern crate seed;
-use seed::prelude::*;
-
+use seed::{*, prelude::*};
 
 // Model
 

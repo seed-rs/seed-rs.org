@@ -99,18 +99,24 @@ pub fn render() {
 ## React
 
 ```jsx
-const Button = ({name, color, doIt}: {name: string, color: string, doIt: Function}) {
+const Form = ({name, color, value, changeText, doIt}:
+        {name: string, color: string, value: number, changeText: Function, doIt: Function}) {
+    // A description
     const style: CSSProperties = {fontSize: 12, color: color}
 
     return (
-        <button
-            className="buttons"
-            title="Click me!"
-            style={style}
-            onClick={() => doIt()}
-        >
-            {name}
-        </button>
+        <>
+            <input value={value.toString() onChange={(ev) => changeText(ev)} />
+
+            <button
+                className="buttons"
+                title="Click me!"
+                style={style}
+                onClick={() => doIt()}
+            >
+                {name}
+            </button>
+        </>
     )
 }
 ```
@@ -118,21 +124,25 @@ const Button = ({name, color, doIt}: {name: string, color: string, doIt: Functio
 ## Seed
 
 ```rust
-fn button(name: &str, color: &str) -> Node<Msg> {
+/// A description
+fn form(name: &str, color: &str, value: u32) -> Vec<Node<Msg>> {
     let style = style!{St::fontSize => px(12), St::Color => color};    
+    
+    vec![
+        input![ attrs!{At::Value => value}, input_ev(Ev::Input, Msg::ChangeText)],        
 
-    button![
-        class!("buttons"),
-        attrs!{At::Title => "Click me!"},
-        style,
-        simple_ev(Ev::Click, Msg::DoIt)
-        name,
+        button![
+            class!("buttons"),
+            attrs!{At::Title => "Click me!"},
+            style,
+            simple_ev(Ev::Click, Msg::DoIt)
+            name,
+        ]
     ]
 
 }
 ```
 
-## Events (todo)
 
 ## Reusable UI items (todo)
 

@@ -172,27 +172,3 @@ fn view(model: &Model) -> Node<Msg> {
 Reference the `Request` API docs (linked above) for a full
 list of methods available to configure the request, and links to the `MDN` docs describing
 them. (eg: `credentials`, `mode`, `integrity`)
-
-
-## Receiving non-JSON data, as with files:
-```rust
-fn export(year: i32, month: u32) -> impl Future<Item = Msg, Error = Msg> {
-//fn export(year: i32, month: u32) {
-    let url = "/export-rap/";
-    seed::Request::new(url)
-        .method(seed::Method::Post)
-        .header("X-CSRFToken", &getCookie("csrftoken"))
-//        .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-        .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8'); request.responseType = 'blob'")
-        .send_json(&ExportData { year, month })
-        .fetch(Msg::ExportResult)
-}
-```
-
-```rust
-        Msg::Export(year, month) => {
-            orders.perform_cmd(export(year, month));
-        }
-
-        Msg::ExportResult(fetch_object) => (),
-```
