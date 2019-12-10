@@ -43,6 +43,7 @@ pub fn guides() -> Vec<Guide> {
         guide!(slug: "release-and-debugging", menu_title: "Release and debugging", file_name: "release_and_debugging", prepend_menu_divider: false),
         guide!(slug: "complex-apps", menu_title: "Complex apps", file_name: "complex_apps", prepend_menu_divider: false),
         guide!(slug: "server-integration", menu_title: "Server integration", file_name: "server_integration", prepend_menu_divider: false),
+        guide!(slug: "support", menu_title: "Support", file_name: "support", prepend_menu_divider: true),
         guide!(slug: "changelog", menu_title: "Changelog", file_name: "changelog", prepend_menu_divider: true),
     ]
 }
