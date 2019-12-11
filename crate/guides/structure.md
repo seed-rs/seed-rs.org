@@ -68,13 +68,13 @@ enum Msg {
 ```
  
 The update [function]( https://doc.rust-lang.org/book/ch03-03-how-functions-work.html) 
-you pass to `App::builder(` describes how the state should change, upon
-receiving each type of message. It's the only place where the model is changed. It accepts a message, 
-and model as parameters, and returns an `Update` struct. `Update` contains `ShouldRender` and `Effect`
+you pass to `App::builder()` describes how the state should change, upon
+receiving each type of message. It's the only place where the model is changed. It accepts a message 
+and a model as parameters, and returns an `Update` struct. `Update` contains `ShouldRender` and `Effect`
 enums. `ShouldRender` and its variants are imported in the prelude, 
 and has variants of 
-`Render` and `Skip`. Render triggers a rendering update, and will be used in 
-most cases. `Skip` updates the model without triggering a render, and is useful in animations.
+`Render` and `Skip`. Render triggers a rendering update and will be used in 
+most cases. `Skip` updates the model without triggering a render and is useful in animations.
 `Effect` isn't exposed in the API: it's used internally to handle async events like
 fetch requests. See the `Http requests` section for more info.
 
