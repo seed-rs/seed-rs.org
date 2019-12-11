@@ -117,6 +117,8 @@ fn update(msg: Msg, model: &mut Model, _orders: &mut impl Orders<Msg>) {
 }
 ```
 
+[TODO]: # (This section below is unclear, please improve me)
+
 The third parameter of the update function is an 
 [Orders](https://docs.rs/seed/0.3.4/seed/prelude/struct.Orders.html)
  struct, imported in the prelude.
