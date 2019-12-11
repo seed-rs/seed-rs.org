@@ -1,23 +1,21 @@
 # View
 
- Visual layout (ie HTML/DOM elements) is described declaratively in Rust, and uses 
-[macros]( https://doc.rust-lang.org/book/appendix-04-macros.html) to simplify syntax. Each element
+ Visual layout (ie HTML/DOM elements) is described declaratively with [macros]( https://doc.rust-lang.org/book/appendix-04-macros.html) to simplify syntax. Each element
 is represented by a macro, eg `div![]`. These act as functions that accept an arbitrary
-number of parameters, in any order: They handle the parameters based exclusively on type.
+number of parameters in any order. They handle parameters based exclusively on type.
 
-The view's defined by a function that's passed to 
-[App::builder](https://docs.rs/seed/0.4.2/seed/struct.App.html#method.build). This takes a `&Model`
-as its parameter, and outputs something that implements the ` View` trait, which is imported in the prelude.
+The view is defined by a function passed to 
+[App::build()](https://docs.rs/seed/0.4.2/seed/struct.App.html#method.build). It takes a `&Model`
+as a parameter and outputs something that implements the ` View` trait, which is imported in the prelude.
 Usually, this is a `Node`, or `Vec<Node>`, representing all nodes that will be inserted as children
-on the top-level one. (The top-level `Node` is in the html file, and specified with
-[App::builder.mount()](https://docs.rs/seed/0.4.2/seed/struct.AppBuilder.html#method.mount), 
-or as a default, the element with id `app`).
+on the top-level one. The top-level `Node` exists in the DOM as specified by
+[AppBuilder::mount()](https://docs.rs/seed/0.4.2/seed/struct.AppBuilder.html#method.mount) and defaults to an element with id `app`.
  It may composed into sub-functions, which can be thought of like components in other frameworks. 
 
 Examples:
 ```rust
 fn view(model: &Model) -> Node<Msg> {
-    h1![ "Let there be light" ],
+    h1![ "Let there be light" ]
 }
 ```
 
@@ -25,12 +23,14 @@ fn view(model: &Model) -> Node<Msg> {
 fn view(model: &Model) -> Vec<Node<Msg>> {
     vec![
         h1![ "Let there be light" ],
-        h2![ "Let it be both a particle and a wave" ]
+        h2![ "Let it be both a particle and a wave" ],
     ]
 }
 `````
 In either of those examples, you could use the signature: `fn view(model: &Model) -> impl View<Msg>` instead.
 This allows you to change between them without changing the function signature.
+
+[TODO]: # (Explain what `Msg` type parameter means and how it's connected to `update` function)
 
 ## The Node Enum
 The Virtual DOM is represnted by nested [Nodes](https://docs.rs/seed/0.1.6/seed/dom_types/enum.Node.html).
