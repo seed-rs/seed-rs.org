@@ -25,7 +25,7 @@ impl Default for Model {
 ```
  
 In this example, we initialize using Rust’s `Default` trait, in order to keep the initialization code by the
- model struct. When we call `Model.default()`, it initializes with these values. We could 
+ model struct. When we call `Model::default()`, it initializes with these values. We could 
  also initialize it using a constructor method, or a struct literal. Note the use of `into()` 
  on our `&str` literal, to convert it into an owned `String`.
  
