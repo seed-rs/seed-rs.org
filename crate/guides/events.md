@@ -177,7 +177,7 @@ where it handles text input triggered by a key press, and uses prevent_default()
 ## Window events
 We handle events triggered by the overall window specially, since it doesn't fit directly
 into our virtual DOM. We pass to `App::builder::window_events()` a function that accepts a
- ref to `Model`, and returns a `Vec<devents::Listener>`. We use it to control
+ ref to `Model`, and returns a `Vec<events::Listener>`. We use it to control
 which listeners are attached to the window based on the model. Excerpt from the
 [window_events](https://github.com/seed-rs/seed/blob/master/examples/window_events/src/lib.rs)
 example:
