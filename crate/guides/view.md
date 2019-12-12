@@ -433,6 +433,6 @@ branches must return an `Node` (Or `Vec` of `Node`s) to satisfy Rust's type syst
 rendered, and its `empty![]` macro alias, which is more concise and consistent:
 ```rust
 div![
-    if model.count >= 10 { h2![ style!{St::Padding => 50}, "Nice!" ] } else { empty![]) }
+    if model.count >= 10 { h2![ style!{St::Padding => 50}, "Nice!" ] } else { empty![] }
 ]
 ```
