@@ -58,7 +58,7 @@ or included multiple times.
 - [Listener](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Listener.html) structs, which handle events
 - `String`s or `&str`s representing a node text
 - [Node](https://docs.rs/seed/0.1.6/seed/dom_types/enum.Node.html) structs, representing a child
-- Vecs of `Node`, `Listener`, `Attrs`, or `Style` structs
+- Vecs of `Node`, `Listener`, `Attrs`, or `Style`
 - `Map`s, ie the result of `map()`, yielding `Node`s or `Listener`s, without having to explicitly `collect`
 
 The parameters can be passed in any order; the compiler knows how to handle them
