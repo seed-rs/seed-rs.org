@@ -265,6 +265,22 @@ fn a_component() -> Node<Msg> {
 }
 ```
 
+You can also pass Vecs of Styles to the view macros. This may be convenient when building styles 
+before passing to the view:
+```rust
+fn a_component(condition: bool) -> Node<Msg> {
+    let mut styles = vec![style!{"color" => "lavender"}];
+    
+    if condition {
+        styles.push(style!{St::FontSize: px(12)})
+    }
+
+    div![
+        h1![ styles, "First row" ],
+    ]
+}
+```
+
 
 Overall: we leverage of Rust's strict type system to flexibly-create the view
 using normal Rust code.W
