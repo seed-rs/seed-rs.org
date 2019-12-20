@@ -56,11 +56,10 @@ or included multiple times.
 - [Attrs](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Attrs.html) structs
 - [Style](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Style.html) structs
 - [Listener](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Listener.html) structs, which handle events
-- `Vec`s of `Listener`, `Attrs`, or `Style` structs
 - `String`s or `&str`s representing a node text
 - [Node](https://docs.rs/seed/0.1.6/seed/dom_types/enum.Node.html) structs, representing a child
-- Vecs of `Node` structs, representing multiple children
-- `Map`s, ie the result of `map()`, yielding `Node`s or `Listener`s, without having to explicitly `collect`.
+- Vecs of `Node`, `Listener`, `Attrs`, or `Style` structs
+- `Map`s, ie the result of `map()`, yielding `Node`s or `Listener`s, without having to explicitly `collect`
 
 The parameters can be passed in any order; the compiler knows how to handle them
 based on their types. Children are rendered in the order passed.
