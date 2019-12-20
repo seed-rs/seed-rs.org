@@ -51,15 +51,16 @@ each element, and imported into the global namespace. Eg `div!` above. We use th
 use seed::{*, prelude::*};
 ```
 
-These macros accept any combination of the following parameters:
-- One [Attrs](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Attrs.html) struct
-- One [Style](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Style.html) struct
-- One or more [Listener](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Listener.html) structs, which handle events
-- One or more `Vec`s of `Listener` structs
-- One `String` or `&str` representing a node text
-- One or more [Node](https://docs.rs/seed/0.1.6/seed/dom_types/enum.Node.html) structs, representing a child
-- One or more Vecs of `Node` structs, representing multiple children
-- A `Map`, ie the result of `map()`, yielding `Node`s or `Listener`s, without having to explicitly `collect`.
+These macros accept any combination of the following parameters. Each can be ommitted, included once,
+or included multiple times.
+- [Attrs](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Attrs.html) structs
+- [Style](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Style.html) structs
+- [Listener](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Listener.html) structs, which handle events
+- `Vec`s of `Listener`, `Attrs`, or `Style` structs
+- `String`s or `&str`s representing a node text
+- [Node](https://docs.rs/seed/0.1.6/seed/dom_types/enum.Node.html) structs, representing a child
+- Vecs of `Node` structs, representing multiple children
+- `Map`s, ie the result of `map()`, yielding `Node`s or `Listener`s, without having to explicitly `collect`.
 
 The parameters can be passed in any order; the compiler knows how to handle them
 based on their types. Children are rendered in the order passed.
@@ -283,7 +284,7 @@ fn a_component(condition: bool) -> Node<Msg> {
 
 
 Overall: we leverage of Rust's strict type system to flexibly-create the view
-using normal Rust code.W
+using normal Rust code.
 
 
 `El` has several helper methods which can be chained together:
