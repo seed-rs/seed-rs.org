@@ -1,9 +1,12 @@
 // @TODO: uncomment once https://github.com/rust-lang/rust/issues/54726 stable
 //#![rustfmt::skip::macros(class)]
 
-#![allow(clippy::used_underscore_binding)]
-#![allow(clippy::non_ascii_literal)]
-#![allow(clippy::enum_glob_use)]
+#![allow(
+    clippy::used_underscore_binding,
+    clippy::non_ascii_literal,
+    clippy::enum_glob_use,
+    clippy::must_use_candidate
+)]
 
 mod generated;
 mod guide;

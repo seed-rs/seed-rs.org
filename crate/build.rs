@@ -80,15 +80,15 @@ where
         Event::Text(text) => {
             push_to_text_parts(&text);
             Event::Text(text)
-        },
+        }
         Event::Code(code) => {
             push_to_text_parts(&code);
             Event::Code(code)
-        },
+        }
         Event::FootnoteReference(reference) => {
             push_to_text_parts(&reference);
             Event::FootnoteReference(reference)
-        },
+        }
         _ => event,
     })
 }
@@ -105,7 +105,7 @@ where
                 format!(" lang=\"{}\"", code_lang)
             };
             Event::Html(format!("<code-block{}>", lang).into())
-        },
+        }
         Event::End(Tag::CodeBlock(_)) => Event::Html("</code-block>".into()),
         _ => event,
     })
