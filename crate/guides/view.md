@@ -5,11 +5,11 @@ is represented by a macro, eg `div![]`. These act as functions that accept an ar
 number of parameters in any order. They handle parameters based exclusively on type.
 
 The view is defined by a function passed to 
-[App::build()](https://docs.rs/seed/0.4.2/seed/struct.App.html#method.build). It takes a `&Model`
+[App::build()](https://docs.rs/seed/0.5.1/seed/struct.App.html#method.build). It takes a `&Model`
 as a parameter and outputs something that implements the ` View` trait, which is imported in the prelude.
 Usually, this is a `Node`, or `Vec<Node>`, representing all nodes that will be inserted as children
 on the top-level one. The top-level `Node` exists in the DOM as specified by
-[AppBuilder::mount()](https://docs.rs/seed/0.4.2/seed/struct.AppBuilder.html#method.mount) and defaults to an element with id `app`.
+[AppBuilder::mount()](https://docs.rs/seed/0.5.1/seed/struct.AppBuilder.html#method.mount) and defaults to an element with id `app`.
  It may composed into sub-functions, which can be thought of like components in other frameworks. 
 
 Examples:
@@ -33,12 +33,12 @@ This allows you to change between them without changing the function signature.
 [TODO]: # (Explain what `Msg` type parameter means and how it's connected to `update` function)
 
 ## The Node Enum
-The Virtual DOM is represnted by nested [Nodes](https://docs.rs/seed/0.1.6/seed/dom_types/enum.Node.html).
+The Virtual DOM is represnted by nested [Nodes](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Node.html).
 `Node` has 3 variants: 
 
-- `Text` holds a [Text](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Text.html)
+- `Text` holds a [Text](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Text.html)
 struct. Mostly for internal use, but can be created with `Node::new_text()`.
-- `Element` wraps an [El](https://docs.rs/seed/0.1.6/seed/dom_types/struct.El.html), which is
+- `Element` wraps an [El](https://docs.rs/seed/0.5.1/seed/dom_types/struct.El.html), which is
 the main component of our VDOM. Created using macros, described below.
 - `Empty` is a placeholder that doens't render anything; useful in conditional/ternary logic.
 Created using the `empty![]` macro, or `seed::empty()`.
@@ -53,11 +53,11 @@ use seed::{*, prelude::*};
 
 These macros accept any combination of the following parameters. Each can be ommitted, included once,
 or included multiple times.
-- [Attrs](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Attrs.html) structs
-- [Style](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Style.html) structs
-- [Listener](https://docs.rs/seed/0.1.6/seed/dom_types/struct.Listener.html) structs, which handle events
+- [Attrs](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Attrs.html) structs
+- [Style](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Style.html) structs
+- [Listener](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Listener.html) structs, which handle events
 - `String`s or `&str`s representing a node text
-- [Node](https://docs.rs/seed/0.1.6/seed/dom_types/enum.Node.html) structs, representing a child
+- [Node](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Node.html) structs, representing a child
 - `Vec`s of `Attrs`, `Style`, `Listener`, or `Node`
 - `Map`s of `Attrs`, `Style`, `Listener`, or `Node`, ie the result of `map()`,
  without having to explicitly `collect`
@@ -65,8 +65,8 @@ or included multiple times.
 The parameters can be passed in any order; the compiler knows how to handle them
 based on their types. Children are rendered in the order passed.
 
-Views are described using [El](https://docs.rs/seed/0.1.6/seed/dom_types/struct.El.html) structs, 
-defined in the [seed::dom_types](https://docs.rs/seed/0.1.6/seed/dom_types/index.html) module.
+Views are described using [El](https://docs.rs/seed/0.5.1/seed/dom_types/struct.El.html) structs, 
+defined in the [seed::dom_types](https://docs.rs/seed/0.5.1/seed/dom_types/index.html) module.
 
 `Attrs` and `Style` are thinly-wrapped hashmaps created with their own macros: `attrs!{}` and `style!{}`
 respectively.
@@ -117,7 +117,7 @@ let style = style![
 ```
 
 We can set multiple values for an attribute using 
-[Attribute.add_multiple](https://docs.rs/seed/0.4.2/seed/dom_types/struct.Attrs.html#method.add_multiple).
+[Attribute.add_multiple](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Attrs.html#method.add_multiple).
  This is useful for setting multiple classes. Note that we must set this up outside of
 the view macro, since it involves modifying a variable:
 ```rust
@@ -130,7 +130,7 @@ fn a_component() -> Node<Msg> {
 ```
 
 Seed validates attributes [against this list](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes);
-The [At](https://docs.rs/seed/0.4.2/seed/dom_types/enum.At.html) 
+The [At](https://docs.rs/seed/0.5.1/seed/dom_types/enum.At.html) 
 enum includes only these values, and `&strs` passed are converted into `At`s. If you
 wish to use a custom attribute, use 
 [At::Custom](https://docs.rs/seed/0.4.1/seed/dom_types/enum.At.html#variant.Custom)
@@ -187,7 +187,7 @@ fn a_component() -> Node<Msg> {
 
 For boolean attributes that are handled by presense or absense, like `disabled`, `checked`,
 `autofocus` etc, use 
-[.as_at_value](https://docs.rs/seed/0.4.2/seed/dom_types/values/trait.AsAtValue.html#tymethod.as_at_value):
+[.as_at_value](https://docs.rs/seed/0.5.1/seed/dom_types/values/trait.AsAtValue.html#tymethod.as_at_value):
  `input![ attrs!{At::Disabled => false.as_at_value() ]`:
 
 ```rust
@@ -318,7 +318,7 @@ svg![
 ]
 ```
 
-The same exmaple using [from_html](https://docs.rs/seed/0.4.2/seed/dom_types/enum.Node.html#method.from_html):
+The same exmaple using [from_html](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Node.html#method.from_html):
 ```rust
 Node::from_html(
 r#"
