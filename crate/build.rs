@@ -73,22 +73,22 @@ where
     I: Iterator<Item = Event<'a>>,
 {
     let push_to_text_parts = move |text: &str| {
-        text_parts.borrow_mut().push(text.to_lowercase().to_string());
+        text_parts.borrow_mut().push(text.to_lowercase());
     };
 
     parser.map(move |event| match event {
         Event::Text(text) => {
             push_to_text_parts(&text);
             Event::Text(text)
-        }
+        },
         Event::Code(code) => {
             push_to_text_parts(&code);
             Event::Code(code)
-        }
+        },
         Event::FootnoteReference(reference) => {
             push_to_text_parts(&reference);
             Event::FootnoteReference(reference)
-        }
+        },
         _ => event,
     })
 }
@@ -105,7 +105,7 @@ where
                 format!(" lang=\"{}\"", code_lang)
             };
             Event::Html(format!("<code-block{}>", lang).into())
-        }
+        },
         Event::End(Tag::CodeBlock(_)) => Event::Html("</code-block>".into()),
         _ => event,
     })

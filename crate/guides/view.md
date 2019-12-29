@@ -133,14 +133,14 @@ Seed validates attributes [against this list](https://developer.mozilla.org/en-U
 The [At](https://docs.rs/seed/0.5.1/seed/dom_types/enum.At.html) 
 enum includes only these values, and `&strs` passed are converted into `At`s. If you
 wish to use a custom attribute, use 
-[At::Custom](https://docs.rs/seed/0.4.1/seed/dom_types/enum.At.html#variant.Custom)
+[At::Custom](https://docs.rs/seed/0.5.1/seed/dom_types/enum.At.html#variant.Custom)
 , eg `At::Custom(name)`, where `name` is a `String` of your
 attribute's name. In `attrs!` when using `&str`s, inserting an unrecognized attribute
 will do the same. Similar `Custom` methods exist for 
-[Style](https://docs.rs/seed/0.4.1/seed/dom_entity_names/styles/enum.St.html#variant.Custom),
-[Namespace](https://docs.rs/seed/0.4.1/seed/dom_types/enum.Namespace.html#variant.Custom),
-[Tag](https://docs.rs/seed/0.4.1/seed/dom_types/enum.Tag.html#variant.Custom), and
-[Category](https://docs.rs/seed/0.4.1/seed/events/enum.Category.html#variant.Custom).
+[Style](https://docs.rs/seed/0.5.1/seed/dom_entity_names/styles/enum.St.html#variant.Custom),
+[Namespace](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Namespace.html#variant.Custom),
+[Tag](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Tag.html#variant.Custom), and
+[Category](https://docs.rs/seed/0.5.1/seed/events/enum.Category.html#variant.Custom).
 
 The `class!` and `id!` convenience macros allow settings
 attributes as a list of classes, or a single id, if no other attributes are required.
@@ -233,7 +233,7 @@ fn view(model: &Model) -> impl View<Msg> {
 ```
 
 We can combine Attrs and `Style` instances using their 
-[merge](https://docs.rs/seed/0.4.1/seed/dom_types/struct.Attrs.html#method.merge)
+[merge](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Attrs.html#method.merge)
  methods, which take
 an `&Attrs` and `&Style` respectively. This can be used to compose styles from reusable parts. 
 Example:
@@ -373,7 +373,7 @@ pub fn render() {
 
 ##  Components
 The analog of components in frameworks like React are normal Rust functions that that return
-[Node](https://docs.rs/seed/0.1.8/seed/dom_types/enum.Node.html) s.
+[Node](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Node.html) s.
 These functions take parameters that are not treated in a way equivalent
 to attributes on native DOM elements; they just provide a way to 
 organize your code. In practice, they're used in a way similar to components in React.
@@ -446,7 +446,7 @@ fn items() -> Node<Msg> {
 ## Dummy elements
 When performing ternary operations inside an element macro, all
 branches must return an `Node` (Or `Vec` of `Node`s) to satisfy Rust's type system. Seed provides the
-[empty](https://docs.rs/seed/0.1.8/seed/fn.empty.html) function, which creates a `Node` that will not be 
+[empty](https://docs.rs/seed/0.5.1/seed/fn.empty.html) function, which creates a `Node` that will not be 
 rendered, and its `empty![]` macro alias, which is more concise and consistent:
 ```rust
 div![
