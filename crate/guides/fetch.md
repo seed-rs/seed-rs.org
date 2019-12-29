@@ -1,8 +1,8 @@
 # HTTP Requests (fetch)
 
-We use the [seed::Request](https://docs.rs/seed/0.1.12/seed/fetch/struct.Request.html) struct
+We use the [seed::Request](https://docs.rs/seed/0.5.1/seed/fetch/struct.Request.html) struct
 to make HTTP requests in the browser, wrapping the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
-To use this, we need to include `futures = "^0.1.26"` in `Cargo.toml`. The [Fetch module](https://docs.rs/seed/0.2.3/seed/fetch/index.html)
+To use this, we need to include `futures = "^0.1.26"` in `Cargo.toml`. The [Fetch module](https://docs.rs/seed/0.5.1/seed/fetch/index.html)
 is standalone: It can be used with any wasm-bindgen program.
 
 ## Receiving data

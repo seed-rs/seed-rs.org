@@ -120,7 +120,7 @@ fn update(msg: Msg, model: &mut Model, _orders: &mut impl Orders<Msg>) {
 [TODO]: # (This section below is unclear, please improve me)
 
 The third parameter of the update function is an 
-[Orders](https://docs.rs/seed/0.3.4/seed/prelude/struct.Orders.html)
+[Orders](https://docs.rs/seed/0.5.1/seed/prelude/struct.Orders.html)
  struct, imported in the prelude.
 It has four methods, each defining an update behavior:
 
@@ -146,7 +146,7 @@ See the [view section](https://seed-rs.org/guide/view) for details.
 To start your app, call the `App::builder` method, which takes the following parameters:
 
 - An `init` function which accepts an initial routing, initial orders, and outputs 
-an [Init struct](https://docs.rs/seed/0.4.1/seed/struct.Init.html) (imported in the prelude),
+an [Init struct](https://docs.rs/seed/0.5.1/seed/struct.Init.html) (imported in the prelude),
  wrapping the initial model.
 - Your update function
 - Your view function
@@ -205,7 +205,7 @@ pub fn render() {
 
 `AfterMount` has the following fields:
     - `model`: The initial model
-    - `url_handling`: A [Urlhandling](https://docs.rs/seed/0.4.1/seed/enum.UrlHandling.html)  enum, which has 
+    - `url_handling`: A [Urlhandling](https://docs.rs/seed/0.5.1/seed/enum.UrlHandling.html)  enum, which has 
     variants `PassToRoutes`: default with `Init::new()`),
     and `None`
 
