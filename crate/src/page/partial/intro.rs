@@ -1,5 +1,6 @@
 use crate::{
     generated::css_classes::C, page::partial::image, Msg, Route, SEED_VERSION,
+    SEED_VERSION_DATE,
 };
 use seed::{prelude::*, *};
 
@@ -16,8 +17,9 @@ pub fn view(show: bool) -> impl View<Msg> {
                     C.sm__items_center,
                 ],
                 view_logo().els(),
-                view_version().els(),
+                view_description_and_version().els(),
             ],
+            view_join_forum_chat().els(),
             view_testimonials().els(),
         ]
     } else {
@@ -43,6 +45,29 @@ fn view_logo() -> impl View<Msg> {
     ]
 }
 
+fn view_description_and_version() -> impl View<Msg> {
+    div![
+        class![C.flex, C.flex_col,],
+        view_description().els(),
+        a![
+            class![
+                C.mt_2,
+                C.text_right,
+                C.text_blue_600,
+                C.hover__text_blue_800,
+                C.hover__underline,
+            ],
+            attrs! {
+                At::Href => Route::Guide("changelog".to_owned())
+            },
+            div![
+                span![class![C.font_bold,], SEED_VERSION],
+                span![class![C.ml_4, C.text_sm,], SEED_VERSION_DATE,],
+            ]
+        ]
+    ]
+}
+
 fn view_description() -> impl View<Msg> {
     h2![
         class![
@@ -60,23 +85,33 @@ fn view_description() -> impl View<Msg> {
     ]
 }
 
-fn view_version() -> impl View<Msg> {
+fn view_join_forum_chat() -> impl View<Msg> {
     div![
-        class![C.flex, C.flex_col,],
-        view_description().els(),
+        class![
+            C.mb_12,
+            C.text_center,
+            C.text_blue_900,
+            C.font_semibold,
+            C.text_lg,
+            C.whitespace_pre_wrap,
+        ],
+        span!["You are very welcome to join our "],
         a![
-            class![
-                C.mt_2,
-                C.text_right,
-                C.text_blue_600,
-                C.hover__text_blue_800,
-                C.hover__underline,
-            ],
+            class![C.text_blue_500, C.hover__text_blue_700, C.hover__underline,],
+            "forum",
             attrs! {
-                At::Href => Route::Guide("changelog".to_owned())
-            },
-            SEED_VERSION
-        ]
+                At::Href => "https://seed.discourse.group",
+            }
+        ],
+        span![" and "],
+        a![
+            class![C.text_blue_500, C.hover__text_blue_700, C.hover__underline,],
+            "chat",
+            attrs! {
+                At::Href => "https://discord.gg/JHHcHp5",
+            }
+        ],
+        span!["!"],
     ]
 }
 
