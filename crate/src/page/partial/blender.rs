@@ -1,5 +1,5 @@
 use crate::{generated::css_classes::C, Mode, Msg};
-use seed::{dom_types::Attrs, prelude::*, *};
+use seed::{prelude::*, *};
 
 pub fn view_for_header(mode: Mode) -> impl View<Msg> {
     if mode == Mode::Dark {
