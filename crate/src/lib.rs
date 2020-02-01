@@ -21,8 +21,7 @@ use serde_json;
 use std::{convert::identity, fmt};
 use Visibility::*;
 
-const SEED_VERSION: &str = "0.5.1";
-const SEED_VERSION_DATE: &str = "Dec 28, 2019";
+const SEED_VERSION: &str = "0.6.0 (February 1, 2020)";
 const TITLE_SUFFIX: &str = "Seed";
 const STORAGE_KEY: &str = "seed";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
