@@ -193,8 +193,8 @@ For boolean attributes that are handled by presense or absense, like `disabled`,
 ```rust
 fn a_component() -> Node<Msg> {
     // ...
-    input![ attrs!{At::Typed => "checkbox"; At::Checked => true.as_at_value()} ]
-    input![ attrs!{At::Autofocus => true.as_at_value()} ]
+    input![ attrs!{At::Type => "checkbox"; At::Checked => true.as_at_value()} ]
+    input![ attrs!{At::AutoFocus => true.as_at_value()} ]
     // ...
 }
 ```
