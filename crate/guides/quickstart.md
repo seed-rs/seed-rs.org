@@ -15,7 +15,7 @@ nodes![
 ```
 
 - You can use native DOM elements safely because 
-ElRef::get checks if the referenced element exists, 
+`ElRef::get` checks if the referenced element exists, 
 is in the DOM now, and has the right type. Check ouf the `canvas`, `user_media`,
 or `todomvc` examples.
 

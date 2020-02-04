@@ -5,7 +5,7 @@ You can trigger state changes that update the address bar,
  and can be nagivated to/from using forward and back buttons. This works for landing-page
 routing as well, provided your server is configured to support. See the
 [todomvc](https://github.com/seed-rs/seed/tree/master/examples/todomvc) example, and 
-the seed-rs.org repo.
+the [seed-rs.org](https://github.com/seed-rs/seed-rs.org) repo.
   
 Let's say our site the following pages:
 a guide, which can have subpages, and a changelog, accessible by `http://seed-rs.org/changelog`,
