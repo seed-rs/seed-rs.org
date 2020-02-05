@@ -4,8 +4,8 @@ Seed includes flexible routing, inspired by
 You can trigger state changes that update the address bar,
  and can be nagivated to/from using forward and back buttons. This works for landing-page
 routing as well, provided your server is configured to support. See the
- [homepage](https://github.com/seed-rs/seed/tree/master/examples/homepage) and
-[todomvc](https://github.com/seed-rs/seed/tree/master/examples/todomvc) examples.
+[todomvc](https://github.com/seed-rs/seed/tree/master/examples/todomvc) example, and 
+the [seed-rs.org](https://github.com/seed-rs/seed-rs.org) repo.
   
 Let's say our site the following pages:
 a guide, which can have subpages, and a changelog, accessible by `http://seed-rs.org/changelog`,
@@ -65,7 +65,7 @@ button!["Changelog", attrs!{At::Href => "/changelog"} ]
 ## More detail, and routing using events
 
 Your `routes` function outputs the message that handles the routing as an `Option`, and accepts a 
-[Url struct](https://docs.rs/seed/0.5.1/seed/routing/struct.Url.html)
+[Url struct](https://docs.rs/seed/0.5.1/seed/browser/url/struct.Url.html)
 describing the route, which routes has the following fields:
 ```rust
 pub struct Url {

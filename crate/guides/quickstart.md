@@ -1,3 +1,27 @@
+# New features in v0.6.0:
+Reference [this PR](https://github.com/seed-rs/seed/pull/330).
+
+- Added the `nodes!` enum. This vec-like enum can be used to combine different collections
+of `Node`s, for use in view macros.
+Example:
+```rust
+nodes![
+    h1!["a node"],
+    vec![
+        h4["a vec"],
+        h4["of nodes"],
+    ],
+]
+```
+
+- You can use native DOM elements safely because 
+`ElRef::get` checks if the referenced element exists, 
+is in the DOM now, and has the right type. Check ouf the `canvas`, `user_media`,
+or `todomvc` examples.
+
+- `El::custom` added; this can be used to create an Element with a custom / arbitrary tag.
+
+
 # Quickstart
 
 ## Setup
@@ -53,7 +77,7 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-seed = "^0.5.0"
+seed = "^0.6.0"
 wasm-bindgen = "^0.2.50"
 ```
 
