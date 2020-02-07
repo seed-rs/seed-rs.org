@@ -1,4 +1,9 @@
 [[redirects]]
+  from = "/docs/*"
+  to = "https://docs.rs/seed/latest?search=:splat"
+  status = 301
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
