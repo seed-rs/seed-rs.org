@@ -325,19 +325,20 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
 // ------ ------
 
 pub fn view(model: &Model) -> impl View<Msg> {
-    let mut nodes = vec![div![
-        class![C.min_h_screen, C.bg_white,],
-        match model.page {
-            Page::Guide {
-                guide,
-                show_intro,
-            } => page::guide::view(&guide, model, show_intro).els(),
-            Page::NotFound => page::not_found::view().els(),
-        },
-        page::partial::header::view(model).els(),
-    ]];
-    nodes.append(&mut blender::view_for_content(model.mode).els());
-    nodes
+    nodes![
+        div![
+            class![C.min_h_screen, C.bg_white,],
+            match model.page {
+                Page::Guide {
+                    guide,
+                    show_intro,
+                } => page::guide::view(&guide, model, show_intro).els(),
+                Page::NotFound => page::not_found::view().els(),
+            },
+            page::partial::header::view(model).els(),
+        ],
+        blender::view_for_content(model.mode).els(),
+    ]
 }
 
 // ------ ------
