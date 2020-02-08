@@ -143,13 +143,20 @@ See the [view section](https://seed-rs.org/guide/view) for details.
 
 
 ## Initializing
-To start your app, call the `App::builder` method, which takes the following parameters:
+To start your app, call the `App::builder` method, which creates an 
+[Builder struct](https://docs.rs/seed/0.6.0/seed/app/builder/struct.Builder.html) struct. 
+It has the the following optional methods:
 
-- An `init` function which accepts an initial routing, initial orders, and outputs 
-an [Init struct](https://docs.rs/seed/0.5.1/seed/struct.Init.html) (imported in the prelude),
- wrapping the initial model.
-- Your update function
-- Your view function
+- `before_mount` - Specify a function which allow you to 
+select the HTML element where the app will be mounted and how it'll be mounted.
+- `after_mount` - Used to initialize the model, and provide initial URL handling.
+- `routes` - used to specify routing function. See the Routing section for details.
+- `window_events` Registers a function which decides how window events will be handled.
+- `sync` - Registers a sync function. (Fill out)
+
+And the following mandatory one:
+- `build_and_start` - run at the end, to initialize the app.
+
 
 You can can chain the following optional methods:
 
@@ -160,34 +167,27 @@ state based on url (See the `Routing` section)
 
 And must must complete with the method `.build_and_start();`.
 
-`.mount()` takes a single argument, which can be the id of the element you wish to mount in,
-a `web_sys::Element`, or a `web_sys::HtmlElement`. Examples:
-`App::builder(update, view).mount(seed::body())`
-`App::builder(update, view).mount('a_div_id`)`
-
-```
-App::builder(update, view).mount(
-    seed::body().querySelector("section").unwrap().unwrap()
-)
-```
-
 The `App::builder` call must be wrapped in a function with the `#[wasm_bindgen(start)]` invocation.
+
+Example using a custom mount point:
+```rust
+fn before_mount(_url: Url) -> BeforeMount {
+   BeforeMount::new()
+       .mount_point("main")
+       .mount_type(MountType::Takeover)
+}
+
+#[wasm_bindgen(start)]
+pub fn render() {
+    App::builder(update, view)
+        .before_mount(before_mount)
+        .build_and_start();
+}
+```
 
 This will render your app to the element holding the id you passed; in the case of this example,
 "main". The only part of the web page Seed will interact with is that element, so you can
 use other HTML not part of Seed, or other JS code/frameworks in the same document.
-
-Example, with optional methods:
-```rust
-#[wasm_bindgen(start)]
-pub fn render() {
-    App::builder(update, view)
-        .mount("main")
-        .routes(routes)
-        .window_events(window_events)
-        .build_and_start();
-}
-```
 
 Example of using an `after_mount` function:
 ```rust
@@ -213,3 +213,16 @@ pub fn render() {
 `AfterMount::default()` covers the most common use-cases, where the model is initialized with its 
  `default::Default` implementation. (This is also true if we don't use the `.after_mount()` method.
  You can pass a different model by using `after_mount::new(model)`, where `model` here is your model.
+ 
+ 
+Example, with `route` and `window_events`, described in the Routing and Misc sections of this guide
+respectively:
+```rust
+#[wasm_bindgen(start)]
+pub fn render() {
+    App::builder(update, view)
+        .routes(routes)
+        .window_events(window_events)
+        .build_and_start();
+}
+```
