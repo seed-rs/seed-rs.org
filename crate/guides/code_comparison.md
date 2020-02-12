@@ -14,40 +14,20 @@ way to handle it. We're also using Typescript.
 
 ## React
 
-```jsx
-import * as React from "react"
-import * as ReactDOM from "react-dom"
+```tsx
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 
 interface MainProps {}
-interface MainState {
-    val: number
+
+const Main: React.FC<MainProps> = () => {
+    const [value, setValue] = React.useState<number>(0)
+    const increment = () => setValue(value + 1)
+
+    return <button onClick={increment}>{'Hello, World × ' + value}</button>
 }
 
-class Main extends React.Component<MainProps, MainState> {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            val: 0
-        }
-
-        this.increment = this.increment.bind(this)
-    }
-    
-    increment() {
-        this.setState({val: this.state.val + 1})
-    }
-    
-    render() {
-        return (
-            <button onClick={() => this.state.increment()}>
-                {"Hello, World × " + this.state.val}
-            </button>
-        )   
-    }
-}
-
-ReactDOM.render(<Main />, document.getElementById("app"))
+ReactDOM.render(<Main />, document.getElementById('app'))
 ```
 
 
@@ -98,15 +78,22 @@ pub fn render() {
 
 ## React
 
-```jsx
-const Form = ({name, color, value, changeText, doIt}:
-        {name: string, color: string, value: number, changeText: Function, doIt: Function}) {
+```tsx
+interface Props {
+  name: string
+  color: string
+  value: number
+  changeText: (ev: React.ChangeEvent<HTMLInputElement>) => void
+  doIt: Function
+}
+
+const Form: React.FC<Props> = ({ name, color, value, changeText, doIt }) => {
     // A description
-    const style: CSSProperties = {fontSize: 12, color: color}
+    const style: React.CSSProperties = { fontSize: 12, color: color }
 
     return (
         <>
-            <input value={value.toString() onChange={(ev) => changeText(ev)} />
+            <input value={value.toString()} onChange={changeText} />
 
             <button
                 className="buttons"
