@@ -7,7 +7,7 @@ To output to the web browser's console (ie `console.log()` in JS), use
 in a similar way, equivalent to JS's `console.error()`.
 
 ## Custom tags
-Seed generally retricts the element tags allowed by using Enums for the tags, and
+Seed generally restricts the element tags allowed by using Enums for the tags, and
 a predefined set of element-creation macros. If you wish to use a custom tag, you can
 use using `Tag::from` (`El` and `Tag` are
 exposed in the prelude), either with the `El::empty` constructor, or using the `custom!`

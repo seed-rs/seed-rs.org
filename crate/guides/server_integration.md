@@ -62,7 +62,7 @@ tokio-timer = "0.2.11"
 shared = { path = "../shared" }
 ```
 
-The client's `cargo.toml` is a standard Seed one. The shared `Cargo.toml` includes
+The client's `Cargo.toml` is a standard Seed one. The shared `Cargo.toml` includes
 whatever you need for your shared data structures and code; it will usually include
 `serde` for serializing and deserializing, and may include database code, since
 this crate is a good place for database models and schema.
