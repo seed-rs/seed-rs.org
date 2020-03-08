@@ -294,7 +294,7 @@ let my_el = div![]
     .add_class("complete")
     .add_attr("alt".to_string(), "a description".to_string())
     .add_style(St::Height, "20px".to_string())
-    .replace_text("Oops, not complete");oo
+    .replace_text("Oops, not complete");
 
 ```
 
