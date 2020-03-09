@@ -1,12 +1,12 @@
 # Routing
 Seed includes flexible routing, inspired by 
-[React-Reason](https://github.com/reasonml/reason-react/blob/master/docs/router.md): 
+[Reason-React](https://github.com/reasonml/reason-react/blob/master/docs/router.md): 
 You can trigger state changes that update the address bar,
  and can be nagivated to/from using forward and back buttons. This works for landing-page
 routing as well, provided your server is configured to support. See the
-[todomvc](https://github.com/seed-rs/seed/tree/master/examples/todomvc) example, and 
-the [seed-rs.org](https://github.com/seed-rs/seed-rs.org) repo.
-  
+ seed-rs.org [source](https://github.com/seed-rs/seed-rs.org/tree/master/crate/src) and
+[todomvc](https://github.com/seed-rs/seed/tree/master/examples/todomvc) example.
+
 Let's say our site the following pages:
 a guide, which can have subpages, and a changelog, accessible by `http://seed-rs.org/changelog`,
 `http://seed-rs.org/guide`, and `http://seed-rs.org/guide/3` (where 3 is the page we want) respectively. 
@@ -17,7 +17,7 @@ number for the guide page. An enum would be cleaner, but we don't wish to compli
 ## The basics
 
 To set up the initial routing, pass a `routes` function describing how to handle
-routing, to [App::build](https://docs.rs/seed/0.5.1/seed/struct.App.html#method.build)'s 
+routing, to [App::build](https://docs.rs/seed/latest/seed/app/struct.App.html#method.build)'s 
 `routes` method.
 ```rust
 fn routes(url: Url) -> Option<Msg> {
@@ -65,7 +65,7 @@ button!["Changelog", attrs!{At::Href => "/changelog"} ]
 ## More detail, and routing using events
 
 Your `routes` function outputs the message that handles the routing as an `Option`, and accepts a 
-[Url struct](https://docs.rs/seed/0.5.1/seed/browser/url/struct.Url.html)
+[Url struct](https://docs.rs/seed/latest/seed/browser/url/struct.Url.html)
 describing the route, which routes has the following fields:
 ```rust
 pub struct Url {
@@ -118,11 +118,11 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
 }
 ```
 
-Notice how the `Route` messages above call [seed::push_route](https://docs.rs/seed/0.5.1/seed/routing/fn.push_route.html), 
+Notice how the `Route` messages above call [seed::push_route](https://docs.rs/seed/latest/seed/browser/service/routing/fn.push_route.html), 
 and the `Change` messages are called in the `routes` function, and are recursively called in the
 update function. `push_route` accepts a single parameter: a `Url` struct, which you can create with a 
 struct literal, or
- [seed::Url::new](https://docs.rs/seed/0.5.1/seed/routing/struct.Url.html#method.new). Alternatively,
+ [seed::Url::new](https://docs.rs/seed/latest/seed/browser/url/struct.Url.html#method.new). Alternatively,
   you can pass a `Vec<String>` / `Vec<&str>`, representing the path.
 
 ```rust
