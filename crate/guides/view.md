@@ -1,15 +1,15 @@
 # View
 
- Visual layout (ie HTML/DOM elements) is described declaratively with [macros]( https://doc.rust-lang.org/book/appendix-04-macros.html) to simplify syntax. Each element
+ Visual layout (ie HTML/DOM elements) is described declaratively with [macros]( https://doc.rust-lang.org/book/ch19-06-macros.html) to simplify syntax. Each element
 is represented by a macro, eg `div![]`. These act as functions that accept an arbitrary
 number of parameters in any order. They handle parameters based exclusively on type.
 
 The view is defined by a function passed to 
-[App::build()](https://docs.rs/seed/0.5.1/seed/struct.App.html#method.build). It takes a `&Model`
+[App::build()](https://docs.rs/seed/latest/seed/app/struct.App.html#method.build). It takes a `&Model`
 as a parameter and outputs something that implements the ` View` trait, which is imported in the prelude.
 Usually, this is a `Node`, or `Vec<Node>`, representing all nodes that will be inserted as children
 on the top-level one. The top-level `Node` exists in the DOM as specified by
-[AppBuilder::mount()](https://docs.rs/seed/0.5.1/seed/struct.AppBuilder.html#method.mount) and defaults to an element with id `app`.
+[AppBuilder::mount()](https://docs.rs/seed/latest/seed/app/builder/struct.Builder.html#method.mount) and defaults to an element with id `app`.
  It may composed into sub-functions, which can be thought of like components in other frameworks. 
 
 Examples:
@@ -33,12 +33,12 @@ This allows you to change between them without changing the function signature.
 [TODO]: # (Explain what `Msg` type parameter means and how it's connected to `update` function)
 
 ## The Node Enum
-The Virtual DOM is represnted by nested [Nodes](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Node.html).
+The Virtual DOM is represnted by nested [Nodes](https://docs.rs/seed/latest/seed/virtual_dom/node/enum.Node.html).
 `Node` has 3 variants: 
 
-- `Text` holds a [Text](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Text.html)
+- `Text` holds a [Text](https://docs.rs/seed/latest/seed/virtual_dom/node/text/struct.Text.html)
 struct. Mostly for internal use, but can be created with `Node::new_text()`.
-- `Element` wraps an [El](https://docs.rs/seed/0.5.1/seed/dom_types/struct.El.html), which is
+- `Element` wraps an [El](https://docs.rs/seed/latest/seed/virtual_dom/node/el/struct.El.html), which is
 the main component of our VDOM. Created using macros, described below.
 - `Empty` is a placeholder that doens't render anything; useful in conditional/ternary logic.
 Created using the `empty![]` macro, or `seed::empty()`.
@@ -53,11 +53,11 @@ use seed::{*, prelude::*};
 
 These macros accept any combination of the following parameters. Each can be ommitted, included once,
 or included multiple times.
-- [Attrs](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Attrs.html) structs
-- [Style](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Style.html) structs
-- [Listener](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Listener.html) structs, which handle events
+- [Attrs](https://docs.rs/seed/latest/seed/virtual_dom/attrs/struct.Attrs.html) structs
+- [Style](https://docs.rs/seed/latest/seed/virtual_dom/style/struct.Style.html) structs
+- [Listener](https://docs.rs/seed/latest/seed/virtual_dom/event_handler_manager/listener/struct.Listener.html) structs, which handle events
 - `String`s or `&str`s representing a node text
-- [Node](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Node.html) structs, representing a child
+- [Node](https://docs.rs/seed/latest/seed/virtual_dom/node/enum.Node.html) structs, representing a child
 - `Vec`s of `Attrs`, `Style`, `Listener`, or `Node`
 - `Map`s of `Attrs`, `Style`, `Listener`, or `Node`, ie the result of `map()`,
  without having to explicitly `collect`
@@ -65,8 +65,7 @@ or included multiple times.
 The parameters can be passed in any order; the compiler knows how to handle them
 based on their types. Children are rendered in the order passed.
 
-Views are described using [El](https://docs.rs/seed/0.5.1/seed/dom_types/struct.El.html) structs, 
-defined in the [seed::dom_types](https://docs.rs/seed/0.5.1/seed/dom_types/index.html) module.
+Views are described using [El](https://docs.rs/seed/latest/seed/virtual_dom/node/el/struct.El.html) structs.
 
 `Attrs` and `Style` are thinly-wrapped hashmaps created with their own macros: `attrs!{}` and `style!{}`
 respectively.
@@ -117,7 +116,7 @@ let style = style![
 ```
 
 We can set multiple values for an attribute using 
-[Attribute.add_multiple](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Attrs.html#method.add_multiple).
+[Attribute.add_multiple](https://docs.rs/seed/latest/seed/virtual_dom/attrs/struct.Attrs.html#method.add_multiple).
  This is useful for setting multiple classes. Note that we must set this up outside of
 the view macro, since it involves modifying a variable:
 ```rust
@@ -130,17 +129,17 @@ fn a_component() -> Node<Msg> {
 ```
 
 Seed validates attributes [against this list](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes);
-The [At](https://docs.rs/seed/0.5.1/seed/dom_types/enum.At.html) 
+The [At](https://docs.rs/seed/latest/seed/dom_entity_names/enum.At.html) 
 enum includes only these values, and `&strs` passed are converted into `At`s. If you
 wish to use a custom attribute, use 
-[At::Custom](https://docs.rs/seed/0.5.1/seed/dom_types/enum.At.html#variant.Custom)
+[At::Custom](https://docs.rs/seed/latest/seed/dom_entity_names/enum.At.html#variant.Custom)
 , eg `At::Custom(name)`, where `name` is a `String` of your
 attribute's name. In `attrs!` when using `&str`s, inserting an unrecognized attribute
 will do the same. Similar `Custom` methods exist for 
-[Style](https://docs.rs/seed/0.5.1/seed/dom_entity_names/styles/enum.St.html#variant.Custom),
-[Namespace](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Namespace.html#variant.Custom),
-[Tag](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Tag.html#variant.Custom), and
-[Category](https://docs.rs/seed/0.5.1/seed/events/enum.Category.html#variant.Custom).
+[Style](https://docs.rs/seed/latest/seed/dom_entity_names/enum.St.html#variant.Custom),
+[Namespace](https://docs.rs/seed/latest/seed/browser/dom/namespace/enum.Namespace.html#variant.Custom),
+[Tag](https://docs.rs/seed/latest/seed/dom_entity_names/enum.Tag.html#variant.Custom), and
+[Event](https://docs.rs/seed/latest/seed/dom_entity_names/enum.Ev.html#variant.Custom).
 
 The `class!` and `id!` convenience macros allow settings
 attributes as a list of classes, or a single id, if no other attributes are required.
@@ -187,7 +186,7 @@ fn a_component() -> Node<Msg> {
 
 For boolean attributes that are handled by presense or absense, like `disabled`, `checked`,
 `autofocus` etc, use 
-[.as_at_value](https://docs.rs/seed/0.5.1/seed/dom_types/values/trait.AsAtValue.html#tymethod.as_at_value):
+[.as_at_value](https://docs.rs/seed/latest/seed/virtual_dom/values/trait.AsAtValue.html#tymethod.as_at_value):
  `input![ attrs!{At::Disabled => false.as_at_value() ]`:
 
 ```rust
@@ -233,7 +232,7 @@ fn view(model: &Model) -> impl View<Msg> {
 ```
 
 We can combine Attrs and `Style` instances using their 
-[merge](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Attrs.html#method.merge)
+[merge](https://docs.rs/seed/latest/seed/virtual_dom/attrs/struct.Attrs.html#method.merge)
  methods, which take
 an `&Attrs` and `&Style` respectively. This can be used to compose styles from reusable parts. 
 Example:
@@ -318,7 +317,7 @@ svg![
 ]
 ```
 
-The same exmaple using [from_html](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Node.html#method.from_html):
+The same exmaple using [from_html](https://docs.rs/seed/latest/seed/virtual_dom/node/el/struct.El.html#method.from_html):
 ```rust
 Node::from_html(
 r#"
@@ -373,7 +372,7 @@ pub fn render() {
 
 ##  Components
 The analog of components in frameworks like React are normal Rust functions that that return
-[Node](https://docs.rs/seed/0.5.1/seed/dom_types/enum.Node.html) s.
+[Nodes](https://docs.rs/seed/latest/seed/virtual_dom/node/enum.Node.html).
 These functions take parameters that are not treated in a way equivalent
 to attributes on native DOM elements; they just provide a way to 
 organize your code. In practice, they're used in a way similar to components in React.
@@ -446,7 +445,7 @@ fn items() -> Node<Msg> {
 ## Dummy elements
 When performing ternary operations inside an element macro, all
 branches must return an `Node` (Or `Vec` of `Node`s) to satisfy Rust's type system. Seed provides the
-[empty](https://docs.rs/seed/0.5.1/seed/fn.empty.html) function, which creates a `Node` that will not be 
+[empty](https://docs.rs/seed/latest/seed/fn.empty.html) function, which creates a `Node` that will not be 
 rendered, and its `empty![]` macro alias, which is more concise and consistent:
 ```rust
 div![

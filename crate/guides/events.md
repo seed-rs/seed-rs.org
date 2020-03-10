@@ -1,5 +1,5 @@
 # Events
-Events are created by passing [Listener](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Listener.html)s,
+Events are created by passing [Listener](https://docs.rs/seed/latest/seed/virtual_dom/event_handler_manager/listener/struct.Listener.html)s,
 or vecs of Listeners into `Node` macros. They're created using the following functions exposed in the prelude: `simple_ev`,
 `input_ev`, `keyboard_ev`, `mouse_ev`, and `raw_ev`. The first is demonstrated in the example in the quickstart section,
 and all are demonstrated in the todomvc example.

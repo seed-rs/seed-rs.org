@@ -119,9 +119,9 @@ fn update(msg: Msg, model: &mut Model, _orders: &mut impl Orders<Msg>) {
 
 [TODO]: # (This section below is unclear, please improve me)
 
-The third parameter of the update function is an 
-[Orders](https://docs.rs/seed/0.5.1/seed/prelude/struct.Orders.html)
- struct, imported in the prelude.
+The third parameter of the update function implements the  
+[Orders](https://docs.rs/seed/latest/seed/app/orders/trait.Orders.html)
+ trait, imported in the prelude.
 It has four methods, each defining an update behavior:
 
 - `render`: Rerender the DOM, based on the new model. If `orders` is not used for a branch, it
@@ -156,7 +156,6 @@ select the HTML element where the app will be mounted and how it'll be mounted.
 
 And the following mandatory one:
 - `build_and_start` - run at the end, to initialize the app.
-
 
 You can can chain the following optional methods:
 
@@ -205,7 +204,7 @@ pub fn render() {
 
 `AfterMount` has the following fields:
     - `model`: The initial model
-    - `url_handling`: A [Urlhandling](https://docs.rs/seed/0.5.1/seed/enum.UrlHandling.html)  enum, which has 
+    - `url_handling`: A [Urlhandling](https://docs.rs/seed/latest/seed/app/builder/after_mount/enum.UrlHandling.html)  enum, which has 
     variants `PassToRoutes`: default with `Init::new()`),
     and `None`
 

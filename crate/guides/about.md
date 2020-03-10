@@ -34,7 +34,7 @@ are worth it.
 
 Check out the [Code comparison](https://seed-rs.org/guide/code-comparison) section of this guide. Additionally,
 the [todomvc example](https://github.com/seed-rs/seed/tree/master/examples/todomvc) is an implementation of 
-the [TodoMVC project](https://todomvc.com/),
+the [TodoMVC project](http://todomvc.com/),
 which has example code in other frameworks that produce identitcal apps. Compare the example in this
 project to one on that page that uses a framework you're familiar with.
 
@@ -106,7 +106,7 @@ be a versatile, standardized toolkit.
 - Alex Chrichton, for being extraodinarily helpful in the Rust / WASM community
 - The [Elm](https://elm-lang.org/) team, for creating and standardizing the Elm architecture
 - Mozilla, for excellent DOM documentation
-- Denis Kolodin, for creating the inspirational [Yew framework](https://github.com/DenisKolodin/yew)
+- Denis Kolodin, for creating the inspirational [Yew framework](https://github.com/yewstack/yew)
 - Utkarsh Kukreti, for through his [Draco repo](https://github.com/utkarshkukreti/draco),
   helping me understand how wasm-bindgen's
   closure system can be used to update state.
@@ -114,11 +114,11 @@ be a versatile, standardized toolkit.
 
 ## Reference
 
-- [wasm-bindgen guide](https://rustwasm.github.io/wasm-bindgen/introduction.html)
+- [wasm-bindgen guide](https://rustwasm.github.io/docs/wasm-bindgen/)
 - [Mozilla MDN web docs](https://developer.mozilla.org/en-US/)
 - [web-sys api](https://rustwasm.github.io/wasm-bindgen/api/web_sys/) (A good partner for the MDN docs - most DOM items have web-sys equivalents used internally)
 - [Rust book](https://doc.rust-lang.org/book/index.html)
 - [Rust standard library api](https://doc.rust-lang.org/std/)
 - [Seed's API docs](https://docs.rs/seed)
 - [Learn Rust](https://www.rust-lang.org/learn)
-- [Testing in Headless Browsers](https://rustwasm.github.io/wasm-bindgen/wasm-bindgen-test/browsers.html)
+- [Testing in Headless Browsers](https://rustwasm.github.io/docs/wasm-bindgen/wasm-bindgen-test/browsers.html)

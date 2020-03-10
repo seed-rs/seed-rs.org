@@ -20,7 +20,7 @@ custom![ Tag::from("anothertag".into())
     custom_el,
 ]
 ```
-An example is provided as part of the [window_events](https://github.com/seed-rs/seed/tree/master/examples/todomvc)
+An example is provided as part of the [window_events](https://github.com/seed-rs/seed/tree/master/examples/window_events)
 example.
 
 ## Local storage
@@ -51,7 +51,7 @@ let data = serde_json::from_str(&loaded_serialized).unwrap();
 
 ## Display markdown and raw HTML
 Seed supports creating elements from markdown text, using [pulldown-cmark](https://github.com/raphlinus/pulldown-cmark)
-internally. Use the [Node::from_markdown()](https://docs.rs/seed/0.5.1/seed/dom_types/struct.Node.html#method.from_markdown)
+internally. Use the [El::from_markdown()](https://docs.rs/seed/latest/seed/virtual_dom/node/el/struct.El.html#method.from_markdown)
 method to create an element that accepts a markdown &str as its only parameter, and displays
 it normally as html. Note that it does not support syntax highlighting. You can render raw HTML with `El::from_html(html)`, where `html` is a 
 &str of HTML. You can also use the `raw!` and `md!` macros for `from_html` and 

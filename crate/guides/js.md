@@ -53,4 +53,4 @@ passes data that can be deserialized into the model.
 Note that you can also pass arguments to JS functions like this.
 
 
-For more info, reference [this wasm-bindgen example](https://rustwasm.github.io/wasm-bindgen/examples/import-js.html).
+For more info, reference [this wasm-bindgen example](https://rustwasm.github.io/docs/wasm-bindgen/examples/import-js.html).
