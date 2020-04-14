@@ -216,7 +216,7 @@ impl From<Url> for Route {
     fn from(url: Url) -> Self {
         let mut path = url.path.into_iter();
 
-        match path.next().as_ref().map(String::as_str) {
+        match path.next().as_deref() {
             None | Some("") => Self::Root,
             Some("guide") => {
                 path.next().map(Self::Guide).unwrap_or(Self::Unknown)
