@@ -39,7 +39,7 @@ And cargo-make: `cargo install --force cargo-make`
 To start, clone [the quickstart repo](https://github.com/seed-rs/seed-quickstart):
 `git clone https://github.com/seed-rs/seed-quickstart.git`,
 run `cargo make build` in a terminal to build the app, and `cargo make serve` to start a dev server
-on `127.0.0.0:8000`. If you'd like the compiler to automatically check and recompile when you 
+on [127.0.0.1:8000](http://127.0.0.1:8000). If you'd like the compiler to automatically check and recompile when you 
 make changes, run `cargo make watch` instead of `cargo make build`.
 
 
