@@ -30,6 +30,7 @@ impl Default for Model {
     }
 }
 
+
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Commit {
     pub sha: String,
@@ -44,6 +45,7 @@ pub struct Branch {
 #[derive(Clone)]
 enum Msg {
     DataFetched(seed::fetch::ResponseDataResult<Branch>),
+    FetchData,
 }
 
 fn fetch_data() -> impl Future<Output = Result<Msg, Msg>> {
@@ -53,6 +55,11 @@ fn fetch_data() -> impl Future<Output = Result<Msg, Msg>> {
 
 fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
+        Msg::FetchData => {
+            orders.perform_cmd(fetch_data());
+            orders.skip();
+        }
+
         Msg::DataFetched(Ok(branch)) => model.branch = Some(branch),
 
         Msg::DataFetched(Err(fail_reason)) => {
@@ -77,7 +84,7 @@ fn view(model: &Model) -> Node<Msg> {
 }
 
 fn after_mount(_: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model> {
-    orders.perform_cmd(fetch_data());
+    orders.send_msg(Msg::FetchData);
     AfterMount::default()
 }
 
@@ -89,10 +96,10 @@ pub fn render() {
 }
 
 ```
-On page load, we trigger an update in the `init` function using `Msg::FetchData`, 
-which points the `update` via `orders.perform_cmd` and a function we've created
+After component mount, we trigger an update in the `after_mount` function by sending `Msg::FetchData`, 
+which instructs the `update` fn to use `orders.perform_cmd` and an async function we've created
 called `fetch_data`. This allows state to be
-update asynchronously, when the request is complete. `skip()` is a convenience method that
+updated asynchronously, when the request is complete. `skip()` is a convenience method that
 sets `Update::ShouldRender` to `Skip`; sending the request doesn't trigger a render.
 We pattern-match the response in the `update` function's`DataFetched` arm: If successful, we update the model.
 If not, we display an error in the console using the `error!` macro.
