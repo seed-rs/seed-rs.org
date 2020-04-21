@@ -2,7 +2,7 @@
 
 We use the [seed::Request](https://docs.rs/seed/latest/seed/browser/service/fetch/struct.Request.html) struct
 to make HTTP requests in the browser, wrapping the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
-To use this, we need to include `futures = "^0.1.26"` in `Cargo.toml`. The [Fetch module](https://docs.rs/seed/latest/seed/browser/service/fetch/index.html)
+To use this, we need to include `futures = "^0.3.4"` and `serde = { version = "^1.0.85", features = ['derive'] }` in `Cargo.toml`. The [Fetch module](https://docs.rs/seed/latest/seed/browser/service/fetch/index.html)
 is standalone: It can be used with any wasm-bindgen program.
 
 ## Receiving data
@@ -13,15 +13,29 @@ Example, where we update the state on initial load (similar to the
 example contains more sample code.
 
 ```rust
+use seed::{*, prelude::*};
+
 use futures::Future;
 use serde::{Serialize, Deserialize};
 
-#[derive(Clone, Serialize, Deserialize)]
+struct Model {
+    pub branch: Option<Branch>,
+}
+
+impl Default for Model {
+    fn default() -> Self {
+        Self {
+            branch: None,
+        }
+    }
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Commit {
     pub sha: String,
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Branch {
     pub name: String,
     pub commit: Commit,
@@ -30,17 +44,16 @@ pub struct Branch {
 #[derive(Clone)]
 enum Msg {
     DataFetched(seed::fetch::ResponseDataResult<Branch>),
-
 }
 
-fn fetch_data() -> impl Future<Item = Msg, Error = Msg> {
+fn fetch_data() -> impl Future<Output = Result<Msg, Msg>> {
     let url = "https://api.github.com/repos/seed-rs/seed/branches/master";
-    Request::new(url.into()).fetch_json_data(Msg::DataFetched)
+    Request::new(url).fetch_json_data(Msg::DataFetched)
 }
 
 fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
-        Msg::DataFetched(Ok(branch)) => model.branch = branch,
+        Msg::DataFetched(Ok(branch)) => model.branch = Some(branch),
 
         Msg::DataFetched(Err(fail_reason)) => {
             error!(format!(
@@ -53,10 +66,14 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
 }
 
 fn view(model: &Model) -> Node<Msg> {
-    div![format!(
-        "Repo info: Name: {}, SHA: {}",
-        model.branch.name, model.branch.commit.sha
-    )]
+    if let Some(branch) = &model.branch {
+        div![format!(
+            "Repo info: Name: {}, SHA: {}",
+            branch.name, branch.commit.sha
+        )]
+    } else {
+        div!["Branch not loaded"]
+    }
 }
 
 fn after_mount(_: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model> {
@@ -64,13 +81,11 @@ fn after_mount(_: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model> {
     AfterMount::default()
 }
 
-#[wasm_bindgen]
+#[wasm_bindgen(start)]
 pub fn render() {
-    let app = seed::App::builder(update, view)
+    App::builder(update, view)
         .after_mount(after_mount)
-        .run();
-
-    app.update(Msg::FetchData);
+        .build_and_start();
 }
 
 ```
