@@ -9,7 +9,7 @@ use seed::{prelude::*, *};
 pub fn view(model: &Model) -> Node<Msg> {
     nav![
         id!("header"),
-        class![
+        C![
             C.fixed,
             C.w_full,
             C.z_30,
@@ -22,7 +22,7 @@ pub fn view(model: &Model) -> Node<Msg> {
         blender::view_for_header(model.mode),
         // container
         div![
-            class![
+            C![
                 C.relative,
                 C.w_full,
                 C.container,
@@ -47,7 +47,7 @@ pub fn view(model: &Model) -> Node<Msg> {
 // ------ view border  ------
 
 fn view_container_with_border() -> Node<Msg> {
-    div![class![
+    div![C![
         C.absolute,
         C.right_0,
         C.top_0,
@@ -72,7 +72,7 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> Node<Msg> {
 
     let toggle = button![
         id!("view_guide_list_toggle"),
-        class![
+        C![
             C.flex,
             C.items_center,
             C.px_3,
@@ -91,17 +91,14 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> Node<Msg> {
         simple_ev(Ev::Click, Msg::ScrollToTop),
         simple_ev(Ev::Click, Msg::ToggleGuideList),
         if in_prerendering {
-            div![
-                class![C.h_6, C.w_6, C.rotate],
-                image::spinner_svg().into_nodes()
-            ]
+            div![C![C.h_6, C.w_6, C.rotate], image::spinner_svg().into_nodes()]
         } else {
             span!["Guides",]
         }
     ];
 
     div![
-        class![
+        C![
             C.relative,
             C.pl_4,
             C.flex,
@@ -125,7 +122,7 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> Node<Msg> {
 
 fn view_logo() -> Node<Msg> {
     div![
-        class![
+        C![
             C.relative,
             C.flex,
             C.items_center,
@@ -136,7 +133,7 @@ fn view_logo() -> Node<Msg> {
             C.lg__pl_16,
         ],
         a![
-            class![
+            C![
                 C.w_24,
                 C.focus__outline_none,
                 // lg__
@@ -154,7 +151,7 @@ fn view_logo() -> Node<Msg> {
 
 fn view_menu_toggle(in_prerendering: bool) -> Node<Msg> {
     div![
-        class![
+        C![
             C.relative,
             C.pr_4,
             C.flex,
@@ -163,7 +160,7 @@ fn view_menu_toggle(in_prerendering: bool) -> Node<Msg> {
         ],
         button![
             id!("menu_toggle"),
-            class![
+            C![
                 C.flex,
                 C.items_center,
                 C.px_3,
@@ -182,7 +179,7 @@ fn view_menu_toggle(in_prerendering: bool) -> Node<Msg> {
             simple_ev(Ev::Click, Msg::ToggleMenu),
             if in_prerendering {
                 div![
-                    class![C.h_6, C.w_6, C.rotate],
+                    C![C.h_6, C.w_6, C.rotate],
                     image::spinner_svg().into_nodes()
                 ]
             } else {
@@ -195,10 +192,10 @@ fn view_menu_toggle(in_prerendering: bool) -> Node<Msg> {
 fn view_menu_content(model: &Model) -> Node<Msg> {
     div![
         id!("menu_content"),
-        class![
+        C![
             C.w_full,
             C.relative,
-            C.hidden => model.menu_visibility == Hidden,
+            IF!(model.menu_visibility == Hidden => C.hidden),
             C.mt_6,
             C.z_20,
             C.flex,
@@ -220,7 +217,7 @@ fn view_menu_content(model: &Model) -> Node<Msg> {
 
 fn view_links() -> Node<Msg> {
     ul![
-        class![
+        C![
             C.justify_end,
             C.items_center,
             // lg__
@@ -242,12 +239,12 @@ fn view_links() -> Node<Msg> {
 
 fn view_link(title: &str, link: &str) -> Node<Msg> {
     li![
-        class![
+        C![
             C.mr_3, C.py_2, // lg__
             C.lg__py_0,
         ],
         a![
-            class![
+            C![
                 C.inline_block,
                 C.py_2,
                 C.px_4,
@@ -267,7 +264,7 @@ fn view_link(title: &str, link: &str) -> Node<Msg> {
 
 fn view_github_mark() -> Node<Msg> {
     a![
-        class![
+        C![
             C.mt_4, C.mb_8, C.mr_8, // lg__
             C.lg__mx_3, C.lg__my_0,
         ],
