@@ -15,10 +15,9 @@ mod page;
 use generated::css_classes::C;
 use guide::Guide;
 use page::partial::blender;
-use seed::{prelude::*, *};
+use seed::{browser::web_storage::LocalStorage, prelude::*, *};
 use serde::{Deserialize, Serialize};
-use serde_json;
-use std::{convert::identity, fmt};
+use std::fmt;
 use Visibility::*;
 
 const SEED_VERSION: &str = "0.6.0";
@@ -53,12 +52,6 @@ impl Visibility {
 #[derive(Default, Serialize, Deserialize)]
 pub struct Config {
     mode: Mode,
-}
-
-// ------ local_storage ------
-
-fn local_storage() -> storage::Storage {
-    storage::get_storage().expect("get local storage")
 }
 
 // ------ ------
@@ -182,14 +175,7 @@ pub fn after_mount(
 
 fn load_config() -> Config {
     // @TODO `.and_then(identity)` replace with `.flatten()` once stable
-    local_storage()
-        .get_item(STORAGE_KEY)
-        .ok()
-        .and_then(identity)
-        .and_then(|serialized_config| {
-            serde_json::from_str(&serialized_config).ok()
-        })
-        .unwrap_or_default()
+    LocalStorage::get(STORAGE_KEY).unwrap_or_default()
 }
 
 fn is_in_prerendering() -> bool {
@@ -299,7 +285,8 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
             let config = Config {
                 mode: model.mode,
             };
-            storage::store_data(&local_storage(), STORAGE_KEY, &config);
+            LocalStorage::insert(STORAGE_KEY, &config)
+                .expect("insert to local storage");
         },
     }
 }
