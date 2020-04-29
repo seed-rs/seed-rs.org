@@ -8,7 +8,7 @@ pub fn view(show: bool) -> Node<Msg> {
     if show {
         div![
             div![
-                class![
+                C![
                     C.mb_8,
                     // sm__
                     C.sm__my_12,
@@ -29,9 +29,9 @@ pub fn view(show: bool) -> Node<Msg> {
 
 fn view_logo() -> Node<Msg> {
     div![
-        class![C.flex,],
+        C![C.flex,],
         a![
-            class![
+            C![
                 C.w_48,
                 C.focus__outline_none,
                 // lg__
@@ -47,10 +47,10 @@ fn view_logo() -> Node<Msg> {
 
 fn view_description_and_version() -> Node<Msg> {
     div![
-        class![C.flex, C.flex_col,],
+        C![C.flex, C.flex_col,],
         view_description(),
         a![
-            class![
+            C![
                 C.mt_2,
                 C.text_right,
                 C.text_blue_600,
@@ -61,8 +61,8 @@ fn view_description_and_version() -> Node<Msg> {
                 At::Href => Route::Guide("changelog".to_owned())
             },
             div![
-                span![class![C.font_bold,], SEED_VERSION],
-                span![class![C.ml_4, C.text_sm,], SEED_VERSION_DATE,],
+                span![C![C.font_bold,], SEED_VERSION],
+                span![C![C.ml_4, C.text_sm,], SEED_VERSION_DATE,],
             ]
         ]
     ]
@@ -70,7 +70,7 @@ fn view_description_and_version() -> Node<Msg> {
 
 fn view_description() -> Node<Msg> {
     h2![
-        class![
+        C![
             C.font_semibold,
             C.text_right,
             C.mt_2,
@@ -87,7 +87,7 @@ fn view_description() -> Node<Msg> {
 
 fn view_join_forum_chat() -> Node<Msg> {
     div![
-        class![
+        C![
             C.mb_12,
             C.text_center,
             C.text_blue_900,
@@ -97,7 +97,7 @@ fn view_join_forum_chat() -> Node<Msg> {
         ],
         span!["You are very welcome to join our "],
         a![
-            class![C.text_blue_500, C.hover__text_blue_700, C.hover__underline,],
+            C![C.text_blue_500, C.hover__text_blue_700, C.hover__underline,],
             "forum",
             attrs! {
                 At::Href => "https://seed.discourse.group",
@@ -105,7 +105,7 @@ fn view_join_forum_chat() -> Node<Msg> {
         ],
         span![" and "],
         a![
-            class![C.text_blue_500, C.hover__text_blue_700, C.hover__underline,],
+            C![C.text_blue_500, C.hover__text_blue_700, C.hover__underline,],
             "chat",
             attrs! {
                 At::Href => "https://discord.gg/JHHcHp5",
@@ -180,14 +180,14 @@ fn view_testimonials() -> Node<Msg> {
     let (testimonials_1, testimonials_2) =
         testimonials.split_at(testimonials.len() / 2);
     div![
-        class![
+        C![
             C.mb_10, // md__
             C.md__mb_0, C.md__flex, // lg__
             C.lg__mb_5,
         ],
         ul![testimonials_1.iter().map(view_testimonial)],
         ul![
-            class![
+            C![
                 // md__
                 C.md__ml_4,
             ],
@@ -198,7 +198,7 @@ fn view_testimonials() -> Node<Msg> {
 
 fn view_testimonial(testimonial: &Testimonial) -> Node<Msg> {
     li![a![
-        class![
+        C![
             C.flex,
             C.my_5,
             C.items_center,
@@ -210,13 +210,13 @@ fn view_testimonial(testimonial: &Testimonial) -> Node<Msg> {
             At::Href => testimonial.url,
         },
         img![
-            class![C.object_contain, C.flex_shrink_0, C.rounded_full,],
+            C![C.object_contain, C.flex_shrink_0, C.rounded_full,],
             attrs! {
                 At::Src => format!("{}{}", testimonial.author_image_url, "?v=4&s=48"),
                 At::Height => 48,
                 At::Width => 48,
             },
         ],
-        div![class![C.mx_2,], testimonial.quote,],
+        div![C![C.mx_2,], testimonial.quote,],
     ],]
 }

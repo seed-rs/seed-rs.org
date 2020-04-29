@@ -315,7 +315,7 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
 pub fn view(model: &Model) -> impl IntoNodes<Msg> {
     nodes![
         div![
-            class![C.min_h_screen, C.bg_white,],
+            C![C.min_h_screen, C.bg_white,],
             match model.page {
                 Page::Guide {
                     guide,

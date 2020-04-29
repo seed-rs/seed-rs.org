@@ -16,7 +16,7 @@ pub fn view(
     model: &Model,
 ) -> Node<Msg> {
     div![
-        class![
+        C![
             if position == Position::Top {
                 C.mb_8
             } else {
@@ -52,16 +52,16 @@ pub fn view(
 // ------ view empty column ------
 
 fn view_empty_column() -> Node<Msg> {
-    div![class![C.flex_1,]]
+    div![C![C.flex_1,]]
 }
 
 // ------ view mode toggle ------
 
 fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> Node<Msg> {
     div![
-        class![C.flex_1, C.flex, C.justify_center,],
+        C![C.flex_1, C.flex, C.justify_center,],
         div![
-            class![
+            C![
                 C.flex,
                 C.items_center,
                 C.px_3,
@@ -76,10 +76,10 @@ fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> Node<Msg> {
             ],
             simple_ev(Ev::Click, Msg::ToggleMode),
             span![
-                class![C.whitespace_no_wrap, C.flex, C.items_center,],
+                C![C.whitespace_no_wrap, C.flex, C.items_center,],
                 if in_prerendering {
                     div![
-                        class![C.mr_1, C.h_4, C.w_4, C.rotate,],
+                        C![C.mr_1, C.h_4, C.w_4, C.rotate,],
                         image::spinner_svg().into_nodes()
                     ]
                 } else {
@@ -101,9 +101,9 @@ fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> Node<Msg> {
 
 fn view_edit_this_page(edit_url: &str) -> Node<Msg> {
     div![
-        class![C.flex_1, C.flex, C.justify_center,],
+        C![C.flex_1, C.flex, C.justify_center,],
         a![
-            class![
+            C![
                 C.flex,
                 C.items_center,
                 C.text_blue_500,
@@ -116,9 +116,9 @@ fn view_edit_this_page(edit_url: &str) -> Node<Msg> {
             },
             span!["Edit this page",]
         ],
-        span![class![C.flex, C.mx_1, C.items_center,], "|"],
+        span![C![C.flex, C.mx_1, C.items_center,], "|"],
         a![
-            class![
+            C![
                 C.flex,
                 C.items_center,
                 C.text_blue_500,
@@ -138,9 +138,9 @@ fn view_edit_this_page(edit_url: &str) -> Node<Msg> {
 
 fn view_previous_guide_link(previous_guide: &Guide) -> Node<Msg> {
     div![
-        class![C.flex_1, C.flex, C.justify_start,],
+        C![C.flex_1, C.flex, C.justify_start,],
         a![
-            class![
+            C![
                 C.flex,
                 C.hover__underline,
                 C.hover__text_green_700,
@@ -151,7 +151,7 @@ fn view_previous_guide_link(previous_guide: &Guide) -> Node<Msg> {
             },
             view_previous_icon(),
             div![
-                class![
+                C![
                     C.font_bold,
                     C.m_auto,
                     C.pb_1,
@@ -167,9 +167,9 @@ fn view_previous_guide_link(previous_guide: &Guide) -> Node<Msg> {
 
 fn view_next_guide_link(next_guide: &Guide) -> Node<Msg> {
     div![
-        class![C.flex_1, C.flex, C.justify_end,],
+        C![C.flex_1, C.flex, C.justify_end,],
         a![
-            class![
+            C![
                 C.flex,
                 C.hover__underline,
                 C.hover__text_green_700,
@@ -179,7 +179,7 @@ fn view_next_guide_link(next_guide: &Guide) -> Node<Msg> {
                 At::Href => Route::Guide(next_guide.slug.to_owned()).to_string(),
             },
             div![
-                class![
+                C![
                     C.font_bold,
                     C.m_auto,
                     C.pb_1,
@@ -198,7 +198,7 @@ fn view_next_guide_link(next_guide: &Guide) -> Node<Msg> {
 
 fn view_previous_icon() -> Node<Msg> {
     div![
-        class![C.h_8, C.w_8,],
+        C![C.h_8, C.w_8,],
         style! {
             St::Transform => "rotate(180deg)",
         },
@@ -207,7 +207,7 @@ fn view_previous_icon() -> Node<Msg> {
 }
 
 fn view_next_icon() -> Node<Msg> {
-    div![class![C.h_8, C.w_8], image::next_icon_svg().into_nodes()]
+    div![C![C.h_8, C.w_8], image::next_icon_svg().into_nodes()]
 }
 
 // ------ get previous & next guide ------

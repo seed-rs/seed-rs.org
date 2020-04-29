@@ -56,7 +56,7 @@ pub fn next_icon_svg() -> impl IntoNodes<Msg> {
 
 pub fn search_icon_svg() -> impl IntoNodes<Msg> {
     svg![
-        class![
+        C![
             C.fill_current,
             C.pointer_events_none,
             C.text_green_800,

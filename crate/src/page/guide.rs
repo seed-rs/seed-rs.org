@@ -6,7 +6,7 @@ use crate::{
 use seed::{prelude::*, *};
 pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
     div![
-        class![
+        C![
             C.container,
             C.w_full,
             C.flex,
@@ -25,7 +25,7 @@ pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
 fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
     use content_control_panel::Position::{Bottom, Top};
     div![
-        class![
+        C![
             C.w_full,
             C.min_h_screen,
             C.p_8,
@@ -46,7 +46,7 @@ fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
 
 fn view_guide_html(content: &str) -> Node<Msg> {
     div![
-        class![
+        C![
             // it has to be "markdown-body" so it's content is styled by Github CSS
             C.markdown_body,
         ],
@@ -56,7 +56,7 @@ fn view_guide_html(content: &str) -> Node<Msg> {
 
 fn view_netlify_logo() -> Node<Msg> {
     a![
-        class! {
+        C! {
             C.flex,
             C.mt_5,
             C.justify_center,
@@ -65,7 +65,7 @@ fn view_netlify_logo() -> Node<Msg> {
             At::Href => "https://www.netlify.com",
         },
         img![
-            class! {
+            C! {
                 C.z_auto,
             },
             attrs! {
