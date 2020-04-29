@@ -55,11 +55,37 @@ pub struct Config {
 }
 
 // ------ ------
-// Before Mount
+//     Init
 // ------ ------
 
-fn before_mount(_: Url) -> BeforeMount {
-    BeforeMount::new().mount_type(MountType::Takeover)
+fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
+    orders
+        .send_msg(Msg::RouteChanged(url.clone().into()))
+        .send_msg(Msg::UpdatePageTitle)
+        .subscribe(|app::subs::UrlChanged(url)| -> Msg {
+            Msg::RouteChanged(url.into())
+        });
+
+    let guides = guide::guides();
+    Model {
+        page: Page::from_route_and_replace_history(&url.into(), &guides),
+        guide_list_visibility: Hidden,
+        menu_visibility: Hidden,
+        in_prerendering: is_in_prerendering(),
+        guides,
+        search_query: "".to_string(),
+        matched_guides: vec![],
+        mode: load_config().mode,
+    }
+}
+
+fn load_config() -> Config {
+    LocalStorage::get(STORAGE_KEY).unwrap_or_default()
+}
+
+fn is_in_prerendering() -> bool {
+    let user_agent = window().navigator().user_agent().expect("get user agent");
+    user_agent == USER_AGENT_FOR_PRERENDERING
 }
 
 // ------ ------
@@ -146,40 +172,6 @@ impl Page {
             Route::Unknown => Self::NotFound,
         }
     }
-}
-
-// ------ ------
-//  After Mount
-// ------ ------
-
-pub fn after_mount(
-    url: Url,
-    orders: &mut impl Orders<Msg>,
-) -> AfterMount<Model> {
-    let guides = guide::guides();
-    let model = Model {
-        page: Page::from_route_and_replace_history(&url.into(), &guides),
-        guide_list_visibility: Hidden,
-        menu_visibility: Hidden,
-        in_prerendering: is_in_prerendering(),
-        guides,
-        search_query: "".to_string(),
-        matched_guides: vec![],
-        mode: load_config().mode,
-    };
-
-    orders.send_msg(Msg::UpdatePageTitle);
-
-    AfterMount::new(model).url_handling(UrlHandling::None)
-}
-
-fn load_config() -> Config {
-    LocalStorage::get(STORAGE_KEY).unwrap_or_default()
-}
-
-fn is_in_prerendering() -> bool {
-    let user_agent = window().navigator().user_agent().expect("get user agent");
-    user_agent == USER_AGENT_FOR_PRERENDERING
 }
 
 // ------ ------
@@ -328,10 +320,6 @@ pub fn view(model: &Model) -> impl IntoNodes<Msg> {
 // ------ ------
 
 #[wasm_bindgen(start)]
-pub fn run() {
-    App::builder(update, view)
-        .before_mount(before_mount)
-        .after_mount(after_mount)
-        .routes(routes)
-        .build_and_start();
+pub fn start() {
+    App::start("app", init, update, view);
 }
