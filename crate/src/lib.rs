@@ -214,12 +214,13 @@ pub enum Route {
 
 impl From<Url> for Route {
     fn from(url: Url) -> Self {
-        let mut path = url.path.into_iter();
+        let mut path = url.path().iter();
 
-        match path.next().as_deref() {
+        // `Option<&String>.as_defer() -> &str` doesn't work as with owned `String`
+        match path.next().map(|s| s.as_str()) {
             None | Some("") => Self::Root,
             Some("guide") => {
-                path.next().map(Self::Guide).unwrap_or(Self::Unknown)
+                path.next().cloned().map(Self::Guide).unwrap_or(Self::Unknown)
             },
             _ => Self::Unknown,
         }
