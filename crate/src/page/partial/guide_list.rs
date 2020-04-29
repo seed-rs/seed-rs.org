@@ -4,7 +4,7 @@ use crate::{
 };
 use seed::{prelude::*, *};
 
-pub fn view(guide: &Guide, model: &Model) -> impl View<Msg> {
+pub fn view(guide: &Guide, model: &Model) -> Node<Msg> {
     div![
         class![
             C.w_full,
@@ -12,8 +12,8 @@ pub fn view(guide: &Guide, model: &Model) -> impl View<Msg> {
             C.lg__w_1of5,
             C.lg__px_6,
         ],
-        view_guide_list_toggle(guide, model.in_prerendering).els(),
-        view_guide_list_content(guide, model).els(),
+        view_guide_list_toggle(guide, model.in_prerendering),
+        view_guide_list_content(guide, model),
     ]
 }
 
@@ -22,7 +22,7 @@ pub fn view(guide: &Guide, model: &Model) -> impl View<Msg> {
 fn view_guide_list_toggle(
     selected_guide: &Guide,
     in_prerendering: bool,
-) -> impl View<Msg> {
+) -> Node<Msg> {
     div![
         class![
             C.sticky,
@@ -52,18 +52,18 @@ fn view_guide_list_toggle(
             simple_ev(Ev::Click, Msg::ToggleGuideList),
             selected_guide.menu_title,
             if in_prerendering {
-                vec![div![
+                div![
                     class![C.h_6, C.w_6, C.rotate],
-                    image::spinner_svg().els()
-                ]]
+                    image::spinner_svg().into_nodes()
+                ]
             } else {
-                view_hamburger().els()
+                view_hamburger()
             }
         ]
     ]
 }
 
-fn view_hamburger() -> impl View<Msg> {
+fn view_hamburger() -> Node<Msg> {
     div![
         class![C.text_2xl, C.leading_none,],
         // TRIGRAM FOR HEAVEN - https://www.fileformat.info/info/unicode/char/2630/index.htm
@@ -73,10 +73,7 @@ fn view_hamburger() -> impl View<Msg> {
 
 // ------ view guide list content ------
 
-fn view_guide_list_content(
-    selected_guide: &Guide,
-    model: &Model,
-) -> impl View<Msg> {
+fn view_guide_list_content(selected_guide: &Guide, model: &Model) -> Node<Msg> {
     div![
         id!("menu_items"),
         class![
@@ -103,17 +100,16 @@ fn view_guide_list_content(
         style! {
             St::Top => em(7),
         },
-        view_search(model).els(),
+        view_search(model),
         ul![model.guides.iter().map(|guide| {
             let guide_is_selected = guide == selected_guide;
             let guide_is_matched = model.matched_guides.contains(guide);
             view_guide_list_item(guide, guide_is_selected, guide_is_matched)
-                .els()
         })]
     ]
 }
 
-fn view_search(model: &Model) -> impl View<Msg> {
+fn view_search(model: &Model) -> Node<Msg> {
     div![
         class![
             C.flex_1,
@@ -138,7 +134,7 @@ fn view_search(model: &Model) -> impl View<Msg> {
                     St::Top => rem(0.6),
                     St::Left => rem(1.5),
                 },
-                image::search_icon_svg().els()
+                image::search_icon_svg().into_nodes()
             ],
             // search input
             input![
@@ -172,7 +168,7 @@ fn view_guide_list_item(
     guide: &Guide,
     active: bool,
     matched: bool,
-) -> impl View<Msg> {
+) -> Node<Msg> {
     li![
         class![
             C.hover__bg_green_100 => !matched,

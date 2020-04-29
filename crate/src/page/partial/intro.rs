@@ -4,7 +4,7 @@ use crate::{
 };
 use seed::{prelude::*, *};
 
-pub fn view(show: bool) -> impl View<Msg> {
+pub fn view(show: bool) -> Node<Msg> {
     if show {
         div![
             div![
@@ -16,18 +16,18 @@ pub fn view(show: bool) -> impl View<Msg> {
                     C.sm__justify_center,
                     C.sm__items_center,
                 ],
-                view_logo().els(),
-                view_description_and_version().els(),
+                view_logo(),
+                view_description_and_version(),
             ],
-            view_join_forum_chat().els(),
-            view_testimonials().els(),
+            view_join_forum_chat(),
+            view_testimonials(),
         ]
     } else {
         empty![]
     }
 }
 
-fn view_logo() -> impl View<Msg> {
+fn view_logo() -> Node<Msg> {
     div![
         class![C.flex,],
         a![
@@ -40,15 +40,15 @@ fn view_logo() -> impl View<Msg> {
             attrs! {
                 At::Href => Route::Root.to_string()
             },
-            image::seed_logo_svg().els(),
+            image::seed_logo_svg().into_nodes(),
         ],
     ]
 }
 
-fn view_description_and_version() -> impl View<Msg> {
+fn view_description_and_version() -> Node<Msg> {
     div![
         class![C.flex, C.flex_col,],
-        view_description().els(),
+        view_description(),
         a![
             class![
                 C.mt_2,
@@ -68,7 +68,7 @@ fn view_description_and_version() -> impl View<Msg> {
     ]
 }
 
-fn view_description() -> impl View<Msg> {
+fn view_description() -> Node<Msg> {
     h2![
         class![
             C.font_semibold,
@@ -85,7 +85,7 @@ fn view_description() -> impl View<Msg> {
     ]
 }
 
-fn view_join_forum_chat() -> impl View<Msg> {
+fn view_join_forum_chat() -> Node<Msg> {
     div![
         class![
             C.mb_12,
@@ -123,7 +123,7 @@ struct Testimonial {
     author_image_url: &'static str,
 }
 
-fn view_testimonials() -> impl View<Msg> {
+fn view_testimonials() -> Node<Msg> {
     let testimonials = vec![
         Testimonial {
             quote: "Awesome, awesome framework!",

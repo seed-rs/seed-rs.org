@@ -14,7 +14,7 @@ pub fn view(
     selected_guide: &Guide,
     position: Position,
     model: &Model,
-) -> impl View<Msg> {
+) -> Node<Msg> {
     div![
         class![
             if position == Position::Top {
@@ -32,32 +32,32 @@ pub fn view(
         ],
         // previous guide
         previous_guide(selected_guide, &model.guides).map_or_else(
-            || view_empty_column().els(),
-            |previous_guide| view_previous_guide_link(previous_guide).els()
+            || view_empty_column(),
+            |previous_guide| view_previous_guide_link(previous_guide)
         ),
         // mode toggle or edit this page button
         if position == Position::Top {
-            view_mode_toggle(model.in_prerendering, model.mode).els()
+            view_mode_toggle(model.in_prerendering, model.mode)
         } else {
-            view_edit_this_page(selected_guide.edit_url).els()
+            view_edit_this_page(selected_guide.edit_url)
         },
         // next guide
         next_guide(selected_guide, &model.guides).map_or_else(
-            || view_empty_column().els(),
-            |next_guide| view_next_guide_link(next_guide).els()
+            || view_empty_column(),
+            |next_guide| view_next_guide_link(next_guide)
         ),
     ]
 }
 
 // ------ view empty column ------
 
-fn view_empty_column() -> impl View<Msg> {
+fn view_empty_column() -> Node<Msg> {
     div![class![C.flex_1,]]
 }
 
 // ------ view mode toggle ------
 
-fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> impl View<Msg> {
+fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> Node<Msg> {
     div![
         class![C.flex_1, C.flex, C.justify_center,],
         div![
@@ -80,7 +80,7 @@ fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> impl View<Msg> {
                 if in_prerendering {
                     div![
                         class![C.mr_1, C.h_4, C.w_4, C.rotate,],
-                        image::spinner_svg().els()
+                        image::spinner_svg().into_nodes()
                     ]
                 } else {
                     empty![]
@@ -99,7 +99,7 @@ fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> impl View<Msg> {
 
 // ------ view edit this page & feedback ------
 
-fn view_edit_this_page(edit_url: &str) -> impl View<Msg> {
+fn view_edit_this_page(edit_url: &str) -> Node<Msg> {
     div![
         class![C.flex_1, C.flex, C.justify_center,],
         a![
@@ -136,7 +136,7 @@ fn view_edit_this_page(edit_url: &str) -> impl View<Msg> {
 
 // ------ view previous & next guide link ------
 
-fn view_previous_guide_link(previous_guide: &Guide) -> impl View<Msg> {
+fn view_previous_guide_link(previous_guide: &Guide) -> Node<Msg> {
     div![
         class![C.flex_1, C.flex, C.justify_start,],
         a![
@@ -149,7 +149,7 @@ fn view_previous_guide_link(previous_guide: &Guide) -> impl View<Msg> {
             attrs! {
                 At::Href => Route::Guide(previous_guide.slug.to_owned()).to_string(),
             },
-            view_previous_icon().els(),
+            view_previous_icon(),
             div![
                 class![
                     C.font_bold,
@@ -165,7 +165,7 @@ fn view_previous_guide_link(previous_guide: &Guide) -> impl View<Msg> {
     ]
 }
 
-fn view_next_guide_link(next_guide: &Guide) -> impl View<Msg> {
+fn view_next_guide_link(next_guide: &Guide) -> Node<Msg> {
     div![
         class![C.flex_1, C.flex, C.justify_end,],
         a![
@@ -189,25 +189,25 @@ fn view_next_guide_link(next_guide: &Guide) -> impl View<Msg> {
                 ],
                 next_guide.menu_title,
             ],
-            view_next_icon().els(),
+            view_next_icon(),
         ]
     ]
 }
 
 // ------ view previous & next icon ------
 
-fn view_previous_icon() -> impl View<Msg> {
+fn view_previous_icon() -> Node<Msg> {
     div![
         class![C.h_8, C.w_8,],
         style! {
             St::Transform => "rotate(180deg)",
         },
-        image::next_icon_svg().els()
+        image::next_icon_svg().into_nodes()
     ]
 }
 
-fn view_next_icon() -> impl View<Msg> {
-    div![class![C.h_8, C.w_8], image::next_icon_svg().els()]
+fn view_next_icon() -> Node<Msg> {
+    div![class![C.h_8, C.w_8], image::next_icon_svg().into_nodes()]
 }
 
 // ------ get previous & next guide ------

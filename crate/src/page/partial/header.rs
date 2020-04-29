@@ -6,7 +6,7 @@ use crate::{
 };
 use seed::{prelude::*, *};
 
-pub fn view(model: &Model) -> impl View<Msg> {
+pub fn view(model: &Model) -> Node<Msg> {
     nav![
         id!("header"),
         class![
@@ -19,7 +19,7 @@ pub fn view(model: &Model) -> impl View<Msg> {
             // lg__
             C.lg__shadow_none,
         ],
-        blender::view_for_header(model.mode).els(),
+        blender::view_for_header(model.mode),
         // container
         div![
             class![
@@ -35,18 +35,18 @@ pub fn view(model: &Model) -> impl View<Msg> {
                 C.pt_2,
                 C.pb_2,
             ],
-            view_container_with_border().els(),
-            view_guide_list_toggle(model.page, model.in_prerendering).els(),
-            view_logo().els(),
-            view_menu_toggle(model.in_prerendering).els(),
-            view_menu_content(model).els(),
+            view_container_with_border(),
+            view_guide_list_toggle(model.page, model.in_prerendering),
+            view_logo(),
+            view_menu_toggle(model.in_prerendering),
+            view_menu_content(model),
         ]
     ]
 }
 
 // ------ view border  ------
 
-fn view_container_with_border() -> impl View<Msg> {
+fn view_container_with_border() -> Node<Msg> {
     div![class![
         C.absolute,
         C.right_0,
@@ -62,7 +62,7 @@ fn view_container_with_border() -> impl View<Msg> {
 
 // ------ view guide list toggle  ------
 
-fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> impl View<Msg> {
+fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> Node<Msg> {
     let page_is_guide = match page {
         Page::Guide {
             ..
@@ -91,7 +91,10 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> impl View<Msg> {
         simple_ev(Ev::Click, Msg::ScrollToTop),
         simple_ev(Ev::Click, Msg::ToggleGuideList),
         if in_prerendering {
-            div![class![C.h_6, C.w_6, C.rotate], image::spinner_svg().els()]
+            div![
+                class![C.h_6, C.w_6, C.rotate],
+                image::spinner_svg().into_nodes()
+            ]
         } else {
             span!["Guides",]
         }
@@ -120,7 +123,7 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> impl View<Msg> {
 
 // ------ view logo  ------
 
-fn view_logo() -> impl View<Msg> {
+fn view_logo() -> Node<Msg> {
     div![
         class![
             C.relative,
@@ -142,14 +145,14 @@ fn view_logo() -> impl View<Msg> {
             attrs! {
                 At::Href => Route::Root.to_string()
             },
-            image::seed_logo_svg().els(),
+            image::seed_logo_svg().into_nodes(),
         ]
     ]
 }
 
 // ------ view menu  ------
 
-fn view_menu_toggle(in_prerendering: bool) -> impl View<Msg> {
+fn view_menu_toggle(in_prerendering: bool) -> Node<Msg> {
     div![
         class![
             C.relative,
@@ -178,7 +181,10 @@ fn view_menu_toggle(in_prerendering: bool) -> impl View<Msg> {
             ],
             simple_ev(Ev::Click, Msg::ToggleMenu),
             if in_prerendering {
-                div![class![C.h_6, C.w_6, C.rotate], image::spinner_svg().els()]
+                div![
+                    class![C.h_6, C.w_6, C.rotate],
+                    image::spinner_svg().into_nodes()
+                ]
             } else {
                 span!["Menu",]
             }
@@ -186,7 +192,7 @@ fn view_menu_toggle(in_prerendering: bool) -> impl View<Msg> {
     ]
 }
 
-fn view_menu_content(model: &Model) -> impl View<Msg> {
+fn view_menu_content(model: &Model) -> Node<Msg> {
     div![
         id!("menu_content"),
         class![
@@ -207,12 +213,12 @@ fn view_menu_content(model: &Model) -> impl View<Msg> {
             C.lg__w_auto,
             C.lg__mt_0,
         ],
-        view_links().els(),
-        view_github_mark().els(),
+        view_links(),
+        view_github_mark(),
     ]
 }
 
-fn view_links() -> impl View<Msg> {
+fn view_links() -> Node<Msg> {
     ul![
         class![
             C.justify_end,
@@ -223,21 +229,18 @@ fn view_links() -> impl View<Msg> {
         view_link(
             "Rust Quickstart",
             "https://github.com/seed-rs/seed-quickstart"
-        )
-        .els(),
+        ),
         view_link(
             "Webpack QS",
             "https://github.com/seed-rs/seed-quickstart-webpack"
-        )
-        .els(),
-        view_link("Docs.rs", "https://docs.rs/seed/latest/seed").els(),
-        view_link("Crates.io", "https://crates.io/crates/seed").els(),
-        view_link("Awesome List", "https://github.com/seed-rs/awesome-seed-rs")
-            .els(),
+        ),
+        view_link("Docs.rs", "https://docs.rs/seed/latest/seed"),
+        view_link("Crates.io", "https://crates.io/crates/seed"),
+        view_link("Awesome List", "https://github.com/seed-rs/awesome-seed-rs"),
     ]
 }
 
-fn view_link(title: &str, link: &str) -> impl View<Msg> {
+fn view_link(title: &str, link: &str) -> Node<Msg> {
     li![
         class![
             C.mr_3, C.py_2, // lg__
@@ -262,7 +265,7 @@ fn view_link(title: &str, link: &str) -> impl View<Msg> {
     ]
 }
 
-fn view_github_mark() -> impl View<Msg> {
+fn view_github_mark() -> Node<Msg> {
     a![
         class![
             C.mt_4, C.mb_8, C.mr_8, // lg__
@@ -271,6 +274,6 @@ fn view_github_mark() -> impl View<Msg> {
         attrs! {
             At::Href => "https://github.com/seed-rs/seed",
         },
-        image::github_mark_svg().els()
+        image::github_mark_svg().into_nodes()
     ]
 }

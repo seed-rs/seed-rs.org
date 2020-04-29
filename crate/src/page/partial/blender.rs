@@ -1,7 +1,7 @@
 use crate::{generated::css_classes::C, Mode, Msg};
 use seed::{prelude::*, *};
 
-pub fn view_for_header(mode: Mode) -> impl View<Msg> {
+pub fn view_for_header(mode: Mode) -> Node<Msg> {
     if mode == Mode::Dark {
         div![class![C.absolute, C.z_40,], common_classes()]
     } else {
@@ -9,7 +9,7 @@ pub fn view_for_header(mode: Mode) -> impl View<Msg> {
     }
 }
 
-pub fn view_for_content(mode: Mode) -> impl View<Msg> {
+pub fn view_for_content(mode: Mode) -> Node<Msg> {
     if mode == Mode::Dark {
         div![class![C.fixed, C.z_20,], common_classes()]
     } else {

@@ -4,8 +4,7 @@ use crate::{
     Guide, Model, Msg,
 };
 use seed::{prelude::*, *};
-
-pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> impl View<Msg> {
+pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
     div![
         class![
             C.container,
@@ -18,16 +17,12 @@ pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> impl View<Msg> {
             // lg__
             C.lg__mt_0,
         ],
-        guide_list::view(guide, model).els(),
-        view_content(guide, model, show_intro).els(),
+        guide_list::view(guide, model),
+        view_content(guide, model, show_intro),
     ]
 }
 
-fn view_content(
-    guide: &Guide,
-    model: &Model,
-    show_intro: bool,
-) -> impl View<Msg> {
+fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
     use content_control_panel::Position::{Bottom, Top};
     div![
         class![
@@ -41,15 +36,15 @@ fn view_content(
             C.lg__border_l_4,
             C.lg__border_green_500,
         ],
-        intro::view(show_intro).els(),
-        content_control_panel::view(guide, Top, model).els(),
-        view_guide_html(guide.html).els(),
-        content_control_panel::view(guide, Bottom, model).els(),
-        view_netlify_logo().els()
+        intro::view(show_intro),
+        content_control_panel::view(guide, Top, model),
+        view_guide_html(guide.html),
+        content_control_panel::view(guide, Bottom, model),
+        view_netlify_logo()
     ]
 }
 
-fn view_guide_html(content: &str) -> impl View<Msg> {
+fn view_guide_html(content: &str) -> Node<Msg> {
     div![
         class![
             // it has to be "markdown-body" so it's content is styled by Github CSS
@@ -59,7 +54,7 @@ fn view_guide_html(content: &str) -> impl View<Msg> {
     ]
 }
 
-fn view_netlify_logo() -> impl View<Msg> {
+fn view_netlify_logo() -> Node<Msg> {
     a![
         class! {
             C.flex,

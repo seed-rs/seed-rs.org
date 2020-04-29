@@ -312,7 +312,7 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
 //     View
 // ------ ------
 
-pub fn view(model: &Model) -> impl View<Msg> {
+pub fn view(model: &Model) -> impl IntoNodes<Msg> {
     nodes![
         div![
             class![C.min_h_screen, C.bg_white,],
@@ -320,12 +320,12 @@ pub fn view(model: &Model) -> impl View<Msg> {
                 Page::Guide {
                     guide,
                     show_intro,
-                } => page::guide::view(&guide, model, show_intro).els(),
-                Page::NotFound => page::not_found::view().els(),
+                } => page::guide::view(&guide, model, show_intro),
+                Page::NotFound => page::not_found::view(),
             },
-            page::partial::header::view(model).els(),
+            page::partial::header::view(model),
         ],
-        blender::view_for_content(model.mode).els(),
+        blender::view_for_content(model.mode),
     ]
 }
 
