@@ -80,7 +80,7 @@ fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> Node<Msg> {
                 if in_prerendering {
                     div![
                         C![C.mr_1, C.h_4, C.w_4, C.rotate,],
-                        image::spinner_svg().into_nodes()
+                        image::spinner_svg()
                     ]
                 } else {
                     empty![]
@@ -202,12 +202,12 @@ fn view_previous_icon() -> Node<Msg> {
         style! {
             St::Transform => "rotate(180deg)",
         },
-        image::next_icon_svg().into_nodes()
+        image::next_icon_svg()
     ]
 }
 
 fn view_next_icon() -> Node<Msg> {
-    div![C![C.h_8, C.w_8], image::next_icon_svg().into_nodes()]
+    div![C![C.h_8, C.w_8], image::next_icon_svg()]
 }
 
 // ------ get previous & next guide ------

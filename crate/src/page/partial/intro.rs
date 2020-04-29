@@ -40,7 +40,7 @@ fn view_logo() -> Node<Msg> {
             attrs! {
                 At::Href => Route::Root.to_string()
             },
-            image::seed_logo_svg().into_nodes(),
+            image::seed_logo_svg(),
         ],
     ]
 }

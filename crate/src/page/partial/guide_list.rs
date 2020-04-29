@@ -52,10 +52,7 @@ fn view_guide_list_toggle(
             simple_ev(Ev::Click, Msg::ToggleGuideList),
             selected_guide.menu_title,
             if in_prerendering {
-                div![
-                    C![C.h_6, C.w_6, C.rotate],
-                    image::spinner_svg().into_nodes()
-                ]
+                div![C![C.h_6, C.w_6, C.rotate], image::spinner_svg()]
             } else {
                 view_hamburger()
             }
@@ -134,7 +131,7 @@ fn view_search(model: &Model) -> Node<Msg> {
                     St::Top => rem(0.6),
                     St::Left => rem(1.5),
                 },
-                image::search_icon_svg().into_nodes()
+                image::search_icon_svg()
             ],
             // search input
             input![
@@ -171,12 +168,12 @@ fn view_guide_list_item(
 ) -> Node<Msg> {
     li![
         C![
-            IF!(!matched => C.hover__bg_green_100),
+            IF!(not(matched) => C.hover__bg_green_100),
             IF!(matched => C.bg_green_200),
             // md__
             C.md__my_0,
             // lg__
-            IF!(!matched => C.lg__hover__bg_transparent),
+            IF!(not(matched) => C.lg__hover__bg_transparent),
         ],
         if guide.prepend_menu_divider {
             hr![C![C.border_t, C.border_green_300,]]

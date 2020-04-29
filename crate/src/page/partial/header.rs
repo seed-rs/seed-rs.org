@@ -91,7 +91,7 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> Node<Msg> {
         simple_ev(Ev::Click, Msg::ScrollToTop),
         simple_ev(Ev::Click, Msg::ToggleGuideList),
         if in_prerendering {
-            div![C![C.h_6, C.w_6, C.rotate], image::spinner_svg().into_nodes()]
+            div![C![C.h_6, C.w_6, C.rotate], image::spinner_svg()]
         } else {
             span!["Guides",]
         }
@@ -142,7 +142,7 @@ fn view_logo() -> Node<Msg> {
             attrs! {
                 At::Href => Route::Root.to_string()
             },
-            image::seed_logo_svg().into_nodes(),
+            image::seed_logo_svg(),
         ]
     ]
 }
@@ -178,10 +178,7 @@ fn view_menu_toggle(in_prerendering: bool) -> Node<Msg> {
             ],
             simple_ev(Ev::Click, Msg::ToggleMenu),
             if in_prerendering {
-                div![
-                    C![C.h_6, C.w_6, C.rotate],
-                    image::spinner_svg().into_nodes()
-                ]
+                div![C![C.h_6, C.w_6, C.rotate], image::spinner_svg()]
             } else {
                 span!["Menu",]
             }
@@ -271,6 +268,6 @@ fn view_github_mark() -> Node<Msg> {
         attrs! {
             At::Href => "https://github.com/seed-rs/seed",
         },
-        image::github_mark_svg().into_nodes()
+        image::github_mark_svg()
     ]
 }

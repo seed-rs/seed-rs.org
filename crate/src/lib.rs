@@ -15,7 +15,7 @@ mod page;
 use generated::css_classes::C;
 use guide::Guide;
 use page::partial::blender;
-use seed::{browser::web_storage::LocalStorage, prelude::*, *};
+use seed::{prelude::*, *};
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use Visibility::*;
@@ -174,7 +174,6 @@ pub fn after_mount(
 }
 
 fn load_config() -> Config {
-    // @TODO `.and_then(identity)` replace with `.flatten()` once stable
     LocalStorage::get(STORAGE_KEY).unwrap_or_default()
 }
 
@@ -199,15 +198,10 @@ pub enum Route {
 }
 
 impl From<Url> for Route {
-    fn from(url: Url) -> Self {
-        let mut path = url.path().iter();
-
-        // `Option<&String>.as_defer() -> &str` doesn't work as with owned `String`
-        match path.next().map(|s| s.as_str()) {
-            None | Some("") => Self::Root,
-            Some("guide") => {
-                path.next().cloned().map(Self::Guide).unwrap_or(Self::Unknown)
-            },
+    fn from(mut url: Url) -> Self {
+        match url.remaining_path_parts().as_slice() {
+            [] => Self::Root,
+            ["guide", page] => Self::Guide(page.to_string()),
             _ => Self::Unknown,
         }
     }
