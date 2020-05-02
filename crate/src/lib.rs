@@ -193,7 +193,7 @@ impl From<Url> for Route {
     fn from(mut url: Url) -> Self {
         match url.remaining_path_parts().as_slice() {
             [] => Self::Root,
-            ["guide", page] => Self::Guide(page.to_string()),
+            ["guide", page] => Self::Guide((*page).to_string()),
             _ => Self::Unknown,
         }
     }
