@@ -34,10 +34,10 @@ pub fn view(
             C.lg__ml_auto,
         ],
         // previous guide
-        previous_guide(selected_guide, &model.guides).map_or_else(
-            || view_empty_column(),
-            |previous_guide| view_previous_guide_link(previous_guide)
-        ),
+        previous_guide(selected_guide, &model.guides)
+            .map_or_else(view_empty_column, |previous_guide| {
+                view_previous_guide_link(previous_guide)
+            }),
         // mode toggle or edit this page button
         if position == Position::Top {
             view_mode_toggle(model.in_prerendering, model.mode)
@@ -45,10 +45,10 @@ pub fn view(
             view_edit_this_page(selected_guide.edit_url)
         },
         // next guide
-        next_guide(selected_guide, &model.guides).map_or_else(
-            || view_empty_column(),
-            |next_guide| view_next_guide_link(next_guide)
-        ),
+        next_guide(selected_guide, &model.guides)
+            .map_or_else(view_empty_column, |next_guide| view_next_guide_link(
+                next_guide
+            )),
     ]
 }
 
