@@ -5,7 +5,10 @@ use crate::{
     generated::css_classes::C, page::partial::image, Guide, Model, Msg, Route,
     Visibility::Hidden,
 };
-use seed::{prelude::*, *};
+use seed::{
+    a, attrs, button, div, empty, hr, id, input, li, prelude::*, span, style,
+    ul, C, IF,
+};
 
 pub fn view(guide: &Guide, model: &Model) -> Node<Msg> {
     div![

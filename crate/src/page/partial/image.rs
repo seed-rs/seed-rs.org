@@ -1,5 +1,5 @@
 use crate::{generated::css_classes::C, Msg};
-use seed::{prelude::*, *};
+use seed::{attrs, path, prelude::*, raw, svg, C};
 
 pub fn seed_logo_svg() -> Vec<Node<Msg>> {
     raw![

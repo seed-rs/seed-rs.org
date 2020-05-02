@@ -7,7 +7,7 @@ use crate::{
     Model, Msg, Page, Route,
     Visibility::Hidden,
 };
-use seed::{prelude::*, *};
+use seed::{a, attrs, button, div, id, li, nav, prelude::*, span, ul, C, IF};
 
 pub fn view(model: &Model) -> Node<Msg> {
     nav![

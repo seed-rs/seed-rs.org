@@ -5,7 +5,7 @@ use crate::{
     generated::css_classes::C, page::partial::image, Msg, Route, SEED_VERSION,
     SEED_VERSION_DATE,
 };
-use seed::{prelude::*, *};
+use seed::{a, attrs, br, div, empty, h2, img, li, prelude::*, span, ul, C};
 
 pub fn view(show: bool) -> Node<Msg> {
     if show {
