@@ -1,3 +1,6 @@
+// Clippy complains about `cognitive_complexity` for simple functions with macros.
+#![allow(clippy::cognitive_complexity)]
+
 use crate::{
     generated::css_classes::C, page::partial::image, Guide, Mode, Model, Msg,
     Route,
