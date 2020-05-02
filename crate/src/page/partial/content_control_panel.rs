@@ -5,7 +5,7 @@ use crate::{
     generated::css_classes::C, page::partial::image, Guide, Mode, Model, Msg,
     Route,
 };
-use seed::{prelude::*, *};
+use seed::{a, attrs, div, empty, prelude::*, span, style, C};
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum Position {

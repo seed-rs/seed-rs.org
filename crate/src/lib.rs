@@ -15,7 +15,9 @@ mod page;
 use generated::css_classes::C;
 use guide::Guide;
 use page::partial::blender;
-use seed::{prelude::*, *};
+use seed::{
+    app, div, document, nodes, prelude::*, wasm_bindgen, web_sys, window, C,
+};
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use Visibility::*;

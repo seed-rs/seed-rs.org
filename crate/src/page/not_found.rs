@@ -2,7 +2,7 @@
 #![allow(clippy::cognitive_complexity)]
 
 use crate::{generated::css_classes::C, Msg, Route};
-use seed::{prelude::*, *};
+use seed::{a, attrs, div, prelude::*, C};
 
 pub fn view() -> Node<Msg> {
     div![

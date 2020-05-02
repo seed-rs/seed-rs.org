@@ -6,7 +6,8 @@ use crate::{
     page::partial::{content_control_panel, guide_list, intro},
     Guide, Model, Msg,
 };
-use seed::{prelude::*, *};
+use seed::{a, attrs, div, img, prelude::*, raw, C};
+
 pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
     div![
         C![
