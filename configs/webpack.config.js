@@ -29,7 +29,7 @@ module.exports = (env, argv) => {
       noInfo: true,
       stats: "errors-only",
       overlay: {
-        warnings: true,
+        // warnings: true,
         errors: true
       },
       historyApiFallback: true,
