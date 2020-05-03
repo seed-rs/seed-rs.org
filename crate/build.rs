@@ -1,4 +1,4 @@
-use pulldown_cmark::{self, Event, Tag};
+use pulldown_cmark::{self, CodeBlockKind, Event, Tag};
 use std::{cell::RefCell, fs, path::PathBuf, rc::Rc};
 
 fn main() {
@@ -98,7 +98,7 @@ where
     I: Iterator<Item = Event<'a>>,
 {
     parser.map(|event| match event {
-        Event::Start(Tag::CodeBlock(code_lang)) => {
+        Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(code_lang))) => {
             let lang = if code_lang.is_empty() {
                 String::new()
             } else {

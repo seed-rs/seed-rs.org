@@ -5,7 +5,8 @@
     clippy::used_underscore_binding,
     clippy::non_ascii_literal,
     clippy::enum_glob_use,
-    clippy::must_use_candidate
+    clippy::must_use_candidate,
+    clippy::wildcard_imports
 )]
 
 mod generated;
@@ -15,11 +16,9 @@ mod page;
 use generated::css_classes::C;
 use guide::Guide;
 use page::partial::blender;
-use seed::{
-    app, div, document, nodes, prelude::*, wasm_bindgen, web_sys, window, C,
-};
+use seed::{prelude::*, *};
 use serde::{Deserialize, Serialize};
-use std::fmt;
+
 use Visibility::*;
 
 const SEED_VERSION: &str = "0.6.0";
@@ -27,6 +26,8 @@ const SEED_VERSION_DATE: &str = "Feb 1, 2020";
 const TITLE_SUFFIX: &str = "Seed";
 const STORAGE_KEY: &str = "seed";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
+
+const GUIDE: &str = "guide";
 
 // ------ ------
 //    Common
@@ -61,16 +62,13 @@ pub struct Config {
 // ------ ------
 
 fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
-    orders
-        .send_msg(Msg::RouteChanged(url.clone().into()))
-        .send_msg(Msg::UpdatePageTitle)
-        .subscribe(|app::subs::UrlChanged(url)| -> Msg {
-            Msg::RouteChanged(url.into())
-        });
+    orders.subscribe(Msg::UrlChanged);
 
     let guides = guide::guides();
+
     Model {
-        page: Page::from_route_and_replace_history(&url.into(), &guides),
+        base_url: url.to_base_url(),
+        page: Page::init(url, &guides),
         guide_list_visibility: Hidden,
         menu_visibility: Hidden,
         in_prerendering: is_in_prerendering(),
@@ -95,6 +93,7 @@ fn is_in_prerendering() -> bool {
 // ------ ------
 
 pub struct Model {
+    pub base_url: Url,
     pub page: Page,
     pub guide_list_visibility: Visibility,
     pub menu_visibility: Visibility,
@@ -130,7 +129,7 @@ impl Default for Mode {
 
 // ------ Page ------
 
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum Page {
     Guide {
         guide: Guide,
@@ -140,80 +139,47 @@ pub enum Page {
 }
 
 impl Page {
-    pub fn to_href(self) -> String {
-        match self {
-            Self::Guide {
-                guide,
-                ..
-            } => format!("/guide/{}", guide.slug),
-            Self::NotFound => "/404".into(),
-        }
-    }
-
-    pub fn from_route_and_replace_history(
-        route: &Route,
-        guides: &[Guide],
-    ) -> Self {
-        match route {
-            Route::Root => match guides.first() {
-                Some(guide) => Self::Guide {
-                    guide: *guide,
-                    show_intro: true,
-                },
-                None => Self::NotFound,
-            },
-            Route::Guide(slug) => {
-                match guides.iter().find(|guide| guide.slug == slug) {
-                    Some(guide) => Self::Guide {
+    pub fn init(mut url: Url, guides: &[Guide]) -> Self {
+        match url.remaining_path_parts().as_slice() {
+            [] => {
+                if let Some(guide) = guides.first() {
+                    Self::Guide {
                         guide: *guide,
-                        show_intro: false,
-                    },
-                    None => Self::NotFound,
+                        show_intro: true,
+                    }
+                } else {
+                    Self::NotFound
                 }
             },
-            Route::Unknown => Self::NotFound,
+            [GUIDE, guide_slug] => {
+                if let Some(guide) =
+                    guides.iter().find(|guide| guide.slug == *guide_slug)
+                {
+                    Self::Guide {
+                        guide: *guide,
+                        show_intro: false,
+                    }
+                } else {
+                    Self::NotFound
+                }
+            },
+            _ => Self::NotFound,
         }
     }
 }
 
 // ------ ------
-//    Routes
+//     Urls
 // ------ ------
 
-pub fn routes(url: Url) -> Option<Msg> {
-    Some(Msg::RouteChanged(url.into()))
-}
-
-#[derive(Clone)]
-pub enum Route {
-    Root,
-    Guide(String),
-    Unknown,
-}
-
-impl From<Url> for Route {
-    fn from(mut url: Url) -> Self {
-        match url.remaining_path_parts().as_slice() {
-            [] => Self::Root,
-            ["guide", page] => Self::Guide((*page).to_string()),
-            _ => Self::Unknown,
-        }
+struct_urls!();
+impl<'a> Urls<'a> {
+    pub fn home(self) -> Url {
+        self.base_url()
     }
-}
 
-impl Route {
-    pub fn path(&self) -> Vec<&str> {
-        match self {
-            Self::Root => vec![],
-            Self::Guide(slug) => vec!["guide", slug.as_str()],
-            Self::Unknown => vec!["404"],
-        }
-    }
-}
-
-impl fmt::Display for Route {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "/{}", self.path().join("/"))
+    pub fn guide(self, guide_slug: &str) -> Url {
+        self.base_url().add_path_part(GUIDE).add_path_part(guide_slug)
     }
 }
 
@@ -221,10 +187,8 @@ impl fmt::Display for Route {
 //    Update
 // ------ ------
 
-#[derive(Clone)]
 pub enum Msg {
-    RouteChanged(Route),
-    UpdatePageTitle,
+    UrlChanged(subs::UrlChanged),
     ScrollToTop,
     ToggleGuideList,
     HideGuideList,
@@ -236,13 +200,9 @@ pub enum Msg {
 
 pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
-        Msg::RouteChanged(route) => {
-            model.page =
-                Page::from_route_and_replace_history(&route, &model.guides);
-            orders.send_msg(Msg::ScrollToTop);
-            orders.send_msg(Msg::UpdatePageTitle);
-        },
-        Msg::UpdatePageTitle => {
+        Msg::UrlChanged(subs::UrlChanged(url)) => {
+            model.page = Page::init(url, &model.guides);
+
             let title = match model.page {
                 Page::Guide {
                     guide,
@@ -251,6 +211,8 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
                 Page::NotFound => format!("404 - {}", TITLE_SUFFIX),
             };
             document().set_title(&title);
+
+            orders.send_msg(Msg::ScrollToTop);
         },
         Msg::ScrollToTop => window().scroll_to_with_scroll_to_options(
             web_sys::ScrollToOptions::new().top(0.),
@@ -309,7 +271,7 @@ pub fn view(model: &Model) -> impl IntoNodes<Msg> {
                     guide,
                     show_intro,
                 } => page::guide::view(&guide, model, show_intro),
-                Page::NotFound => page::not_found::view(),
+                Page::NotFound => page::not_found::view(&model.base_url),
             },
             page::partial::header::view(model),
         ],

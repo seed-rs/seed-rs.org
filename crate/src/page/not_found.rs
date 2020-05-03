@@ -1,10 +1,10 @@
 // Clippy complains about `cognitive_complexity` for simple functions with macros.
 #![allow(clippy::cognitive_complexity)]
 
-use crate::{generated::css_classes::C, Msg, Route};
+use crate::{generated::css_classes::C, Msg, Urls};
 use seed::{a, attrs, div, prelude::*, C};
 
-pub fn view() -> Node<Msg> {
+pub fn view(base_url: &Url) -> Node<Msg> {
     div![
         C![C.mt_32, C.flex, C.justify_center,],
         div![
@@ -26,7 +26,7 @@ pub fn view() -> Node<Msg> {
                     C.hover__text_green_700,
                 ],
                 attrs! {
-                    At::Href => Route::Root.to_string()
+                    At::Href => Urls::new(base_url).home()
                 },
                 "Home"
             ],

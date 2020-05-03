@@ -40,7 +40,7 @@ fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
             C.lg__border_l_4,
             C.lg__border_green_500,
         ],
-        intro::view(show_intro),
+        intro::view(show_intro, &model.base_url),
         content_control_panel::view(guide, Top, model),
         view_guide_html(guide.html),
         content_control_panel::view(guide, Bottom, model),

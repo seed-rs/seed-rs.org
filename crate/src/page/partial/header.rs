@@ -4,7 +4,7 @@
 use crate::{
     generated::css_classes::C,
     page::partial::{blender, image},
-    Model, Msg, Page, Route,
+    Model, Msg, Page, Urls,
     Visibility::Hidden,
 };
 use seed::{a, attrs, button, div, id, li, nav, prelude::*, span, ul, C, IF};
@@ -39,8 +39,12 @@ pub fn view(model: &Model) -> Node<Msg> {
                 C.pb_2,
             ],
             view_container_with_border(),
-            view_guide_list_toggle(model.page, model.in_prerendering),
-            view_logo(),
+            view_guide_list_toggle(
+                model.page,
+                model.in_prerendering,
+                &model.base_url
+            ),
+            view_logo(&model.base_url),
             view_menu_toggle(model.in_prerendering),
             view_menu_content(model),
         ]
@@ -65,7 +69,11 @@ fn view_container_with_border() -> Node<Msg> {
 
 // ------ view guide list toggle  ------
 
-fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> Node<Msg> {
+fn view_guide_list_toggle(
+    page: Page,
+    in_prerendering: bool,
+    base_url: &Url,
+) -> Node<Msg> {
     let page_is_guide = match page {
         Page::Guide {
             ..
@@ -91,8 +99,8 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> Node<Msg> {
             C.focus__outline_none,
             C.hover__underline,
         ],
-        simple_ev(Ev::Click, Msg::ScrollToTop),
-        simple_ev(Ev::Click, Msg::ToggleGuideList),
+        ev(Ev::Click, |_| Msg::ScrollToTop),
+        ev(Ev::Click, |_| Msg::ToggleGuideList),
         if in_prerendering {
             div![C![C.h_6, C.w_6, C.rotate], image::spinner_svg()]
         } else {
@@ -113,7 +121,7 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> Node<Msg> {
         } else {
             a![
                 attrs! {
-                    At::Href => Route::Root.to_string()
+                    At::Href => Urls::new(base_url).home()
                 },
                 toggle,
             ]
@@ -123,7 +131,7 @@ fn view_guide_list_toggle(page: Page, in_prerendering: bool) -> Node<Msg> {
 
 // ------ view logo  ------
 
-fn view_logo() -> Node<Msg> {
+fn view_logo(base_url: &Url) -> Node<Msg> {
     div![
         C![
             C.relative,
@@ -143,7 +151,7 @@ fn view_logo() -> Node<Msg> {
                 C.lg__w_32,
             ],
             attrs! {
-                At::Href => Route::Root.to_string()
+                At::Href => Urls::new(base_url).home()
             },
             image::seed_logo_svg(),
         ]
@@ -179,7 +187,7 @@ fn view_menu_toggle(in_prerendering: bool) -> Node<Msg> {
                 C.focus__outline_none,
                 C.hover__underline,
             ],
-            simple_ev(Ev::Click, Msg::ToggleMenu),
+            ev(Ev::Click, |_| Msg::ToggleMenu),
             if in_prerendering {
                 div![C![C.h_6, C.w_6, C.rotate], image::spinner_svg()]
             } else {

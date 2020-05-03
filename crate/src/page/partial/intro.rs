@@ -2,12 +2,12 @@
 #![allow(clippy::cognitive_complexity)]
 
 use crate::{
-    generated::css_classes::C, page::partial::image, Msg, Route, SEED_VERSION,
+    generated::css_classes::C, page::partial::image, Msg, Urls, SEED_VERSION,
     SEED_VERSION_DATE,
 };
 use seed::{a, attrs, br, div, empty, h2, img, li, prelude::*, span, ul, C};
 
-pub fn view(show: bool) -> Node<Msg> {
+pub fn view(show: bool, base_url: &Url) -> Node<Msg> {
     if show {
         div![
             div![
@@ -19,8 +19,8 @@ pub fn view(show: bool) -> Node<Msg> {
                     C.sm__justify_center,
                     C.sm__items_center,
                 ],
-                view_logo(),
-                view_description_and_version(),
+                view_logo(base_url),
+                view_description_and_version(base_url),
             ],
             view_join_forum_chat(),
             view_testimonials(),
@@ -30,7 +30,7 @@ pub fn view(show: bool) -> Node<Msg> {
     }
 }
 
-fn view_logo() -> Node<Msg> {
+fn view_logo(base_url: &Url) -> Node<Msg> {
     div![
         C![C.flex,],
         a![
@@ -41,14 +41,14 @@ fn view_logo() -> Node<Msg> {
                 C.lg__w_64,
             ],
             attrs! {
-                At::Href => Route::Root.to_string()
+                At::Href => Urls::new(base_url).home()
             },
             image::seed_logo_svg(),
         ],
     ]
 }
 
-fn view_description_and_version() -> Node<Msg> {
+fn view_description_and_version(base_url: &Url) -> Node<Msg> {
     div![
         C![C.flex, C.flex_col,],
         view_description(),
@@ -61,7 +61,7 @@ fn view_description_and_version() -> Node<Msg> {
                 C.hover__underline,
             ],
             attrs! {
-                At::Href => Route::Guide("changelog".to_owned())
+                At::Href => Urls::new(base_url).guide("changelog")
             },
             div![
                 span![C![C.font_bold,], SEED_VERSION],
