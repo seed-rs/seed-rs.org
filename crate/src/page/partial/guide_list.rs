@@ -2,7 +2,7 @@
 #![allow(clippy::cognitive_complexity)]
 
 use crate::{
-    generated::css_classes::C, page::partial::image, Guide, Model, Msg, Route,
+    generated::css_classes::C, page::partial::image, Guide, Model, Msg, Urls,
     Visibility::Hidden,
 };
 use seed::{
@@ -55,7 +55,7 @@ fn view_guide_list_toggle(
                 C.rounded_full,
                 C.bg_green_500,
             ],
-            simple_ev(Ev::Click, Msg::ToggleGuideList),
+            ev(Ev::Click, |_| Msg::ToggleGuideList),
             selected_guide.menu_title,
             if in_prerendering {
                 div![C![C.h_6, C.w_6, C.rotate], image::spinner_svg()]
@@ -107,7 +107,12 @@ fn view_guide_list_content(selected_guide: &Guide, model: &Model) -> Node<Msg> {
         ul![model.guides.iter().map(|guide| {
             let guide_is_selected = guide == selected_guide;
             let guide_is_matched = model.matched_guides.contains(guide);
-            view_guide_list_item(guide, guide_is_selected, guide_is_matched)
+            view_guide_list_item(
+                guide,
+                guide_is_selected,
+                guide_is_matched,
+                &model.base_url,
+            )
         })]
     ]
 }
@@ -171,6 +176,7 @@ fn view_guide_list_item(
     guide: &Guide,
     active: bool,
     matched: bool,
+    base_url: &Url,
 ) -> Node<Msg> {
     li![
         C![
@@ -206,9 +212,9 @@ fn view_guide_list_item(
                 },
             ],
             attrs! {
-                At::Href => Route::Guide(guide.slug.to_owned()).to_string(),
+                At::Href => Urls::new(base_url).guide(guide.slug),
             },
-            simple_ev(Ev::Click, Msg::HideGuideList),
+            ev(Ev::Click, |_| Msg::HideGuideList),
             span![
                 C![
                     C.block,

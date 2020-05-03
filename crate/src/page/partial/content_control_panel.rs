@@ -3,7 +3,7 @@
 
 use crate::{
     generated::css_classes::C, page::partial::image, Guide, Mode, Model, Msg,
-    Route,
+    Urls,
 };
 use seed::{a, attrs, div, empty, prelude::*, span, style, C};
 
@@ -34,10 +34,12 @@ pub fn view(
             C.lg__ml_auto,
         ],
         // previous guide
-        previous_guide(selected_guide, &model.guides)
-            .map_or_else(view_empty_column, |previous_guide| {
-                view_previous_guide_link(previous_guide)
-            }),
+        previous_guide(selected_guide, &model.guides).map_or_else(
+            view_empty_column,
+            |previous_guide| {
+                view_previous_guide_link(previous_guide, &model.base_url)
+            }
+        ),
         // mode toggle or edit this page button
         if position == Position::Top {
             view_mode_toggle(model.in_prerendering, model.mode)
@@ -45,10 +47,10 @@ pub fn view(
             view_edit_this_page(selected_guide.edit_url)
         },
         // next guide
-        next_guide(selected_guide, &model.guides)
-            .map_or_else(view_empty_column, |next_guide| view_next_guide_link(
-                next_guide
-            )),
+        next_guide(selected_guide, &model.guides).map_or_else(
+            view_empty_column,
+            |next_guide| view_next_guide_link(next_guide, &model.base_url)
+        ),
     ]
 }
 
@@ -77,7 +79,7 @@ fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> Node<Msg> {
                 C.hover__text_gray_700,
                 C.hover__border_gray_600,
             ],
-            simple_ev(Ev::Click, Msg::ToggleMode),
+            ev(Ev::Click, |_| Msg::ToggleMode),
             span![
                 C![C.whitespace_no_wrap, C.flex, C.items_center,],
                 if in_prerendering {
@@ -139,7 +141,10 @@ fn view_edit_this_page(edit_url: &str) -> Node<Msg> {
 
 // ------ view previous & next guide link ------
 
-fn view_previous_guide_link(previous_guide: &Guide) -> Node<Msg> {
+fn view_previous_guide_link(
+    previous_guide: &Guide,
+    base_url: &Url,
+) -> Node<Msg> {
     div![
         C![C.flex_1, C.flex, C.justify_start,],
         a![
@@ -150,7 +155,7 @@ fn view_previous_guide_link(previous_guide: &Guide) -> Node<Msg> {
                 C.focus__outline_none,
             ],
             attrs! {
-                At::Href => Route::Guide(previous_guide.slug.to_owned()).to_string(),
+                At::Href => Urls::new(base_url).guide(previous_guide.slug),
             },
             view_previous_icon(),
             div![
@@ -168,7 +173,7 @@ fn view_previous_guide_link(previous_guide: &Guide) -> Node<Msg> {
     ]
 }
 
-fn view_next_guide_link(next_guide: &Guide) -> Node<Msg> {
+fn view_next_guide_link(next_guide: &Guide, base_url: &Url) -> Node<Msg> {
     div![
         C![C.flex_1, C.flex, C.justify_end,],
         a![
@@ -179,7 +184,7 @@ fn view_next_guide_link(next_guide: &Guide) -> Node<Msg> {
                 C.focus__outline_none,
             ],
             attrs! {
-                At::Href => Route::Guide(next_guide.slug.to_owned()).to_string(),
+                At::Href => Urls::new(base_url).guide(next_guide.slug),
             },
             div![
                 C![
