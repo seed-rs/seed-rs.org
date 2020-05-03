@@ -1,4 +1,4 @@
-use pulldown_cmark::{self, Event, Tag, CodeBlockKind};
+use pulldown_cmark::{self, CodeBlockKind, Event, Tag};
 use std::{cell::RefCell, fs, path::PathBuf, rc::Rc};
 
 fn main() {
