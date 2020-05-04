@@ -6,7 +6,11 @@ use crate::{
     page::partial::{content_control_panel, guide_list, intro},
     Guide, Model, Msg,
 };
-use seed::{a, attrs, div, img, prelude::*, raw, C};
+use seed::{prelude::*, *};
+use std::{
+    collections::hash_map::DefaultHasher,
+    hash::{Hash, Hasher},
+};
 
 pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
     div![
@@ -54,7 +58,7 @@ fn view_guide_html(content: &str) -> Node<Msg> {
             // it has to be "markdown-body" so it's content is styled by Github CSS
             C.markdown_body,
         ],
-        raw!(content)
+        set_keys_to_code_blocks(raw!(content))
     ]
 }
 
@@ -77,4 +81,23 @@ fn view_netlify_logo() -> Node<Msg> {
             }
         ],
     ]
+}
+
+/// Add element key to each code block to force reinitialization if code changed.
+fn set_keys_to_code_blocks(nodes: Vec<Node<Msg>>) -> Vec<Node<Msg>> {
+    nodes
+        .into_iter()
+        .map(|node| match node {
+            Node::Element(el) => {
+                if el.is_custom() && el.tag.as_str() == "code-block" {
+                    let mut hasher = DefaultHasher::new();
+                    el.get_text().hash(&mut hasher);
+                    custom![el.tag, el_key(&hasher.finish()), el.children]
+                } else {
+                    Node::Element(el)
+                }
+            },
+            _ => node,
+        })
+        .collect()
 }
