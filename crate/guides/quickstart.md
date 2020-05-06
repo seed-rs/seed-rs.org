@@ -30,17 +30,18 @@ This framework requires you to install [Rust](https://www.rust-lang.org/tools/in
 
 You'll need a recent version of Rust: `rustup update`
 
-The wasm32-unknown-unknown target: `rustup target add wasm32-unknown-unknown`
-
-And cargo-make: `cargo install --force cargo-make`
+Once that's done, you'll need cargo-make to build: `cargo install --force cargo-make`
 
 ## The theoretical minimum
 
 To start, clone [the quickstart repo](https://github.com/seed-rs/seed-quickstart):
-`git clone https://github.com/seed-rs/seed-quickstart.git`,
-run `cargo make build` in a terminal to build the app, and `cargo make serve` to start a dev server
-on [127.0.0.1:8000](http://127.0.0.1:8000). If you'd like the compiler to automatically check and recompile when you 
-make changes, run `cargo make watch` instead of `cargo make build`.
+`git clone https://github.com/seed-rs/seed-quickstart.git`
+
+To get a dev server deployed to [localhost:8000](http://127.0.0.1:8000), run `cargo make start`.
+
+`cargo make watch`is available for auto-magic re-builds
+
+(Look through `Makefile.toml` for other project work-flow commands, e.g. release builds)
 
 
 ## A little deeper
