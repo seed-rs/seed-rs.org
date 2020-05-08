@@ -26,21 +26,25 @@ or `todomvc` examples.
 
 ## Setup
 
-This framework requires you to install [Rust](https://www.rust-lang.org/tools/install).
+The two fundamental things to setup:
 
-You'll need a recent version of Rust: `rustup update`
+ * [Rust](https://www.rust-lang.org/tools/install), the language itself.
+ * Run `rustup update` from the cli: the project assumes a relatively new version of Rust.
+ * `cargo install cargo-make`, a broadly useful tool to for Rust [workflows](https://github.com/sagiegurari/cargo-make).
 
-The wasm32-unknown-unknown target: `rustup target add wasm32-unknown-unknown`
-
-And cargo-make: `cargo install --force cargo-make`
 
 ## The theoretical minimum
 
-To start, clone [the quickstart repo](https://github.com/seed-rs/seed-quickstart):
-`git clone https://github.com/seed-rs/seed-quickstart.git`,
-run `cargo make build` in a terminal to build the app, and `cargo make serve` to start a dev server
-on [127.0.0.1:8000](http://127.0.0.1:8000). If you'd like the compiler to automatically check and recompile when you 
-make changes, run `cargo make watch` instead of `cargo make build`.
+The two main steps:
+
+ * [Generate](https://github.com/seed-rs/seed-quickstart/generate) your own repo from this one as a template, then clone it.
+ * From the clones root-directory: `cargo make start` - builds the project and serves it to [localhost:8000](http://127.0.0.1:8000).
+
+#### Also worth noting...
+
+`cargo make watch` is much like running `start`, which is automatically re-run when a Rust file is changed.
+
+The project [Makefile](https://github.com/seed-rs/seed-quickstart/blob/master/Makefile.toml) has other usefull commands, such as release builds.
 
 
 ## A little deeper
@@ -205,6 +209,6 @@ Some examples also require to run API server in another terminal window - `cargo
 When server(s) are running, open [127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
 
 ## Resources
-- [Awesome-seed-rs](https://github.com/seed-rs/awesome-seed-rs): A curated list of resources
-- [Seed Realworld](https://github.com/seed-rs/seed-rs-realworld): A detailed realworld example site
-- [Engineering Rust Web Applications](https://erwabook.com/): A book describing full-stack Rust web-development, using Seed for the frontend
+- [Awesome-seed-rs](https://github.com/seed-rs/awesome-seed-rs): A curated list of resources.
+- [Seed Realworld](https://github.com/seed-rs/seed-rs-realworld): A detailed realworld example site.
+- [Engineering Rust Web Applications](https://erwabook.com/): A book describing full-stack Rust web-development, using Seed for the frontend.
