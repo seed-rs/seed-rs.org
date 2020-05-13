@@ -1,5 +1,10 @@
 use pulldown_cmark::{self, CodeBlockKind, Event, Tag};
-use std::{cell::RefCell, fs, path::PathBuf, rc::Rc};
+use std::{
+    cell::RefCell,
+    fs,
+    path::{Path, PathBuf},
+    rc::Rc,
+};
 
 fn main() {
     for path in html_and_text_files() {
@@ -10,16 +15,20 @@ fn main() {
         let markdown = fs::read_to_string(&path).unwrap();
         let (html, text_parts) = markdown_to_html_and_text_parts(&markdown);
 
-        let html_path = format!(
-            "generated_guides/{}.html",
-            path.file_stem().unwrap().to_str().unwrap()
+        let parent_folder = format!(
+            "generated_guides/{}",
+            path.iter().nth_back(1).unwrap().to_str().unwrap()
         );
+        if !Path::new(&parent_folder).exists() {
+            fs::create_dir(&parent_folder).unwrap();
+        }
+
+        let file_stem = path.file_stem().unwrap().to_str().unwrap();
+
+        let html_path = format!("{}/{}.html", parent_folder, file_stem);
         fs::write(html_path, html).unwrap();
 
-        let text_path = format!(
-            "generated_guides/{}.txt",
-            path.file_stem().unwrap().to_str().unwrap()
-        );
+        let text_path = format!("{}/{}.txt", parent_folder, file_stem);
         fs::write(text_path, text_parts.join(" ")).unwrap();
     }
 }
@@ -27,6 +36,15 @@ fn main() {
 fn html_and_text_files() -> Vec<PathBuf> {
     fs::read_dir("generated_guides")
         .unwrap()
+        .filter_map(|entry| {
+            let path = entry.unwrap().path();
+            if path.is_dir() {
+                Some(fs::read_dir(path).unwrap())
+            } else {
+                None
+            }
+        })
+        .flatten()
         .filter_map(|entry| {
             let path = entry.unwrap().path();
 
@@ -41,6 +59,15 @@ fn html_and_text_files() -> Vec<PathBuf> {
 fn markdown_files() -> Vec<PathBuf> {
     fs::read_dir("guides")
         .unwrap()
+        .filter_map(|entry| {
+            let path = entry.unwrap().path();
+            if path.is_dir() {
+                Some(fs::read_dir(path).unwrap())
+            } else {
+                None
+            }
+        })
+        .flatten()
         .filter_map(|entry| {
             let path = entry.unwrap().path();
             if path.extension().unwrap_or_default() == "md" {

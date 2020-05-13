@@ -104,15 +104,19 @@ fn view_guide_list_content(selected_guide: &Guide, model: &Model) -> Node<Msg> {
             St::Top => em(7),
         },
         view_search(model),
-        ul![model.guides.iter().map(|guide| {
+        ul![model.guides.iter().filter_map(|guide| {
+            if guide.seed_version != model.selected_seed_version.version() {
+                return None;
+            }
+
             let guide_is_selected = guide == selected_guide;
             let guide_is_matched = model.matched_guides.contains(guide);
-            view_guide_list_item(
+            Some(view_guide_list_item(
                 guide,
                 guide_is_selected,
                 guide_is_matched,
                 &model.base_url,
-            )
+            ))
         })]
     ]
 }
@@ -212,7 +216,7 @@ fn view_guide_list_item(
                 },
             ],
             attrs! {
-                At::Href => Urls::new(base_url).guide(guide.slug),
+                At::Href => Urls::new(base_url).guide(guide),
             },
             ev(Ev::Click, |_| Msg::HideGuideList),
             span![
