@@ -2,12 +2,18 @@
 #![allow(clippy::cognitive_complexity)]
 
 use crate::{
-    generated::css_classes::C, page::partial::image, Msg, Urls, SEED_VERSION,
-    SEED_VERSION_DATE,
+    generated::css_classes::C, page::partial::image, Guide, Msg, SeedVersion,
+    Urls, DEFAULT_GUIDE_SLUG,
 };
-use seed::{a, attrs, br, div, empty, h2, img, li, prelude::*, span, ul, C};
+use seed::{prelude::*, *};
 
-pub fn view(show: bool, base_url: &Url) -> Node<Msg> {
+pub fn view(
+    show: bool,
+    base_url: &Url,
+    guides: &[Guide],
+    seed_versions: &[SeedVersion],
+    selected_seed_version: SeedVersion,
+) -> Node<Msg> {
     if show {
         div![
             div![
@@ -20,7 +26,12 @@ pub fn view(show: bool, base_url: &Url) -> Node<Msg> {
                     C.sm__items_center,
                 ],
                 view_logo(base_url),
-                view_description_and_version(base_url),
+                view_description_and_versions(
+                    base_url,
+                    guides,
+                    seed_versions,
+                    selected_seed_version
+                ),
             ],
             view_join_forum_chat(),
             view_testimonials(),
@@ -48,25 +59,50 @@ fn view_logo(base_url: &Url) -> Node<Msg> {
     ]
 }
 
-fn view_description_and_version(base_url: &Url) -> Node<Msg> {
+fn view_description_and_versions(
+    base_url: &Url,
+    guides: &[Guide],
+    seed_versions: &[SeedVersion],
+    selected_seed_version: SeedVersion,
+) -> Node<Msg> {
     div![
-        C![C.flex, C.flex_col,],
+        C![C.flex, C.flex_col, C.items_end,],
         view_description(),
-        a![
-            C![
-                C.mt_2,
-                C.text_right,
-                C.text_blue_600,
-                C.hover__text_blue_800,
-                C.hover__underline,
-            ],
-            attrs! {
-                At::Href => Urls::new(base_url).guide("changelog")
-            },
-            div![
-                span![C![C.font_bold,], SEED_VERSION],
-                span![C![C.ml_4, C.text_sm,], SEED_VERSION_DATE,],
-            ]
+        div![
+            C![C.flex, C.flex_col, C.mt_2],
+            seed_versions.iter().map(|version| {
+                let version = *version;
+                let default_guide = guides
+                    .iter()
+                    .find(|guide| {
+                        guide.slug == DEFAULT_GUIDE_SLUG
+                            && guide.seed_version == version.version()
+                    })
+                    .unwrap();
+                a![
+                    C![
+                        C.flex,
+                        C.justify_between,
+                        C.items_center,
+                        C.rounded_full,
+                        C.p_2,
+                        C.mt_1,
+                        C.cursor_pointer,
+                        if version == selected_seed_version {
+                            vec![C.text_blue_800, C.bg_green_100]
+                        } else {
+                            vec![C.text_blue_600]
+                        },
+                        C.hover__text_blue_800,
+                        C.hover__bg_green_100,
+                    ],
+                    attrs! {
+                        At::Href => Urls::new(base_url).guide(default_guide)
+                    },
+                    span![C![C.font_bold, C.px_2,], version.version()],
+                    span![C![C.text_sm, C.px_2,], version.date(),],
+                ]
+            })
         ]
     ]
 }

@@ -21,41 +21,11 @@ use serde::{Deserialize, Serialize};
 
 use Visibility::*;
 
-const SEED_VERSION: &str = "0.6.0";
-const SEED_VERSION_DATE: &str = "Feb 1, 2020";
 const TITLE_SUFFIX: &str = "Seed";
 const STORAGE_KEY: &str = "seed";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
-
-const GUIDE: &str = "guide";
-
-// ------ ------
-//    Common
-// ------ ------
-
-// ------ Visibility  ------
-
-#[derive(Clone, Copy, Eq, PartialEq)]
-pub enum Visibility {
-    Visible,
-    Hidden,
-}
-
-impl Visibility {
-    pub fn toggle(&mut self) {
-        *self = match self {
-            Visible => Hidden,
-            Hidden => Visible,
-        }
-    }
-}
-
-// ------ Config ------
-
-#[derive(Default, Serialize, Deserialize)]
-pub struct Config {
-    mode: Mode,
-}
+const DEFAULT_GUIDE_SLUG: &str = "about";
+const DEFAULT_SEED_VERSION: SeedVersion = SeedVersion::V0_6_0;
 
 // ------ ------
 //     Init
@@ -65,10 +35,20 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
     orders.subscribe(Msg::UrlChanged);
 
     let guides = guide::guides();
+    let seed_versions =
+        vec![SeedVersion::V0_6_0, SeedVersion::V0_7_0, SeedVersion::V0_8_0];
+    let mut selected_seed_version = DEFAULT_SEED_VERSION;
 
     Model {
         base_url: url.to_base_url(),
-        page: Page::init(url, &guides),
+        page: Page::init(
+            url,
+            &guides,
+            &seed_versions,
+            &mut selected_seed_version,
+        ),
+        selected_seed_version,
+        seed_versions,
         guide_list_visibility: Hidden,
         menu_visibility: Hidden,
         in_prerendering: is_in_prerendering(),
@@ -95,6 +75,8 @@ fn is_in_prerendering() -> bool {
 pub struct Model {
     pub base_url: Url,
     pub page: Page,
+    pub selected_seed_version: SeedVersion,
+    pub seed_versions: Vec<SeedVersion>,
     pub guide_list_visibility: Visibility,
     pub menu_visibility: Visibility,
     pub in_prerendering: bool,
@@ -102,6 +84,57 @@ pub struct Model {
     pub search_query: String,
     pub matched_guides: Vec<Guide>,
     pub mode: Mode,
+}
+
+// ------ SeedVersion ------
+
+#[derive(Copy, Clone, Eq, PartialEq)]
+pub enum SeedVersion {
+    V0_6_0,
+    V0_7_0,
+    V0_8_0,
+}
+
+impl SeedVersion {
+    pub fn version(self) -> &'static str {
+        match self {
+            Self::V0_6_0 => "0.6.0",
+            Self::V0_7_0 => "0.7.0",
+            Self::V0_8_0 => "0.8.0",
+        }
+    }
+
+    pub fn date(self) -> &'static str {
+        match self {
+            Self::V0_6_0 => "Feb 1, 2020",
+            Self::V0_7_0 => "May 8, 2020",
+            Self::V0_8_0 => "Not released yet",
+        }
+    }
+}
+
+// ------ Visibility  ------
+
+#[derive(Clone, Copy, Eq, PartialEq)]
+pub enum Visibility {
+    Visible,
+    Hidden,
+}
+
+impl Visibility {
+    pub fn toggle(&mut self) {
+        *self = match self {
+            Visible => Hidden,
+            Hidden => Visible,
+        }
+    }
+}
+
+// ------ Config ------
+
+#[derive(Default, Serialize, Deserialize)]
+pub struct Config {
+    mode: Mode,
 }
 
 // ------ Mode  ------
@@ -139,10 +172,19 @@ pub enum Page {
 }
 
 impl Page {
-    pub fn init(mut url: Url, guides: &[Guide]) -> Self {
+    pub fn init(
+        mut url: Url,
+        guides: &[Guide],
+        seed_versions: &[SeedVersion],
+        selected_seed_version: &mut SeedVersion,
+    ) -> Self {
         match url.remaining_path_parts().as_slice() {
             [] => {
-                if let Some(guide) = guides.first() {
+                if let Some(guide) = guides.iter().find(|guide| {
+                    guide.slug == DEFAULT_GUIDE_SLUG
+                        && guide.seed_version == DEFAULT_SEED_VERSION.version()
+                }) {
+                    *selected_seed_version = DEFAULT_SEED_VERSION;
                     Self::Guide {
                         guide: *guide,
                         show_intro: true,
@@ -151,13 +193,18 @@ impl Page {
                     Self::NotFound
                 }
             },
-            [GUIDE, guide_slug] => {
-                if let Some(guide) =
-                    guides.iter().find(|guide| guide.slug == *guide_slug)
-                {
+            [seed_version, guide_slug] => {
+                if let Some(guide) = guides.iter().find(|guide| {
+                    guide.slug == *guide_slug
+                        && guide.seed_version == *seed_version
+                }) {
+                    *selected_seed_version = *seed_versions
+                        .iter()
+                        .find(|version| version.version() == guide.seed_version)
+                        .unwrap();
                     Self::Guide {
                         guide: *guide,
-                        show_intro: false,
+                        show_intro: guide.slug == DEFAULT_GUIDE_SLUG,
                     }
                 } else {
                     Self::NotFound
@@ -178,8 +225,10 @@ impl<'a> Urls<'a> {
         self.base_url()
     }
 
-    pub fn guide(self, guide_slug: &str) -> Url {
-        self.base_url().add_path_part(GUIDE).add_path_part(guide_slug)
+    pub fn guide(self, guide: &Guide) -> Url {
+        self.base_url()
+            .add_path_part(guide.seed_version)
+            .add_path_part(guide.slug)
     }
 }
 
@@ -196,12 +245,18 @@ pub enum Msg {
     HideMenu,
     SearchQueryChanged(String),
     ToggleMode,
+    SwitchVersion(SeedVersion),
 }
 
 pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
         Msg::UrlChanged(subs::UrlChanged(url)) => {
-            model.page = Page::init(url, &model.guides);
+            model.page = Page::init(
+                url,
+                &model.guides,
+                &model.seed_versions,
+                &mut model.selected_seed_version,
+            );
 
             let title = match model.page {
                 Page::Guide {
@@ -238,6 +293,17 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
             LocalStorage::insert(STORAGE_KEY, &config)
                 .expect("insert to local storage");
         },
+        Msg::SwitchVersion(version) => {
+            orders
+                .notify(subs::UrlRequested::new(
+                    model
+                        .base_url
+                        .clone()
+                        .add_path_part(version.version())
+                        .add_path_part(DEFAULT_GUIDE_SLUG),
+                ))
+                .skip();
+        },
     }
 }
 
@@ -245,6 +311,7 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
     if query.is_empty() {
         return Vec::new();
     }
+
     let query = query.to_lowercase();
     guides
         .iter()

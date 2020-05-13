@@ -155,7 +155,7 @@ fn view_previous_guide_link(
                 C.focus__outline_none,
             ],
             attrs! {
-                At::Href => Urls::new(base_url).guide(previous_guide.slug),
+                At::Href => Urls::new(base_url).guide(previous_guide),
             },
             view_previous_icon(),
             div![
@@ -184,7 +184,7 @@ fn view_next_guide_link(next_guide: &Guide, base_url: &Url) -> Node<Msg> {
                 C.focus__outline_none,
             ],
             attrs! {
-                At::Href => Urls::new(base_url).guide(next_guide.slug),
+                At::Href => Urls::new(base_url).guide(next_guide),
             },
             div![
                 C![
@@ -224,18 +224,32 @@ pub fn previous_guide<'a>(
     selected_guide: &Guide,
     guides: &'a [Guide],
 ) -> Option<&'a Guide> {
-    let selected_guide_index =
-        guides.iter().position(|guide| guide == selected_guide)?;
+    let guides = guides
+        .iter()
+        .filter(|guide| guide.seed_version == selected_guide.seed_version)
+        .collect::<Vec<_>>();
 
-    selected_guide_index.checked_sub(1).and_then(|index| guides.get(index))
+    let selected_guide_index =
+        guides.iter().position(|guide| *guide == selected_guide)?;
+
+    selected_guide_index
+        .checked_sub(1)
+        .and_then(|index| guides.get(index).copied())
 }
 
 pub fn next_guide<'a>(
     selected_guide: &Guide,
     guides: &'a [Guide],
 ) -> Option<&'a Guide> {
-    let selected_guide_index =
-        guides.iter().position(|guide| guide == selected_guide)?;
+    let guides = guides
+        .iter()
+        .filter(|guide| guide.seed_version == selected_guide.seed_version)
+        .collect::<Vec<_>>();
 
-    selected_guide_index.checked_add(1).and_then(|index| guides.get(index))
+    let selected_guide_index =
+        guides.iter().position(|guide| *guide == selected_guide)?;
+
+    selected_guide_index
+        .checked_add(1)
+        .and_then(|index| guides.get(index).copied())
 }
