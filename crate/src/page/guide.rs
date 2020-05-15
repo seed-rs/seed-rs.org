@@ -48,7 +48,6 @@ fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
             show_intro,
             &model.base_url,
             &model.guides,
-            &model.seed_versions,
             model.selected_seed_version
         ),
         content_control_panel::view(guide, Top, model),
