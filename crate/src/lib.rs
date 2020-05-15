@@ -25,6 +25,8 @@ const TITLE_SUFFIX: &str = "Seed";
 const STORAGE_KEY: &str = "seed";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
 const DEFAULT_GUIDE_SLUG: &str = "about";
+const SEED_VERSIONS: &[SeedVersion] =
+    &[SeedVersion::V0_6_0, SeedVersion::V0_7_0, SeedVersion::V0_8_0];
 const DEFAULT_SEED_VERSION: SeedVersion = SeedVersion::V0_6_0;
 
 // ------ ------
@@ -35,20 +37,12 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
     orders.subscribe(Msg::UrlChanged);
 
     let guides = guide::guides();
-    let seed_versions =
-        vec![SeedVersion::V0_6_0, SeedVersion::V0_7_0, SeedVersion::V0_8_0];
     let mut selected_seed_version = DEFAULT_SEED_VERSION;
 
     Model {
         base_url: url.to_base_url(),
-        page: Page::init(
-            url,
-            &guides,
-            &seed_versions,
-            &mut selected_seed_version,
-        ),
+        page: Page::init(url, &guides, &mut selected_seed_version),
         selected_seed_version,
-        seed_versions,
         guide_list_visibility: Hidden,
         menu_visibility: Hidden,
         in_prerendering: is_in_prerendering(),
@@ -76,7 +70,6 @@ pub struct Model {
     pub base_url: Url,
     pub page: Page,
     pub selected_seed_version: SeedVersion,
-    pub seed_versions: Vec<SeedVersion>,
     pub guide_list_visibility: Visibility,
     pub menu_visibility: Visibility,
     pub in_prerendering: bool,
@@ -175,7 +168,6 @@ impl Page {
     pub fn init(
         mut url: Url,
         guides: &[Guide],
-        seed_versions: &[SeedVersion],
         selected_seed_version: &mut SeedVersion,
     ) -> Self {
         match url.remaining_path_parts().as_slice() {
@@ -198,7 +190,7 @@ impl Page {
                     guide.slug == *guide_slug
                         && guide.seed_version == *seed_version
                 }) {
-                    *selected_seed_version = *seed_versions
+                    *selected_seed_version = *SEED_VERSIONS
                         .iter()
                         .find(|version| version.version() == guide.seed_version)
                         .unwrap();
@@ -254,7 +246,6 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
             model.page = Page::init(
                 url,
                 &model.guides,
-                &model.seed_versions,
                 &mut model.selected_seed_version,
             );
 

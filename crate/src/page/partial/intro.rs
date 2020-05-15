@@ -3,7 +3,7 @@
 
 use crate::{
     generated::css_classes::C, page::partial::image, Guide, Msg, SeedVersion,
-    Urls, DEFAULT_GUIDE_SLUG,
+    Urls, DEFAULT_GUIDE_SLUG, SEED_VERSIONS,
 };
 use seed::{prelude::*, *};
 
@@ -11,7 +11,6 @@ pub fn view(
     show: bool,
     base_url: &Url,
     guides: &[Guide],
-    seed_versions: &[SeedVersion],
     selected_seed_version: SeedVersion,
 ) -> Node<Msg> {
     if show {
@@ -29,7 +28,6 @@ pub fn view(
                 view_description_and_versions(
                     base_url,
                     guides,
-                    seed_versions,
                     selected_seed_version
                 ),
             ],
@@ -62,7 +60,6 @@ fn view_logo(base_url: &Url) -> Node<Msg> {
 fn view_description_and_versions(
     base_url: &Url,
     guides: &[Guide],
-    seed_versions: &[SeedVersion],
     selected_seed_version: SeedVersion,
 ) -> Node<Msg> {
     div![
@@ -70,7 +67,7 @@ fn view_description_and_versions(
         view_description(),
         div![
             C![C.flex, C.flex_col, C.mt_2],
-            seed_versions.iter().map(|version| {
+            SEED_VERSIONS.iter().map(|version| {
                 let version = *version;
                 let default_guide = guides
                     .iter()
