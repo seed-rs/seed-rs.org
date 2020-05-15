@@ -83,15 +83,15 @@ fn view_description_and_versions(
                         C.items_center,
                         C.rounded_full,
                         C.p_2,
-                        C.mt_1,
                         C.cursor_pointer,
+                        C.focus__outline_none,
                         if version == selected_seed_version {
-                            vec![C.text_blue_800, C.bg_green_100]
+                            vec![C.text_blue_800, C.bg_green_200]
                         } else {
                             vec![C.text_blue_600]
                         },
                         C.hover__text_blue_800,
-                        C.hover__bg_green_100,
+                        C.hover__bg_green_200,
                     ],
                     attrs! {
                         At::Href => Urls::new(base_url).guide(default_guide)
@@ -110,6 +110,7 @@ fn view_description() -> Node<Msg> {
             C.font_semibold,
             C.text_right,
             C.mt_2,
+            C.py_6,
             // sm__
             C.sm__text_xl,
             C.sm__mt_0,
