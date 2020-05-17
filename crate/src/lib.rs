@@ -27,7 +27,7 @@ const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
 const DEFAULT_GUIDE_SLUG: &str = "about";
 const SEED_VERSIONS: &[SeedVersion] =
     &[SeedVersion::V0_6_0, SeedVersion::V0_7_0, SeedVersion::V0_8_0];
-const DEFAULT_SEED_VERSION: SeedVersion = SeedVersion::V0_6_0;
+const DEFAULT_SEED_VERSION: SeedVersion = SeedVersion::V0_7_0;
 
 // ------ ------
 //     Init
