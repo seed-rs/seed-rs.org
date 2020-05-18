@@ -41,4 +41,4 @@ pub fn start() {
 }
 ```
 
-You'll learn about individual parts (`Model`, `update`, etc.) in next chapters. And then we'll zoom out a bit and explain Seed app architecture. 
+You'll learn about individual parts (`Model`, `update`, etc.) in the next chapters. And then we'll zoom out a bit and explain Seed app architecture. 

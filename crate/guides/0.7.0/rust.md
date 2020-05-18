@@ -18,8 +18,11 @@ I think the most important Rust features are:
 - Learning resources: [rust-lang.org/learn](https://www.rust-lang.org/learn)
 
 ## Seed-related notes
+ 
  - Don't try to learn and understand all Rust features and concepts at once. I recommend to follow guides in next chapters - they contain Rust notes, recommendations and links to learning materials.
+ 
  - Seed API is designed to be as simple and readable as possible => You don't have to be Rust expert to read and write Seed apps.
+ 
  - Even if you are a complete beginner, don't hesitate to write feedback because we can be blind to some API issues, strange behavior or missing documentation.
 
 ## Detailed explanations
@@ -63,11 +66,11 @@ Rust is designed so well that I feel nervous while I'm writing in other language
 I don't believe that you should use the most suitable language for specific domain or problem at all costs. I think consistency among your / company projects and simplicity should have the highest priority. And Rust is a very universal language so I think it's a good choice for almost all cases.
 
 There are also things that should be improved (and are improving):
-  - Compilation is still slow, but it's not so frustrating now.
-  - It's not possible to compile Rust in a browser so we can't provide live examples but it should be doable once Rust compiler works in WASM.
-  - IDE support still isn't very good because of Rust complex types and macros but thanks to [Rust Analyzer](https://rust-analyzer.github.io/) it's getting better every day.
-  - Many libraries still aren't WASM/browser-friendly but it's also getting better quickly.
-  - `target` folder (it's something like `node_modules`) can be pretty big.
+  1. Compilation is still slow, but it's not so frustrating now.
+  1. It's not possible to compile Rust in a browser so we can't provide live examples but it should be doable once Rust compiler works in WASM.
+  1. IDE support still isn't very good because of Rust complex types and macros but thanks to [Rust Analyzer](https://rust-analyzer.github.io/) it's getting better every day.
+  1. Many libraries still aren't WASM/browser-friendly but it's also getting better quickly.
+  1. `target` folder (it's something like `node_modules`) can be pretty big.
 
 P.S. Write us your opinion about Rust if you are a beginner and learning it.
 

@@ -19,7 +19,7 @@ use page::partial::blender;
 use seed::{prelude::*, *};
 use serde::{Deserialize, Serialize};
 
-use Visibility::*;
+use Visibility::{Hidden, Visible};
 
 const TITLE_SUFFIX: &str = "Seed";
 const STORAGE_KEY: &str = "seed";
@@ -47,8 +47,8 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
         menu_visibility: Hidden,
         in_prerendering: is_in_prerendering(),
         guides,
-        search_query: "".to_string(),
-        matched_guides: vec![],
+        search_query: String::new(),
+        matched_guides: Vec::new(),
         mode: load_config().mode,
     }
 }
