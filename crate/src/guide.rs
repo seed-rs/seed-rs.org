@@ -54,6 +54,7 @@ pub fn guides() -> Vec<Guide> {
         guide!(seed_version: "0.7.0", slug: "rust", menu_title: "Rust", file_name: "rust", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "new_app", menu_title: "New App", file_name: "new_app", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "app_1_counter", menu_title: "App 1: Counter", file_name: "app_1_counter", prepend_menu_divider: true),
+        guide!(seed_version: "0.7.0", slug: "use", menu_title: "Use", file_name: "use", prepend_menu_divider: false),
         // ------ 0.8.0 ------
         guide!(seed_version: "0.8.0", slug: "about", menu_title: "About", file_name: "about", prepend_menu_divider: false),
     ]
