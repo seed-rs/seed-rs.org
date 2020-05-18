@@ -1,5 +1,5 @@
 .markdown-body ol, .markdown-body ul {
-    list-style-type: unset;
+    list-style-type: revert;
 }
 
 .blend-difference {
