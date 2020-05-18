@@ -1,6 +1,6 @@
 # New App
 
-You can create your new Seed app multiple ways:
+There are several ways to create your new Seed app:
 1. **Basic Rust-only quickstart**
    - [github.com/seed-rs/seed-quickstart](https://github.com/seed-rs/seed-quickstart)
    - It's the simplest quickstart - it's basically a "glue" for basic Rust/WASM tools and it contains a simple example.

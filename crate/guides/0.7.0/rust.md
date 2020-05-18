@@ -67,6 +67,7 @@ There are also things that should be improved (and are improving):
   - It's not possible to compile Rust in a browser so we can't provide live examples but it should be doable once Rust compiler works in WASM.
   - IDE support still isn't very good because of Rust complex types and macros but thanks to [Rust Analyzer](https://rust-analyzer.github.io/) it's getting better every day.
   - Many libraries still aren't WASM/browser-friendly but it's also getting better quickly.
+  - `target` folder (it's something like `node_modules`) can be pretty big.
 
 P.S. Write us your opinion about Rust if you are a beginner and learning it.
 
