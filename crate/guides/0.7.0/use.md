@@ -11,15 +11,30 @@ Counter example part:
 use seed::{prelude::*, *};
 ```
 
-## Rust keyword `use`
+<details>
+<summary>Example from a production app (this website)</summary>
+
+```rust
+use generated::css_classes::C;
+use guide::Guide;
+use page::partial::blender;
+use seed::{prelude::*, *};
+use serde::{Deserialize, Serialize};
+
+use Visibility::{Hidden, Visible};
+```
+
+</details>
+
+---
+
+## Rust keyword `use` [[docs]](https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html)
 
 > `use seed::{prelude::*, *};`
 
-- [Official docs](https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html)
-
 `use` makes app code more readable - imagine you would need to write something like 
 ```rust
-div![
+seed::div![
     "Save",
     seed::browser::dom::event_handler::ev(
         seed::dom_entity_names::events::event_names::Ev::Click,
@@ -42,11 +57,9 @@ However [macros](https://doc.rust-lang.org/book/ch19-06-macros.html) live only i
 
 Seed also automatically includes some [traits](https://doc.rust-lang.org/book/ch10-02-traits.html) and macro helpers through those stars - they are needed for user comfort and performance - it would be pain to include them manually.
 
-## Rust Attributes
+## Rust Attributes [[docs]](https://doc.rust-lang.org/reference/attributes.html#attributes)
 
 > `#![allow(clippy::wildcard_imports)]`
-
-- [Official docs](https://doc.rust-lang.org/reference/attributes.html#attributes)
 
 [Clippy](https://github.com/rust-lang/rust-clippy) is the official Rust linter. It has many useful rules that help you to write faster and more readable code. However programming is often more art than science so Clippy is sometimes annoying and doesn't let you to write cleaner code that breaks a rule.
 
