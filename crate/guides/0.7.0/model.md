@@ -37,7 +37,7 @@ pub struct Model {
 
 - In our case it's only a [type alias](https://doc.rust-lang.org/book/ch19-04-advanced-types.html?highlight=alias#creating-type-synonyms-with-type-aliases) for [i32](https://doc.rust-lang.org/book/ch03-02-data-types.html#integer-types) because we only need to track one value - the number of clicks.
 
-- It can be almost anything - type alias, [enum](https://doc.rust-lang.org/book/ch06-00-enums.html), etc. However the most `Model`s are [structs](https://doc.rust-lang.org/book/ch05-00-structs.html) in real-world apps. And `Model` has to be `static` (it basically means that you can't save the most [references](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html?#references-and-borrowing) into it).
+- It can be almost anything - type alias, [enum](https://doc.rust-lang.org/book/ch06-00-enums.html), etc. However the most `Model`s are [structs](https://doc.rust-lang.org/book/ch05-00-structs.html) in real-world apps. And `Model` has to be `static` (it basically means that you can't save the most [references](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#references-and-borrowing) into it).
 
 ## How to write a good `Model`
 
@@ -45,7 +45,9 @@ pub struct Model {
 
 - Try to save only data into your `Model` - i.e. add field `students: Vec<Student>` instead of `manager: SchoolManager`, where `manager` contains `Vec<Student>` and thousand other things. Exceptions are Seed-related items like handles and DOM elements (we will discuss them in other chapters).
 
-- Don't make you life unnecessary hard => don't make your `Model` [generic](https://doc.rust-lang.org/book/ch10-00-generics.html).
+- Don't make your life unnecessary hard.
+  - Don't make your `Model` [generic](https://doc.rust-lang.org/book/ch10-00-generics.html).
+  - Don't implement any `Model` methods.
 
 - Your `Model` should be [the single source of truth](https://en.wikipedia.org/wiki/Single_source_of_truth) - i.e. add one field `selected_menu_item: MenuItemId` into your main `Model` instead of creating many instances of the component `MenuItem`, where each instance has own `Model` with field `selected: bool`.
 
