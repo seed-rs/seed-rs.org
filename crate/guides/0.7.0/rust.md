@@ -9,6 +9,7 @@ I think the most important Rust features are:
   - You can write both low-level code and high-level abstraction. 
   - Cross-platform.
   - Pragmatic - it's designed to solve real-world problems.
+  - Good official [formatter](https://github.com/rust-lang/rustfmt) and [linter](https://github.com/rust-lang/rust-clippy).
 
 ## Official resources
 
@@ -55,11 +56,13 @@ I think the most important Rust features are:
 
 I've written commercial or hobby projects in multiple languages (Js, CoffeeScript, TS, Elm, Elixir, PHP, C, C++, C#, Go, ..). However I want to write only in Rust. 
 
-Rust is hard to learn even for experienced developers, because they have to unlearn many things and adapt thought process to Rust concepts and best practices. However once you stop fighting with the compiler, Rust takes your hand and push you to correct and efficient solutions. 
+Rust is hard to learn even (?) for experienced developers, because they have to unlearn many things and adapt thought process to Rust concepts and best practices. However once you stop fighting the compiler, Rust takes your hand and push you to correct and efficient solutions. 
 
 I had similar feeling when I was learning to drive a car - it seems pretty hard/strange from the start but once you get used to it, you know that each control / button / pedal has it's specific place and purpose for a good reason. And it makes even more sense once you learn low-level stuff - e.g. how the transmission and a clutch work.
 
-However steep learning curve isn't bad - it's almost impossible for complete beginners to publish uncomplete/buggy libraries. And it means that Rust doesn't hide real complexity behind too simple models.
+However steep learning curve isn't bad: 
+  - It means that Rust doesn't hide real complexity behind too simple models.
+  - It's almost impossible for complete beginners to publish uncomplete/buggy libraries. 
 
 Rust is designed so well that I feel nervous while I'm writing in other languages - I have to do compiler's work again in my head and think about weird things like typos in code, `null`s, `undefined`s, memory leaks, accidental mutations, how to write fast code without mutability, etc. It generates significant cognitive load so I can't focus so much on business logic and other important stuff.
 
