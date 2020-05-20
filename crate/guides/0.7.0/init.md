@@ -42,9 +42,9 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
 
 ---
 
-- `init` function is called only once, when your app started.
-
 - The main purpose of this function is to create a `Model` instance.
+
+- `init` function is called only once, when your app started.
 
 In the Counter example, `init` parameters don't have names (there is only `_` as a placeholder) . It signals to readers, the compiler and linters that we don't use those parameters in the function body. (_Note:_ We can also add only prefix `_` before the names (`_url` and `_orders`) instead, but it's relatively easy to overlook `_` and Clippy can be sad about that because it doesn't ignore prefixed names (unlike the compiler - it ignores them).)
 
@@ -102,6 +102,12 @@ Well, let me explain why it hasn't got a simpler type instead. There are possibl
    - `orders` contains a reference to `App` instance - it's required by some `orders` methods and there are some cases when it's useful for users, too. However struct `App` requires multiple type parameters. And we don't want to "leak" them into `orders` - it would look like `orders: &mut Orders<Msg, Model, Vec<Node<Msg>>>`. So `Orders` isn't a specific type but a [trait](https://doc.rust-lang.org/book/ch10-02-traits.html#traits-defining-shared-behavior). And those extra `App` types are hidden in `Orders`'s [associated types](https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types) with [impl](https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters) help. (_Note:_ We can't hide also type parameter for `Msg` because it would cause cumbersome "type acrobatics" in your components.)
 
 </details>
+
+## How to write a good `init`
+
+- `init` should be short and simple - the main goal is to just create a new `Model` instance. Also it blocks the app - try to invoke time-consuming operations in other functions (especially in `update` function; you'll learn about `update` in next chapters) when the app is rendered and the user is happy that he sees at least some content.
+
+- When you need to write some helpers, respect the rule *"children below the parent"* (it will be explained in next chapters) - write helpers below the `init` function. And once you find out you are using some helpers also in `update` function, move them below the `update`.
 
 ---
 

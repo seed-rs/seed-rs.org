@@ -70,6 +70,7 @@ However the most used is probably attribute `derive`. I recommend to read offici
 **Notes from the front line:**
 
 - Derive `Copy, Clone` for all items, where possible. It will make your life easier and your users and Clippy will appreciate it, too.
+  - Some `derive` values are order-sensitive because they are sequentially applied to the code below them. That's why the alphabetical order in `derive(..)` is not important and by convention `Copy` should be always before `Clone` for better code scannability.
 
 - There are edge-cases where you derive `Clone`, compiler is ok with it but you have still problems with calling `my_item.clone()`. In the most cases you can resolve it by implementing `Clone` manually. ([Related Rust issue](https://github.com/rust-lang/rust/issues/26925))
 

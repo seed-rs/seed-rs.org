@@ -320,8 +320,8 @@ fn search(guides: &[Guide], query: &str) -> Vec<Guide> {
 //     View
 // ------ ------
 
-pub fn view(model: &Model) -> impl IntoNodes<Msg> {
-    nodes![
+pub fn view(model: &Model) -> Vec<Node<Msg>> {
+    vec![
         div![
             C![C.min_h_screen, C.bg_white,],
             match model.page {

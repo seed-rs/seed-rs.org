@@ -26,6 +26,101 @@ I think the most important Rust features are:
  
  - Even if you are a complete beginner, don't hesitate to write feedback because we can be blind to some API issues, strange behavior or missing documentation.
 
+## How to write in Rust
+
+<details>
+<summary>General Rules & Recommendations</summary>
+
+- Rust compiler is your friend.
+
+- [Document](https://doc.rust-lang.org/book/ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments) your code, write expressive names, read docs; Testable code snippets in comments are nice.
+
+- Learn where to use [Result](https://doc.rust-lang.org/std/result/) and where [panic](https://doc.rust-lang.org/book/ch09-03-to-panic-or-not-to-panic.html#to-panic-or-not-to-panic).
+
+- Respect [naming conventions](https://rust-lang.github.io/api-guidelines/naming.html).
+
+- Learn about the famous couples:
+  - [From](https://doc.rust-lang.org/std/convert/trait.From.html) and [Into](https://doc.rust-lang.org/std/convert/trait.Into.html) + [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) and [TryInto](https://doc.rust-lang.org/std/convert/trait.TryInto.html)
+  - [String](https://doc.rust-lang.org/std/string/struct.String.html) and [str](https://doc.rust-lang.org/std/primitive.str.html)
+  - [Display](https://doc.rust-lang.org/std/fmt/trait.Display.html) and [ToString](https://doc.rust-lang.org/std/string/trait.ToString.html)
+  - [fn](https://doc.rust-lang.org/std/primitive.fn.html) and [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html)
+  - [FromStr](https://doc.rust-lang.org/std/str/trait.FromStr.html) and [parse](https://doc.rust-lang.org/std/primitive.str.html#method.parse)
+  - [Rc](https://doc.rust-lang.org/std/rc/struct.Rc.html) and [RefCell](https://doc.rust-lang.org/stable/std/cell/struct.RefCell.html)
+  - [Vec](https://doc.rust-lang.org/std/vec/struct.Vec.html) and [vec!](https://doc.rust-lang.org/std/macro.vec.html)
+
+- Use [early returns](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#recoverable-errors-with-result) where possible.
+
+- Don't use one programming paradigm for everything. Learn where to use [loops](https://doc.rust-lang.org/book/ch03-05-control-flow.html#repetition-with-loops) and where to use [Iterator](https://doc.rust-lang.org/std/iter/index.html)s.
+
+- Use [references](https://doc.rust-lang.org/std/primitive.reference.html) where possible - e.g. rather use [&str](https://doc.rust-lang.org/std/primitive.str.html) instead of [String](https://doc.rust-lang.org/std/string/struct.String.html); or [&[T]](https://doc.rust-lang.org/std/primitive.slice.html) instead of [Vec](https://doc.rust-lang.org/std/vec/struct.Vec.html).
+
+- Try to write minimum `clone` calls. When you need to use cheap `clone`, try to make it explicit - e.g. `Rc::clone(&value)` [[rc docs]](https://doc.rust-lang.org/std/rc/index.html)
+
+- One of the Rust feautures is safe mutability but use it only when best practices for writing [immutable variables](https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#variables-and-mutability) and [pure functions](https://en.wikipedia.org/wiki/Pure_function) make your code unreadable, too slow or error-prone.
+
+- *"Premature optimization is the root of all evil"* - especially in Rust because it's one of the fastest language. Don't do anything extra until your benchmarks are ready to test it. Personal examples:
+   
+   - When I was writing proxy server in Rust, there were two things that slowed down that proxy multiple times - forgotten `println` calls in the hot path and slow DNS server... I recommend to zoom-out and fix higher-level issues first.
+   
+   - Seed VDOM patching algorithm was fast enough on the first attemp. However it's heavily slowed down by DOM calls. I recommend to look at IO and external dependencies before you try to optimize your Rust code.
+
+- Write only cross-platform code and use only Rust tools.
+
+- Don't be affraid to write [async](https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html) code.
+
+- Learn about the popular libraries like:
+  - [serde](https://crates.io/crates/serde)
+  - [rand](https://crates.io/crates/rand) 
+  - [futures](https://crates.io/crates/futures)
+  - [strum](https://crates.io/crates/strum)
+  - [once_cell](https://crates.io/crates/once_cell)
+  - [itertools](https://crates.io/crates/itertools)
+  - [indexmap](https://crates.io/crates/indexmap)
+  - [chrono](https://crates.io/crates/chrono)
+  - [uuid](https://crates.io/crates/uuid)
+  - [rayon](https://crates.io/crates/rayon)
+
+- Write and use [macros](https://doc.rust-lang.org/book/ch19-06-macros.html#macros) only if it's really necessary and document them properly. There are many footguns. And IDEs often fight with them - e.g. autocomplete often doesn't work.
+
+  - The exceptions are macros like `println`, `vec`, `include_str`, etc. - see [all standard macros](https://doc.rust-lang.org/std/index.html#macros).
+
+  - Yes, there are many macros in Seed, but the most of them are used only as an alternative to HTML and are pretty short. And we fixed many bugs inside them already so the rule still applies. We decided to used them after considering many trade-offs. 
+
+- [Clippy](https://github.com/rust-lang/rust-clippy) and [rustfmt](https://github.com/rust-lang/rustfmt) are also your friends. [cargo-make](https://sagiegurari.github.io/cargo-make/) is your unofficial friend. 
+  - You can run command `cargo make verify` in almost all Seed/my projects. It formats code, lints it by pedantic `Clippy` and tests it. See the [task definition](https://github.com/seed-rs/seed-quickstart/blob/8c5807721e2e67d12e3f93533ebb75b871203800/Makefile.toml#L22-L24) in Rust quickstart.
+
+- Write [tests](https://doc.rust-lang.org/book/ch11-01-writing-tests.html) and benchmarks (see e.g. [Criterion.rs](https://bheisler.github.io/criterion.rs/book/criterion_rs.html)).
+
+- Experiment with function parameter types below to find out where there are useful (_Note:_ All of them are used on multiple places in the [Seed repo](https://github.com/seed-rs/seed)):
+  - `fn(text: impl AsRef<str>)` - [AsRef](https://doc.rust-lang.org/std/convert/trait.AsRef.html)
+  - `fn(text: impl ToString)` - [ToString](https://doc.rust-lang.org/std/string/trait.ToString.html)
+  - `fn(text: impl Into<Cow<'static, str>>)` - [Cow](https://doc.rust-lang.org/std/borrow/enum.Cow.html)
+  - `fn<'a>(text: impl Into<Cow<'a, str>>)`
+
+- Once in a while:
+  - Run `rustup update` to update your compiler and tools like `Clippy`. 
+  - Delete `target` folder (it's something like `node_modules`) in your projects to save some space on your disk.
+
+- Look at this [mem](https://doc.rust-lang.org/std/mem/index.html) functions:
+  - [discriminant](https://doc.rust-lang.org/std/mem/fn.discriminant.html)
+  - [drop](https://doc.rust-lang.org/std/mem/fn.drop.html)
+  - [replace](https://doc.rust-lang.org/std/mem/fn.replace.html)
+  - [swap](https://doc.rust-lang.org/std/mem/fn.swap.html)
+  - [take](https://doc.rust-lang.org/std/mem/fn.take.html)
+
+- Use [unsafe](https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html?unsafe-rust) Rust only for special cases or when it's necessary for your domain (you write operating systems, super fast low-level libraries, etc.) There is only safe code in Seed projects (including Seed's core).
+
+- Use "magic" like [Any](https://doc.rust-lang.org/std/any/trait.Any.html) only to improve public API for your users. It always makes the code worse.
+
+- Learn to use channels. Docs for standard ones and the ones in some crates:
+  - [std::sync::mpsc::channel](https://doc.rust-lang.org/std/sync/mpsc/fn.channel.html)
+  - [futures::channel](https://docs.rs/futures/0.3.5/futures/channel/index.html)
+  - [tokio::sync::mpsc::channel](https://docs.rs/tokio/0.2.21/tokio/sync/mpsc/fn.channel.html)
+  - [crossbeam::channel](https://docs.rs/crossbeam/0.7.3/crossbeam/channel/index.html)
+  - [flume](https://docs.rs/flume/0.7.1/flume/)
+
+</details>
+
 ## Detailed explanations
 
 <details>
@@ -47,7 +142,7 @@ I think the most important Rust features are:
 
 - There are many advanced Rust features / APIs that allow us (core developers) to design the best Seed public API for users and THEN we can implement it without problems - in other words: It allows us to hide unnecessary complexity. For instance - we are able to write React-like Hooks without [limitations](https://reactjs.org/docs/hooks-rules.html).
 
-- Rust has been created and is sponsored by Mozilla. Some Firefox parts are already written in Rust. Also other big companies like Microsoft uses Rust. So we expect that Rust will become even more popular and integration with browsers will become easier.
+- Rust has been created and is sponsored by Mozilla. Some Firefox parts are already written in Rust. Also other [big companies](https://blog.knoldus.com/some-extensive-projects-working-with-rust/) like Amazon, NPM, are Microsoft use Rust. So we expect that Rust will become even more popular and integration with browsers will become easier. And perhaps we'll see some Rust components also in Chrome - [Chromium Security article](https://www.chromium.org/Home/chromium-security/memory-safety).
 
 </details>
 
