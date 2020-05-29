@@ -19,6 +19,12 @@ I think the most important Rust features are:
 - Learning resources: [rust-lang.org/learn](https://www.rust-lang.org/learn)
 
 ## Seed-related notes
+
+ - [IMPORTANT] Debug builds are much bigger, slower and contain debug info. However the compilation is much faster.
+
+ - [IMPORTANT] Some crates (e.g. [url](https://crates.io/crates/url)) and all crates that use them may even double the Seed app size.
+
+ - [IMPORTANT] Some crates are not WASM-compatible or require to enable their additional [features](https://doc.rust-lang.org/cargo/reference/features.html). Consult their docs when you encouter compilation problems.
  
  - Don't try to learn and understand all Rust features and concepts at once. I recommend to follow guides in next chapters - they contain Rust notes, recommendations and links to learning materials.
  
@@ -80,12 +86,6 @@ I think the most important Rust features are:
   - [uuid](https://crates.io/crates/uuid)
   - [rayon](https://crates.io/crates/rayon)
 
-- Write and use [macros](https://doc.rust-lang.org/book/ch19-06-macros.html#macros) only if it's really necessary and document them properly. There are many footguns. And IDEs often fight with them - e.g. autocomplete often doesn't work.
-
-  - The exceptions are macros like `println`, `vec`, `include_str`, etc. - see [all standard macros](https://doc.rust-lang.org/std/index.html#macros).
-
-  - Yes, there are many macros in Seed, but the most of them are used only as an alternative to HTML and are pretty short. And we fixed many bugs inside them already so the rule still applies. We decided to used them after considering many trade-offs. 
-
 - [Clippy](https://github.com/rust-lang/rust-clippy) and [rustfmt](https://github.com/rust-lang/rustfmt) are also your friends. [cargo-make](https://sagiegurari.github.io/cargo-make/) is your unofficial friend. 
   - You can run command `cargo make verify` in almost all Seed/my projects. It formats code, lints it by pedantic `Clippy` and tests it. See the [task definition](https://github.com/seed-rs/seed-quickstart/blob/8c5807721e2e67d12e3f93533ebb75b871203800/Makefile.toml#L22-L24) in Rust quickstart.
 
@@ -118,6 +118,21 @@ I think the most important Rust features are:
   - [tokio::sync::mpsc::channel](https://docs.rs/tokio/0.2.21/tokio/sync/mpsc/fn.channel.html)
   - [crossbeam::channel](https://docs.rs/crossbeam/0.7.3/crossbeam/channel/index.html)
   - [flume](https://docs.rs/flume/0.7.1/flume/)
+
+- Write and use [macros](https://doc.rust-lang.org/book/ch19-06-macros.html#macros) only if it's really necessary and document them properly. There are many footguns. And IDEs often fight with them - e.g. autocomplete often doesn't work.
+
+  - The exceptions are macros like `println`, `vec`, `include_str`, etc. - see [all standard macros](https://doc.rust-lang.org/std/index.html#macros).
+
+  - Yes, there are many macros in Seed, but the most of them are used only as an alternative to HTML and are pretty short. And we fixed many bugs inside them already so the rule still applies. We decided to used them after considering many trade-offs.
+
+  - However macros are useful where:
+      - There is missing abstraction - e.g. macro [stop_and_prevent ](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/examples/drop_zone/src/lib.rs#L89-L97) in `drop_zone` example.
+
+      - It helps with readability a lot - e.g. macros `create_t` and `t` in `i18n` example.
+
+      - It's hard/impossible to encode everything by proper Rust types - e.g. Seed element macros like `div!`.
+
+      - It can hide boilerplate and where variable number of parameters is required - e.g. Seed's `log!` - it formats input parameters and calls Javascript `console.log` under the hood.
 
 </details>
 
