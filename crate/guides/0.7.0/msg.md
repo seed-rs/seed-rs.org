@@ -45,6 +45,8 @@ pub enum Msg {
 - All `Msg` variants should be as simple as possible and hold only data or ideally nothing.
    - Example: `enum Msg { MenuItemClicked(MenuItemId), Save }`
 
+- If you can choose the type for your ids (e.g. `MenutItemId`), pick rather [Uuid](https://docs.rs/uuid/0.8.1/uuid/struct.Uuid.html) than [String](https://doc.rust-lang.org/std/string/struct.String.html) or [u32](https://doc.rust-lang.org/std/primitive.u32.html). `Uuid` implements [Copy](https://doc.rust-lang.org/std/marker/trait.Copy.html) and allows you to create entities in your frontend app before they are sent to your server.
+
 - Don't make your life unnecessary hard.
    - Don't make your `Msg` [generic](https://doc.rust-lang.org/book/ch10-00-generics.html).
    - Don't implement any `Msg` methods.
@@ -57,7 +59,7 @@ pub enum Msg {
 
 ## Attribute `derive`
 
-> #[derive(Copy, Clone)]
+> `#[derive(Copy, Clone)]`
 
 We already know attribute `allow` from the previous chapters. 
 

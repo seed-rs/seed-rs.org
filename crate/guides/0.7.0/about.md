@@ -42,8 +42,8 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
 // `view` describes what to display.
 fn view(model: &Model) -> Node<Msg> {
     div![
-        "This is a counter: ",
         C!["counter"],
+        "This is a counter: ",
         button![
             model,
             ev(Ev::Click, |_| Msg::Increment),
