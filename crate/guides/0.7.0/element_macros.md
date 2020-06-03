@@ -9,16 +9,27 @@ div![
 ``` 
 becomes
 ```html
-<div class="counter"></div>
+<div class="counter">
+    This is a counter.
+</div>
 ```
 
 They are only slim wrappers for [`Node<Msg>`](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/src/virtual_dom/node.rs#L18) - e.g. `let node: Node<Msg> = div![];` is a valid code. There is no "black magic" and you can even use `Node` directly instead of element macros, although it's not recommended.
 
+_Note:_ There aren't any differences between elements that use opening & closing tags (`<div>..</div>`) or only self-closing tags (`<img>`; aka "void elements") - you just write:
+```rust
+img![
+    attrs!{At::Src => "my_image.png"}
+]
+```
+
 ## UpdateEl
 
- You can throw all items that implement trait [UpdateEl](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/src/virtual_dom/update_el.rs) into element macros. It's implemented for:
+ You can throw all items that implement trait [UpdateEl](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/src/virtual_dom/update_el.rs) into element macros. 
+ 
+ It's implemented for:
    
-- Seed-specific items like attributes, event handlers, nodes, etc. (We'll cover them in next chapters.)
+- Seed-specific items like attributes, event handlers, nodes and DOM references. (We'll cover them in other chapters.)
 
 - Some basic Rust types like strings and numbers. (Please [create an issue](https://github.com/seed-rs/seed/issues/new) if something important is missing.)
 
@@ -236,3 +247,13 @@ Templates
   - Why do you want to add another dependency with potential bugs and increase app size?
 
 </details>
+
+## Future & Alternatives
+
+- You'll be able to create own element macros - it's useful for custom elements and for writing components.
+
+- We'll write experimental layout/component libraries once Seed Style (new typed CSS) and Seed Hooks (better alternative to React Hooks) are integrated.
+
+- You can write own typed components - see examples [component_builder](https://github.com/seed-rs/seed/tree/3134d21c6fcb2383685885687fe2a7610fb2ff74/examples/component_builder) and [tea_component](https://github.com/seed-rs/seed/tree/3134d21c6fcb2383685885687fe2a7610fb2ff74/examples/tea_component).
+
+- There are libraries that use element macros or `Node`s under the hood (e.g. [Savory](https://gitlab.com/MAlrusayni/savory)).

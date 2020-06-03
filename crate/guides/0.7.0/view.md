@@ -93,3 +93,9 @@ pub fn view(base_url: &Url) -> Node<Msg> {
 - When you need to write some helpers, respect the rule *"children below the parent"* as always.
 
 `view` is the most complex app part => you'll find information and best practices for things like elements, attributes and event handlers in next chapters.
+
+## Future
+
+- `view` and `view_*` functions will have own local state once Seed Hooks are integrated.
+
+- I'll maybe try to write GUI designer that generates `view` in the distant future. It should make development more enjoyable & faster and make cooperation between developers and designers smoother. (Don't hesitate to write [me](https://github.com/MartinKavik) your opinions/ideas.)
