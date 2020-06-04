@@ -20,7 +20,8 @@ I think the most important Rust features are:
 
 ## Seed-related notes
 
- - [IMPORTANT] Debug builds are much bigger, slower and contain debug info. However the compilation is much faster.
+ - [IMPORTANT] Debug builds are much bigger and slower. However it contains debug info and compilation is much faster.
+   - _Note:_ Chrome is better for debugging; Firefox is faster.
 
  - [IMPORTANT] Some crates (e.g. [url](https://crates.io/crates/url)) and all crates that use them may even double the Seed app size.
 
@@ -128,7 +129,7 @@ I think the most important Rust features are:
   - However macros are useful where:
       - There is missing abstraction - e.g. macro [stop_and_prevent ](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/examples/drop_zone/src/lib.rs#L89-L97) in `drop_zone` example.
 
-      - It helps with readability a lot - e.g. macros `create_t` and `t` in `i18n` example.
+      - It helps with readability a lot - e.g. macros [create_t](https://github.com/seed-rs/seed/blob/29666287eaf5e914c80e9fae7cc6736cd31ce087/examples/i18n/src/i18n.rs#L90-L131) and [t](https://github.com/seed-rs/seed/blob/29666287eaf5e914c80e9fae7cc6736cd31ce087/examples/i18n/src/i18n.rs#L116-L127) in `i18n` example.
 
       - It's hard/impossible to encode everything by proper Rust types - e.g. Seed element macros like `div!`.
 
