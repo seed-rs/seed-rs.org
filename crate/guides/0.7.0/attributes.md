@@ -87,7 +87,7 @@ Corresponding HTML:
 
 ## Future
 
-Macro `style!` will be replaced by _Seed Style_. 
+Macro `style!` will be replaced with _Seed Style_. 
 
 Seed Style is basically typed inline CSS on steroids. It allows you to write also pseudo-classes like `:hover` directly in your Rust elements so it eliminates the need to write standalone style files. And there are many more useful features.
 
@@ -98,11 +98,8 @@ Seed Style is basically typed inline CSS on steroids. It allows you to write als
     - You can also use custom attribute names - e.g. `At::from("custom_name")`
 
   - **Value** can be [AtValue](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/src/virtual_dom/values.rs#L67-L88) or  everything that implements [ToString](https://doc.rust-lang.org/std/string/trait.ToString.html). `AtValue` has 3 variants:
-   
     - `Ignored` - The whole attribute is ignored (i.e. not rendered to HTML at all). It's useful for _[boolean HTML attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes#Boolean_Attributes)_ and in your conditions.
-   
     - `None` - The attribute value is not used (i.e. rendered as empty string). It's also useful for _boolean HTML attributes_.
-    
     - `Some(String)` - If `v` in `At::X => v`, implements `ToString`, then it's automatically transformed to `AtValue::Some(v)`.
 
 _Note:_ `C!` and `style!` are basically only `attrs!`'s specializations - you can write 
