@@ -5,7 +5,7 @@ use crate::{
     generated::css_classes::C, page::partial::image, Guide, Mode, Model, Msg,
     Urls,
 };
-use seed::{a, attrs, div, empty, prelude::*, span, style, C, IF};
+use seed::{prelude::*, *};
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum Position {
@@ -74,10 +74,12 @@ fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> Node<Msg> {
                 C.border,
                 C.border_gray_400,
                 C.rounded_full,
-                IF!(!in_prerendering => C.cursor_pointer),
-                IF!(!in_prerendering => C.hover__underline),
-                IF!(!in_prerendering => C.hover__text_gray_700),
-                IF!(!in_prerendering => C.hover__border_gray_600),
+                IF!(!in_prerendering => vec![
+                    C.cursor_pointer,
+                    C.hover__underline,
+                    C.hover__text_gray_700,
+                    C.hover__border_gray_600,
+                ]),
             ],
             ev(Ev::Click, |_| Msg::ToggleMode),
             span![
