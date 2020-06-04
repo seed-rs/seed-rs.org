@@ -164,11 +164,13 @@ fn view_search(model: &Model) -> Node<Msg> {
                     C.px_2,
                     C.pl_8,
                     C.appearance_none,
+                    IF!(model.in_prerendering => C.opacity_50),
                 ],
                 attrs! {
                     At::Type => "search",
                     At::Placeholder => "Search",
                     At::Value => model.search_query,
+                    At::Disabled => model.in_prerendering.as_at_value(),
                 },
                 input_ev(Ev::Input, Msg::SearchQueryChanged),
             ],
