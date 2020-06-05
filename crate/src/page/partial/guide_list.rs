@@ -155,7 +155,12 @@ fn view_search(model: &Model) -> Node<Msg> {
                     C.bg_green_100,
                     C.text_sm,
                     C.text_green_800,
-                    C.placeholder_green_800,
+                    IF!(not(model.in_prerendering) => vec![
+                        C.placeholder_green_800,
+                    ]),
+                    IF!(model.in_prerendering => vec![
+                        C.placeholder_green_400,
+                    ]),
                     C.border_b_4,
                     C.border_green_500,
                     C.focus__outline_none,
@@ -164,7 +169,6 @@ fn view_search(model: &Model) -> Node<Msg> {
                     C.px_2,
                     C.pl_8,
                     C.appearance_none,
-                    IF!(model.in_prerendering => C.opacity_50),
                 ],
                 attrs! {
                     At::Type => "search",
