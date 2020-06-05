@@ -80,6 +80,7 @@ fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> Node<Msg> {
                     C.hover__text_gray_700,
                     C.hover__border_gray_600,
                 ]),
+                IF!(in_prerendering => C.cursor_default),
             ],
             ev(Ev::Click, |_| Msg::ToggleMode),
             span![
