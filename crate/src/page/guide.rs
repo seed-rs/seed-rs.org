@@ -3,7 +3,7 @@
 
 use crate::{
     generated::css_classes::C,
-    page::partial::{content_control_panel, guide_list, image, intro},
+    page::partial::{content_control_panel, guide_list, intro},
     Guide, Model, Msg,
 };
 use seed::{prelude::*, *};
@@ -44,7 +44,7 @@ fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
             C.lg__border_l_4,
             C.lg__border_green_500,
         ],
-        view_prerendered_warning(model.in_prerendering),
+        IF!(model.in_prerendering => view_loading_warning()),
         intro::view(
             show_intro,
             &model.base_url,
@@ -58,35 +58,49 @@ fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
     ]
 }
 
-fn view_prerendered_warning(in_prerendering: bool) -> Node<Msg> {
+fn view_loading_warning() -> Node<Msg> {
     div![
-        C![
-            C.flex,
-            C.items_center,
-            C.bg_blue_500,
-            C.text_white,
-            C.text_sm,
-            C.font_bold,
-            C.px_4,
-            C.py_3,
-            C.mb_8,
-            C.sm__mb_8,
-            IF!(!in_prerendering => C.hidden),
+        raw![
+            r#"
+            <style>
+                @keyframes loading-warning-display {
+                    from { max-height: 0; }
+                    to { max-height: 100%; }
+                }
+            </style>
+            "#
         ],
-        attrs! {
-            At::Custom("role".into()) => "alert"
+        style! {
+            St::AnimationName => "loading-warning-display",
+            St::AnimationDelay => "5s",
+            St::AnimationDuration => "3s",
+            St::AnimationFillMode => "both",
+            St::AnimationTimingFunction => "ease-in",
+            St::Overflow => "hidden",
         },
-        div![C![C.py_1,], image::info_icon_svg(),],
-        p![
-            "This is a pre rendered page. Please make sure your have a ",
-            a![
-                C![C.underline,],
-                attrs! {
-                    At::Href => "https://developer.mozilla.org/en-US/docs/WebAssembly#Browser_compatibility",
-                },
-                "browser with WebAssembly support"
+        div![
+            C![
+                C.bg_blue_500,
+                C.text_white,
+                C.text_sm,
+                C.p_4,
+                C.mb_8,
             ],
-            " and JavaScript enabled to get all page functionality."
+            attrs! {
+                At::Custom("role".into()) => "alert",
+            },
+            strong![C![C.font_bold,], "Loading..."],
+            p![
+                "If this message does not disappear for a long time, make sure you have a ",
+                a![
+                    C![C.underline,],
+                    attrs! {
+                        At::Href => "https://developer.mozilla.org/en-US/docs/WebAssembly#Browser_compatibility",
+                    },
+                    "browser with WebAssembly support"
+                ],
+                " and JavaScript enabled."
+            ]
         ]
     ]
 }
