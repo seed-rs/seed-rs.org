@@ -155,12 +155,8 @@ fn view_search(model: &Model) -> Node<Msg> {
                     C.bg_green_100,
                     C.text_sm,
                     C.text_green_800,
-                    IF!(not(model.in_prerendering) => vec![
-                        C.placeholder_green_800,
-                    ]),
-                    IF!(model.in_prerendering => vec![
-                        C.placeholder_green_400,
-                    ]),
+                    IF!(not(model.in_prerendering) => C.placeholder_green_800),
+                    IF!(model.in_prerendering => C.placeholder_green_400),
                     C.border_b_4,
                     C.border_green_500,
                     C.focus__outline_none,

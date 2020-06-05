@@ -74,7 +74,7 @@ fn view_mode_toggle(in_prerendering: bool, mode: Mode) -> Node<Msg> {
                 C.border,
                 C.border_gray_400,
                 C.rounded_full,
-                IF!(!in_prerendering => vec![
+                IF!(not(in_prerendering) => vec![
                     C.cursor_pointer,
                     C.hover__underline,
                     C.hover__text_gray_700,
