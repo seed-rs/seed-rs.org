@@ -10,6 +10,8 @@ I think the most important Rust features are:
   - Cross-platform.
   - Pragmatic - it's designed to solve real-world problems.
   - Good official [formatter](https://github.com/rust-lang/rustfmt) and [linter](https://github.com/rust-lang/rust-clippy).
+  - See also other opininions - [Why the developers who use Rust love it so much](https://stackoverflow.blog/2020/06/05/why-the-developers-who-use-rust-love-it-so-much/)
+
 
 ## Official resources
 
@@ -84,7 +86,7 @@ I think the most important Rust features are:
   - [itertools](https://crates.io/crates/itertools)
   - [indexmap](https://crates.io/crates/indexmap)
   - [chrono](https://crates.io/crates/chrono)
-  - [uuid](https://crates.io/crates/uuid)
+  - [uuid](https://crates.io/crates/uuid) + [ulid](https://crates.io/crates/ulid) + [cuid](https://crates.io/crates/cuid)
   - [rayon](https://crates.io/crates/rayon)
 
 - [Clippy](https://github.com/rust-lang/rust-clippy) and [rustfmt](https://github.com/rust-lang/rustfmt) are also your friends. [cargo-make](https://sagiegurari.github.io/cargo-make/) is your unofficial friend. 
