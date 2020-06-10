@@ -41,4 +41,4 @@ pub fn start() {
 }
 ```
 
-You'll learn about individual parts (`Model`, `update`, etc.) in the next chapters. And then we'll zoom out a bit and explain Seed app architecture. 
+You'll learn about individual parts (`Model`, `update`, etc.) in the next chapters. If you want to zoom out a bit before we'll jump into the rabbit hole, I recommend to read something about [The Elm Architecture (TEA)](https://guide.elm-lang.org/architecture/).
