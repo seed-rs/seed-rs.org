@@ -65,6 +65,7 @@ pub fn guides() -> Vec<Guide> {
         guide!(seed_version: "0.7.0", slug: "event_handlers", menu_title: "Event Handlers", file_name: "event_handlers", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "start", menu_title: "Start", file_name: "start", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "app_2_todomvc", menu_title: "App 2: TodoMVC", file_name: "app_2_todomvc", prepend_menu_divider: true),
+        guide!(seed_version: "0.7.0", slug: "todomvc_model", menu_title: "Model", file_name: "todomvc_model", prepend_menu_divider: false),
         // ------ 0.8.0 ------
         guide!(seed_version: "0.8.0", slug: "about", menu_title: "About", file_name: "about", prepend_menu_divider: false),
     ]

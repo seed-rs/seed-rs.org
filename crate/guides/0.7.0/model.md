@@ -57,7 +57,7 @@ pub struct Model {
    
    - When you see multiple fields with the same simple type (`bool`, `String`, `u32`, `Option`, etc.) in your `Model`, you should try to remodel it.
    
-   - I recommend to read the book [Domain Modeling Made Functional](https://fsharpforfunandprofit.com/books/).
+   - I recommend to read the book [Domain Modeling Made Functional](https://fsharpforfunandprofit.com/books/) or at least [The "Designing with types" series](https://fsharpforfunandprofit.com/series/designing-with-types.html).
 
 - When you need to create custom types that are used in the `Model`, write them below the `Model`. (The rule *"children below the parent"* is valid for all nested structures.) Example:
 ```rust
