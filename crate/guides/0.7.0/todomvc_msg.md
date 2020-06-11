@@ -157,3 +157,83 @@ enum Msg {
    Msg::UrlChanged(subs::UrlChanged),
 }
 ```
+
+## Naming
+
+`NewTodoTitleChanged` and `SelectedTodoTitleChanged` are pretty long names but they will be used only on a few places and often on a standalone lines so the length is a good trade-off for expressiveness.
+
+`CheckOrUncheckAll` name is a bit strange but it says exactly what it does. I was thinking also about `ToggleAll` and `CheckAll` but they would misinterpreted sooner or later.
+
+## Types
+
+They are 2 `String`s and 3 `Ulid`s but `String` always represent title here and `Ulid` always represents todo id so there aren't any context/domain conflicts and we can leave it as is. 
+
+## Grouping
+
+Our `Msg` enum is still unreadable. Let's create visual groups to improve it.
+I recommend to try to write some combinations before you choose the best one. 
+
+You can group by message type (commands vs events), by the similar name/suffix/prefix (e.g. `CreateTodo`, `ToggleTodo`), by the predicted complexity in `update` function, etc. 
+
+Keep in mind that you'll use the same groups also in your `update` function.
+
+I have two favorite combinations:
+
+<details>
+<summary>The first combination</summary>
+
+```rust
+enum Msg {
+   UrlChanged(subs::UrlChanged),
+
+   // ------ Title changes ------
+   NewTodoTitleChanged(String),
+   SelectedTodoTitleChanged(String),
+
+   // ------ Basic Todo operations ------
+   CreateTodo,
+   ToggleTodo(Ulid),
+   RemoveTodo(Ulid),
+   SelectTodo(Option<Ulid>),
+   SaveSelectedTodo,
+   
+   // ------ Bulk operations ------
+   CheckOrUncheckAll,
+   ClearCompleted,
+}
+```
+
+</details>
+
+And the second and winning combination below. 
+
+--- 
+
+## Msg v.2
+
+```rust
+enum Msg {
+   UrlChanged(subs::UrlChanged),
+   NewTodoTitleChanged(String),
+
+   // ------ Basic Todo operations ------
+   CreateTodo,
+   ToggleTodo(Ulid),
+   RemoveTodo(Ulid),
+   
+   // ------ Bulk operations ------
+   CheckOrUncheckAll,
+   ClearCompleted,
+   
+   // ------ Selection ------
+   SelectTodo(Option<Ulid>),
+   SelectedTodoTitleChanged(String),
+   SaveSelectedTodo,
+}
+```
+
+I think we've successfully covered all interactions in our app and nothing should surprise us during implementation.
+
+---
+
+We'll setup a new Seed project in the next chapter and integrate our `Model` and `Msg` into it.

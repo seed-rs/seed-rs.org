@@ -134,7 +134,7 @@ In Seed apps, you need to create `Model` only once, so when you implement `Defau
 
 A standard Seed app usually contains one app (aka root or main) `Model`, several  page `Model`s and a few component `Model`s. It's often pretty clear where you should save data and it's simple enough to keep the most of your models in your head during development. So there usually aren't problems with data synchronization or introducing unnecessary models (aka local states).
 
-However it's already possible to integrate Javascript [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) (we plan to support also Rust Web Components) and [React-like Hooks](https://reactjs.org/docs/hooks-overview.html#state-hook) are waiting for integration into Seed. It means it will be pretty easy to create local states (even implicitly when you are using a component library), so there are some tips how to define your `Model`s:
+However it's already possible to integrate Javascript [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) (we plan to support also Rust Web Components) and [React-like Hooks](https://reactjs.org/docs/hooks-overview.html#state-hook) - [Seed Hooks](https://seed-style-hooks.netlify.app/hooks_home) - are waiting for integration into Seed. It means it will be pretty easy to create local states (even implicitly when you are using a component library), so there are some tips how to define your `Model`s:
 
 1. Your business data should be kept in standard Seed `Model`s - ideally in the app model or in page models.
 

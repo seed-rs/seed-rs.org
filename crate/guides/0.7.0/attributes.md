@@ -87,9 +87,9 @@ Corresponding HTML:
 
 ## Future
 
-Macro `style!` will be replaced with _Seed Style_. 
+Macro `style!` will be replaced with [Seed Style](https://seed-style-hooks.netlify.app/home). 
 
-Seed Style is basically typed inline CSS on steroids. It allows you to write also pseudo-classes like `:hover` directly in your Rust elements so it eliminates the need to write standalone style files. And there are many more useful features.
+[Seed Style](https://seed-style-hooks.netlify.app/home) is basically typed inline CSS on steroids. It allows you to write also pseudo-classes like `:hover` directly in your Rust elements so it eliminates the need to write standalone style files. And there are many more useful features.
 
 # attrs!
 

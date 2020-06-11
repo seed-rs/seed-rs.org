@@ -252,7 +252,7 @@ Templates
 
 - You'll be able to create own element macros - it's useful for custom elements and for writing components.
 
-- We'll write experimental layout/component libraries once Seed Style (new typed CSS) and Seed Hooks (better alternative to React Hooks) are integrated.
+- We'll write experimental layout/component libraries once [Seed Style](https://seed-style-hooks.netlify.app/home) (new typed CSS) and [Seed Hooks](https://seed-style-hooks.netlify.app/hooks_home) (better alternative to React Hooks) are integrated.
 
 - You can write own typed components - see examples [component_builder](https://github.com/seed-rs/seed/tree/3134d21c6fcb2383685885687fe2a7610fb2ff74/examples/component_builder) and [tea_component](https://github.com/seed-rs/seed/tree/3134d21c6fcb2383685885687fe2a7610fb2ff74/examples/tea_component).
 

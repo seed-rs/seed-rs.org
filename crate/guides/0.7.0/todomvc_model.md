@@ -128,7 +128,7 @@ It means the part of our `Model` has to be JSON (de)serializable. The simplest w
 
 We have to remember which filter is selected - let's add another field into `Model`:
 ```rust
-filter: Filter;
+filter: Filter,
 ...
 enum Filter {
    All,
@@ -149,8 +149,8 @@ struct Model {
     todos: Vec<Todo>,
     new_todo_title: String,
     selected_todo: Option<SelectedTodo>,
-    filter: Filter;
-    base_url: Url
+    filter: Filter,
+    base_url: Url,
 }
 
 struct Todo {
@@ -220,17 +220,17 @@ To respect [KISS principle](https://en.wikipedia.org/wiki/KISS_principle) I thin
 
 ## Model v.2
 
-Model has been updated with `BtreeMap` and `Ulid`. We can add type alias `TodoId` for `Ulid` but it won't help too much with readability.
+Model has been updated with `BTreeMap` and `Ulid`. We can add type alias `TodoId` for `Ulid` but it won't help too much with readability.
 
 `v.2` is not named `final` because we never know what we'll find out during `Msg` designing and implementations.
 
 ```rust
 struct Model {
-    todos: BtreeMap<Ulid, Todo>,
+    todos: BTreeMap<Ulid, Todo>,
     new_todo_title: String,
     selected_todo: Option<SelectedTodo>,
-    filter: Filter;
-    base_url: Url
+    filter: Filter,
+    base_url: Url,
 }
 
 struct Todo {
