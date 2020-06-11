@@ -74,7 +74,7 @@ pub fn view(base_url: &Url) -> Node<Msg> {
 
 > `fn view(model: &Model) -> Node<Msg>`
 
-- **&Model** is [immutable reference](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#references-and-borrowing) to prevent you from mutating the state directly. It's possible to break this "limitation" with [interior mutability](https://doc.rust-lang.org/book/ch15-05-interior-mutability.html#interior-mutability-a-mutable-borrow-to-an-immutable-value) but we strongly oppose to do that, because `view` invocations are pretty unpredictable and such `Model` changes would be surprising and hard to find. (However there will be a way how to preserve and modify local `view` variables once React-like Hooks are integrated.)
+- **&Model** is [immutable reference](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#references-and-borrowing) to prevent you from mutating the state directly. It's possible to break this "limitation" with [interior mutability](https://doc.rust-lang.org/book/ch15-05-interior-mutability.html#interior-mutability-a-mutable-borrow-to-an-immutable-value) but we strongly oppose to do that, because `view` invocations are pretty unpredictable and such `Model` changes would be surprising and hard to find. (However there will be a way how to preserve and modify local `view` variables once [React-like Hooks](https://seed-style-hooks.netlify.app/hooks_home) are integrated.)
 
 - [Node](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/src/virtual_dom/node.rs#L13-L22) represents HTML element or text used as an element content. It's usually created by _element macros_ like `div!` or `span!`. (You'll learn about _element macros_ in next chapters.)
 
@@ -96,6 +96,6 @@ pub fn view(base_url: &Url) -> Node<Msg> {
 
 ## Future
 
-- `view` and `view_*` functions will have own local state once Seed Hooks are integrated.
+- `view` and `view_*` functions will have own local state once [Seed Hooks](https://seed-style-hooks.netlify.app/hooks_home) are integrated.
 
 - I'll maybe try to write GUI designer that generates `view` in the distant future. It should make development more enjoyable & faster and make cooperation between developers and designers smoother. (Don't hesitate to write [me](https://github.com/MartinKavik) your opinions/ideas.)
