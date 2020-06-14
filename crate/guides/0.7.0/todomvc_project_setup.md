@@ -96,12 +96,12 @@ Please, create and start a new Seed app if you want to follow the steps below.
         id: Ulid,
         title: String,
         completed: bool,
-        element: ElRef<web_sys::HtmlElement>,
     }
 
     struct SelectedTodo {
         id: Ulid,
         title: String,
+        input_element: ElRef<web_sys::HtmlElement>,
     }
 
     enum Filter {
@@ -139,8 +139,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
 1. Add dependency [ulid](https://crates.io/crates/ulid) into `Cargo.toml`.
     ```toml
     [dependencies]
-    # TODO: Change to "ulid = "x.x.x" once https://github.com/dylanhart/ulid-rs/pull/28 is merged and a new `ulid` version released.
-    ulid = { git = "https://github.com/MartinKavik/ulid-rs", branch = "feat/wasm_support" }
+    ulid = "0.3.3"
     ...
     ```
 
@@ -165,7 +164,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
 
     fn view(model: &Model) -> Node<Msg> {
         div![
-          "I'm a placeholder"
+            "I'm a placeholder"
         ]
     }
     ```
@@ -264,19 +263,20 @@ Please, create and start a new Seed app if you want to follow the steps below.
                 id: id_a,
                 title: "I'm todo A".to_owned(),
                 completed: false,
-                element: ElRef::new()
             });
 
             self.todos.insert(id_b, Todo {
                 id: id_b,
                 title: "I'm todo B".to_owned(),
                 completed: true,
-                element: ElRef::new()
             });
+
+            self.new_todo_title = "I'm a new todo title".to_owned();
 
             self.selected_todo = Some(SelectedTodo {
                 id: id_b,
                 title: "I'm better todo B".to_owned(),
+                input_element: ElRef::new(),
             });
             self
         }
