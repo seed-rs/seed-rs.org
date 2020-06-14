@@ -52,25 +52,28 @@ You can implement `UpdateEl` trait for your items - see implementation for [Butt
 
 ```rust
 div![
-    // 1. DOM references
-    el_ref(element_reference)
-
-    // 2. Classes
+    // 1. Classes
     C!["a_class"],
 
-    // 3. Style (aka CSS)
+    // 2. DOM references
+    el_ref(element_reference),
+
+    // 3. Element keys
+    el_key(&element_key),
+
+    // 4. Style (aka CSS)
     style!{St::Display => "flex"},
 
-    // 4. Other attributes
+    // 5. Other attributes
     attrs!{At::Width => px(50)},
 
-    // 5. Text content (string, numbers, ..)
+    // 6. Text content (string, numbers, ..)
     "Text",
 
-    // 6. Event handlers
+    // 7. Event handlers
     ev(Ev::Click, |_| Msg::Clicked),
 
-    // 7. Children
+    // 8. Children
     h1!["Title"],
     things.iter().map(view_thing),
 ]

@@ -167,7 +167,8 @@ pub fn start() {
     // but it's too late for the `.expect` below.
     //
     // _Note:_ For Seed <= 0.7.0, you have to add `console_error_panic_hook`
-    // into dependencies in your `Cargo.toml`.
+    // into dependencies in your `Cargo.toml` or use this commit:
+    // `seed = { git = "https://github.com/seed-rs/seed", rev = "0a538f0" }`
     console_error_panic_hook::set_once();
 
     let root_element = document()
