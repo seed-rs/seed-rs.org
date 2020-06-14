@@ -69,6 +69,8 @@ pub fn guides() -> Vec<Guide> {
         guide!(seed_version: "0.7.0", slug: "todomvc_msg", menu_title: "Msg", file_name: "todomvc_msg", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "todomvc_project_setup", menu_title: "Project Setup", file_name: "todomvc_project_setup", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "todomvc_view", menu_title: "View", file_name: "todomvc_view", prepend_menu_divider: false),
+        guide!(seed_version: "0.7.0", slug: "todomvc_update", menu_title: "Update", file_name: "todomvc_update", prepend_menu_divider: false),
+        guide!(seed_version: "0.7.0", slug: "todomvc_local_storage", menu_title: "LocalStorage", file_name: "todomvc_local_storage", prepend_menu_divider: false),
         // ------ 0.8.0 ------
         guide!(seed_version: "0.8.0", slug: "about", menu_title: "About", file_name: "about", prepend_menu_divider: false),
     ]

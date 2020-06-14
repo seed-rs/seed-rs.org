@@ -101,7 +101,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
     struct SelectedTodo {
         id: Ulid,
         title: String,
-        input_element: ElRef<web_sys::HtmlElement>,
+        input_element: ElRef<web_sys::HtmlInputElement>,
     }
 
     enum Filter {
@@ -120,15 +120,18 @@ Please, create and start a new Seed app if you want to follow the steps below.
         NewTodoTitleChanged(String),
     
         // ------ Basic Todo operations ------
+
         CreateTodo,
         ToggleTodo(Ulid),
         RemoveTodo(Ulid),
         
         // ------ Bulk operations ------
+
         CheckOrUncheckAll,
         ClearCompleted,
         
         // ------ Selection ------
+
         SelectTodo(Option<Ulid>),
         SelectedTodoTitleChanged(String),
         SaveSelectedTodo,
@@ -184,6 +187,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
             }
         
             // ------ Basic Todo operations ------
+
             Msg::CreateTodo => {
                 log!("CreateTodo");
             }
@@ -195,6 +199,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
             }
             
             // ------ Bulk operations ------
+
             Msg::CheckOrUncheckAll => {
                 log!("CheckOrUncheckAll");
             }
@@ -203,6 +208,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
             }
             
             // ------ Selection ------
+
             Msg::SelectTodo(opt_id) => {
                 log!("SelectTodo", opt_id);
             },

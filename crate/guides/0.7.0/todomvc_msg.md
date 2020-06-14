@@ -20,7 +20,7 @@ struct Todo {
     id: Ulid,
     title: String,
     completed: bool,
-    element: ElRef<web_sys::HtmlElement>,
+    element: ElRef<web_sys::HtmlInputElement>,
 }
 
 struct SelectedTodo {
@@ -187,10 +187,12 @@ enum Msg {
    UrlChanged(subs::UrlChanged),
 
    // ------ Title changes ------
+
    NewTodoTitleChanged(String),
    SelectedTodoTitleChanged(String),
 
    // ------ Basic Todo operations ------
+
    CreateTodo,
    ToggleTodo(Ulid),
    RemoveTodo(Ulid),
@@ -198,6 +200,7 @@ enum Msg {
    SaveSelectedTodo,
    
    // ------ Bulk operations ------
+
    CheckOrUncheckAll,
    ClearCompleted,
 }
@@ -217,15 +220,18 @@ enum Msg {
    NewTodoTitleChanged(String),
 
    // ------ Basic Todo operations ------
+
    CreateTodo,
    ToggleTodo(Ulid),
    RemoveTodo(Ulid),
    
    // ------ Bulk operations ------
+
    CheckOrUncheckAll,
    ClearCompleted,
    
    // ------ Selection ------
+
    SelectTodo(Option<Ulid>),
    SelectedTodoTitleChanged(String),
    SaveSelectedTodo,
