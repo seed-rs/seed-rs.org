@@ -68,7 +68,7 @@ Let's introduce a `Model` field: `selected_todo: Option<SelectedTodo>`
    - where `SelectedTodo` contains `id: ID` and `title: String`.
    - We need to add the same field `title: String` to basic `Todo` struct.
 
-And we need to add another field `input_element: ElRef<web_sys::HtmlElement>` into `SelectedTodo` so we can perform side-effects safely, i.e. focus selected todo input without using error-prone JS/browser native selectors. It has to be `HtmlElement` and not just `Element` because only `HtmlElement` has method [focus](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.HtmlElement.html#method.focus). (We will talk about `ElRef` in next chapters.)
+And we need to add another field `input_element: ElRef<web_sys::HtmlInputElement>` into `SelectedTodo` so we can perform side-effects safely, i.e. focus selected todo input without using error-prone JS/browser native selectors. It has to be `HtmlInputElement` and not just `Element` because only items that can be [dereferenced](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.HtmlInputElement.html#impl-Deref) to `HtmlElement` have method [focus](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.HtmlElement.html#method.focus). (We will talk about `ElRef` in next chapters.)
 
 ---
 
@@ -90,7 +90,7 @@ struct Todo {
 struct SelectedTodo {
     id: ID,
     title: String,
-    input_element: ElRef<web_sys::HtmlElement>,
+    input_element: ElRef<web_sys::HtmlInputElement>,
 }
 ```
 
@@ -162,7 +162,7 @@ struct Todo {
 struct SelectedTodo {
     id: ID,
     title: String,
-    input_element: ElRef<web_sys::HtmlElement>,
+    input_element: ElRef<web_sys::HtmlInputElement>,
 }
 
 enum Filter {
@@ -242,7 +242,7 @@ struct Todo {
 struct SelectedTodo {
     id: Ulid,
     title: String,
-    input_element: ElRef<web_sys::HtmlElement>,
+    input_element: ElRef<web_sys::HtmlInputElement>,
 }
 
 enum Filter {

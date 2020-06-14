@@ -1130,13 +1130,16 @@ Let's integrate it into our app!
     ...
 
         fn view_footer(todos: &BTreeMap<Ulid, Todo>, selected_filter: Filter) -> Node<Msg> {
+        let completed_count = todos.values().filter(|todo| todo.completed).count();
+        let active_count = todos.len() - completed_count;
+
         footer![C!["footer"],
             span![C!["todo-count"],
-                strong![todos.len()],
-                format!(" item{} left", if todos.len() == 1 { "" } else { "s" }),
+                strong![active_count],
+                format!(" item{} left", if active_count == 1 { "" } else { "s" }),
             ],
             view_filters(selected_filter),
-            IF!(todos.values().any(|todo| todo.completed) =>
+            IF!(completed_count > 0 =>
                 button![C!["clear-completed"],
                     "Clear completed"
                 ]
@@ -1147,7 +1150,7 @@ Let's integrate it into our app!
 
     _Note_:
     ```rust
-    format!(" item{} left", if todos.len() == 1 { "" } else { "s" })
+    format!(" item{} left", if active_count == 1 { "" } else { "s" })
     ```
     is simple but too naive solution for natural language problems. Imagine you would like to write it in Czech:
     ```
@@ -1188,4 +1191,8 @@ Let's integrate it into our app!
 
 ---
 
-We've done it! Perhaps you've noticed that we haven't written any event handlers yet - we'll be writing them together with `update` function in the next chapter. 
+We've done it! You should see something like:
+
+![TodoMVC after view screen](/static/images/todomvc_after_view_screen.png)
+
+Perhaps you've noticed that we haven't written any event handlers yet - we'll be writing them together with `update` function in the next chapter. And we'll finish filtering once we understand subscriptions, routing and link building.
