@@ -62,9 +62,7 @@ _Note:_ Yes, we insert todos into `LocalStorage` on each message. I don't see an
 1. Apply [debouncing or throttling](https://css-tricks.com/debouncing-throttling-explained-examples/) to `LocalStorage` updates.
 
 1. Integrate manual saving and show something like _"Do you want to leave? Data won't be saved."_ when the user want to leave/close browser tab (see example [unsaved_changes](https://github.com/seed-rs/seed/tree/0a538f03d6aeb56b00d997c80a666e388279a727/examples/unsaved_changes) to learn how to implement it). 
-  
    - It would reduce UX in our TodoMVC, however there are use-cases where it would improve UX.
-  
    - It would make the app less robust - there is a higher probability of losing changes.
 
 1. Compress stored data. 
