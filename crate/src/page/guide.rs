@@ -30,7 +30,12 @@ pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
     ]
 }
 
-fn view_content(guide: &Guide, model: &Model, show_intro: bool, guide_content_el: &ElRef<web_sys::HtmlElement>) -> Node<Msg> {
+fn view_content(
+    guide: &Guide,
+    model: &Model,
+    show_intro: bool,
+    guide_content_el: &ElRef<web_sys::HtmlElement>,
+) -> Node<Msg> {
     use content_control_panel::Position::{Bottom, Top};
     div![
         C![
@@ -46,7 +51,7 @@ fn view_content(guide: &Guide, model: &Model, show_intro: bool, guide_content_el
             C.lg__overflow_y_auto,
             C.lg__h_screen,
         ],
-        el_ref(&guide_content_el),
+        el_ref(guide_content_el),
         IF!(model.in_prerendering => view_loading_warning()),
         intro::view(
             show_intro,
