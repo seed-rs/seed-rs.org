@@ -22,7 +22,7 @@ I think the most important Rust features are:
 
 ## Seed-related notes
 
- - [IMPORTANT] Debug builds are much bigger and slower. However it contains debug info and compilation is much faster.
+ - [IMPORTANT] Debug builds are much bigger and slower. However they contain debug info and their compilation is much faster.
    - _Note:_ Chrome is better for debugging; Firefox is faster.
 
  - [IMPORTANT] Some crates (e.g. [url](https://crates.io/crates/url)) and all crates that use them may even double the Seed app size.

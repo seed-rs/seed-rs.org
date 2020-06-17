@@ -95,7 +95,7 @@ Url {
 
 Interesting parts are:
 ```
-    next_hash_path_part_index: 0, // changed to 1
+    next_hash_path_part_index: 0, // then changed to 1
     hash_path: [
         "active",
     ],
@@ -144,7 +144,7 @@ There are two solutions:
     };
     ```
     - `remaining_hash_path_parts()` increments `next_hash_path_part_index` in the loop until it points to a non-existent item and returns references to all iterated items. It's similar to [collect](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect).
-        - Example: `remaining_hash_path_parts()` returns `vec!["active", "foo", "bar"]` for url `/#/active/m 0).foo/bar` if you haven't called `url.next_hash_path_part()` before (i.e. if "iterator" starts from 0).
+        - Example: `remaining_hash_path_parts()` returns `vec!["active", "foo", "bar"]` for url `/#/active/foo/bar` if you haven't called `url.next_hash_path_part()` before (i.e. if "iterator" starts from 0).
 
     - `.as_slice()` call is basically a leaked implementation detail because Rust can't pattern match on `Vec` and we can't return a reference to that `Vec`, too.
 
@@ -172,7 +172,7 @@ Let's try to add this one line:
 fn init(mut url: Url, orders: &mut impl Orders<Msg>) -> Model {
     orders.subscribe(|_: subs::UrlChanged| log!("url changed!"));
 ```
-Update your code & refresh browser tab. Then click the filter buttons and you should see _"url changed!"_ in your console log.
+Update your code & refresh the browser tab. Then click the filter buttons and you should see _"url changed!"_ in your console log.
 
 Let's add another line:
 ```rust
@@ -213,7 +213,7 @@ P.S.
 
 - If you want to play more with subscriptions, run the example [subscribe](https://github.com/seed-rs/seed/tree/d514b2131a9e94f5ffe965f3d0ac74763a11aeb6/examples/subscribe). 
 
-- Keep in mind there is no magic - `subscribe`, `stream`, `notify`, `UrlChanged`, etc. work the same - Seed or user create a _notification_ (bascially any item) and Seed's or user's _subscriptions_ (closures) handle it.
+- Keep in mind there is no magic - `subscribe`, `stream`, `notify`, `UrlChanged`, etc. work the same - Seed or user creates a _notification_ (basically any item) and Seed's or user's _subscriptions_ (closures) handle it.
 
 - Notify/Subscriptions mechanism in Seed is implemented with the help of [any](https://doc.rust-lang.org/std/any/index.html).
 

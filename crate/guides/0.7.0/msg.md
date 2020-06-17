@@ -76,7 +76,7 @@ However the most used is probably attribute `derive`. I recommend to read offici
 
 - There are edge-cases where you derive `Clone`, compiler is ok with it but you have still problems with calling `my_item.clone()`. In the most cases you can resolve it by implementing `Clone` manually. ([Related Rust issue](https://github.com/rust-lang/rust/issues/26925))
 
-- Derive `Debug` at least for public items, if possible. Users will be able to fix the most of bugs in their apps and you'll receive more meaningful bug reports. Seed has macro `log!(item_a, item_b);` that you can use instead of `println!` to log things that implements `Debug` into the browser console log.
+- Derive `Debug` at least for public items, if possible. Users will be able to fix the most of bugs in their apps and you'll receive more meaningful bug reports. Seed has macro `log!(item_a, item_b);` that you can use instead of `println!` to log things that implement `Debug` into the browser console log.
 
 - Derive `Default` when you are sure it's really useful. If you decide to implement `Default` manually, make it super simple.
 

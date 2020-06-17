@@ -22,7 +22,7 @@ becomes
 # C!
 
 - Macro `C!` accepts all items that implement trait [ToClasses](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/src/virtual_dom/to_classes.rs). 
-- If you use multiple `C!` invocations in one element, then the classes will be merged.
+- If you use multiple `C!` invocations in one element, then the classes will be merged. (This rule is valid for all attributes.)
 
 `ToClasses` is implemented for `String` and `&str`, references and containers `Option` and `Vec`.
 

@@ -244,7 +244,7 @@ I assume you understand now why there isn't a fully-typed HTML/DOM/Browser API w
 
 Element macros are more suitable for this because they are "typed enough" - the most of code is still checked by the compiler, however it allows you to write very declarative and readable code. As the result, it's much easier to find bugs in your code while you are looking into HTML spec/MDN docs and scanning the code.
 
-Templates
+And what about templates / template engines?
   - Why do you want to throw out Rust expressive type system and IDE help?
   - Why do you want to learn a new syntax and cryptic error messages? And force your users to do the same?
   - Why do you want to add another dependency with potential bugs and increase app size?

@@ -2,7 +2,7 @@
 
 Do you have any questions, feedback or ideas?
 Feel free to open an 
-[issue on github](https://github.com/seed-rs/seed/issues), create a new [forum](https://seed.discourse.group/) topic or use `#support` [chat](https://discord.gg/JHHcHp5) channel.
+[issue on github](https://github.com/seed-rs/seed/issues), create a new [forum](https://seed.discourse.group/) topic or use [chat](https://discord.gg/JHHcHp5) channel `#support`.
 The Seed community will answer usually within a few hours.
 
 ## Commercial Support
@@ -16,3 +16,9 @@ who is the maintainer and top contributor of Seed.
 
 Or you may contact [slowtec GmbH](https://slowtec.de/) (Germany)
 who offer consulting and full-stack software development with Rust.
+
+## Do you want to support Seed development?
+
+- Martin Kavík - [Github Sponsors](https://github.com/sponsors/MartinKavik) and [Patreon](https://www.patreon.com/martinkavik).
+
+Thank you!

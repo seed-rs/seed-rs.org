@@ -92,9 +92,9 @@ Well, let me explain why it hasn't got a simpler type instead. There are possibl
 1. Without `<Msg>`
    - `fn init(_: Url, orders: &mut impl Orders) -> Model`
    
-   - The compiler and IDEs need help - without it they don't know if our HTTP response handlers return the expected `Msg` type; that we want to send the correct `Msg`; or they can't show you possible options in autocomplete lists.
+   - The compiler and IDEs need help - without it they don't know if our HTTP response handlers return the expected `Msg` type or they can't show you possible options in autocomplete lists.
    
-   - We can hide `<Msg>` by some magic provided by [Any](https://doc.rust-lang.org/std/any/), but you are basically trying to remove static types from Rust.. it's not idiomatic of course and very error-prone. Also there will be multiple `Msg`s in your app and each would have its own `orders` - so it makes sense to distinguish them explicitly.
+   - We can hide `<Msg>` by some magic provided by [Any](https://doc.rust-lang.org/std/any/), but you are basically trying to remove static types from Rust.. it's not idiomatic of course and very error-prone.
 
 1. Without `impl`
    - `fn init(_: Url, orders: &mut Orders<Msg>) -> Model`
@@ -107,7 +107,7 @@ Well, let me explain why it hasn't got a simpler type instead. There are possibl
 
 - `init` should be short and simple - the main goal is to just create a new `Model` instance. Also it blocks the app - try to invoke time-consuming operations in other functions (especially in `update` function; you'll learn about `update` in next chapters) when the app is rendered and the user is happy that he sees at least some content.
 
-- When you need to write some helpers, respect the rule *"children below the parent"* (it will be explained in next chapters) - write helpers below the `init` function. And once you find out you are using some helpers also in `update` function, move them below the `update`.
+- When you need to write some helpers, respect the rule *"children below the parent"* - write helpers below the `init` function. And once you find out you are using some helpers also in `update` function, move them below the `update`.
 
 ---
 

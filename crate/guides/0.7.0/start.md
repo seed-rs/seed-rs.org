@@ -181,7 +181,7 @@ pub fn start() {
 
 ```
 
-Once the root element is successfully found, its content is replaced with the rendered app. So it's NOT recommended to mount the app into `body`, because `body` often contains user's scripts and because browser extensions/plugins like to inject their scripts into `body`. (It's a general rule for all front-end frameworks).
+Once the root element is successfully found, its content is replaced with the rendered app. So it's NOT RECOMMENDED to mount the app into `body`, because `body` often contains user's scripts and because browser extensions/plugins like to inject their scripts into `body`. (It's a general rule for all front-end frameworks).
 
 
 ## How to write a good `start`

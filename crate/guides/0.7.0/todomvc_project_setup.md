@@ -157,7 +157,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
     ```rust
     #[derive(Copy, Clone)]
     ```
-    from `lib.rs`, because `subs::UrlChanged` and `String` don't implement `Copy` and standalone `Clone` for `Msg` is anti-pattern.
+    from `lib.rs`, because `subs::UrlChanged` and `String` don't implement `Copy` and standalone `Clone` for `Msg` is an anti-pattern.
 
 1. Remove `allow` attribute and `div!` content from `view`. You can write simple alternative content (e.g. `"I'm a placeholder"`) to check in your browser that everything works once we fix all compilation errors.
     ```rust
@@ -292,5 +292,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
 
 1. Make sure there aren't any errors or warnings in your terminal and you see something like `I'm a placeholder` in your browser.
    - If you don't see anything, make sure your dev server is running (consult [quickstart's README.md](https://github.com/seed-rs/seed-quickstart)) and that you didn't forget to refresh you browser tab. 
+
+---
 
 Done! We are ready to write `view` in the next chapter!
