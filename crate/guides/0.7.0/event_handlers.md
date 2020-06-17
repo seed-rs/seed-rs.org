@@ -49,7 +49,7 @@ You can return from callbacks:
 1. `Msg`
 ```rust
 ev(Ev::Click, |_| Msg::Clicked),
-ev(Ev::from("data-loaded"), Msg::DataLoaded`) // `DataLoaded(web_sys:Event)`
+ev(Ev::from("data-loaded"), Msg::DataLoaded`) // `enum Msg { DataLoaded(web_sys:Event) }`
 ```
 2. `Option<Msg>`
 ```rust
@@ -110,7 +110,7 @@ _Note:_ All helpers panic if it's not possible to cast the event to the required
 
 ## Window / Document Events
 
-They will be discussed in other chapters, however you can take inspiration from these examples [window_events](https://github.com/seed-rs/seed/blob/2b134d1de2a8b9aa520d11be6e45eef1e5fcd527/examples/window_events/src/lib.rs#L43-L48) and [subscribe](https://github.com/seed-rs/seed/blob/2b134d1de2a8b9aa520d11be6e45eef1e5fcd527/examples/subscribe/src/lib.rs#L15-L18).
+They will be discussed in other chapters, however you can take inspiration from examples [window_events](https://github.com/seed-rs/seed/blob/2b134d1de2a8b9aa520d11be6e45eef1e5fcd527/examples/window_events/src/lib.rs#L43-L48) and [subscribe](https://github.com/seed-rs/seed/blob/2b134d1de2a8b9aa520d11be6e45eef1e5fcd527/examples/subscribe/src/lib.rs#L15-L18).
 
 ## Future
 

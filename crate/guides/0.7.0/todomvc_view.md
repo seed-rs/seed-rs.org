@@ -691,7 +691,7 @@ Let's integrate it into our app!
     }
     ```
 
-    _Note:_ Best practice is to add an element id, but we want to respect template HTML in this case.
+    _Note:_ Best practice is to add an element id, but we want to respect predefined template HTML in this case.
 
 1. Let's include the remaining template HTML into our `view` function to test if everything works => Create a new file `/template.html` and include it during compilation into our `view` body.
 
@@ -963,7 +963,7 @@ Let's integrate it into our app!
         ]
     }
     ```
-    - However it causes compilation errors because are root `vec![...]` expects only `Node<Msg>` as items but our `IF!` returns `Option<Vec<Node<Msg>>>`. Fortunately, there is macro `nodes!` that aligns all types to make the compiler happy:
+    - However it causes compilation errors because the root `vec![...]` expects only `Node<Msg>` as items but our `IF!` returns `Option<Vec<Node<Msg>>>`. Fortunately, there is macro `nodes!` that aligns all types to make the compiler happy:
 
     ```rust
     fn view(model: &Model) -> Vec<Node<Msg>> {
@@ -1032,7 +1032,7 @@ Let's integrate it into our app!
     ```
     Tips:
     
-    - It's often better to pass `Option<&Item>` instead of `&Option<Item>`, because the former one plays better with other `Option` methods and especially with combinators like `map` and `and_then`. [Option::as_ref](https://doc.rust-lang.org/std/option/enum.Option.html#method.as_ref) does the conversion.
+    - It's often better to pass `Option<&Item>` instead of `&Option<Item>` because the former one plays better with other `Option` methods and especially with combinators like [map](https://doc.rust-lang.org/std/option/enum.Option.html#method.map) and [and_then](https://doc.rust-lang.org/std/option/enum.Option.html#method.and_then). [Option::as_ref](https://doc.rust-lang.org/std/option/enum.Option.html#method.as_ref) does the conversion.
     
     - Use `.unwrap()` (instead of `expect("...")`) in places when you are SURE the code will work but the logic isn't encodable by the Rust type system. In our case - we know that if `is_selected` is `true` then `selected_todo` contains `SelectedTodo`.
 
@@ -1178,7 +1178,7 @@ Let's integrate it into our app!
 
     This code associates the DOM input element with the field `input_element`. It allows us to safety access the DOM element in our `update` function (you'll see how in the next chapters). There are multiple examples leveraging element references, however the best demostration is in the [canvas example](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/examples/canvas/src/lib.rs#L24).
 
-1. And the last thing is _element keys_. They are optional for the most cases but they'll help to optimize rendering and they are required when you want to animate your list items by CSS animations. We have only two lists in our `view` - filers and todos. I would recommend to add keys for todos because they are more "dynamic", the number is higher and there is a chance that we'll animate them in the future. Look at [el_key example](https://github.com/seed-rs/seed/tree/0a538f03d6aeb56b00d997c80a666e388279a727/examples/el_key) when you want to know more about element keys.
+1. And the last thing is _element keys_. They are optional for the most cases but they'll help to optimize rendering and they are required when you want to animate your list items by CSS animations. We have only two lists in our `view` - filters and todos. I would recommend to add keys for todos because they are more "dynamic", their count will be often higher and there is a chance that we'll animate them in the future. Look at [el_key example](https://github.com/seed-rs/seed/tree/0a538f03d6aeb56b00d997c80a666e388279a727/examples/el_key) when you want to know more about element keys.
 
     ```rust
     fn view_todo_list(todos: &BTreeMap<Ulid, Todo>, selected_todo: Option<&SelectedTodo>) -> Node<Msg> {
@@ -1195,4 +1195,4 @@ We've done it! You should see something like:
 
 ![TodoMVC after view screen](/static/images/todomvc_after_view_screen.png)
 
-Perhaps you've noticed that we haven't written any event handlers yet - we'll be writing them together with `update` function in the next chapter. And we'll finish filtering once we understand subscriptions, routing and link building.
+Perhaps you noticed that we haven't written any event handlers yet - we'll be writing them together with `update` function in the next chapter. And we'll finish filtering once we understand subscriptions, routing and link building.

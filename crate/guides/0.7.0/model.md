@@ -142,4 +142,4 @@ However it's already possible to integrate Javascript [Web Components](https://d
 
 1. And you can use Web Components for complex GUI elements or when you often need to interact with JS library / component.
 
-(Don't worry, you'll learn more about Web Components and pages in other chapters.)
+(Don't worry, you'll learn more about Web Components and pages in other chapters; or look at [custom_elements](https://github.com/seed-rs/seed/tree/d514b2131a9e94f5ffe965f3d0ac74763a11aeb6/examples/custom_elements) and [pages](https://github.com/seed-rs/seed/tree/d514b2131a9e94f5ffe965f3d0ac74763a11aeb6/examples/pages) examples if you are brave enough.)

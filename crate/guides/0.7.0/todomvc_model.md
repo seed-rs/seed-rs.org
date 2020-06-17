@@ -188,13 +188,13 @@ There is only one `bool` (field `completed`) and it doesn't make sense to rewrit
 
 We need to discuss `ID` together with `todos: Vec<Todo>` because we will be doing many `todos` operations associated with chosen `ID`s. There are some known facts:
 - We have to be able to remove any todo from the list;
-- Push a new todo at the end.
+- Push a new todo at the end;
 - Filter according the `Todo` field `completed`.
 - Todos have to keep it's ordering (from the oldest).
 
 Some options:
 1. todos: [BTreeMap](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html), ID: `u32` - where [u32](https://doc.rust-lang.org/std/primitive.u32.html) would be only incremented when adding a new todo.
-   - There would be [tombstones](https://en.wikipedia.org/wiki/Tombstone_(data_store)) / "holes", because we have to only increment `ID` to keep ordering (implicitly by `BTreeMap`). We would need to remove them somehow to prevent `u32` (`usize`, ..) overflow in the distant future.
+   - There would be [tombstones](https://en.wikipedia.org/wiki/Tombstone_(data_store)) / "holes", because we have to only increment `ID` to keep ordering. We would need to remove them somehow to prevent `u32` (`usize`, ..) overflow in the distant future.
 
 1. todos: [Vec](https://doc.rust-lang.org/std/vec/struct.Vec.html), ID: `usize` - where `ID` is todo's position in `Vec`.
    - Removing todos would change `ID`s of the remaining ones that may render "referenced" `ID` in `SelectedTodo` invalid. We would need to change `Model` and add field `selected: bool` into `Todo` but it would break the business rule that only one todo can be selected. Another way would be to implement a mechanism to update/sync the "reference" - probably with the help of [interior mutability](https://doc.rust-lang.org/book/ch15-05-interior-mutability.html) and maybe [Drop](https://doc.rust-lang.org/std/ops/trait.Drop.html).
@@ -212,9 +212,9 @@ To respect [KISS principle](https://en.wikipedia.org/wiki/KISS_principle) I thin
 
 - Both have some special features - e.g. manual reordering would be easier to implement with `IndexMap`; However to show datetime for each todo we would need just one simple call with `BTreeMap` + `Ulid`. But we shouldn't think about it too much to respect [YAGNI principle](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it).
 
-- `IndexMap` and `BTreemap` has different performance and memory characteristics (see also [performance](https://doc.rust-lang.org/std/collections/index.html#performance) table for `std` collections), but both are pretty fast and Rust is one of the fastest language so it shouldn't be a problem in the most cases. Also it doesn't make sense to choose the right collection from the performance / memory point of view without benchmarks, user behavior pattterns, etc. And keep in mind [_"premature optimization is the root of all evil"_](https://stackify.com/premature-optimization-evil/).
+- `IndexMap` and `BTreemap` have different performance and memory characteristics (see also [performance](https://doc.rust-lang.org/std/collections/index.html#performance) table for `std` collections), but both are pretty fast and Rust is one of the fastest language so it shouldn't be a problem in the most cases. Also it doesn't make sense to choose the right collection from the performance / memory point of view without benchmarks, user behavior pattterns, etc. And keep in mind [_"premature optimization is the root of all evil"_](https://stackify.com/premature-optimization-evil/).
 
-- So I would choose the option **5.** with `BTreeMap` + `Ulid`. You'll learn something about a standard Rust collection and we already have [TodoMVC example](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/examples/todomvc/src/lib.rs) with `IndexMap` in the Seed repo.
+- So I would choose the option **5.**: `BTreeMap` + `Ulid`. You'll learn something about a standard Rust collection and we already have an older [TodoMVC example](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/examples/todomvc/src/lib.rs) with `IndexMap` in the Seed repo.
 
 ---
 
@@ -252,10 +252,13 @@ enum Filter {
 }
 ```
 
-I think we've encoded business rules pretty successfully by the Rust type system. There is one exception - `SelectedTodo.id` may point to a non-existent todo, but we can't get non-existent items from `BTreeMap` so Rust will force us to respect this rule in runtime. 
+I think we've encoded business rules pretty successfully by the Rust type system. There is one exception - `SelectedTodo.id` may point to a non-existent todo, but we can't get non-existent items from `BTreeMap` like Javascript `null` or `undefined` - Rust will force us to respect the rule by returning `Option<Todo>`. 
 
-_Tip_ - try to be as expressive as possible, but also respect KISS; Encode ideally all business rules by the language type system; Developer experience is often more important than other features (e.g. performance) because it automatically means less bugs and faster development in the long run.
+_Tips_ 
+- Try to be as expressive as possible, but also respect KISS.
+- Encode ideally all business rules by the language type system.
+- Developer experience is often more important than other features (e.g. performance) because it automatically means less bugs and faster development in the long run.
 
 ---
 
-We'll design `Msg` in the next chapter and then we'll finally start writing the code to have some fun.
+We'll design `Msg` in the next chapter and then we'll finally start writing the code to have more fun.

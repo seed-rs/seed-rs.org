@@ -162,11 +162,11 @@ enum Msg {
 
 `NewTodoTitleChanged` and `SelectedTodoTitleChanged` are pretty long names but they will be used only on a few places and often on a standalone lines so the length is a good trade-off for expressiveness.
 
-`CheckOrUncheckAll` name is a bit strange but it says exactly what it does. I was thinking also about `ToggleAll` and `CheckAll` but they would misinterpreted sooner or later.
+`CheckOrUncheckAll` name is a bit strange but it says exactly what it does. I was thinking also about `ToggleAll` and `CheckAll` but they would be misinterpreted sooner or later.anit-
 
 ## Types
 
-They are 2 `String`s and 3 `Ulid`s but `String` always represent title here and `Ulid` always represents todo id so there aren't any context/domain conflicts and we can leave it as is. 
+They are 2 `String`s and 3 `Ulid`s but `String` always represent title  and `Ulid` always represents todo id. So there aren't any context/domain conflicts and we can leave it as is. 
 
 ## Grouping
 

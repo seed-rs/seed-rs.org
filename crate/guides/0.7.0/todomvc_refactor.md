@@ -2,7 +2,7 @@
 
 Finish him!
 
-1. Enable linters by removing `#![allow(dead_code, unused_variables)]`
+1. Enable disabled linters by removing `#![allow(dead_code, unused_variables)]`
    - You shouldn't see any warnings or compilation errors.
 
 1. Run `cargo make clippy` (if you use [Rust basic quickstart](https://github.com/seed-rs/seed-quickstart)).
@@ -10,7 +10,7 @@ Finish him!
 
 1. Run `cargo make fmt`
 
-   - Rust formatter sometimes fight with macros, however we SHOULD use it to make our code consistent, espcially when we are working in a team or if it's an open-source project.
+   - Rust formatter sometimes fight with macros, however we SHOULD use it to make our code consistent, especially when we are working in a team or if it's an open-source project.
 
    - I don't think that basic language tools like linters and formatters should be configurable (and configured). However I plan to write a specific configuration file for Seed apps to mitigate formatter issues.
 
@@ -28,7 +28,7 @@ Finish him!
     ```
     There are some related `rustfmt` issues - [#2916](https://github.com/rust-lang/rustfmt/issues/2916), [#3717](https://github.com/rust-lang/rustfmt/issues/3717), [#3904](https://github.com/rust-lang/rustfmt/issues/3904), [#4192](https://github.com/rust-lang/rustfmt/issues/4192). 
 
-    We can resolve it by adding temporary skip attribute:
+    We can resolve it by adding a temporary `skip` attribute:
     ```rust
     // TODO: Remove once rustfmt is updated.
     #[rustfmt::skip]
@@ -37,7 +37,7 @@ Finish him!
     or with `#![rustfmt::skip::macros]` once stable.
 
 
-    I hope it will be fixed in `rustftm v2.0` ([releases](https://github.com/rust-lang/rustfmt/releases)). if not, we should create a new issue in the `rustfmt` repo.
+    I hope it will be fixed in `rustftm v2.0` ([releases](https://github.com/rust-lang/rustfmt/releases)). If not, we should create a new issue in the `rustfmt` repo.
     </details>
 
 1. Run `cargo make test_h firefox`
@@ -46,16 +46,16 @@ Finish him!
 
 1. Run `cargo make verify`
    - It runs `clippy`, `fmt` and `test_h_firefox` tasks.
-   - You should execute it before each Git `push`.
+   - You SHOULD execute it before each Git `push`.
 
 1. Let's do a final visual check to make sure we are satisfied with the code.
-   - There should be comments to tell readers why we chose the particular types (e.g. `BTreeMap` vs `IndexMap`), to explain some business logic, etc. I didn't want to add unnecessary "noise" to examples but you should write them in real-world apps.
+   - There should be comments to tell readers why we chose the particular types (e.g. `BTreeMap` vs `IndexMap`) or to explain some business logic. I didn't want to add unnecessary "noise" to examples but you should write them in real-world apps.
 
    - There shouldn't be almost any comments explaining HOW something works, only WHY is the code important, ideally from the business logic view. The only exception is complex algorithms that we can't simplify.
 
    - We could split our `view_todo_list` function, but I'm not sure it would improve readability too much. 
 
-   - `lib.rs` isn't so long to split it.
+   - `lib.rs` isn't so long to split.
 
    - Seed app blocks should be in this order:
       1. `Init`
@@ -65,7 +65,7 @@ Finish him!
       1. `View`
       1. `Start`
       1. `Exported` (optional, Rust functions available in JS/TS)
-      1. `Extern` (optional, JS items wrapped to be used in Rust)
+      1. `Extern` (optional, JS items used in Rust)
 
 ---
 

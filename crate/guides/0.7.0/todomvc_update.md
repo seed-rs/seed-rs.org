@@ -123,11 +123,15 @@ And don't forget to check that everything works after each step as usual.
 
     _Notes:_
 
-    - We used `const ENTER_KEY` instead of `static ENTER_KEY`. `const` is generally preferable because it's more expressive (it's clear that we don't want to mutate `const`) and because it's inlined and therefore faster in the most cases. However it's relatively easy to make the application too big (it may even crash in runtime) if your `const` is complex. `static` is more suitable for such cases.
+    - We used `const ENTER_KEY` instead of `static ENTER_KEY`. `const` is generally preferable because it's more expressive (it's clear that we don't want to mutate `const`) and because it's inlined and therefore faster in the most cases. However it's relatively easy to make the application (`*.wasm` file size) too big (it may even crash in runtime) if your `const` is complex. `static` is more suitable for such cases.
 
     - There is cloning hidden behind `title: title.to_owned()`. There isn't a safe and simple way how to "pour" the trimmed `string slice` from the original `String` (`new_todo_title`) into `Todo`'s `title`. So we have to clone the trimmed `string slice` and then `clear` the original `String`.
 
-    - We used `Ev::KeyDown` because [keypress event](https://developer.mozilla.org/en-US/docs/Web/API/Document/keypress_event) is deprecated. And `.key()` because [keyCode](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode), [which](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which) and [keyIdentifier](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyIdentifier) are deprecated and because `.code()` returns different values for "classic" Enter (`Enter`) and Enter on the numeric keyboard (`NumpadEnter`). You can test inputs in [Keyboard Event Viewer](https://w3c.github.io/uievents/tools/key-event-viewer.html).
+    - We used `Ev::KeyDown` because [keypress event](https://developer.mozilla.org/en-US/docs/Web/API/Document/keypress_event) is deprecated. And `.key()` because:
+       - [keyCode](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode), [which](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which) and [keyIdentifier](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyIdentifier) are deprecated.
+       - `.code()` returns different values for "classic" Enter (`Enter`) and Enter on the numeric keyboard (`NumpadEnter`). 
+       
+        You can test inputs in [Keyboard Event Viewer](https://w3c.github.io/uievents/tools/key-event-viewer.html).
 
 
 1. `Msg::ClearCompleted`
@@ -281,17 +285,17 @@ And don't forget to check that everything works after each step as usual.
     ```
     _Notes_:
     
-    - `orders.after_next_render` registers a callback that is invoked after the next `view` invokation. The callback receives [RenderInfo](https://github.com/seed-rs/seed/blob/master/src/app/render_info.rs) - it's useful for animations but we don't need it here.
+    - `orders.after_next_render` registers a callback that is invoked after the next `view` invocation. The callback receives [RenderInfo](https://github.com/seed-rs/seed/blob/master/src/app/render_info.rs) - it's useful for animations but we don't need it here (see example [animation](https://github.com/seed-rs/seed/blob/d514b2131a9e94f5ffe965f3d0ac74763a11aeb6/examples/animation/src/lib.rs#L81-L93)).
 
     - `input_element.get()` returns `Option<E>` where `E` is a specific DOM element reference like `web_sys::HtmlInputElement`. It returns `None` when the element doesn't exists in the DOM or has an incompatible type => all [ElRef](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/src/virtual_dom/el_ref.rs) methods are safe to use.
 
     - There are many `.expect(..)` calls because DOM operations are dangerous - any JS library or browser extension can modify DOM "under our hands", browsers have bugs and don't support all features in official specs, etc. So we want to get as much information as possible when the app panics because of such reasons. And descriptions inside `expect` calls help with readability.
 
-    - [as](https://doc.rust-lang.org/beta/std/keyword.as.html) for casting is an anti-pattern in the most cases. You should write `xx::from(yy)` or `xx::try_from(yy)` instead - e.g.
+    - [as](https://doc.rust-lang.org/beta/std/keyword.as.html) for casting is an anti-pattern in the most cases. You should write `xx::from(yy)` or `xx::try_from(yy)` instead. E.g.
         ```rust
         u32::try_from(todo.title.len()))
         ```
-        Alternatives are `xx = yy.into()` and `xx = yy.try_into()` - they are as safe as their `(Try)From` counterparts however they make the code less readable because you often have to guess the type.
+        Alternatives are `xx = yy.into()` and `xx = yy.try_into()` - they are as safe as their `(Try)From` counterparts however they make the code LESS READABLE because you often have to guess the type.
 
 1. `Msg::SaveSelectedTodo`
 
