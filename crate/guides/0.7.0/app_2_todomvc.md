@@ -1,12 +1,15 @@
 # App 2: TodoMVC
 
+[Live Demo](https://seed-app-todomvc.netlify.app/) |  [Repository](https://github.com/MartinKavik/seed-app-todomvc)
+
 ## Intro
 
 Well, I hope your head didn't explode due to the amount of information in the previous example. You should be ready for a real step-by-step tutorial now - how to write a classic [TodoMVC example](http://todomvc.com/) from scratch.
 
 You'll learn:
-- To design a good `Model` based on specifications. 
+- To design good `Model` and `Msg` according to specifications. 
 - Routing.
+- Link building.
 - Window event handling. 
 - How and when to use Element References and Keys.
 - How to use [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). 
