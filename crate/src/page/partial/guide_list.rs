@@ -17,6 +17,8 @@ pub fn view(guide: &Guide, model: &Model) -> Node<Msg> {
             // lg__
             C.lg__w_1of5,
             C.lg__px_6,
+            C.lg__max_h_screen,
+            C.lg__overflow_y_scroll,
         ],
         view_guide_list_toggle(guide, model.in_prerendering),
         view_guide_list_content(guide, model),
@@ -99,6 +101,7 @@ fn view_guide_list_content(selected_guide: &Guide, model: &Model) -> Node<Msg> {
             C.lg__border_transparent,
             C.lg__bg_transparent,
             C.lg__block,
+            C.lg__mt_20,
         ],
         style! {
             St::Top => em(7),
@@ -201,7 +204,7 @@ fn view_guide_list_item(
         a![
             C![
                 C.block,
-                C.py_2,
+                C.py_1,
                 C.pl_4,
                 C.align_middle,
                 C.text_green_800,
