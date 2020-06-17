@@ -26,11 +26,11 @@ pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
             C.lg__mt_0,
         ],
         guide_list::view(guide, model),
-        view_content(guide, model, show_intro),
+        view_content(guide, model, show_intro, &model.guide_content_el),
     ]
 }
 
-fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
+fn view_content(guide: &Guide, model: &Model, show_intro: bool, guide_content_el: &ElRef<web_sys::HtmlElement>) -> Node<Msg> {
     use content_control_panel::Position::{Bottom, Top};
     div![
         C![
@@ -43,7 +43,10 @@ fn view_content(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
             C.lg__pt_24,
             C.lg__border_l_4,
             C.lg__border_green_500,
+            C.lg__overflow_y_auto,
+            C.lg__h_screen,
         ],
+        el_ref(&guide_content_el),
         IF!(model.in_prerendering => view_loading_warning()),
         intro::view(
             show_intro,

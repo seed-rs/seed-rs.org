@@ -50,6 +50,7 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
         search_query: String::new(),
         matched_guides: Vec::new(),
         mode: load_config().mode,
+        guide_content_el: ElRef::new(),
     }
 }
 
@@ -77,6 +78,7 @@ pub struct Model {
     pub search_query: String,
     pub matched_guides: Vec<Guide>,
     pub mode: Mode,
+    pub guide_content_el: ElRef<web_sys::HtmlElement>,
 }
 
 // ------ SeedVersion ------
@@ -260,9 +262,17 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
 
             orders.send_msg(Msg::ScrollToTop);
         },
-        Msg::ScrollToTop => window().scroll_to_with_scroll_to_options(
-            web_sys::ScrollToOptions::new().top(0.),
-        ),
+        Msg::ScrollToTop => {
+            // scroll on mobile + tablet
+            window()
+                .scroll_to_with_scroll_to_options(web_sys::ScrollToOptions::new().top(0.));
+            // scroll on desktop
+            model
+                .guide_content_el
+                .get()
+                .expect("get guide_content_el")
+                .scroll_to_with_scroll_to_options(web_sys::ScrollToOptions::new().top(0.));
+        },
         Msg::ToggleGuideList => model.guide_list_visibility.toggle(),
         Msg::HideGuideList => {
             model.guide_list_visibility = Hidden;
