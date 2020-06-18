@@ -116,7 +116,7 @@ As the result:
 
    - You lose expressive domain-specific names so it can be pretty hard to orient in the code.
    - It bloats the code because standard traits have to cover many cases so they tend to be more complicated.
-   - You need to "bend" some parts of your code so it can be written with those implemented traits - it also makes the code harder to read any probably slower.
+   - You need to "bend" some parts of your code so it can be written with those implemented traits - it also makes the code harder to read and probably slower.
 
 **`Default` trait**: We assume `xx::default()` calls are pretty cheap operations (see `Default` for [primitive types](https://doc.rust-lang.org/src/core/default.rs.html#132) or [Vec](https://doc.rust-lang.org/src/alloc/vec.rs.html#2334-2339)) - in the most cases there isn't even memory allocation on the heap and you probably won't find more expensive operations in `Default` implementations for other items. So when you write more sophisticated `Default` code for your item and somebody use this item in a nested structure, he will be very surprised once he writes some benchmarks.
 

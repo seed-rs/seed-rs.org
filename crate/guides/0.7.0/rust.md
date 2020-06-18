@@ -160,7 +160,7 @@ I think the most important Rust features are:
 
 - There are many advanced Rust features / APIs that allow us (core developers) to design the best Seed public API for users and THEN we can implement it without problems - in other words: It allows us to hide unnecessary complexity. For instance - we are able to write [React-like Hooks](https://seed-style-hooks.netlify.app/hooks_home) without [limitations](https://reactjs.org/docs/hooks-rules.html).
 
-- Rust has been created and is sponsored by Mozilla. Some Firefox parts are already written in Rust. Also other [big companies](https://blog.knoldus.com/some-extensive-projects-working-with-rust/) like Amazon, NPM, are Microsoft use Rust. So we expect that Rust will become even more popular and integration with browsers will become easier. And perhaps we'll see some Rust components also in Chrome - [Chromium Security article](https://www.chromium.org/Home/chromium-security/memory-safety).
+- Rust has been created and is sponsored by Mozilla. Some Firefox parts are already written in Rust. Also other [big companies](https://blog.knoldus.com/some-extensive-projects-working-with-rust/) like Amazon, NPM, and Microsoft use Rust. So we expect that Rust will become even more popular and integration with browsers will become easier. And perhaps we'll see some Rust components also in Chrome - [Chromium Security article](https://www.chromium.org/Home/chromium-security/memory-safety).
 
 </details>
 
