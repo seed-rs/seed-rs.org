@@ -37,7 +37,7 @@ Finish him!
     or with `#![rustfmt::skip::macros]` once stable.
 
 
-    I hope it will be fixed in `rustftm v2.0` ([releases](https://github.com/rust-lang/rustfmt/releases)). If not, we should create a new issue in the `rustfmt` repo.
+    I hope it will be fixed in `rustfmt v2.0` ([releases](https://github.com/rust-lang/rustfmt/releases)). If not, we should create a new issue in the `rustfmt` repo.
     </details>
 
 1. Run `cargo make test_h firefox`

@@ -33,14 +33,14 @@ This allows you to change between them without changing the function signature.
 [TODO]: # (Explain what `Msg` type parameter means and how it's connected to `update` function)
 
 ## The Node Enum
-The Virtual DOM is represnted by nested [Nodes](https://docs.rs/seed/0.6.0/seed/virtual_dom/node/enum.Node.html).
+The Virtual DOM is represented by nested [Nodes](https://docs.rs/seed/0.6.0/seed/virtual_dom/node/enum.Node.html).
 `Node` has 3 variants: 
 
 - `Text` holds a [Text](https://docs.rs/seed/0.6.0/seed/virtual_dom/node/text/struct.Text.html)
 struct. Mostly for internal use, but can be created with `Node::new_text()`.
 - `Element` wraps an [El](https://docs.rs/seed/0.6.0/seed/virtual_dom/node/el/struct.El.html), which is
 the main component of our VDOM. Created using macros, described below.
-- `Empty` is a placeholder that doens't render anything; useful in conditional/ternary logic.
+- `Empty` is a placeholder that doesn't render anything; useful in conditional/ternary logic.
 Created using the `empty![]` macro, or `seed::empty()`.
 
 
@@ -51,7 +51,7 @@ each element, and imported into the global namespace. Eg `div!` above. We use th
 use seed::{*, prelude::*};
 ```
 
-These macros accept any combination of the following parameters. Each can be ommitted, included once,
+These macros accept any combination of the following parameters. Each can be omitted, included once,
 or included multiple times.
 - [Attrs](https://docs.rs/seed/0.6.0/seed/virtual_dom/attrs/struct.Attrs.html) structs
 - [Style](https://docs.rs/seed/0.6.0/seed/virtual_dom/style/struct.Style.html) structs
@@ -184,7 +184,7 @@ fn a_component() -> Node<Msg> {
 }
 ```
 
-For boolean attributes that are handled by presense or absense, like `disabled`, `checked`,
+For boolean attributes that are handled by presence or absence, like `disabled`, `checked`,
 `autofocus` etc, use 
 [.as_at_value](https://docs.rs/seed/0.6.0/seed/virtual_dom/values/trait.AsAtValue.html#tymethod.as_at_value):
  `input![ attrs!{At::Disabled => false.as_at_value() ]`:
@@ -197,8 +197,8 @@ fn a_component() -> Node<Msg> {
     // ...
 }
 ```
-`At::Checked => true.as_at_value()` is equivalent to the presense of a `checked` attribute,
-and `At::Checked => false.as_at_value()` is equivalent to ommitting it.
+`At::Checked => true.as_at_value()` is equivalent to the presence of a `checked` attribute,
+and `At::Checked => false.as_at_value()` is equivalent to omitting it.
 
 To change Attrs or Styles you've created, edit their .vals HashMap. To add
 a new part to them, use their .add method:
@@ -317,7 +317,7 @@ svg![
 ]
 ```
 
-The same exmaple using [from_html](https://docs.rs/seed/0.6.0/seed/virtual_dom/node/el/struct.El.html#method.from_html):
+The same example using [from_html](https://docs.rs/seed/0.6.0/seed/virtual_dom/node/el/struct.El.html#method.from_html):
 ```rust
 Node::from_html(
 r#"
@@ -403,7 +403,7 @@ above as `text_display("Some things")`, not `text_display![ "Some things" ]`.
 ## Fragments
 Fragments (`<>...</>` syntax in React and Yew) are components that represent multiple
 elements without a parent. They're useful to avoid
-unecessary divs, which clutter the DOM, and breaks things like tables and CSS-grid. 
+unnecessary divs, which clutter the DOM, and breaks things like tables and CSS-grid. 
 There's no special fragment syntax: have your component return a `Vec` of `Node`s instead of 
 one. Add it to the parent's element macro:
 ```rust

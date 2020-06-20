@@ -10,7 +10,7 @@ I think the most important Rust features are:
   - Cross-platform.
   - Pragmatic - it's designed to solve real-world problems.
   - Good official [formatter](https://github.com/rust-lang/rustfmt) and [linter](https://github.com/rust-lang/rust-clippy).
-  - See also other opininions - [Why the developers who use Rust love it so much](https://stackoverflow.blog/2020/06/05/why-the-developers-who-use-rust-love-it-so-much/)
+  - See also other opinions - [Why the developers who use Rust love it so much](https://stackoverflow.blog/2020/06/05/why-the-developers-who-use-rust-love-it-so-much/)
 
 
 ## Official resources
@@ -27,7 +27,7 @@ I think the most important Rust features are:
 
  - [IMPORTANT] Some crates (e.g. [url](https://crates.io/crates/url)) and all crates that use them may even double the Seed app size.
 
- - [IMPORTANT] Some crates are not WASM-compatible or require to enable their additional [features](https://doc.rust-lang.org/cargo/reference/features.html). Consult their docs when you encouter compilation problems.
+ - [IMPORTANT] Some crates are not WASM-compatible or require to enable their additional [features](https://doc.rust-lang.org/cargo/reference/features.html). Consult their docs when you encounter compilation problems.
  
  - Don't try to learn and understand all Rust features and concepts at once. I recommend to follow guides in next chapters - they contain Rust notes, recommendations and links to learning materials.
  
@@ -65,17 +65,17 @@ I think the most important Rust features are:
 
 1. Try to write minimum `clone` calls. When you need to use cheap `clone`, try to make it explicit - e.g. `Rc::clone(&value)` [[rc docs]](https://doc.rust-lang.org/std/rc/index.html)
 
-1. One of the Rust feautures is safe mutability but use it only when best practices for writing [immutable variables](https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#variables-and-mutability) and [pure functions](https://en.wikipedia.org/wiki/Pure_function) make your code unreadable, too slow or error-prone.
+1. One of the Rust features is safe mutability but use it only when best practices for writing [immutable variables](https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#variables-and-mutability) and [pure functions](https://en.wikipedia.org/wiki/Pure_function) make your code unreadable, too slow or error-prone.
 
 1. *"Premature optimization is the root of all evil"* - especially in Rust because it's one of the fastest language. Don't do anything extra until your benchmarks are ready to test it. Personal examples:
    
    - When I was writing proxy server in Rust, there were two things that slowed down that proxy multiple times - forgotten `println` calls in the hot path and slow DNS server... I recommend to zoom-out and fix higher-level issues first.
    
-   - Seed VDOM patching algorithm was fast enough on the first attemp. However it's heavily slowed down by DOM calls. I recommend to look at IO and external dependencies before you try to optimize your Rust code.
+   - Seed VDOM patching algorithm was fast enough on the first attempt. However it's heavily slowed down by DOM calls. I recommend to look at IO and external dependencies before you try to optimize your Rust code.
 
 1. Write only cross-platform code and use only Rust tools.
 
-1. Don't be affraid to write [async](https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html) code.
+1. Don't be afraid to write [async](https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html) code.
 
 1. Learn about the popular libraries like:
     - [serde](https://crates.io/crates/serde)
@@ -144,9 +144,9 @@ I think the most important Rust features are:
 <details>
 <summary>Why is Seed written in Rust</summary>
 
-- Performance, low memory consuption and safety are reasons why also an [operating system](https://www.redox-os.org/), embedded devices and proxy servers are written in Rust.
+- Performance, low memory consumption and safety are reasons why also an [operating system](https://www.redox-os.org/), embedded devices and proxy servers are written in Rust.
 
-- One of the Rust compilation targets is [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly). It means very fast front-end apps. (Unfortunatelly there are current limitations because of missing Rust/native browser API, however it's still fast enough even for production apps.)
+- One of the Rust compilation targets is [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly). It means very fast front-end apps. (Unfortunately there are current limitations because of missing Rust/native browser API, however it's still fast enough even for production apps.)
 
 - There are many high-quality Rust libraries and tools - we don't have to reinvent wheels while we are developing Seed.
 
@@ -175,7 +175,7 @@ I had similar feeling when I was learning to drive a car - it seems pretty hard/
 
 However steep learning curve isn't bad: 
   - It means that Rust doesn't hide real complexity behind too simple models.
-  - It's almost impossible for complete beginners to publish uncomplete/buggy libraries. 
+  - It's almost impossible for complete beginners to publish incomplete/buggy libraries. 
 
 Rust is designed so well that I feel nervous while I'm writing in other languages - I have to do compiler's work again in my head and think about weird things like typos in code, `null`s, `undefined`s, memory leaks, accidental mutations, how to write fast code without mutability, etc. It generates significant cognitive load so I can't focus so much on business logic and other important stuff.
 

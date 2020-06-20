@@ -44,7 +44,7 @@ The two main steps:
 
 `cargo make watch` is much like running `start`, which is automatically re-run when a Rust file is changed.
 
-The project [Makefile](https://github.com/seed-rs/seed-quickstart/blob/master/Makefile.toml) has other usefull commands, such as release builds.
+The project [Makefile](https://github.com/seed-rs/seed-quickstart/blob/master/Makefile.toml) has other useful commands, such as release builds.
 
 
 ## A little deeper
@@ -190,7 +190,7 @@ pub fn render() {
 }
 ```
 
-For a truly minimimal example, see [lib.rs in the quickstart repo](https://github.com/seed-rs/seed-quickstart/blob/master/src/lib.rs)
+For a truly minimal example, see [lib.rs in the quickstart repo](https://github.com/seed-rs/seed-quickstart/blob/master/src/lib.rs)
 
 ## Building and running
 

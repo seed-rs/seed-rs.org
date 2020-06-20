@@ -35,13 +35,13 @@ are worth it.
 Check out the [Code comparison](https://seed-rs.org/guide/code-comparison) section of this guide. Additionally,
 the [todomvc example](https://github.com/seed-rs/seed/tree/master/examples/todomvc) is an implementation of 
 the [TodoMVC project](http://todomvc.com/),
-which has example code in other frameworks that produce identitcal apps. Compare the example in this
+which has example code in other frameworks that produce identical apps. Compare the example in this
 project to one on that page that uses a framework you're familiar with.
 
 ## Influences
 
 This project is strongly influenced by Elm, React, and Redux. The overall structure
-of Seed apps mimicks that of The Elm Architecture.
+of Seed apps mimics that of The Elm Architecture.
 
 ## There are already several Rust/WASM frameworks; why add another?
 

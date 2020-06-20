@@ -84,7 +84,7 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
 
 ---
 
-- `update` is the function where you shoud handle `Msg`s.
+- `update` is the function where you should handle `Msg`s.
 
 - It's the only place where you should mutate your business data.
 

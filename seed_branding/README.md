@@ -19,7 +19,7 @@ generated with a sequence of automatic or manual steps:
 
 3. Make the logo square for real (there is no command line option to change the sheet size)
 
-4. Once we have a `seed_logo_square.svg`, we can generarte the 512x512 png image.
+4. Once we have a `seed_logo_square.svg`, we can generate the 512x512 png image.
    Using the command line:
 
    ```bash

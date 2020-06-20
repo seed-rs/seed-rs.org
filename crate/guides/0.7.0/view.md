@@ -78,7 +78,7 @@ pub fn view(base_url: &Url) -> Node<Msg> {
 
 - [Node](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/src/virtual_dom/node.rs#L13-L22) represents HTML element or text used as an element content. It's usually created by _element macros_ like `div!` or `span!`. (You'll learn about _element macros_ in next chapters.)
 
-- Your `view` function can return everything that implements [IntoNodes](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/src/virtual_dom/node/into_nodes.rs). It means your `view` signature can be also `fn view(model: &Model) -> impl IntoNode<Msg>` but we DON'T recommned this form because it's not very expressive and it makes chaining of nested `view`s harder. The most used and preferable forms are `-> Node<Msg>` or `-> Vec<Node<Msg>>`.
+- Your `view` function can return everything that implements [IntoNodes](https://github.com/seed-rs/seed/blob/3134d21c6fcb2383685885687fe2a7610fb2ff74/src/virtual_dom/node/into_nodes.rs). It means your `view` signature can be also `fn view(model: &Model) -> impl IntoNode<Msg>` but we DON'T recommend this form because it's not very expressive and it makes chaining of nested `view`s harder. The most used and preferable forms are `-> Node<Msg>` or `-> Vec<Node<Msg>>`.
 
 - In our Counter example, there is also another Clippy attribute `trivially_copy_pass_by_ref`. Clippy is sad because the `Model` in Counter example is too simple so it doesn't make sense to pass it into the `view` function by reference because copying it would be more efficient. Clippy won't bother you with it once your `Model` doesn't implement `Copy`.
 

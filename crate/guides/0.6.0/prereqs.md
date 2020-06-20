@@ -5,7 +5,7 @@ Proficiency in Rust isn't required to get started.
 It helps, but I think you'll be able to build a usable webapp using only this guide.
 For business logic beyond the GUI, more study may be required.
 The official [Rust Book](https://doc.rust-lang.org/book/index.html) is a good
-place to start. Especially-revelant chapters are `Understanding Ownership` `Using Structs`,
+place to start. Especially-relevant chapters are `Understanding Ownership` `Using Structs`,
 and `Enums and Pattern Matching`.
 
 You should be able to get by with just the basic Rust syntax common to most programming
