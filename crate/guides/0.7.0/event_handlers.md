@@ -11,7 +11,7 @@ becomes
 ```html
 <button>15</button>
 ```
-where click on the `button` invokes your `update` function with `Msg::Icrement` as an argument.
+where click on the `button` invokes your `update` function with `Msg::Increment` as an argument.
 
 # ev
 
@@ -29,7 +29,7 @@ It can be any `Ev` variant or you can write a custom one by `Ev::from("custom_ev
 
 The second argument(`|_| Msg::Increment`) is called _callback_ or _handler_.
 
-`ev`'s callback expects [web_sys::Event](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.Event.html) as an input. [Event](https://developer.mozilla.org/en-US/docs/Web/API/Event) is the most general iterface for all events. It's useful for calling methods like [preventDefault](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault):
+`ev`'s callback expects [web_sys::Event](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.Event.html) as an input. [Event](https://developer.mozilla.org/en-US/docs/Web/API/Event) is the most general interface for all events. It's useful for calling methods like [preventDefault](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault):
 ```rust
 ev(Ev::Click, |event| {
     event.prevent_default();
@@ -84,7 +84,7 @@ ev(Ev::Click, |event| {
 
 _Note:_ Syntax `::<web_sys::MouseEvent>` is known as a [turbofish](https://github.com/jplatte/turbo.fish).
 
-To elimitate error-prone boilerplate introduced by casting, there are some `ev`-related functions that cast the event before they call your callback:
+To eliminate error-prone boilerplate introduced by casting, there are some `ev`-related functions that cast the event before they call your callback:
 - `keyboard_ev` casts `Event` to [KeyboardEvent](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.KeyboardEvent.html)
 - `mouse_ev` => [MouseEvent](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.MouseEvent.html)
 - `touch_ev` => [TouchEvent](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.TouchEvent.html)

@@ -186,7 +186,7 @@ fn view_filters(selected_filter: Filter, base_url: &Url) -> Node<Msg> {
 ### Block A)
 
 We've moved field `base_url` at the top because:
-   - The value is initiated by using `url`, so it has to be placed above `filter: Filter::from(url)` becuase `Filter::from` consumes `url` (i.e. takes ownership).
+   - The value is initiated by using `url`, so it has to be placed above `filter: Filter::from(url)` because `Filter::from` consumes `url` (i.e. takes ownership).
    - It's a common part of Seed apps - it allows a bit faster code scanning for experienced Seed users.
 
 `Url` method `to_hash_base_url()` deletes all path parts with index >= `next_hash_path_part_index` in the cloned url. In our case it removes all path parts because `next_hash_path_part_index` is always set to 0 in `url` in `init`. 
@@ -199,7 +199,7 @@ We've moved field `base_url` at the top because:
 
 ### Block C)
 
-This is the link building itselft. We'll talk about it in a standalone section `3. struct_urls!` below.
+This is the link building itself. We'll talk about it in a standalone section `3. struct_urls!` below.
 
 ### Block D)
 

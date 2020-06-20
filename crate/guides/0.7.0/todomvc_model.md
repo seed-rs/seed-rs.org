@@ -26,7 +26,7 @@ We will need a field to store the input value. Let's define it as `new_todo_titl
 >
 > This checkbox toggles all the todos to the same state as itself. Make sure to clear the checked state after the "Clear completed" button is clicked. The "Mark all as complete" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked.
 
-We don't need to introduce some complex logic if we just derive the "Mark all as complete" checkox state from todos. It means we should be able to iterate todos quickly - our `Vec<Todos>` looks like a good choice so far. And we need a field `completed: bool` in our `Todo` for sure.
+We don't need to introduce some complex logic if we just derive the "Mark all as complete" checkbox state from todos. It means we should be able to iterate todos quickly - our `Vec<Todos>` looks like a good choice so far. And we need a field `completed: bool` in our `Todo` for sure.
 
 ---
 
@@ -212,7 +212,7 @@ To respect [KISS principle](https://en.wikipedia.org/wiki/KISS_principle) I thin
 
 - Both have some special features - e.g. manual reordering would be easier to implement with `IndexMap`; However to show datetime for each todo we would need just one simple call with `BTreeMap` + `Ulid`. But we shouldn't think about it too much to respect [YAGNI principle](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it).
 
-- `IndexMap` and `BTreemap` have different performance and memory characteristics (see also [performance](https://doc.rust-lang.org/std/collections/index.html#performance) table for `std` collections), but both are pretty fast and Rust is one of the fastest language so it shouldn't be a problem in the most cases. Also it doesn't make sense to choose the right collection from the performance / memory point of view without benchmarks, user behavior pattterns, etc. And keep in mind [_"premature optimization is the root of all evil"_](https://stackify.com/premature-optimization-evil/).
+- `IndexMap` and `BTreemap` have different performance and memory characteristics (see also [performance](https://doc.rust-lang.org/std/collections/index.html#performance) table for `std` collections), but both are pretty fast and Rust is one of the fastest language so it shouldn't be a problem in the most cases. Also it doesn't make sense to choose the right collection from the performance / memory point of view without benchmarks, user behavior patterns, etc. And keep in mind [_"premature optimization is the root of all evil"_](https://stackify.com/premature-optimization-evil/).
 
 - So I would choose the option **5.**: `BTreeMap` + `Ulid`. You'll learn something about a standard Rust collection and we already have an older [TodoMVC example](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/examples/todomvc/src/lib.rs) with `IndexMap` in the Seed repo.
 

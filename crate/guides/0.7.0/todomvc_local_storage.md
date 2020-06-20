@@ -70,7 +70,7 @@ _Note:_ Yes, we insert todos into `LocalStorage` on each message. I don't see an
    
    1. Then, we can apply a compressing algorithm and save it as a big string.
 
-   1. It would need bechmarks to prove that additional computations mitigate slow transfer and saving.
+   1. It would need benchmarks to prove that additional computations mitigate slow transfer and saving.
 
 ---
 

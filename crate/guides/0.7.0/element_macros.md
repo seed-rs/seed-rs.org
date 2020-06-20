@@ -230,7 +230,7 @@ I think HTML+CSS+JS are "languages" with the steepest learning curve and it's pr
 
   => Are the rules that enforce accessibility and semantic markup possible to define? Or are they content-dependent and should be defined by human per case?
 
-- API inconsistency. Some element attributes can be set declaratively through HTML and they are accessible also through JS properties. Some attributes are used only to set default values. Some properties can't be set through attributes. Some input elements are set through attribute value, some through their content. Some attribute values are only valid if another attribute has a specific value. Some attributes don't work if the element has been attached programatically. And again, good luck with custom elements...
+- API inconsistency. Some element attributes can be set declaratively through HTML and they are accessible also through JS properties. Some attributes are used only to set default values. Some properties can't be set through attributes. Some input elements are set through attribute value, some through their content. Some attribute values are only valid if another attribute has a specific value. Some attributes don't work if the element has been attached programmatically. And again, good luck with custom elements...
   
   => There are many workarounds in Seed to make the browser built-in elements work. And there were also the most bugs. 
   

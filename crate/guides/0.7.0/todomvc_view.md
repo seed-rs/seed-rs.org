@@ -1158,7 +1158,7 @@ Let's integrate it into our app!
     1,2,3 položky zbývají
     4+ položek zbývá
     ```
-    I think it's clear it becomes cumbersome quickly. There are localization systems like [Fluent](https://www.projectfluent.org/) that mitigate these problems. And we have [i18n example](https://github.com/seed-rs/seed/tree/0a538f03d6aeb56b00d997c80a666e388279a727/examples/i18n) that demostrates how to leverage `Fluent`.
+    I think it's clear it becomes cumbersome quickly. There are localization systems like [Fluent](https://www.projectfluent.org/) that mitigate these problems. And we have [i18n example](https://github.com/seed-rs/seed/tree/0a538f03d6aeb56b00d997c80a666e388279a727/examples/i18n) that demonstrates how to leverage `Fluent`.
 
 1. The last two things left to connect - the first one is `input_element`.
 
@@ -1176,7 +1176,7 @@ Let's integrate it into our app!
     }
     ```
 
-    This code associates the DOM input element with the field `input_element`. It allows us to safety access the DOM element in our `update` function (you'll see how in the next chapters). There are multiple examples leveraging element references, however the best demostration is in the [canvas example](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/examples/canvas/src/lib.rs#L24).
+    This code associates the DOM input element with the field `input_element`. It allows us to safety access the DOM element in our `update` function (you'll see how in the next chapters). There are multiple examples leveraging element references, however the best demonstration is in the [canvas example](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/examples/canvas/src/lib.rs#L24).
 
 1. And the last thing is _element keys_. They are optional for the most cases but they'll help to optimize rendering and they are required when you want to animate your list items by CSS animations. We have only two lists in our `view` - filters and todos. I would recommend to add keys for todos because they are more "dynamic", their count will be often higher and there is a chance that we'll animate them in the future. Look at [el_key example](https://github.com/seed-rs/seed/tree/0a538f03d6aeb56b00d997c80a666e388279a727/examples/el_key) when you want to know more about element keys.
 

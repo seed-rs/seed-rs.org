@@ -1,0 +1,12 @@
+{
+    "version":"0.1",
+    "language": "en",
+    "ignorePaths": ["web_components/vendor/**"],
+    "dictionaries": ["rust","softwareTerms", "fonts","fullstack","local"],
+    "dictionaryDefinitions": [
+        {
+            "file": "words.txt",
+            "name": "local"
+        }
+    ]
+}

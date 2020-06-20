@@ -162,7 +162,7 @@ enum Msg {
 
 `NewTodoTitleChanged` and `SelectedTodoTitleChanged` are pretty long names but they will be used only on a few places and often on a standalone lines so the length is a good trade-off for expressiveness.
 
-`CheckOrUncheckAll` name is a bit strange but it says exactly what it does. I was thinking also about `ToggleAll` and `CheckAll` but they would be misinterpreted sooner or later.anit-
+`CheckOrUncheckAll` name is a bit strange but it says exactly what it does. I was thinking also about `ToggleAll` and `CheckAll` but they would be misinterpreted sooner or later.
 
 ## Types
 

@@ -7,7 +7,7 @@ compare to [its implementation in other frameworks](http://todomvc.com/).
 
 Note that there are multiple ways to manage state in React, we've picked one where we store state
 in the top-level component, and use functional components thereafter.
-A closer structure match would be using it coupled with Redux. The Context API's an additional
+A closer structure match would be using it coupled with Redux. The Context API is an additional
 way to handle it. We're also using Typescript.
 
 ## A simple template, ready for state management

@@ -73,7 +73,7 @@ we're only passing the field text, and keyboard event respectively to the Msg. T
 example is Rust shorthand for ```input_ev("input", |text| Msg::NewWords(text))```. If you were
 to pass something other than, or more than just the input text (Or KeyboardEvent for keyboard_ev, 
 or Event for raw_ev described below),
-you can't use this shorthand, and would have to do something like this intead,
+you can't use this shorthand, and would have to do something like this instead,
 explicitly writing the closure:
 ```rust
 #[derive(Clone)]

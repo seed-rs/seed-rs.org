@@ -2,7 +2,7 @@
 Seed includes flexible routing, inspired by 
 [Reason-React](https://github.com/reasonml/reason-react/blob/master/docs/router.md): 
 You can trigger state changes that update the address bar,
- and can be nagivated to/from using forward and back buttons. This works for landing-page
+ and can be navigated to/from using forward and back buttons. This works for landing-page
 routing as well, provided your server is configured to support. See the
  seed-rs.org [source](https://github.com/seed-rs/seed-rs.org/tree/master/crate/src) and
 [todomvc](https://github.com/seed-rs/seed/tree/master/examples/todomvc) example.
@@ -75,7 +75,7 @@ pub struct Url {
     pub title: Option<String>,
 }
 ```
-`path` contains the path heirarchy from top to bottom. For example, the `changelog` page above's path
+`path` contains the path hierarchy from top to bottom. For example, the `changelog` page above's path
 is `vec![String::from("changelog")]`, representing `/changelog/`, and guide page 3's is 
 `vec![String::from("guide"), 3.to_string()]`, representing `/guide/3/`. It's likely all you'll need.
 The other three properties aren't as common; `hash` describes text after a `#`; `search` describes
@@ -107,7 +107,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
             seed::push_route(vec!["guide", guide_page]);
             orders.skip().send_msg(Msg::ChangeGuidePage(guide_page))
         },
-        // This is separate, because nagivating the route triggers state updates, which would
+        // This is separate, because navigating the route triggers state updates, which would
         // trigger an additional push state.
         Msg::ChangePage(page) => model.page = page,
         Msg::ChangeGuidePage(guide_page) => {
@@ -133,11 +133,11 @@ seed::push_route(
 )
 ```
  
-When a page is loaded or browser naviation occurs (eg back button), Seed uses the `routes`
+When a page is loaded or browser navigation occurs (eg back button), Seed uses the `routes`
 func you provided to determine which message to call. 
 
 Notice how we keep ChangePage and RoutePage separate in our example. Do not
-call `push_route` from one of these messages, or you'll end up with recusions/unwanted behavior:
+call `push_route` from one of these messages, or you'll end up with recursions/unwanted behavior:
  `ChangePage` in our example performs
 the action associated with routing, while `RoutePage` updates our route history, then
 recursively calls `ChangePage`. If you were to attempt this in the same message, each

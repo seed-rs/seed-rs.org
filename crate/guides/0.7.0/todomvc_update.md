@@ -188,7 +188,7 @@ And don't forget to check that everything works after each step as usual.
     ...
     ```
 
-    _Note:_ You may be tempted to pass `all_completed` along the message to replace `all_checked` with it to eliminate one loop. Don't do it. `view` often contains old data and you may accidentaly introduce a hard-to-debug bug.
+    _Note:_ You may be tempted to pass `all_completed` along the message to replace `all_checked` with it to eliminate one loop. Don't do it. `view` often contains old data and you may accidentally introduce a hard-to-debug bug.
 
 1. `Msg::SelectedTodoTitleChanged(String)`
 
