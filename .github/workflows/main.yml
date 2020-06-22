@@ -39,6 +39,9 @@ jobs:
         run: cargo make verify_only
         working-directory: ./crate
 
+      - name: Run spell check
+        run: yarn spellcheck
+
       - name: Install Netlify CLI
         if: github.ref == 'refs/heads/master'
         run: sudo npm install netlify-cli -g

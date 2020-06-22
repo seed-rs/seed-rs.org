@@ -5,7 +5,7 @@
     "dictionaries": ["rust","softwareTerms", "fonts","fullstack","local"],
     "dictionaryDefinitions": [
         {
-            "file": "words.txt",
+            "file": "cspell_dictionary.txt",
             "name": "local"
         }
     ]
