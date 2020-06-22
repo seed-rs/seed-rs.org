@@ -18,6 +18,7 @@ use guide::Guide;
 use page::partial::blender;
 use seed::{prelude::*, *};
 use serde::{Deserialize, Serialize};
+use wasm_bindgen::JsCast;
 
 use Visibility::{Hidden, Visible};
 
@@ -28,13 +29,37 @@ const DEFAULT_GUIDE_SLUG: &str = "about";
 const SEED_VERSIONS: &[SeedVersion] =
     &[SeedVersion::V0_6_0, SeedVersion::V0_7_0, SeedVersion::V0_8_0];
 const DEFAULT_SEED_VERSION: SeedVersion = SeedVersion::V0_7_0;
+const LEFT_ARROW_KEY: &str = "ArrowLeft";
+const RIGHT_ARROW_KEY: &str = "ArrowRight";
 
 // ------ ------
 //     Init
 // ------ ------
 
 fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
-    orders.subscribe(Msg::UrlChanged);
+    orders.subscribe(Msg::UrlChanged).stream(streams::window_event(
+        Ev::KeyDown,
+        |event| {
+            let tag = event
+                .target()
+                .unwrap()
+                .unchecked_into::<web_sys::Element>()
+                .tag_name();
+            if tag == "INPUT" {
+                // Ignore `input` elements.
+                // Rewrite to `prevent_default` / `stop_propagation once cumbersome.
+                None
+            } else {
+                let keyboard_event =
+                    event.unchecked_into::<web_sys::KeyboardEvent>();
+                match keyboard_event.key().as_str() {
+                    LEFT_ARROW_KEY => Some(Msg::GoToPreviousGuide),
+                    RIGHT_ARROW_KEY => Some(Msg::GoToNextGuide),
+                    _ => None,
+                }
+            }
+        },
+    ));
 
     let guides = guide::guides();
     let mut selected_seed_version = DEFAULT_SEED_VERSION;
@@ -240,6 +265,8 @@ pub enum Msg {
     SearchQueryChanged(String),
     ToggleMode,
     SwitchVersion(SeedVersion),
+    GoToPreviousGuide,
+    GoToNextGuide,
 }
 
 pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
@@ -307,6 +334,42 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
                         .add_path_part(DEFAULT_GUIDE_SLUG),
                 ))
                 .skip();
+        },
+        Msg::GoToPreviousGuide => {
+            if let Page::Guide {
+                guide,
+                ..
+            } = &model.page
+            {
+                if let Some(previous_guide) =
+                    page::partial::content_control_panel::previous_guide(
+                        guide,
+                        &model.guides,
+                    )
+                {
+                    orders.notify(subs::UrlRequested::new(
+                        Urls::new(&model.base_url).guide(previous_guide),
+                    ));
+                }
+            }
+        },
+        Msg::GoToNextGuide => {
+            if let Page::Guide {
+                guide,
+                ..
+            } = &model.page
+            {
+                if let Some(next_guide) =
+                    page::partial::content_control_panel::next_guide(
+                        guide,
+                        &model.guides,
+                    )
+                {
+                    orders.notify(subs::UrlRequested::new(
+                        Urls::new(&model.base_url).guide(next_guide),
+                    ));
+                }
+            }
         },
     }
 }
