@@ -14,7 +14,7 @@
     "serve:prerender": "yarn serve -l 8000 dist",
     "prerender": "yarn concurrently -k -s first \"yarn serve:dist\" \"wait-on http://localhost:8000/ && react-snap\"",
     "generate:css_classes": "webpack --config configs/webpack.css_classes.config --mode=development",
-    "spellcheck": "yarn cspell -v --config configs/cspell.json ./\\*\\*/\\*.md"
+    "spellcheck": "yarn cspell --config configs/cspell.json ./\\*\\*/\\*.md"
   },
   "reactSnap": {
     "source": "dist",
