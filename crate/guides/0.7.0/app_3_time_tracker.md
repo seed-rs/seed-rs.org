@@ -4,6 +4,8 @@
 
 ## Intro
 
+Let's write something more interesting!
+
 You'll learn:
 - Fire & handle [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and [GraphQL](https://graphql.org/) requests.
 - About [JSON Web Tokens](https://jwt.io/).
