@@ -295,13 +295,11 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
                 web_sys::ScrollToOptions::new().top(0.),
             );
             // scroll on desktop
-            model
-                .guide_content_el
-                .get()
-                .expect("get guide_content_el")
-                .scroll_to_with_scroll_to_options(
+            if let Some(guide_content_el) = model.guide_content_el.get() {
+                guide_content_el.scroll_to_with_scroll_to_options(
                     web_sys::ScrollToOptions::new().top(0.),
                 );
+            }
         },
         Msg::ToggleGuideList => model.guide_list_visibility.toggle(),
         Msg::HideGuideList => {
