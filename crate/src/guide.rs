@@ -75,6 +75,7 @@ pub fn guides() -> Vec<Guide> {
         guide!(seed_version: "0.7.0", slug: "todomvc_link_building", menu_title: "Link Building", file_name: "todomvc_link_building", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "todomvc_refactor", menu_title: "Refactor", file_name: "todomvc_refactor", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "app_3_time_tracker", menu_title: "App 3: Time Tracker", file_name: "app_3_time_tracker", prepend_menu_divider: true),
+        guide!(seed_version: "0.7.0", slug: "time_tracker_specifications", menu_title: "Specifications", file_name: "time_tracker_specifications", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "support", menu_title: "Support", file_name: "support", prepend_menu_divider: true),
         // ------ 0.8.0 ------
         guide!(seed_version: "0.8.0", slug: "about", menu_title: "About", file_name: "about", prepend_menu_divider: false),

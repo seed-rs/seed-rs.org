@@ -295,4 +295,12 @@ Please, create and start a new Seed app if you want to follow the steps below.
 
 ---
 
+_Note:_ There are `.to_owned()` calls instead of `to_string()` or `into()` in the code above and in other chapters.
+    
+- `"foo".to_string()` wouldn't make any sense if you don't know Rust: "Why we are casting string to string??". If you understand `&str` as a kind of text/string, then it makes more sense to write `to_owned()`. `to_owned()` better expresses the operation: "promoting" a string reference to the owned string. And you can accidentaly introduce more expensive `to_string` operation when you replace `a_str.to_string()` with `a_complex_item.to_string()`.
+
+- `into()` has similar problems like `to_string` but they are worse because `into` is even more general than `to_string`. For example, you have no idea what type `bar` has in the expression `let bar = "foo".into()`.
+
+---
+
 Done! We are ready to write `view` in the next chapter!
