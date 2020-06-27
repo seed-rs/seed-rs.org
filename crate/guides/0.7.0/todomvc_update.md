@@ -10,9 +10,11 @@ And don't forget to check that everything works after each step as usual.
     fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         match msg {
            ...
-            Msg::RemoveTodo(id) => {
-                model.todos.remove(&id);
-            }
+            Msg::ToggleTodo(id) => {
+                if let Some(todo) = model.todos.get_mut(&id) {
+                    todo.completed = not(todo.completed);
+                }
+            } 
     ...
 
     fn view_todo_list(todos: &BTreeMap<Ulid, Todo>, selected_todo: Option<&SelectedTodo>) -> Node<Msg> {
@@ -35,11 +37,9 @@ And don't forget to check that everything works after each step as usual.
     fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         match msg {
            ...
-            Msg::ToggleTodo(id) => {
-                if let Some(todo) = model.todos.get_mut(&id) {
-                    todo.completed = not(todo.completed);
-                }
-            } 
+            Msg::RemoveTodo(id) => {
+                model.todos.remove(&id);
+            }
     ...
 
     fn view_todo_list(todos: &BTreeMap<Ulid, Todo>, selected_todo: Option<&SelectedTodo>) -> Node<Msg> {
@@ -190,28 +190,6 @@ And don't forget to check that everything works after each step as usual.
 
     _Note:_ You may be tempted to pass `all_completed` along the message to replace `all_checked` with it to eliminate one loop. Don't do it. `view` often contains old data and you may accidentally introduce a hard-to-debug bug.
 
-1. `Msg::SelectedTodoTitleChanged(String)`
-
-    ```rust
-    fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
-        match msg {
-            ...
-            Msg::SelectedTodoTitleChanged(title) => {
-                if let Some(selected_todo) = &mut model.selected_todo {
-                    selected_todo.title = title;
-                }
-            },
-    ...
-
-    fn view_todo_list(todos: &BTreeMap<Ulid, Todo>, selected_todo: Option<&SelectedTodo>) -> Node<Msg> {
-        ...
-                        input![C!["edit"], 
-                            ...
-                            input_ev(Ev::Input, Msg::SelectedTodoTitleChanged),
-                        ]
-    ...
-    ```
-
 1. `Msg::SelectTodo(Option<Ulid>)`
 
     >### Item
@@ -296,6 +274,28 @@ And don't forget to check that everything works after each step as usual.
         u32::try_from(todo.title.len()))
         ```
         Alternatives are `xx = yy.into()` and `xx = yy.try_into()` - they are as safe as their `(Try)From` counterparts however they make the code LESS READABLE because you often have to guess the type.
+
+1. `Msg::SelectedTodoTitleChanged(String)`
+
+    ```rust
+    fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
+        match msg {
+            ...
+            Msg::SelectedTodoTitleChanged(title) => {
+                if let Some(selected_todo) = &mut model.selected_todo {
+                    selected_todo.title = title;
+                }
+            },
+    ...
+
+    fn view_todo_list(todos: &BTreeMap<Ulid, Todo>, selected_todo: Option<&SelectedTodo>) -> Node<Msg> {
+        ...
+                        input![C!["edit"], 
+                            ...
+                            input_ev(Ev::Input, Msg::SelectedTodoTitleChanged),
+                        ]
+    ...
+    ```
 
 1. `Msg::SaveSelectedTodo`
 
