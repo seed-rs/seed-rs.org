@@ -1129,7 +1129,7 @@ Let's integrate it into our app!
         view_footer(&model.todos, model.filter),
     ...
 
-        fn view_footer(todos: &BTreeMap<Ulid, Todo>, selected_filter: Filter) -> Node<Msg> {
+    fn view_footer(todos: &BTreeMap<Ulid, Todo>, selected_filter: Filter) -> Node<Msg> {
         let completed_count = todos.values().filter(|todo| todo.completed).count();
         let active_count = todos.len() - completed_count;
 
