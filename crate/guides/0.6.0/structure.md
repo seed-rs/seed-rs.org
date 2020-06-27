@@ -2,7 +2,7 @@
 
 ## Model
 Each app must contain a model [struct]( https://doc.rust-lang.org/book/ch05-00-structs.html), 
-which contains the app’s state. It must should contain 
+which contains the app’s state. It must contain 
 [owned data](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html). References
 with a static [lifetime](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html) work,
 but may be more difficult to work with. Example:

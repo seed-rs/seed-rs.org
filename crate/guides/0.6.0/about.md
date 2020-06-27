@@ -24,7 +24,7 @@ allow for accepting a variable number and order of parameters, and the attrs/sty
 essentially HashMap literals, with wrappers that let element macros know how to distinguish
 them.
 
-The lack of resemblance to HTML be offputting, but the learning
+The lack of resemblance to HTML may be off-putting, but the learning
 curve is shallow, and I think the macro syntax is close-enough to normal Rust that it's
 easy to reason about how to build views, without compartmentalizing it into logic code and display code.
 This lack of separation in particular is a controversial decision, but I think the benefits
@@ -54,7 +54,7 @@ quickstart guide.
 
 Seed's different approach to view syntax also distinguishes it:
 rather than use an HTML-like markup similar to JSX,
-it uses Rust builtin types, with thinly-wrapped by macros that allow flexible composition.
+it uses Rust builtin types, thinly wrapped by macros that allow flexible composition.
 This decision will not appeal to everyone, but I think it integrates more naturally with
 the language.
 
