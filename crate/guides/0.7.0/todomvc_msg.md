@@ -145,16 +145,16 @@ Nothing interesting here.
 
 ```rust
 enum Msg {
-   Msg::NewTodoTitleChanged(String),
-   Msg::CreateTodo,
-   Msg::CheckOrUncheckAll,
-   Msg::ClearCompleted,
-   Msg::ToggleTodo(Ulid),
-   Msg::SelectTodo(Option<Ulid>),
-   Msg::RemoveTodo(Ulid),
-   Msg::SelectedTodoTitleChanged(String),
-   Msg::SaveSelectedTodo,
-   Msg::UrlChanged(subs::UrlChanged),
+   NewTodoTitleChanged(String),
+   CreateTodo,
+   CheckOrUncheckAll,
+   ClearCompleted,
+   ToggleTodo(Ulid),
+   SelectTodo(Option<Ulid>),
+   RemoveTodo(Ulid),
+   SelectedTodoTitleChanged(String),
+   SaveSelectedTodo,
+   UrlChanged(subs::UrlChanged),
 }
 ```
 
