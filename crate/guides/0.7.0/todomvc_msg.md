@@ -9,7 +9,7 @@ However we'll also try to imagine how each `Msg` affects our `Model`. It basical
 
 ```rust
 struct Model {
-    todos: BtreeMap<Ulid, Todo>,
+    todos: BTreeMap<Ulid, Todo>,
     new_todo_title: String,
     selected_todo: Option<SelectedTodo>,
     filter: Filter;

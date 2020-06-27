@@ -85,7 +85,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
     // ------ ------
 
     struct Model {
-        todos: BtreeMap<Ulid, Todo>,
+        todos: BTreeMap<Ulid, Todo>,
         new_todo_title: String,
         selected_todo: Option<SelectedTodo>,
         filter: Filter,

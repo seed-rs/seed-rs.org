@@ -11,7 +11,7 @@ Let's implement proper filter handling in our `view` functions. (We could do it 
 ```rust
 fn view(model: &Model) -> Vec<Node<Msg>> {
     ...
-            view_main(&model.todos,model.selected_todo.as_ref(), model.filter),
+            view_main(&model.todos, model.selected_todo.as_ref(), model.filter),
 ...
 
 fn view_main(todos: &BTreeMap<Ulid, Todo>, selected_todo: Option<&SelectedTodo>, filter: Filter) -> Node<Msg> {
