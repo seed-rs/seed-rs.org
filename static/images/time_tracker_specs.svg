@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="527px" preserveAspectRatio="none" style="width:211px;height:527px;" version="1.1" viewBox="0 0 211 527" width="211px" zoomAndPan="magnify"><defs><filter height="300%" id="funfdi6e46msm" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="188" x="11.5" y="16.708">Time Tracker - Specs</text><rect fill="#FEFECE" filter="url(#funfdi6e46msm)" height="60.8906" style="stroke: #A80036; stroke-width: 1.5;" width="56" x="70.5" y="28.9531"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="29" x="84" y="42.0918">User</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="71.5" x2="125.5" y1="46.9219" y2="46.9219"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="14" x="76.5" y="60.2041">uid</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="27" x="76.5" y="71.8447">super</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="44" x="76.5" y="83.4854">last_login</text><rect fill="#FEFECE" filter="url(#funfdi6e46msm)" height="37.6094" style="stroke: #A80036; stroke-width: 1.5;" width="49" x="74" y="149.9531"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="35" x="81" y="163.0918">Client</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="75" x2="122" y1="167.9219" y2="167.9219"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="28" x="80" y="181.2041">name</text><rect fill="#FEFECE" filter="url(#funfdi6e46msm)" height="37.6094" style="stroke: #A80036; stroke-width: 1.5;" width="58" x="69.5" y="247.9531"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="44" x="76.5" y="261.0918">Project</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="70.5" x2="126.5" y1="265.9219" y2="265.9219"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="28" x="75.5" y="279.2041">name</text><rect fill="#FEFECE" filter="url(#funfdi6e46msm)" height="60.8906" style="stroke: #A80036; stroke-width: 1.5;" width="75" x="6" y="345.9531"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="61" x="13" y="359.0918">TimeEntry</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="80" y1="363.9219" y2="363.9219"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="35" x="12" y="377.2041">started</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="47" x="12" y="388.8447">[stopped]</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="18" x="12" y="400.4854">title</text><rect fill="#FEFECE" filter="url(#funfdi6e46msm)" height="60.8906" style="stroke: #A80036; stroke-width: 1.5;" width="76" x="116.5" y="345.9531"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="62" x="123.5" y="359.0918">TimeBlock</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="117.5" x2="191.5" y1="363.9219" y2="363.9219"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="40" x="122.5" y="377.2041">duration</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="32" x="122.5" y="388.8447">billable</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="28" x="122.5" y="400.4854">[paid]</text><rect fill="#FEFECE" filter="url(#funfdi6e46msm)" height="49.25" style="stroke: #A80036; stroke-width: 1.5;" width="57" x="126" y="466.9531"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="43" x="133" y="480.0918">Invoice</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="127" x2="182" y1="484.9219" y2="484.9219"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="8" x="132" y="498.2041">id</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="23" x="132" y="509.8447">[link]</text><!--MD5=[a605f9a646bac91c0f1ec4bed5c60b13]
+reverse link User to Client--><path d="M98.5,103.0751 C98.5,119.2275 98.5,136.7291 98.5,149.6307 " fill="none" id="User&lt;-Client" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="98.5,89.955,94.5,95.955,98.5,101.955,102.5,95.955,98.5,89.955" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[de5b1069dfab79b77c766ba6d863ef81]
+reverse link Client to Project--><path d="M98.5,201.4775 C98.5,216.7706 98.5,234.487 98.5,247.6317 " fill="none" id="Client&lt;-Project" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="98.5,188.3147,94.5,194.3147,98.5,200.3147,102.5,194.3147,98.5,188.3147" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[51f835a1aa570fc64af0fdfec63f5dcd]
+reverse link Project to TimeEntry--><path d="M83.0253,297.7617 C75.5129,312.7184 66.5095,330.6433 58.9944,345.6051 " fill="none" id="Project&lt;-TimeEntry" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="88.9197,286.0265,82.6522,289.5928,83.5335,296.7498,89.801,293.1836,88.9197,286.0265" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[a372a8e4ab2b6db3b57b9898828cdea1]
+reverse link Project to TimeBlock--><path d="M114.256,297.7617 C121.9051,312.7184 131.0722,330.6433 138.7239,345.6051 " fill="none" id="Project&lt;-TimeBlock" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="108.2545,286.0265,107.4252,293.1898,113.7185,296.7104,114.5478,289.5471,108.2545,286.0265" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[8b405392c5802dfb3e2d4a2655de163a]
+link TimeBlock to Invoice--><path d="M154.5,406.9691 C154.5,425.6007 154.5,449.1208 154.5,466.6104 " fill="none" id="TimeBlock-Invoice" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><!--MD5=[3216312312b6a4c200a8147da40b25e1]
+@startuml
+title Time Tracker - Specs
+
+object User {
+  uid
+  super
+  last_login
+}
+
+object Client {
+  name
+}
+
+object Project {
+  name
+}
+
+object TimeEntry {
+  started
+  [stopped]
+  title
+}
+
+object TimeBlock {
+  duration
+  billable
+  [paid]
+}
+
+object Invoice {
+  id
+  [link]
+}
+
+User *.. Client
+Client *.. Project
+Project *.. TimeEntry
+Project *.. TimeBlock
+TimeBlock .. Invoice
+@enduml
+
+PlantUML version 1.2019.12(Sun Nov 03 10:24:54 UTC 2019)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 1.8.0_232-heroku-b09
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
