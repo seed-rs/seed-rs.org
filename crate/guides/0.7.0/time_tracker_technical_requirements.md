@@ -15,7 +15,7 @@ Time Tracker users don't want to lose their data and the app will be used as a l
 
 1. The hosting should be free or very cheap.
 
-1. The app content (labels, images, etc.; not user data) may be hard-coded - English would be the only language.
+1. The app content (labels, images, etc.; not user data) may be hard-coded - English would be the only language. (See the example [i18n](https://github.com/seed-rs/seed/tree/6238190b5441b283df4fdb49078cccf420b512a4/examples/i18n) when you need to support more languages.)
 
 1. The app should be reliable to not disrupt user work - especially while the user is tracking time.
 
@@ -35,7 +35,25 @@ Time Tracker users don't want to lose their data and the app will be used as a l
 
 1. The responsive GUI would be nice, but it's not the top priority.
 
-1. We don't want to integrate a [cookie banner](https://secureprivacy.ai/why-you-need-a-cookie-banner-on-your-website/). The app shouldn't use [cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies) at all.
+1. We don't want to integrate a [cookie banner](https://secureprivacy.ai/why-you-need-a-cookie-banner-on-your-website/). The app should use only strictly necessary [cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies).
+
+1. We expect that users won't create many entities and that the traffic amount won't be very high. However scalability would be nice.
+
+1. We don't need any realtime communication. It means we don't have to integrate something like [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) or [Server-send events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events).
+
+1. We don't have to support old or "exotic" browsers.
+
+1. We don't need to support "offline mode" (The app is usable even without internet connection). However it would be a reasonable future requirment for the time tracking app - then we should look also at [Progressive Web Apps](https://web.dev/progressive-web-apps/) and their builders like [Woz](https://github.com/alexkehayias/woz).
+
+1. We can use external managed services (identity providers, mail senders, databases, ...)
+
+1. We don't want to register a custom domain. Something like `time-tracker.static_site_hosting.com` would be enough.
+
+---
+
+Let's move to architecture before we forget all specifications and requirements...
+
+
 
 
 
