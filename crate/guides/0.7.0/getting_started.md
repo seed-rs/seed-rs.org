@@ -13,5 +13,5 @@ The most of them are mine, so don't hesitate to write me about your opinions or 
 
 - All chapters are intended for both beginners and advanced users. **If you are a beginner don't hesitate to skip parts** that don't make sense to you (yet) and return back once you are ready to digest all information. This advice also applies to official Rust learning materials.
 
-Let's look at [Rust](https://www.rust-lang.org/) in the next chapter. Click on the right arrow below this text.
+Let's look at [Rust](https://www.rust-lang.org/) in the next chapter. Press the right arrow key on your keyboard or click the arrow below this text.
 
