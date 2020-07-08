@@ -82,7 +82,7 @@ We would need to integrate 2 BE services - user management and managed database 
 
 ## User Management
 
-- We need to choose IDaaS (Identity-as-a-service). The most known are probably [Auth0](https://auth0.com/) and [Okta](https://www.okta.com/). Both should support passwordless registration/login and we should be able to meet the conditions of their free plans.
+- We need to choose IDaaS (Identity-as-a-service). The most known are probably [Auth0](https://auth0.com/) and [Okta](https://www.okta.com/). Both should support various registration/login flows and we should be able to meet the conditions of their free plans.
 
 - Also each bigger cloud has own IDaaS - e.g. [Amazon Cognito](https://aws.amazon.com/cognito/) or [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/) or [Firebase Authentication](https://firebase.google.com/products/auth).
 
@@ -94,7 +94,7 @@ When you look at our entities - User, Client, Project, .. (we've created a diagr
 
 ### Database
 
-- Our entity tree isn't very complex, so we can use all common database [types](https://dataguide.prisma.io/intro/comparing-database-types) like relational, document or graph. However the best fit for a tree of simple entities is probably a graph database.
+- Our entity tree isn't very complex, so we can use all common database [types](https://dataguide.prisma.io/intro/comparing-database-types) like relational, document or graph. However the best fit for a tree of simple entities is probably a graph database. Read article [Why you should build your next app with a graph database](https://dgraph.io/blog/post/graphdb-for-your-next-app/) for detailed explanation.
 
 - The most of the time we will be doing only simple [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations. The exception may be time entries aggregations to generate reports and show charts. 
 
@@ -116,10 +116,10 @@ When you look at our entities - User, Client, Project, .. (we've created a diagr
 
 We would like to use a free service and we don't want to fall into a huge ecosystem => no `AppSync` for us. We don't need the most of CMS features and there is a chance there we won't be able to write a more specialized custom queries => we won't connect to `GraphCMS`.
 
-`Fauna` vs `Slash Graphql`. Fauna has a built-in authentication but I can't find a reasonable tutorial how to setup passwordless or integrate an external identity provider. However it should be doable according this [article](https://www.felix-gehring.de/articles/2020/01/28/using-faunadb-with-an-identity-provider/).
-`Slash GraphQL` is (at the time of writing) private beta, however it looks promising and it's ready for 3rd-party identity providers. And it's based on a graph database.
+`Fauna` vs `Slash Graphql`. Fauna has a built-in authentication and a free plan. There are also some helpful articles how to integrate a custom identity provider to the stack with Fauna: e.g. [Using FaunaDB with an Identity Provider](https://www.felix-gehring.de/articles/2020/01/28/using-faunadb-with-an-identity-provider/) and [From Static Sites To End User JAMstack Apps With FaunaDB](https://www.smashingmagazine.com/2020/06/static-sites-jamstack-apps-faunadb/).
+`Slash GraphQL` is (at the time of writing) private beta, however it looks promising. It's ready for 3rd-party identity providers (there is an `Auth0` integration tutorial in their docs) and it's based on a graph database.
 
-So let's experiment a bit and try `Slash GraphQL`. It would be nice to combine it with `Auth0`.
+Let's experiment a bit and choose `Slash GraphQL`. It would be nice to combine it with `Auth0`. There is a chance the API would be simpler thanks to the focusing only on the graph database and GraphQL. (I can't compare `Fauna` and `Slash GraphQL` properly now due to lack of experience with both services - don't hesitate to write me your opinions.)
 
 ---
 
