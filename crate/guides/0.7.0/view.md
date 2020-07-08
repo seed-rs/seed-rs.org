@@ -98,4 +98,4 @@ pub fn view(base_url: &Url) -> Node<Msg> {
 
 - `view` and `view_*` functions will have own local state once [Seed Hooks](https://seed-style-hooks.netlify.app/hooks_home) are integrated.
 
-- I'll maybe try to write GUI designer that generates `view` in the distant future. It should make development more enjoyable & faster and make cooperation between developers and designers smoother. (Don't hesitate to write [me](https://github.com/MartinKavik) your opinions/ideas.)
+- I'll maybe try to write GUI designer that generates `view` in the distant future. Or at least a plugin for [Figma](https://www.figma.com/) or [Adobe XD](https://www.adobe.com/uk/products/xd.html). It should make development more enjoyable & faster and make cooperation between developers and designers smoother. (Don't hesitate to write [me](https://github.com/MartinKavik) your opinions/ideas.)
