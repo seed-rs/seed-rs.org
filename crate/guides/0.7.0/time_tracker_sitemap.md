@@ -16,7 +16,7 @@ _Notes:_
 - URL: `/`
 - It will be used only as a crossroad. There could be simple button "Go to Time Tracker" as a CTA / shortcut.
 - No item in the main menu is active.
-- If the user is logged in, show buttons "Sign up" and "Login". 
+- If the user is logged in, show buttons "Sign up" and "Log in". 
 - If the user isn't logged in, show buttons "[user_name]" and "Log out". The first button navigates to the page `Settings`.
 - `Bulma` logo will be replaced.
 - `seed-rs.org` should be a link.
