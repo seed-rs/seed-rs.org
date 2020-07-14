@@ -121,7 +121,7 @@ attrs!{
 instead of:
 ```rust
 attrs!{
-    At::Disabled => if disabled { At::None } else { At::Ignored }
+    At::Disabled => if disabled { AtValue::None } else { AtValue::Ignored }
 }
 ```
 _Note:_ Without that `.as_at_value()` call, variable `disabled` would be only casted into `String` and rendered in HTML as `disabled="false"`. 
