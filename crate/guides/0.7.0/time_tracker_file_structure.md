@@ -129,7 +129,7 @@ enum Msg {
 
 fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
     match msg {
-        Msg::UrlChanged(url) => {},
+        Msg::UrlChanged(subs::UrlChanged(url)) => {},
     }
 }
 
@@ -698,6 +698,7 @@ pub fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         Msg::ConfirmPasswordChanged(confirm_password) => {},
 
         Msg::Save => {},
+        Msg::DeleteAccount => {},
     }
 }
 

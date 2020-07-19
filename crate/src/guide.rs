@@ -81,6 +81,7 @@ pub fn guides() -> Vec<Guide> {
         guide!(seed_version: "0.7.0", slug: "time_tracker_sitemap", menu_title: "Sitemap", file_name: "time_tracker_sitemap", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "time_tracker_models_and_msgs", menu_title: "Models & Msgs", file_name: "time_tracker_models_and_msgs", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "time_tracker_file_structure", menu_title: "File Structure", file_name: "time_tracker_file_structure", prepend_menu_divider: false),
+        guide!(seed_version: "0.7.0", slug: "time_tracker_header_and_routing", menu_title: "Header & Routing", file_name: "time_tracker_header_and_routing", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "support", menu_title: "Support", file_name: "support", prepend_menu_divider: true),
         // ------ 0.8.0 ------
         guide!(seed_version: "0.8.0", slug: "about", menu_title: "About", file_name: "about", prepend_menu_divider: false),

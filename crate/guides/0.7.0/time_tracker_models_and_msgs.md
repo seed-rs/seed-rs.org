@@ -312,6 +312,7 @@ enum Msg {
     ConfirmPasswordChanged(String),
 
     Save,
+    DeleteAccount,
 }
 ```
 

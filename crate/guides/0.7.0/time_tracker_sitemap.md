@@ -5,7 +5,7 @@ Let's design app's pages.
 Included pictures below are basically ugly mockups with some missing component states where some parts are just copy & pasted from Bulma's docs. However it should be enough to guide us during implementation.
 
 _Notes:_ 
-- Teaching how to design a nice and useful UI is out of scope of this tutorial.
+- Teaching UI/UX theory is out of scope of this tutorial. However we'll try to design & develop something pretty and usable with a bit of luck.
 - If you want to learn something about UX/UI quickly, I recommend to look at [Refactoring UI](https://refactoringui.com/) and [Nick Kolenda's UX list](https://www.nickkolenda.com/user-experience/). Or [start.uxdesign.cc](https://start.uxdesign.cc/) is a good source of inspiration.
 - I've "designed" those mockups in [Figma](https://www.figma.com/). I can recommend to try also [Adobe XD](https://www.adobe.com/products/xd.html) or [Affinity Designer](https://affinity.serif.com/en-gb/designer/).
 
@@ -47,7 +47,7 @@ _Notes:_
 
 ## Clients & Projects
 
-- URL: `/clients_projects`
+- URL: `/clients_and_projects`
 - User can add, remove and rename his clients and projects.
 - All removing operations should be confirmed by a simple modal dialog box. We'll use ugly browser native one for the sake of simplicity.
 - Client and project names are in-place editable.
@@ -82,7 +82,7 @@ _Notes:_
 ## Settings
 
 - URL: `/settings`
-- It'll communicate only with our identity provider.
+- It'll communicate only with our identity provider. (An exception could be deleting an account.)
 - We don't need it at all if our IDP offers its own user settings.
 
 ![Design Settings](/static/images/design_settings.png)
