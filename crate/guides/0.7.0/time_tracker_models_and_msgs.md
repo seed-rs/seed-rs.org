@@ -350,7 +350,7 @@ enum Page {
 
 ```rust
 enum Msg {
-    Msg::UrlChanged(subs::UrlChanged),
+    UrlChanged(subs::UrlChanged),
 }
 ```
 
