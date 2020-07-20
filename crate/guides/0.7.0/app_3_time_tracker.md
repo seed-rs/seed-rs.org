@@ -1,6 +1,8 @@
 # App 3: Time Tracker
 
 [Live Demo](https://seed-app-time-tracker.netlify.app/) |  [Repository](https://github.com/MartinKavik/seed-app-time-tracker)
+ - Email address: `john@example.com`
+ - Password: `Password1`
 
 ## Intro
 
