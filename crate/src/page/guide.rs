@@ -20,6 +20,7 @@ pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
             C.mt_16,
             // lg__
             C.lg__mt_0,
+            C.container,
         ],
         guide_list::view(guide, model),
         view_content(guide, model, show_intro, &model.guide_content_el),
