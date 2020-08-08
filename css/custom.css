@@ -1,3 +1,42 @@
+
+@media (max-width: 1023px) {
+  .sidebar {  
+    width: 100%;
+  }
+  .content-container {
+    max-width:100%;
+    padding: 0 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  #menu_items {
+    padding-bottom: 3rem;
+  }
+
+  .content-container {
+    padding-left:25%;
+    width:80%;
+    
+  }
+
+  .sidebar {  
+    height: 100%;
+    width: 20%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+  }
+}
+
+
+.markdown-body {
+  max-width: 45rem;
+}
+
 .markdown-body ol, .markdown-body ul {
     list-style-type: revert;
 }

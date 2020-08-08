@@ -15,10 +15,6 @@ use std::{
 pub fn view(guide: &Guide, model: &Model, show_intro: bool) -> Node<Msg> {
     div![
         C![
-            C.container,
-            C.w_full,
-            C.flex,
-            C.flex_wrap,
             C.mx_auto,
             C.px_2,
             C.mt_16,
@@ -39,7 +35,9 @@ fn view_content(
     use content_control_panel::Position::{Bottom, Top};
     div![
         C![
+            /*
             C.w_full,
+            C.flex_1,
             C.min_h_screen,
             C.p_8,
             C.bg_white,
@@ -48,8 +46,10 @@ fn view_content(
             C.lg__pt_24,
             C.lg__border_l_4,
             C.lg__border_green_500,
-            C.lg__overflow_y_auto,
-            C.lg__h_screen,
+            //C.lg__overflow_y_auto,
+            C.lg__h_screen,*/
+            //C.content_container,
+            C.content_container,
         ],
         el_ref(guide_content_el),
         IF!(model.in_prerendering => view_loading_warning()),
@@ -84,7 +84,7 @@ fn view_loading_warning() -> Node<Msg> {
             St::AnimationDuration => "3s",
             St::AnimationFillMode => "both",
             St::AnimationTimingFunction => "ease-in",
-            St::Overflow => "hidden",
+            //St::Overflow => "hidden",
         },
         div![
             C![
