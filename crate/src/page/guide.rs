@@ -45,8 +45,8 @@ fn view_content(
             // lg__
             //C.lg__w_4of5,
             C.lg__pt_24,
-            C.lg__border_l_4,
-            C.lg__border_green_500,
+            //C.lg__border_l_4,
+            //C.lg__border_green_500,
             //C.lg__overflow_y_auto,
             //C.lg__h_screen,
             //C.content_container,
