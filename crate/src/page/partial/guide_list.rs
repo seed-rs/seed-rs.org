@@ -13,12 +13,7 @@ use seed::{
 pub fn view(guide: &Guide, model: &Model) -> Node<Msg> {
     div![
         C![
-            C.w_full,
-            // lg__
-            C.lg__w_1of5,
-            C.lg__px_6,
-            C.lg__max_h_screen,
-            C.lg__overflow_y_scroll,
+            C.sidebar,
         ],
         view_guide_list_toggle(guide, model.in_prerendering),
         view_guide_list_content(guide, model),
@@ -33,7 +28,6 @@ fn view_guide_list_toggle(
 ) -> Node<Msg> {
     div![
         C![
-            C.sticky,
             C.inset_0,
             // lg__
             C.lg__hidden,
@@ -87,7 +81,6 @@ fn view_guide_list_content(selected_guide: &Guide, model: &Model) -> Node<Msg> {
             C.m_auto,
             IF!(model.guide_list_visibility == Hidden => C.hidden),
             C.overflow_x_hidden,
-            C.overflow_y_auto,
             C.mt_0,
             C.border_4,
             C.border_t_0,
@@ -96,8 +89,6 @@ fn view_guide_list_content(selected_guide: &Guide, model: &Model) -> Node<Msg> {
             C.z_20,
             // lg__
             C.lg__w_full,
-            C.lg__sticky,
-            C.lg__overflow_y_hidden,
             C.lg__border_transparent,
             C.lg__bg_transparent,
             C.lg__block,
