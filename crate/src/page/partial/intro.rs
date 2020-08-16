@@ -46,7 +46,7 @@ fn view_logo(base_url: &Url) -> Node<Msg> {
             C![
                 C.w_48,
                 C.focus__outline_none,
-                // lg__
+                C.mt_8,
                 C.lg__w_64,
             ],
             attrs! {
