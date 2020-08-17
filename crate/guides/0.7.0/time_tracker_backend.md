@@ -100,13 +100,13 @@ type Invoice {
 
 1. Click `API Explorer` (either in the `Success` dialog or in the main side menu).
 
-1. Insert the `mutation`:
+1. Insert the `mutation`. Generate ids by [ulidgenerator.com](https://ulidgenerator.com/):
     - _Note_: You can press `Ctrl + Space` to show autocomplete suggestions. And `Ctrl + /` to comment/uncomment selected text.
 
     ```graphql
     mutation {
       addClient(input: [{
-        id: "1",
+        id: "01EG14HC157VEJ8DWMSKBEDGY5",
         name: "Client A",
         projects: [],
         time_blocks: [],
@@ -116,58 +116,58 @@ type Invoice {
       }
       
       addProject(input: [{
-        id: "1",
+        id: "01EG14HRYJ6SRC6NNK8AV4J7NC",
         name: "Project 1",
         time_entries: [],
-        client: { id: "1" },
+        client: { id: "01EG14HC157VEJ8DWMSKBEDGY5" },
       }, {
-        id: "2",
+        id: "01EG14J2MW4N92WGBRAE79S134",
         name: "Project 2",
         time_entries: [],
-        client: { id: "1" },
+        client: { id: "01EG14HC157VEJ8DWMSKBEDGY5" },
       }]) {
         numUids
       }
       
       addTimeEntry(input: [{
-        id: "1",
+        id: "01EG14JB1NR008D032E2GHXD6G",
         name: "Time Entry X",
         started: "2020-01-15T15:53:39Z",
         stopped: null,
-        project: { id: "1" },
+        project: { id: "01EG14HRYJ6SRC6NNK8AV4J7NC" },
       }, {
-        id: "2",
+        id: "01EG14JJGVEVKM9K5ET99W40R9",
         name: "Time Entry Y",
         started: "2020-01-15T16:58:20Z",
         stopped: "2020-01-15T17:25:23Z",
-        project: { id: "2" },
+        project: { id: "01EG14J2MW4N92WGBRAE79S134" },
       }]) {
         numUids
       }
       
       addTimeBlock(input: [{
-        id: "1",
+        id: "01EG14JTR0VP8J2FN45RZ92VEX",
         name: "Time Block X",
         status: UNPAID,
         duration: 72000, # 20h * 3600 
         invoice: null,
-        client: { id: "1" },
+        client: { id: "01EG14HC157VEJ8DWMSKBEDGY5" },
       }, {
-        id: "2",
+        id: "01EG14JZ9AHFDNXQ48TKY721YA",
         name: "Time Block Y",
         status: UNPAID,
         duration: 72000, # 20h * 3600 
         invoice: null,
-        client: { id: "1" },
+        client: { id: "01EG14HC157VEJ8DWMSKBEDGY5" },
       }]) {
         numUids
       }
       
       addInvoice(input: [{
-        id: "1",
+        id: "01EG14K58V0YS7K48B7VS6345R",
         custom_id: "5-2020",
         url: "https://example.com/my_invoice.pdf",
-        time_block: { id: "2" },
+        time_block: { id: "01EG14JZ9AHFDNXQ48TKY721YA" },
       }]) {
         numUids
       }

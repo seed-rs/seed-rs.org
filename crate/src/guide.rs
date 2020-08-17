@@ -85,6 +85,7 @@ pub fn guides() -> Vec<Guide> {
         guide!(seed_version: "0.7.0", slug: "time_tracker_authentication", menu_title: "Authentication", file_name: "time_tracker_authentication", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "time_tracker_fetch", menu_title: "Fetch", file_name: "time_tracker_fetch", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "time_tracker_backend", menu_title: "Backend", file_name: "time_tracker_backend", prepend_menu_divider: false),
+        guide!(seed_version: "0.7.0", slug: "time_tracker_graphql", menu_title: "GraphQL", file_name: "time_tracker_graphql", prepend_menu_divider: false),
         guide!(seed_version: "0.7.0", slug: "support", menu_title: "Support", file_name: "support", prepend_menu_divider: true),
         // ------ 0.8.0 ------
         guide!(seed_version: "0.8.0", slug: "about", menu_title: "About", file_name: "about", prepend_menu_divider: false),
