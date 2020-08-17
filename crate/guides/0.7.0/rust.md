@@ -56,6 +56,7 @@ I think the most important Rust features are:
     - [FromStr](https://doc.rust-lang.org/std/str/trait.FromStr.html) and [parse](https://doc.rust-lang.org/std/primitive.str.html#method.parse)
     - [Rc](https://doc.rust-lang.org/std/rc/struct.Rc.html) and [RefCell](https://doc.rust-lang.org/stable/std/cell/struct.RefCell.html)
     - [Vec](https://doc.rust-lang.org/std/vec/struct.Vec.html) and [vec!](https://doc.rust-lang.org/std/macro.vec.html)
+    - [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) and [DerefMut](https://doc.rust-lang.org/std/ops/trait.DerefMut.html)
 
 1. Use [early returns](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#recoverable-errors-with-result) where possible.
 
