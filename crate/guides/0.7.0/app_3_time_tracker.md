@@ -1,5 +1,9 @@
 # App 3: Time Tracker
 
+_NOTE:_ It's **WIP**! Routing, Auth0 authentication and GraphQL queries + Slash GraphQL backend are done (at the time of writing). The most of views, authorization, mutations and SCSS compilation are todos. But It should already give you an idea how to design, architect and write a relatively large app.
+
+---
+
 [Live Demo](https://seed-app-time-tracker.netlify.app/) |  [Repository](https://github.com/MartinKavik/seed-app-time-tracker)
  - Email address: `john@example.com`
  - Password: `Password1`
@@ -9,13 +13,17 @@
 Let's write something more useful - a real Time Tracker with user accounts and full back-end integration! Step-by-step from motivations and design to backend and deploy.  
 
 You'll learn:
-- Fire & handle [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and [GraphQL](https://graphql.org/) requests.
-- About [JSON Web Tokens](https://jwt.io/).
-- To write modules/components.
+- To architect a relatively large app (frontend + backend).
+- To write Seed modules/components.
 - Advanced routing, link building and how to change a base path.
 - To work with global state / context.
-- To architect a large app.
+- Call Javascript functions from the Rust world.
+- When to use Seed's notify/subscribe mechanism.
+- Fire & handle [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and [GraphQL](https://graphql.org/) requests.
+- About [JSON Web Tokens](https://jwt.io/).
 - How to integrate [SASS](https://sass-lang.com/) and [Bulma](https://bulma.io/).
+- To define [Slash GraphQL](https://dgraph.io/slash-graphql) backend.
+- Setup and integrate [Auth0](https://auth0.com/).
 
 ## Motivation
 
