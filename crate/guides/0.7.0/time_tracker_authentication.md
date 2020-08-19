@@ -187,7 +187,7 @@ _Note:_ I was drawing inspiration from the official [Auth0 tutorial](https://aut
     - _Notes:_ 
         - You'll learn more about fetching in the next chapter.
         - There should be a better error handling than a simple `error!` call in the production app - we should at least show the user-friendly message on the website and describe user-friendly steps how to resolve the problem.
-        - We don't really need to store `AuthConfig` in our `Model` because it will be passed to a new JS AUth0 client, but in this development phase it's useful for debugging and maybe we'll need it later. 
+        - We don't really need to store `AuthConfig` in our `Model` because it will be passed to a new JS Auth0 client, but in this development phase it's useful for debugging and maybe we'll need it later. 
 
 1. Remove mocked `User` and update `User` fields according the data that will be sent from `auth0.getUser()`:
     ```rust
@@ -295,7 +295,9 @@ Let's make our header buttons useable by connecting them with the Auth0 client.
     }
 
     window.logout = () => {
-        auth0.logout();
+        auth0.logout({
+            returnTo: window.location.origin
+        });
     }
 
     init('/pkg/package_bg.wasm');
