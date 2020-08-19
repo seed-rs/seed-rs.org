@@ -2,11 +2,11 @@
 
 [tasks.verify]
 description = "Format, lint with Clippy and run tests"
-dependencies = ["fmt", "clippy", "spellcheck", "test_h_firefox"]
+dependencies = ["fmt", "clippy", "spellcheck"] #, "test_h_firefox"] (https://github.com/rustwasm/wasm-bindgen/issues/2261)
 
 [tasks.verify_only]
 description = "Like `verify`, but fails if the code isn't formatted. Primarily for CI."
-dependencies = ["fmt_check", "clippy", "spellcheck", "test_h_firefox"]
+dependencies = ["fmt_check", "clippy", "spellcheck"] #, "test_h_firefox"] (https://github.com/rustwasm/wasm-bindgen/issues/2261)
 
 # ---- TEST ----
 

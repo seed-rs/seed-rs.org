@@ -36,20 +36,9 @@ fn view_content(
     use content_control_panel::Position::{Bottom, Top};
     div![
         C![
-            
-            //C.w_full,
-            //C.flex_1,
-            //C.min_h_screen,
-            //C.p_8,
             C.bg_white,
             // lg__
-            //C.lg__w_4of5,
             C.lg__pt_24,
-            //C.lg__border_l_4,
-            //C.lg__border_green_500,
-            //C.lg__overflow_y_auto,
-            //C.lg__h_screen,
-            //C.content_container,
             C.content_container,
         ],
         el_ref(guide_content_el),

@@ -43,12 +43,7 @@ fn view_logo(base_url: &Url) -> Node<Msg> {
     div![
         C![C.flex,],
         a![
-            C![
-                C.w_48,
-                C.focus__outline_none,
-                C.mt_8,
-                C.lg__w_64,
-            ],
+            C![C.w_48, C.focus__outline_none, C.mt_8, C.lg__w_64,],
             attrs! {
                 At::Href => Urls::new(base_url).home()
             },
