@@ -21,9 +21,9 @@ pub fn view(
     div![
         C![
             if position == Position::Top {
-                C.mb_8
+                vec![C.mb_8, C.mt_6, C.lg__mt_0]
             } else {
-                C.mt_8
+                vec![C.mt_8]
             },
             C.w_full,
             C.flex,
