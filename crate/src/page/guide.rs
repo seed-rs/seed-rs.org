@@ -62,8 +62,8 @@ fn view_loading_warning() -> Node<Msg> {
             r#"
             <style>
                 @keyframes loading-warning-display {
-                    from { max-height: 0; }
-                    to { max-height: 100%; }
+                    from { height: 0; opacity: 0; }
+                    to { height: auto; opacity: 1; }
                 }
             </style>
             "#
@@ -74,7 +74,7 @@ fn view_loading_warning() -> Node<Msg> {
             St::AnimationDuration => "3s",
             St::AnimationFillMode => "both",
             St::AnimationTimingFunction => "ease-in",
-            //St::Overflow => "hidden",
+            St::Overflow => "hidden",
         },
         div![
             C![
