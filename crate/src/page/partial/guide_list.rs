@@ -12,9 +12,7 @@ use seed::{
 
 pub fn view(guide: &Guide, model: &Model) -> Node<Msg> {
     div![
-        C![
-            C.sidebar,
-        ],
+        C![C.sidebar,],
         view_guide_list_toggle(guide, model.in_prerendering),
         view_guide_list_content(guide, model),
     ]
