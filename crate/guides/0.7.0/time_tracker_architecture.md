@@ -33,7 +33,7 @@ Our Time Tracker app is basically an ideal case for [SPA](https://en.wikipedia.o
      - I wouldn't use it if the big bundle size is a problem. Or if I want a built-in state management.
   - [F#](https://fsharp.org/) + [Bolero](https://fsbolero.io/)
      - I would choose it if I want a more expressive language than C#.
-     - I wouldn't choose it if I have to use only the most mainstream languages and officialy supported libraries.
+     - I wouldn't choose it if I have to use only the most mainstream languages and officially supported libraries.
   - [Purescript](https://www.purescript.org/) + [Halogen](https://purescript-halogen.github.io/purescript-halogen/)
     - I would choose it if I like Haskell, team members are experienced functional developers and Elm is too simple or opinionated for the project.
     - I wouldn't choose it if I don't want to use Node.js or [bower](https://bower.io/).
@@ -43,7 +43,7 @@ Our Time Tracker app is basically an ideal case for [SPA](https://en.wikipedia.o
 
 - Other interesting front-end languages / frameworks: [Imba](https://www.imba.io/), [Mint](https://www.mint-lang.com/), [Yew](https://yew.rs/).
 
-Well, I'm usre you aren't surprised that we'll use Rust + Seed to build our Time Tracker.
+Well, I'm sure you aren't surprised that we'll use Rust + Seed to build our Time Tracker.
 
 _Note:_ Please suggest changes in the list above when you find old, missing or incorrect information. I don't actively use the most of those frameworks.
 
@@ -152,4 +152,4 @@ Backend
 
 ---
 
-We've successfuly finished the most difficult tasks - writing specifications, requirements and choosing infrastructure components. Let's zoom in on front-end and describe a sitemap.
+We've successfully finished the most difficult tasks - writing specifications, requirements and choosing infrastructure components. Let's zoom in on front-end and describe a sitemap.

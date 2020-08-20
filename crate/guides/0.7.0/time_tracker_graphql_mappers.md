@@ -390,7 +390,7 @@ It's very similar to the previous page.
 
 ---
 
-Let's finally test how our app sends and decodes qeueries:
+Let's finally test how our app sends and decodes queries:
 
 ![Time Tracker GraphQL queries](/static/images/time_tracker_graphql_queries.gif)
 

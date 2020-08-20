@@ -664,7 +664,7 @@ impl From<cynic::DecodeError> for GraphQLError {
         DecodeError(cynic::DecodeError)
     }
     ```
-    - `ResponseErrors` means the GrahpQL response's `errors` isn't an empty array. _Note:_ Once we need to know `data` even if there are errors, we will need something like [cynic::GraphQLResult](https://docs.rs/cynic/0.8.0/cynic/type.GraphQLResult.html).
+    - `ResponseErrors` means the GraphQL response's `errors` isn't an empty array. _Note:_ Once we need to know `data` even if there are errors, we will need something like [cynic::GraphQLResult](https://docs.rs/cynic/0.8.0/cynic/type.GraphQLResult.html).
     - `DecodeError` means the response is probably malformed and can't be deserialized to prepared Rust items.
 
 1. [From](https://doc.rust-lang.org/std/convert/trait.From.html) implementation for `GraphQLError`:
@@ -675,7 +675,7 @@ impl From<cynic::DecodeError> for GraphQLError {
         }
     }
     ```
-    - The only purpose is to allow to use early returns (like `Err(error)?` or `.await?`) in functions that returns `graphl::Result<T>` - e.g. `send_query`.
+    - The only purpose is to allow to use early returns (like `Err(error)?` or `.await?`) in functions that returns `graphql::Result<T>` - e.g. `send_query`.
 
 1. And finally `send_query`:
     ```rust
@@ -758,7 +758,7 @@ We will need 3 queries for our 3 main pages according our `Model`s and UI design
         }
     }
     ```
-    - _Note_: I haven't found a simple way to compute total tracked time on the backend (I assume I'm overlooking something in Slash GraphQL docs or they are working on it right now.) So we'll request all time entries and compute tracked time manually on the frotend.
+    - _Note_: I haven't found a simple way to compute total tracked time on the backend (I assume I'm overlooking something in Slash GraphQL docs or they are working on it right now.) So we'll request all time entries and compute tracked time manually on the frontend.
 
 ## GraphQL items
 

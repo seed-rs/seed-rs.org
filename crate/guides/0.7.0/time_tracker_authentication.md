@@ -12,7 +12,7 @@ There isn't a Rust Auth0 SDK and we don't want to write it because it would take
 
 - Log in:
     1. The Seed app starts.
-    1. Fetch the Auth0 configration from the API endpoint or file `/auth_config.json`.
+    1. Fetch the Auth0 configuration from the API endpoint or file `/auth_config.json`.
     1. Initiate the Auth0 client with the fetched configuration.
     1. The client finds out that the user isn't logged in.
     1. The user clicks the button `Log in`.
@@ -28,12 +28,12 @@ There isn't a Rust Auth0 SDK and we don't want to write it because it would take
 
 - Log out:
    1. The user clicks the button `Log out`.
-   1. The user is redirected to Auth0 platform and immediatelly back to the app.
+   1. The user is redirected to Auth0 platform and immediately back to the app.
 
 As you can see we don't have to think about tokens, storages, cookies, emails, backend APIs and other "low-level" things thanks to the SDK.
 
 Auth0 uses a combination of memory and cookies instead of `LocalStorage` for managing tokens by default, the log in and sign up process is almost completely orchestrated on their platform (even SDK script is hosted on their CDN) so it should be secure enough.
-The trade-off could be the worse UX because of redirections and inconsistent UI in the app and among emails the user receives.  
+The trade-off could be the worse UX because of redirects and inconsistent UI in the app and among emails the user receives.  
 
 
 ## 1. Auth0 account configuration
@@ -121,7 +121,7 @@ _Note:_ I was drawing inspiration from the official [Auth0 tutorial](https://aut
     wasm-bindgen-futures = "0.4.17"
     serde-wasm-bindgen = "0.1.3"
     ```
-    - [serde](https://serde.rs/) is required for `AuthCofing` and `User` deserialization.
+    - [serde](https://serde.rs/) is required for `AuthConfig` and `User` deserialization.
     - [wasm-bindgen-futures](https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/) is required for calling async JS functions from the Rust code.
     - [serde-wasm-bindgen](https://crates.io/crates/serde-wasm-bindgen) can directly (i.e. without `JSON.stringify`) transform JS User object to the Rust `User` struct.
 
@@ -407,7 +407,7 @@ And that's it! We've successfully integrated secure authentication.
 
 There are still some things that should be polished - e.g. show a loading spinner instead of `Sign up` and `Log in` buttons while the Auth0 client is initializing - but it's good enough for now.
 
-The next chapter should explain how fetching works. And then we'll explore [Slash GrahpQL](https://dgraph.io/slash-graphql) and try to implement some backend APIs.
+The next chapter should explain how fetching works. And then we'll explore [Slash GraphQL](https://dgraph.io/slash-graphql) and try to implement some backend APIs.
 
 
 

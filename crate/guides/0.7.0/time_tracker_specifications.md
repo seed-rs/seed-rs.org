@@ -53,7 +53,7 @@ We'll try to make the app as simple as possible but also not too simple so you'l
 
 - Invoice is automatically created and deleted with the associated time block.
 - Users can modify invoices.
-- Eatch invoice has these properties:
+- Each invoice has these properties:
   - Custom id (optional) - e.g. invoice variable symbol.
   - Link to the invoice (optional) - e.g. `https://an_invoice_service/invoices/xx.pdf`.
 
@@ -105,7 +105,7 @@ P.S. I don't want to introduce any terminologies defined by [DDD](https://en.wik
 
 ### Add Time Entry
 
-1. User clicks the buttom `Time Tracker`.
+1. User clicks the button `Time Tracker`.
 1. The `Time Tracker` page appears.
 1. User clicks the `Start` button beside the chosen Project.
 1. A new Time Entry with the enabled timer is prepended below the chosen Project.

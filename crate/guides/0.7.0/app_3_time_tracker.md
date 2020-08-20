@@ -35,9 +35,9 @@ And I want:
   - Link a time block to the associated invoice.
 I use(d) services like [toggl](https://toggl.com/) or [Clockify](https://clockify.me/) but the features mention above have been often missing and I don't need the most of built-in features.
 
-I think this example will be easily customizable to meet your requirements. And the most of us use or at least know a time tracker so we won't need to explain some unfimiliar and complex logic and terminology.
+I think this example will be easily customizable to meet your requirements. And the most of us use or at least know a time tracker so we won't need to explain some unfamiliar and complex logic and terminology.
 
-The example should also demostrate how to implement basic auth logic - registration & login. 
+The example should also demonstrate how to implement basic auth logic - registration & login. 
 
 _Tip:_ We should always identify what are the problems we want to resolve before we even start to think about our new app.
 
