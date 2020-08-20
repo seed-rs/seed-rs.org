@@ -207,4 +207,4 @@ Other links related to this topic:
 
 ---
 
-We'll return back to Time Tracker app and we'll try to explore [Slash GrahpQL](https://dgraph.io/slash-graphql) in the next chapter.
+We'll return back to Time Tracker app and we'll try to explore [Slash GraphQL](https://dgraph.io/slash-graphql) in the next chapter.

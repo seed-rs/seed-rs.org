@@ -25,7 +25,7 @@ Time Tracker users don't want to lose their data and the app will be used as a l
    - If you want to prerender your app as a build step, you can use Seed [Webpack quickstart](https://github.com/seed-rs/seed-quickstart-webpack) (or [Seeder](https://github.com/MartinKavik/seeder) in the future).
    - Seed SSR is planned, but it's not a priority now.
 
-1. The app don't have to respect all [accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/What_is_accessibility) best practises - we assume that the most of users will be developers without disabilities and accessibility itself is out-of-scope of this tutorial.
+1. The app don't have to respect all [accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/What_is_accessibility) best practices - we assume that the most of users will be developers without disabilities and accessibility itself is out-of-scope of this tutorial.
 
 1. We don't have to use any existing backend.
 
@@ -43,7 +43,7 @@ Time Tracker users don't want to lose their data and the app will be used as a l
 
 1. We don't have to support old or "exotic" browsers.
 
-1. We don't need to support "offline mode" (The app is usable even without internet connection). However it would be a reasonable future requirment for the time tracking app - then we should look also at [Progressive Web Apps](https://web.dev/progressive-web-apps/) and their builders like [Woz](https://github.com/alexkehayias/woz).
+1. We don't need to support "offline mode" (The app is usable even without internet connection). However it would be a reasonable future requirement for the time tracking app - then we should look also at [Progressive Web Apps](https://web.dev/progressive-web-apps/) and their builders like [Woz](https://github.com/alexkehayias/woz).
 
 1. We can use external managed services (identity providers, mail senders, databases, ...)
 

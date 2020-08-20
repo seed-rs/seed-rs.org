@@ -12,9 +12,9 @@ Our plan:
 
 ## 1. New `Slash GraphQL` _backend_
 
-1. Slash Graphql is currently _developer preview_. So it's free, however you need to get invitation. Try my [invitation page](https://slash.dgraph.io/invite.html?id=0x345e) or if it doesn't work write me your email (on [chat](https://discord.gg/JHHcHp5) or `martin@kavik.cz`) and I'll invite you manually. Or you can request an invitation on their homapage - https://dgraph.io/slash-graphql.
+1. Slash Graphql is currently _developer preview_. So it's free, however you need to get invitation. Try my [invitation page](https://slash.dgraph.io/invite.html?id=0x345e) or if it doesn't work write me your email (on [chat](https://discord.gg/JHHcHp5) or `martin@kavik.cz`) and I'll invite you manually. Or you can request an invitation on their homepage - https://dgraph.io/slash-graphql.
 
-1. Log in to Slash administration and you should see somehing like:
+1. Log in to Slash administration and you should see something like:
 
     ![Slash Dashboard](/static/images/time_tracker_slash_dashboard.png)
 
@@ -90,7 +90,7 @@ type Invoice {
 - Directive `@id` [docs](https://graphql.dgraph.io/doc/schema/ids). We can't use `ID` because we want to define ids in our app and it'll also make creating test data easier as a nice side-effect.
 
 1. Write the schema into the textarea on the page `Schema`:
-    - _Note_: Therer is a bug at the time of writing in the Slash's administration - `Schema Builer` doesn't work, probably because it fails while it's parsing `enum`.
+    - _Note_: There is a bug at the time of writing in the Slash's administration - `Schema Builder` doesn't work, probably because it fails while it's parsing `enum`.
 
     ![Slash Backend is live](/static/images/time_tracker_slash_schema.png)
 

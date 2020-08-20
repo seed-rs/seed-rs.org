@@ -8,5 +8,6 @@
             "file": "cspell_dictionary.txt",
             "name": "local"
         }
-    ]
+    ],
+    "ignoreRegExpList": ["id: \"([A-Z]|[0-9])*\""]
 }

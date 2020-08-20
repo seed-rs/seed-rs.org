@@ -365,6 +365,6 @@ We should be able to represent all header buttons as links - we need only one `M
 
 All our `Model`s and `Msg`s are defined!
 
-You've probably noticed there are some repeating parts among our `Model`s and `Msgs` like `RemoteData`, `ChangesStatus` or `errors` - fight the urge to refactor it and create an abstraction now. Let's leave it decoupled because we are stil not able to fully recognize all patterns and predict all future implementation details that may break our abstractions.
+You've probably noticed there are some repeating parts among our `Model`s and `Msgs` like `RemoteData`, `ChangesStatus` or `errors` - fight the urge to refactor it and create an abstraction now. Let's leave it decoupled because we are still not able to fully recognize all patterns and predict all future implementation details that may break our abstractions.
 
 In the next chapter we'll setup the project with a basic file structure to accommodate our pages.
