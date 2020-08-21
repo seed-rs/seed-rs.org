@@ -51,7 +51,8 @@ We'll try to make the app as simple as possible but also not too simple so you'l
 
 ### Invoice
 
-- Invoice is automatically created and deleted with the associated time block.
+- Users can create one invoice for each time block.
+- Users can delete invoices.
 - Users can modify invoices.
 - Each invoice has these properties:
   - Custom id (optional) - e.g. invoice variable symbol.

@@ -12,7 +12,7 @@ Our plan:
 
 ## 1. New `Slash GraphQL` _backend_
 
-1. Slash Graphql is currently _developer preview_. So it's free, however you need to get invitation. Try my [invitation page](https://slash.dgraph.io/invite.html?id=0x345e) or if it doesn't work write me your email (on [chat](https://discord.gg/JHHcHp5) or `martin@kavik.cz`) and I'll invite you manually. Or you can request an invitation on their homepage - https://dgraph.io/slash-graphql.
+1. Slash Graphql is currently _developer preview_. So it's free, however you need to get invitation. Try my [invitation page](https://slash.dgraph.io/invite.html?id=0x345e) or if it doesn't work write me your email (on [chat](https://discord.gg/JHHcHp5) or `martin@kavik.cz`) and I'll invite you manually. Or you can request an invitation on [their homepage](https://dgraph.io/slash-graphql).
 
 1. Log in to Slash administration and you should see something like:
 

@@ -1,6 +1,6 @@
 # Models & Msgs
 
-Let's define `Model`s and `Msg`s for individual pages and then include them into the root `Model` and `Msg`. We'll ignore page header - we'll resolve it with the root `Model` and `Msg`.
+Let's define `Model`s and `Msg`s for individual pages and then include them into the root `Model` and `Msg`. We'll ignore page header - we'll resolve it together with the root `Model` and `Msg` later.
 
 I recommend to look at page designs while you are writing your `Model`s.
 
@@ -85,9 +85,9 @@ enum Msg {
 }
 ```
 
-You don't find a text like "Changes saved at 19:32:36" in the design however we should add it to signal user that everything works and all data are safely stored on the server. The related data will be stored in the `Model` field `change_status`.
+You don't find a text like "Changes saved at 19:32:36" in the page design however we should add it to signal user that everything works and all data are safely stored on the server. The related data will be stored in the `Model` field `change_status`.
 
-When some saving requests to backend fail - e.g. when the server is down - an error message should be displayed. We can store error messages in the `Model` field `errors`. The user can clear all error messages by click the button - this action fires `Msg::ClearError`.
+When some saving requests to backend fail - e.g. when the server is down - an error message should be displayed. We can store error messages in the `Model` field `errors`. The user can clear all error messages by a button click - this action fires `Msg::ClearError`.
 
 We've chosen the same container for our entities like in the previous TodoMVC example - a combination of `BTreeMap` + `Ulid` as an id. However this time we want to render items from the newest to the oldest ones. It isn't a problem, we can use [reverse iterator](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.rev) because `BTreeMap` implements [DoubleEndedIterator](https://doc.rust-lang.org/std/iter/trait.DoubleEndedIterator.html).
 
@@ -95,7 +95,7 @@ We can define [new types](https://doc.rust-lang.org/stable/rust-by-example/gener
 
 There are often pairs `ClientId` + `ProjectId`. It's a trade-off between some boilerplate in `Msg` variants and more complex algorithms or structures that would allow us to find the chosen entity in the tree. We can refactor it once we need deeply nested entities / tree.
 
-The app synchronizes Client and Project names with the `Model` on each change / key press in the corresponding HTML elements - we will listen for [input event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event). However we don't want to send a request to back-end on each key press. One possible solution is to implement some kind of [debouncing](https://css-tricks.com/debouncing-throttling-explained-examples/) for input events. Or we can try just listen for [change event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event). `Msg::SaveClientName` or `Msg::SaveProjectName` would be sent on `change event`.
+The app synchronizes Client and Project names with the `Model` on each change / key press in the corresponding HTML elements - we will listen for [input event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event). However we don't want to send a request to backend on each key press. One possible solution is to implement some kind of [debouncing](https://css-tricks.com/debouncing-throttling-explained-examples/) for input events. Or we can try just listen for [change event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event). `Msg::SaveClientName` or `Msg::SaveProjectName` would be sent on `change event`.
 
 `fetch::Result<BTreeMap<ClientId, Client>>` is just an alias for `Result<BTreeMap<ClientId, Client>, FetchError>`, where `FetchError` is imported by `seed::prelude::*`. (We'll talk about fetching in the next chapters.)
 
@@ -175,11 +175,11 @@ enum Msg {
 }
 ```
 
-We need to update active TimeEntry on each second so the user see the current time. When the user clicks the button "Stop", the current time will be saved to the active TimeEntry field `stopped`.
+We need to update the active TimeEntry each second so the user see the current time. When the user clicks the button "Stop", the current time will be saved to the active TimeEntry field `stopped`.
 
 While the user is editing the TimeEntry duration, `stopped` is automatically recomputed. When editing is done, `Msg::SaveTimeEntryStopped` is fired. The user can edit the duration and `stopped` time only when the TimeEntry is inactive.
 
-`timer_handle` is a "pointer" to a timer that fires `Msg::OnSecondTick` on each second - it's a `Msg` [Stream](https://docs.rs/futures/0.3.5/futures/stream/trait.Stream.html). The timer is disabled and removed when `timer_handle` is [dropped](https://doc.rust-lang.org/std/ops/trait.Drop.html). `StreamHandle` is imported by `seed::prelude::*`.
+`timer_handle` is a "pointer" to a timer that fires `Msg::OnSecondTick` each second - it's a `Msg` [Stream](https://docs.rs/futures/0.3.5/futures/stream/trait.Stream.html). The timer is disabled and removed when `timer_handle` is [dropped](https://doc.rust-lang.org/std/ops/trait.Drop.html). `StreamHandle` is imported by `seed::prelude::*`.
 
 ---
 
@@ -264,7 +264,7 @@ enum Msg {
 }
 ```
 
-We hope that our back-end will be able to compute `tracked` time from Client's TimeEntries.
+We hope that our backend will be able to compute `tracked` time from Client's TimeEntries.
 
 ---
 
@@ -357,7 +357,7 @@ enum Msg {
 
 `ctx` will be accessible from all pages - it's our "shared" state. The fields in `Context` and `User` will probably change while we will be integrating the identity provider.
 
-The app drops the previous page `Model` when routing to the another page. It's not always the best option but it's the simplest and the most predictable way to switch pages. (If you don't want to drop `Model`s, see the example [pages_keep_state](https://github.com/seed-rs/seed/tree/8d04fcde8a22f785fa20d28cb2f1a9b3b2d7e790/examples/pages_keep_state).)
+The app drops the previous page `Model` while it's routing to the another page. It's not always the best option but it's the simplest and the most predictable way to switch pages. (If you don't want to drop `Model`s, see the example [pages_keep_state](https://github.com/seed-rs/seed/tree/8d04fcde8a22f785fa20d28cb2f1a9b3b2d7e790/examples/pages_keep_state).)
 
 We should be able to represent all header buttons as links - we need only one `Msg` variant `UrlChanged`.
 

@@ -90,6 +90,7 @@ prerender
 purescript
 quickstart's
 realworld
+rebranded
 repos
 rerender
 rerendered

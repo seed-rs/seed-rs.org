@@ -1,6 +1,6 @@
 # About
 
-> Seed is a front-end Rust framework for creating fast and reliable web apps with an elm-like architecture.
+> Seed is a frontend Rust framework for creating fast and reliable web apps with an elm-like architecture.
 
 - All the benefits of Rust and macro based syntax.
 - Minimal overhead, configuration, and boilerplate.
@@ -10,7 +10,7 @@
 ---
 
 # Examples
-If you already know Rust and Seed or front-end development basics, the examples provided in the [repository](https://github.com/seed-rs/seed) are a good place to get started. They also act as an integration testing suite we run before every commit to ensure there are no unintended breaking changes to the user space. Because of Rust's compile-time checking, testing is that much more robust and changes can be pushed confidently.
+If you already know Rust and Seed or frontend development basics, the examples provided in the [repository](https://github.com/seed-rs/seed) are a good place to get started. They also act as an integration testing suite we run before every commit to ensure there are no unintended breaking changes to the user space. Because of Rust's compile-time checking, testing is that much more robust and changes can be pushed confidently.
 
 You'll learn more about Rust and how to setup a new Seed project in next chapters, however if you are an experienced Rust developer and want to try something now - you can run [examples](https://github.com/seed-rs/seed/tree/master/examples) with `cargo make start example_name` from the Seed repository root.
 
@@ -59,7 +59,7 @@ pub fn start() {
 ```
 
 # Quickstart
-If you are proficient in a front-end framework, creating a standalone web app is painless. You'll notice minimal configuration:
+If you are proficient in a frontend framework, creating a standalone web app is painless. You'll notice minimal configuration:
 
 ```
 ├── Cargo.toml
@@ -106,7 +106,7 @@ Our main focus is on developer experience, the benefits of which are currently:
 ### Seed
 - [Awesome-seed-rs](https://github.com/seed-rs/awesome-seed-rs): A curated list of resources
 - [Seed Realworld](https://github.com/seed-rs/seed-rs-realworld): A detailed realworld example site
-- [Engineering Rust Web Applications](https://erwabook.com/intro/): A book describing full-stack Rust web-development, using Seed for the front-end
+- [Engineering Rust Web Applications](https://erwabook.com/intro/): A book describing full-stack Rust web-development, using Seed for the frontend
 
 ### Rust
 - [Rust Discord](https://discordapp.com/invite/rust-lang)

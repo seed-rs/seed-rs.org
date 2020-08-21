@@ -39,7 +39,7 @@ npm install -g get-graphql-schema # or: yarn add global get-graphql-schema
 get-graphql-schema [YOUR_NOTED_GRAPHQL_ENDPOINT] > schema.graphql
 ```
 
-Make sure the file `/schema.graphql` exists. It should look like:
+Make sure the file `/schema.graphql` has been created. It should look like:
 
 <details>
 <summary>schema.graphql</summary>
@@ -584,7 +584,7 @@ type UpdateTimeEntryPayload {
 ## `send_query` & `graphql::Result`
 
 The code below is everything we need to send GraphQL queries to our backend.
-Let's read it all and then explain its parts.
+Let's read it all and then we'll explain its parts.
 
 _Note:_ If the code snippet below looks a little bit too generic to you, you aren't alone - maybe we should wrap it into a new GraphQL Seed service. Please write your opinions in [this issue](https://github.com/seed-rs/seed/issues/519).
 
@@ -647,7 +647,7 @@ impl From<cynic::DecodeError> for GraphQLError {
 }
 ```
 
-1. Let's start with the type alias `Return`:
+1. Let's start with the type alias `Result`:
 
     ```rust
     pub type Result<T> = std::result::Result<T, GraphQLError>;
@@ -664,10 +664,10 @@ impl From<cynic::DecodeError> for GraphQLError {
         DecodeError(cynic::DecodeError)
     }
     ```
-    - `ResponseErrors` means the GraphQL response's `errors` isn't an empty array. _Note:_ Once we need to know `data` even if there are errors, we will need something like [cynic::GraphQLResult](https://docs.rs/cynic/0.8.0/cynic/type.GraphQLResult.html).
+    - `ResponseErrors` means the GraphQL response's `errors` isn't an empty array. _Note:_ Once we need to read `data` even if there are errors, we will need something like [cynic::GraphQLResult](https://docs.rs/cynic/0.8.0/cynic/type.GraphQLResult.html).
     - `DecodeError` means the response is probably malformed and can't be deserialized to prepared Rust items.
 
-1. [From](https://doc.rust-lang.org/std/convert/trait.From.html) implementation for `GraphQLError`:
+1. [From](https://doc.rust-lang.org/std/convert/trait.From.html) implementations for `GraphQLError`:
     ```rust
     impl From<*> for GraphQLError {
         fn from(*: *) -> Self {
@@ -693,7 +693,7 @@ impl From<cynic::DecodeError> for GraphQLError {
 
 ## Queries
 
-We will need 3 queries for our 3 main pages according our `Model`s and UI designs:
+We will need 3 queries for our 3 main pages:
 
 1. For the page `clients_and_projects`:
 
@@ -983,6 +983,6 @@ All those structs and enums are verified against the schema during compilation. 
 
 ---
 
-We are ready to send GraphQL requests, however we can't transform their responses to our `Model`s yet. Let's fix it in the next chapter and finally send them!
+We are ready to send GraphQL requests, however we can't transform their responses to match our `Model` types yet. Let's fix it in the next chapter and finally send them!
 
 

@@ -147,7 +147,7 @@ I think the most important Rust features are:
 
 - Performance, low memory consumption and safety are reasons why also an [operating system](https://www.redox-os.org/), embedded devices and proxy servers are written in Rust.
 
-- One of the Rust compilation targets is [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly). It means very fast front-end apps. (Unfortunately there are current limitations because of missing Rust/native browser API, however it's still fast enough even for production apps.)
+- One of the Rust compilation targets is [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly). It means very fast frontend apps. (Unfortunately there are current limitations because of missing Rust/native browser API, however it's still fast enough even for production apps.)
 
 - There are many high-quality Rust libraries and tools - we don't have to reinvent wheels while we are developing Seed.
 

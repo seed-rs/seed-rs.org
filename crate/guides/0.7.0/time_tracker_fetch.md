@@ -8,7 +8,7 @@ Seed `fetch` is basically a thin wrapper around [Fetch API](https://developer.mo
 
 ## Example A
 
-Let's look at the code first. This is a part of [server_integration](https://github.com/seed-rs/seed/blob/480141ce9e520c07e60ddae58244edb40c9f55e9/examples/server_integration/client/src/example_a.rs) example:
+Let's look at the code first. This is a part of the [server_integration](https://github.com/seed-rs/seed/blob/480141ce9e520c07e60ddae58244edb40c9f55e9/examples/server_integration/client/src/example_a.rs) example:
 
 ```rust
 pub enum Msg {
@@ -63,7 +63,7 @@ pub enum Msg {
 }
 ```
 
-`fetch::Result` is just an alias for `Result<T, FetchError>`. `T` is a custom type `shared::SendMessageResponseBody`.
+`fetch::Result` is just an alias for `Result<T, FetchError>`. `T` is a custom response data type (`shared::SendMessageResponseBody` in our case).
 
 ---
 
@@ -94,7 +94,7 @@ Msg::SendRequest => {
 }
 ```
 
-- `skip()` isn't required - we know that we don't modify `Model` at all so we can tell Seed that it doesn't have to rerender page - i.e. it can _skip_ rendering. `.skip()` is just a simple performance optimization.
+- `skip()` isn't required, but we know that we don't modify `Model` at all so we can tell Seed that it doesn't have to rerender page - i.e. it can _skip_ rendering. `.skip()` is just a simple performance optimization.
 - `async` functions/blocks are executed sometime in the future. That's why they often accept only owned values. In our case we need to clone `model.new_message` because it's possible that it will be mutated before our `async` block is executed and compiler doesn't allow this potentially harmful behavior.
 - `async` blocks are basically `Future`s.
 - Stable Rust supports only `async` blocks and functions. `async` closures aren't supported yet.

@@ -10,7 +10,7 @@ _NOTE:_ It's **WIP**! Routing, Auth0 authentication and GraphQL queries + Slash 
 
 ## Intro
 
-Let's write something more useful - a real Time Tracker with user accounts and full back-end integration! Step-by-step from motivations and design to backend and deploy.  
+Let's write something more useful - a real Time Tracker with user accounts and full backend integration! Step-by-step from motivations and design to backend and deploy.  
 
 You'll learn:
 - To architect a relatively large app (frontend + backend).
@@ -20,6 +20,7 @@ You'll learn:
 - Call Javascript functions from the Rust world.
 - When to use Seed's notify/subscribe mechanism.
 - Fire & handle [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and [GraphQL](https://graphql.org/) requests.
+- How to write and integrate [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements) with [Font Awesome](https://fontawesome.com/).
 - About [JSON Web Tokens](https://jwt.io/).
 - How to integrate [SASS](https://sass-lang.com/) and [Bulma](https://bulma.io/).
 - To define [Slash GraphQL](https://dgraph.io/slash-graphql) backend.

@@ -6,7 +6,7 @@ Our goal:
 
 ![Final result](/static/images/time_tracker_authentication_final.gif)
 
-There isn't a Rust Auth0 SDK and we don't want to write it because it would take a lot of time and there is a big change to write security bugs. Fortunately there is an official [Javascript SDK for SPAs](https://auth0.com/docs/libraries/auth0-single-page-app-sdk) that we can use through `wasm-bindgen` JS/Rust "bridge".
+There isn't a Rust Auth0 SDK and we don't want to write it because it would take a lot of time and there is a big chance to write security bugs. Fortunately there is an official [Javascript SDK for SPAs](https://auth0.com/docs/libraries/auth0-single-page-app-sdk) that we can use through `wasm-bindgen` JS/Rust "bridge".
 
 ## Flows
 
@@ -32,7 +32,7 @@ There isn't a Rust Auth0 SDK and we don't want to write it because it would take
 
 As you can see we don't have to think about tokens, storages, cookies, emails, backend APIs and other "low-level" things thanks to the SDK.
 
-Auth0 uses a combination of memory and cookies instead of `LocalStorage` for managing tokens by default, the log in and sign up process is almost completely orchestrated on their platform (even SDK script is hosted on their CDN) so it should be secure enough.
+Auth0 uses a combination of memory and cookies instead of `LocalStorage` for managing tokens by default and the log in & sign up process is almost completely orchestrated on their platform (even SDK script is hosted on their CDN) so it should be secure enough.
 The trade-off could be the worse UX because of redirects and inconsistent UI in the app and among emails the user receives.  
 
 
@@ -64,7 +64,7 @@ The trade-off could be the worse UX because of redirects and inconsistent UI in 
 
 We'll move the app initialization script from `index.html` to `index.js`, fetch auth data and pass user data from SDK's JS Auth0 client to the Rust part of the app.
 
-_Note:_ I was drawing inspiration from the official [Auth0 tutorial](https://auth0.com/docs/quickstart/spa/vanillajs) for writing SPA in vanilla JS and from [SDK docs](https://auth0.com/docs/libraries/auth0-single-page-app-sdk) during the code writing.
+_Note:_ I was drawing inspiration from the official [Auth0 tutorial](https://auth0.com/docs/quickstart/spa/vanillajs) for writing SPA in vanilla JS and from [SDK docs](https://auth0.com/docs/libraries/auth0-single-page-app-sdk) during the writing.
 
 1. Add a new file `/index.js` with the app and auth initialization script:
     ```js

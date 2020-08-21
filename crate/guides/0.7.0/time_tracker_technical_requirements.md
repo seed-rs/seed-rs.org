@@ -23,7 +23,7 @@ Time Tracker users don't want to lose their data and the app will be used as a l
 
 1. SEO is not important - we don't need [prerendering](https://www.netlify.com/blog/2016/11/22/prerendering-explained/) or [server-side rendering](https://blog.jakoblind.no/getting-started-react-ssr/).
    - If you want to prerender your app as a build step, you can use Seed [Webpack quickstart](https://github.com/seed-rs/seed-quickstart-webpack) (or [Seeder](https://github.com/MartinKavik/seeder) in the future).
-   - Seed SSR is planned, but it's not a priority now.
+   - _Note:_ Seed SSR is planned, but it's not a priority now.
 
 1. The app don't have to respect all [accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/What_is_accessibility) best practices - we assume that the most of users will be developers without disabilities and accessibility itself is out-of-scope of this tutorial.
 
@@ -39,7 +39,7 @@ Time Tracker users don't want to lose their data and the app will be used as a l
 
 1. We expect that users won't create many entities and that the traffic amount won't be very high. However scalability would be nice.
 
-1. We don't need any realtime communication. It means we don't have to integrate something like [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) or [Server-send events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events).
+1. We don't need any realtime communication. It means we don't have to integrate something like [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) or [Server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events).
 
 1. We don't have to support old or "exotic" browsers.
 

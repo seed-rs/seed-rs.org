@@ -964,7 +964,7 @@ and various special cases. This is a very important change that gives us
 confidence in extending language definitions and refactoring library core.
 
 We're going to redesign the old [demo/test suite][demo] into an interactive
-demo web app. If you're confident front-end developer or designer and want to
+demo web app. If you're confident frontend developer or designer and want to
 help us with it, drop a comment into [the issue][#542] on GitHub.
 
 [test]: https://github.com/isagalaev/highlight.js/tree/master/test
