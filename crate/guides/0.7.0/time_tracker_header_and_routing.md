@@ -291,7 +291,7 @@ _WARNING_: `event.stop_propagation()` or `event.prevent_default()` in combinatio
 
 We need to `subscribe` to `subs::UrlChanged(url)`. (`Msg::UrlChanged` expects this type as the only argument so `Msg::UrlChanged` constructor effectively works as a subscription handler.)
 
-And we pick the right page.
+And we choose the right `page` by calling `Page::init` with the provided `url`.
 
 ```rust
 fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
@@ -306,7 +306,7 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
 }
 ```
 
-We `init` a page according to the provided url.
+`Page::init`:
 
 
 ```rust
@@ -483,7 +483,7 @@ Edit `index.html`:
     ...
 ```
 
-Now you website and routing work for both url:
+Now your website and routing should work for both url:
 - [localhost:8000/](http://localhost:8000/)
 - [localhost:8000/ui](http://localhost:8000/ui)
 

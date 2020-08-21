@@ -16,8 +16,8 @@ _Notes:_
 - URL: `/`
 - It will be used only as a crossroad. There could be simple button "Go to Time Tracker" as a CTA / shortcut.
 - No item in the main menu is active.
-- If the user is logged in, show buttons "Sign up" and "Log in". 
-- If the user isn't logged in, show buttons "[user_name]" and "Log out". The first button navigates to the page `Settings`.
+- If the user isn't logged in, show buttons "Sign up" and "Log in". 
+- If the user is logged in, show buttons "[user_name]" and "Log out". The former navigates to the page `Settings` and the latter one redirects to the identity provider.
 - `Bulma` logo will be replaced.
 - `seed-rs.org` should be a link.
 - Themes / colors may be changed later.
@@ -29,7 +29,10 @@ _Notes:_
 ## Login / Registration
 
 - It will be handled by our identity provider.
-- It should look like this: ![Auth0 Universal Login](/static/images/auth0_universal_login.png)
+- It should look like this: 
+
+    ![Auth0 Universal Login](/static/images/auth0_universal_login.png)
+    
 - Doc: [auth0.com/docs/universal-login](https://auth0.com/docs/universal-login)
 - (image original [location](https://auth0.com/blog/introducing-the-new-auth0-universal-login-experience/))
 
@@ -89,4 +92,4 @@ _Notes:_
 
 ---
 
-Architecture and UI are designed, the next step is the front-end `Model`.
+Architecture and UI are designed, the next step is the frontend `Model`.

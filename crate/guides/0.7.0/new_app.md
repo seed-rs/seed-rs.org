@@ -9,7 +9,7 @@ There are several ways to create your new Seed app:
 
 1. **Webpack quickstart**
    - [github.com/seed-rs/seed-quickstart-webpack](https://github.com/seed-rs/seed-quickstart-webpack)
-   - Choose this template if you are experienced front-end / Seed developer or when you want to write production apps and like challenges.
+   - Choose this template if you are experienced frontend / Seed developer or when you want to write production apps and like challenges.
    - This website is based on it.
 
 1. **Seeder**

@@ -32,7 +32,7 @@ We can start with the simplest page - `src/page/clients_and_projects.rs`.
         errors: Vec<graphql::GraphQLError>,
     ```
 
-1. Change `fetch::Result` to `graphql::Result` in `Msg::ClientsFetched` and `log!` & update `Model` on fetch:
+1. Change `fetch::Result` to `graphql::Result` in `Msg::ClientsFetched`. And we want to log `clients` and update `Model` on fetch:
 
     ```rust
     pub enum Msg {
@@ -106,6 +106,7 @@ We can start with the simplest page - `src/page/clients_and_projects.rs`.
     }
     ```
     - The purpose of this function is to send a GraphQL request and then return response data to fill our `Model` later. However there is a problem - we can't just move the response data directly to our `Model` because they have different types. So we have to transform response data to `Model` data by `*_mapper` closures.
+      - If you have tendency to delete mappers and use response data directly to remove some boilerplate, please fight the urge. It would mix two different application parts - business core and IO - and it usually doesn't end well. I recommend to read about [hexagonal architecture](https://madewithlove.com/hexagonal-architecture-demystified/).
 
     - `query_mod::Query::fragment(())` creates a [SelectionSet](https://docs.rs/cynic/0.8.0/cynic/selection_set/struct.SelectionSet.html) with no [Arguments](https://docs.rs/cynic/0.8.0/cynic/struct.Argument.html) (represented by [unit](https://doc.rust-lang.org/std/primitive.unit.html) `()`).
 
@@ -142,7 +143,7 @@ It's very similar to the previous page.
         errors: Vec<graphql::GraphQLError>,
     ```
 
-1. Change `fetch::Result` to `graphql::Result` in `Msg::ClientsFetched` and `log!` & update `Model` on fetch:
+1. Change `fetch::Result` to `graphql::Result` in `Msg::ClientsFetched`. And we want to log `clients` and update `Model` on fetch:
 
     ```rust
     pub enum Msg {
@@ -259,7 +260,7 @@ It's very similar to the previous page.
         errors: Vec<graphql::GraphQLError>,
     ```
 
-1. Change `fetch::Result` to `graphql::Result` in `Msg::ClientsFetched` and `log!` & update `Model` on fetch:
+1. Change `fetch::Result` to `graphql::Result` in `Msg::ClientsFetched`. And we want to log `clients` and update `Model` on fetch:
 
     ```rust
     pub enum Msg {
