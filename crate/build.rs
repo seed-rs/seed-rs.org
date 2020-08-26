@@ -141,12 +141,6 @@ where
                     attributes.push(("lang", code_lang.to_string()));
                 }
 
-                if let Some(Event::Text(text)) = parser.next() {
-                    attributes.push(("code", text.to_string()));
-                } else {
-                    panic!("the text has to follow the opening code-block tag");
-                }
-
                 let mut code = String::new();
 
                 while let Some(event) = parser.next() {
