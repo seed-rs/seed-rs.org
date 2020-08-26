@@ -4,10 +4,10 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 @customElement('code-block')
 export class CodeBlock extends LitElement {
   @property() lang = '';
+  @property() code = '';
 
   render() {
-    const code = decodeHtml(this.innerHTML);
-    const highlightedCode = highlightCode(code, this.lang)
+    const highlightedCode = highlightCode(this.code, this.lang)
 
     return html`<pre><code>${unsafeHTML(highlightedCode)}</code></pre>`;
   }
@@ -15,13 +15,6 @@ export class CodeBlock extends LitElement {
   createRenderRoot() {
     return this;
   }
-}
-
-function decodeHtml(html: string): string {
-  return new DOMParser()
-    .parseFromString(html, "text/html")
-    .documentElement
-    .textContent!;
 }
 
 function highlightCode(code: string, lang: string): string {

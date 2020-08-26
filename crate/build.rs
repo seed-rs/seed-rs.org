@@ -5,6 +5,7 @@ use std::{
     path::{Path, PathBuf},
     rc::Rc,
 };
+use uuid::Uuid;
 
 fn main() {
     for path in html_and_text_files() {
@@ -85,8 +86,9 @@ fn markdown_to_html_and_text_parts(markdown: &str) -> (String, Vec<String>) {
     let mut html = String::new();
     let text_parts = Rc::new(RefCell::new(Vec::<String>::new()));
 
-    let parser = transform_code_blocks(parser);
     let parser = extract_lowercase_text(parser, text_parts.clone());
+    let parser = transform_code_blocks(parser);
+    let parser = add_details_el_key(parser);
 
     pulldown_cmark::html::push_html(&mut html, parser);
     (html, text_parts.replace(Vec::new()))
@@ -120,20 +122,77 @@ where
     })
 }
 
-fn transform_code_blocks<'a, I>(parser: I) -> impl Iterator<Item = Event<'a>>
+/// Transforms markdown code blocks to custom elements `<code-block lang="xx" code ="xx"></code-block>`.
+#[allow(clippy::while_let_on_iterator)]
+fn transform_code_blocks<'a, I>(
+    mut parser: I,
+) -> impl Iterator<Item = Event<'a>>
+where
+    I: Iterator<Item = Event<'a>>,
+{
+    let mut events = Vec::new();
+
+    while let Some(event) = parser.next() {
+        match event {
+            Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(code_lang))) => {
+                let mut attributes = Vec::<(&str, String)>::new();
+
+                if !code_lang.is_empty() {
+                    attributes.push(("lang", code_lang.to_string()));
+                }
+
+                if let Some(Event::Text(text)) = parser.next() {
+                    attributes.push(("code", text.to_string()));
+                } else {
+                    panic!("the text has to follow the opening code-block tag");
+                }
+
+                let mut code = String::new();
+
+                while let Some(event) = parser.next() {
+                    match event {
+                        Event::Text(text) => {
+                            code.push_str(&text.to_string());
+                        }
+                        Event::End(Tag::CodeBlock(_)) => {
+                            attributes.push(("code", code));
+                            break;
+                        }
+                        _ => panic!("the closing code-block tag or text has to follow the opening code-block tag"),
+                    }
+                }
+
+                let attributes: String = attributes
+                    .into_iter()
+                    .map(|(key, value)| {
+                        format!(" {}=\"{}\"", key, value.replace('"', "&quot;"))
+                    })
+                    .collect();
+
+                events.push(Event::Html(
+                    format!("<code-block{}></code-block>", attributes).into(),
+                ))
+            },
+            _ => events.push(event),
+        }
+    }
+
+    events.into_iter()
+}
+
+fn add_details_el_key<'a, I>(parser: I) -> impl Iterator<Item = Event<'a>>
 where
     I: Iterator<Item = Event<'a>>,
 {
     parser.map(|event| match event {
-        Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(code_lang))) => {
-            let lang = if code_lang.is_empty() {
-                String::new()
-            } else {
-                format!(" lang=\"{}\"", code_lang)
-            };
-            Event::Html(format!("<code-block{}>", lang).into())
+        Event::Html(html) if html.contains("<details") => {
+            let html = html.replacen(
+                "<details",
+                &format!("<details data-el-key=\"{}\" ", Uuid::new_v4()),
+                1,
+            );
+            Event::Html(html.into())
         },
-        Event::End(Tag::CodeBlock(_)) => Event::Html("</code-block>".into()),
         _ => event,
     })
 }
