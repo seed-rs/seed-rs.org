@@ -116,7 +116,7 @@ pub enum SeedVersion {
 }
 
 impl SeedVersion {
-    pub fn version(self) -> &'static str {
+    pub const fn version(self) -> &'static str {
         match self {
             Self::V0_6_0 => "0.6.0",
             Self::V0_7_0 => "0.7.0",
@@ -124,7 +124,7 @@ impl SeedVersion {
         }
     }
 
-    pub fn date(self) -> &'static str {
+    pub const fn date(self) -> &'static str {
         match self {
             Self::V0_6_0 => "Feb 1, 2020",
             Self::V0_7_0 => "May 8, 2020",
