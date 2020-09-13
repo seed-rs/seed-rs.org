@@ -12,7 +12,7 @@ I've found 3 GraphQL clients on [crates.io](https://crates.io/) before I've star
 
 - [cynic](https://github.com/obmarg/cynic)
    - It's also a pretty new project. Author draws inspiration from the Elm world and `graphql-client` (see below) and tries to write a less "magical" API - the library allows you to write own items that will be used in queries and validates them later against the given GraphQL scheme. Other libraries usually generate all the structures for you by themselves.
-   - The latest version at the time of writing is `0.8.0` from `Aug 16, 2020` ; All time downloads: `720`.
+   - The latest version at the time of writing is `0.9.0` from `Sep 11, 2020` ; All time downloads: `858`.
 
 - [graphql-client](https://github.com/graphql-rust/graphql-client)
   - It's the oldest and the most mature library.
@@ -569,8 +569,7 @@ type UpdateTimeEntryPayload {
 
     ```toml
     serde-wasm-bindgen ...
-    cynic = "0.8.0"
-    serde_json = "1.0.57"
+    cynic = "0.9.0"
     ```
 
 1. Create a new empty file `/src/graphql.rs`. This module will contain our GraphQL queries.
@@ -599,7 +598,7 @@ pub type Result<T> = std::result::Result<T, GraphQLError>;
 pub async fn send_query<'a, ResponseData: 'a, Root: cynic::QueryRoot>(
     selection_set: cynic::SelectionSet<'a, ResponseData, Root>
 ) -> Result<ResponseData> {
-    let query = cynic::Query::new(selection_set);
+    let query = cynic::Operation::query(selection_set);
 
     let graphql_response = 
         // @TODO: Move url to a config file.
@@ -687,7 +686,7 @@ impl From<cynic::DecodeError> for GraphQLError {
         ```rust
         graphql::send_query(MyQuery::fragment(()))
         ```
-        And you can read about `cynic` types on [docs.rs](https://docs.rs/cynic/0.8.0/cynic/) or [cynic-rs.dev](https://cynic-rs.dev/).
+        And you can read about `cynic` types on [docs.rs](https://docs.rs/cynic/0.9.0/cynic/) or [cynic-rs.dev](https://cynic-rs.dev/).
 
     - `send_request`'s body isn't very interesting - just one `POST` fetch request with basic error handling and some `cynic`-related calls that I've found in `cynic`'s docs.
 
