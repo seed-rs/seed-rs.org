@@ -2,7 +2,7 @@
 
 "Real" data are loaded in `Model`s for pages `clients_and_projects`, `time_tracker` and `time_blocks` from the backend. So let's write `view` functions for these pages to display them. 
 
-We'll also write `view` for the `Home` page and improve our header style a bit to match  the look of pages.
+We'll also write `view` for the `home` and `not_found` page and improve our header style a bit to match  the look of pages.
 
 We won't write `view` for `Settings` page - let's focus on it later because it's quite different from the other pages. And we won't write `view` functions for errors and saving changes in this chapter.
 
@@ -107,6 +107,29 @@ We won't write `view` for `Settings` page - let's focus on it later because it's
     ```
 
 _Note:_ `view` functions and their helpers are often pretty long because they contain a lot of HTML-like objects. However there shouldn't be any complex logic - [Bulma's docs](https://bulma.io/documentation/) and [MDN CSS docs](https://developer.mozilla.org/en-US/docs/Web/CSS) should be enough to help you to understand them.
+
+## Not Found
+
+![Views - Not Found](/static/images/time_tracker_views_not_found.png)
+
+1. We can draw inspiration from the `home` page and write to `src/page/home.rs`:
+
+    ```rust
+    use seed::{prelude::*, *};
+
+    pub fn view<Ms>() -> Node<Ms> {
+        section![C!["hero", "is-medium", "ml-6"],
+            div![C!["hero-body"],
+                h1![C!["title", "is-size-1"],
+                    "404",
+                ],
+                h2![C!["subtitle", "is-size-3"],
+                    "Page not found",
+                ]
+            ]
+        ]
+    }
+    ```
 
 ## Clients & Projects
 
@@ -864,6 +887,9 @@ _Note:_ `view` functions and their helpers are often pretty long because they co
         for_active_time_entry: bool
     ) -> Node<Msg> {
         let num_seconds = duration.num_seconds();
+
+        let negative = num_seconds < 0;
+        let num_seconds = num_seconds.abs();
         let hours = num_seconds / 3600;
         let minutes = num_seconds % 3600 / 60;
         let seconds = num_seconds % 60;
@@ -885,7 +911,7 @@ _Note:_ `view` functions and their helpers are often pretty long because they co
                 At::Value => if let Some(TimeEntryChange::Duration(duration)) = time_entry_change {
                     duration.to_owned()
                 } else {
-                    format!("{}:{:02}:{:02}", hours, minutes, seconds)
+                    format!("{}{}:{:02}:{:02}", if negative { "-" } else { "" }, hours, minutes, seconds)
                 }
             },
             input_ev(Ev::Input, move |duration| Msg::TimeEntryDurationChanged(client_id, project_id, time_entry_id, duration)),
@@ -1019,135 +1045,135 @@ _Note:_ `view` functions and their helpers are often pretty long because they co
 
 1. Our updated `update` function:
 
-<details>
-<summary><code>update</code> function</summary>
+    <details>
+    <summary><code>update</code> function</summary>
 
-    ```rust
-    pub fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
-        match msg {
-            Msg::ClientsFetched(Ok(clients)) => {
-                log!("Msg::ClientsFetched", clients);
-                model.clients = RemoteData::Loaded(clients);
-            },
-            Msg::ClientsFetched(Err(graphql_error)) => {
-                model.errors.push(graphql_error);
-            },
+        ```rust
+        pub fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
+            match msg {
+                Msg::ClientsFetched(Ok(clients)) => {
+                    log!("Msg::ClientsFetched", clients);
+                    model.clients = RemoteData::Loaded(clients);
+                },
+                Msg::ClientsFetched(Err(graphql_error)) => {
+                    model.errors.push(graphql_error);
+                },
 
-            Msg::ChangesSaved(None) => {
-                log!("Msg::ChangesSaved");
-            },
-            Msg::ChangesSaved(Some(fetch_error)) => {
-                log!("Msg::ChangesSaved", fetch_error);
-            },
+                Msg::ChangesSaved(None) => {
+                    log!("Msg::ChangesSaved");
+                },
+                Msg::ChangesSaved(Some(fetch_error)) => {
+                    log!("Msg::ChangesSaved", fetch_error);
+                },
 
-            Msg::ClearErrors => {},
+                Msg::ClearErrors => {},
 
-            // ------ TimeBlock ------
-            
-            Msg::AddTimeBlock(client_id) => {
-                log!("Msg::AddTimeBlock", client_id);
-            },
-            Msg::DeleteTimeBlock(client_id, time_block_id) => {
-                log!("Msg::DeleteTimeBlock", client_id, time_block_id);
-            },
-            Msg::SetTimeBlockStatus(client_id, time_block_id, time_block_status) => {
-                log!("Msg::SetTimeBlockStatus", client_id, time_block_id, time_block_status);
-            },
-
-            Msg::TimeBlockNameChanged(client_id, time_block_id, name) => {
-                let mut set_time_block_name = move |name| -> Option<()> {
-                    Some(model
-                        .clients
-                        .loaded_mut()?
-                        .get_mut(&client_id)?
-                        .time_blocks
-                        .get_mut(&time_block_id)?
-                        .name = name)
-                };
-                log!("Msg::TimeBlockNameChanged", client_id, time_block_id, name);
-                set_time_block_name(name);
-            },
-            Msg::SaveTimeBlockName(client_id, time_block_id) => {
-                log!("Msg::SaveTimeBlockName", client_id, time_block_id);
-            },
-
-            Msg::TimeBlockDurationChanged(client_id, time_block_id, duration) => {
-                let mut set_time_block_duration_change = move |duration| -> Option<()> {
-                    Some(model
-                        .clients
-                        .loaded_mut()?
-                        .get_mut(&client_id)?
-                        .time_blocks
-                        .get_mut(&time_block_id)?
-                        .duration_change = Some(duration))
-                };
-                log!("Msg::TimeBlockDurationChanged", client_id, time_block_id, duration);
-                set_time_block_duration_change(duration);
-            },
-            Msg::SaveTimeBlockDuration(client_id, time_block_id) => {
-                let mut set_time_block_duration_change = move || -> Option<()> {
-                    Some(model
-                        .clients
-                        .loaded_mut()?
-                        .get_mut(&client_id)?
-                        .time_blocks
-                        .get_mut(&time_block_id)?
-                        .duration_change = None)
-                };
-                log!("Msg::SaveTimeBlockDuration", client_id, time_block_id);
-                set_time_block_duration_change();
-            },
-
-            // ------ Invoice ------
-
-            Msg::AttachInvoice(client_id, time_block_id) => {
-                log!("Msg::AttachInvoice", client_id, time_block_id);
-            },
-            Msg::DeleteInvoice(client_id, time_block_id) => {
-                log!("Msg::DeleteInvoice", client_id, time_block_id);
-            },
-
-            Msg::InvoiceCustomIdChanged(client_id, time_block_id, custom_id) => {
-                let mut set_invoice_custom_id = move |custom_id| -> Option<()> {
-                    Some(model
-                        .clients
-                        .loaded_mut()?
-                        .get_mut(&client_id)?
-                        .time_blocks
-                        .get_mut(&time_block_id)?
-                        .invoice.as_mut()?
-                        .custom_id = Some(custom_id))
-                };
-                log!("Msg::InvoiceCustomIdChanged", client_id, time_block_id, custom_id);
-                set_invoice_custom_id(custom_id);
+                // ------ TimeBlock ------
                 
-            },
-            Msg::SaveInvoiceCustomId(client_id, time_block_id) => {
-                log!("Msg::SaveInvoiceCustomId", client_id, time_block_id);
-            },
+                Msg::AddTimeBlock(client_id) => {
+                    log!("Msg::AddTimeBlock", client_id);
+                },
+                Msg::DeleteTimeBlock(client_id, time_block_id) => {
+                    log!("Msg::DeleteTimeBlock", client_id, time_block_id);
+                },
+                Msg::SetTimeBlockStatus(client_id, time_block_id, time_block_status) => {
+                    log!("Msg::SetTimeBlockStatus", client_id, time_block_id, time_block_status);
+                },
 
-            Msg::InvoiceUrlChanged(client_id, time_block_id, url) => {
-                let mut set_invoice_url = move |url| -> Option<()> {
-                    Some(model
-                        .clients
-                        .loaded_mut()?
-                        .get_mut(&client_id)?
-                        .time_blocks
-                        .get_mut(&time_block_id)?
-                        .invoice.as_mut()?
-                        .url = Some(url))
-                };
-                log!("Msg::InvoiceUrlChanged", client_id, time_block_id, url);
-                set_invoice_url(url);
-            },
-            Msg::SaveInvoiceUrl(client_id, time_block_id) => {
-                log!("Msg::SaveInvoiceUrl", client_id, time_block_id);
-            },
+                Msg::TimeBlockNameChanged(client_id, time_block_id, name) => {
+                    let mut set_time_block_name = move |name| -> Option<()> {
+                        Some(model
+                            .clients
+                            .loaded_mut()?
+                            .get_mut(&client_id)?
+                            .time_blocks
+                            .get_mut(&time_block_id)?
+                            .name = name)
+                    };
+                    log!("Msg::TimeBlockNameChanged", client_id, time_block_id, name);
+                    set_time_block_name(name);
+                },
+                Msg::SaveTimeBlockName(client_id, time_block_id) => {
+                    log!("Msg::SaveTimeBlockName", client_id, time_block_id);
+                },
+
+                Msg::TimeBlockDurationChanged(client_id, time_block_id, duration) => {
+                    let mut set_time_block_duration_change = move |duration| -> Option<()> {
+                        Some(model
+                            .clients
+                            .loaded_mut()?
+                            .get_mut(&client_id)?
+                            .time_blocks
+                            .get_mut(&time_block_id)?
+                            .duration_change = Some(duration))
+                    };
+                    log!("Msg::TimeBlockDurationChanged", client_id, time_block_id, duration);
+                    set_time_block_duration_change(duration);
+                },
+                Msg::SaveTimeBlockDuration(client_id, time_block_id) => {
+                    let mut set_time_block_duration_change = move || -> Option<()> {
+                        Some(model
+                            .clients
+                            .loaded_mut()?
+                            .get_mut(&client_id)?
+                            .time_blocks
+                            .get_mut(&time_block_id)?
+                            .duration_change = None)
+                    };
+                    log!("Msg::SaveTimeBlockDuration", client_id, time_block_id);
+                    set_time_block_duration_change();
+                },
+
+                // ------ Invoice ------
+
+                Msg::AttachInvoice(client_id, time_block_id) => {
+                    log!("Msg::AttachInvoice", client_id, time_block_id);
+                },
+                Msg::DeleteInvoice(client_id, time_block_id) => {
+                    log!("Msg::DeleteInvoice", client_id, time_block_id);
+                },
+
+                Msg::InvoiceCustomIdChanged(client_id, time_block_id, custom_id) => {
+                    let mut set_invoice_custom_id = move |custom_id| -> Option<()> {
+                        Some(model
+                            .clients
+                            .loaded_mut()?
+                            .get_mut(&client_id)?
+                            .time_blocks
+                            .get_mut(&time_block_id)?
+                            .invoice.as_mut()?
+                            .custom_id = Some(custom_id))
+                    };
+                    log!("Msg::InvoiceCustomIdChanged", client_id, time_block_id, custom_id);
+                    set_invoice_custom_id(custom_id);
+                    
+                },
+                Msg::SaveInvoiceCustomId(client_id, time_block_id) => {
+                    log!("Msg::SaveInvoiceCustomId", client_id, time_block_id);
+                },
+
+                Msg::InvoiceUrlChanged(client_id, time_block_id, url) => {
+                    let mut set_invoice_url = move |url| -> Option<()> {
+                        Some(model
+                            .clients
+                            .loaded_mut()?
+                            .get_mut(&client_id)?
+                            .time_blocks
+                            .get_mut(&time_block_id)?
+                            .invoice.as_mut()?
+                            .url = Some(url))
+                    };
+                    log!("Msg::InvoiceUrlChanged", client_id, time_block_id, url);
+                    set_invoice_url(url);
+                },
+                Msg::SaveInvoiceUrl(client_id, time_block_id) => {
+                    log!("Msg::SaveInvoiceUrl", client_id, time_block_id);
+                },
+            }
         }
-    }
-    ```
+        ```
 
-</details>
+    </details>
 
 1. And finally the `view` function:
 

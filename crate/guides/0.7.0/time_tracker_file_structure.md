@@ -37,7 +37,7 @@ So let's update or create all the files!
 ```toml
 ...
 [dependencies]
-chrono = "0.4.13"
+chrono = "0.4.15"
 ulid = "0.4.0"
 
 ...

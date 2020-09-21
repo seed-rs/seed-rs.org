@@ -20,9 +20,8 @@ You'll learn:
 - Call Javascript functions from the Rust world.
 - When to use Seed's notify/subscribe mechanism.
 - Fire & handle [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and [GraphQL](https://graphql.org/) requests.
-- How to write and integrate [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements) with [Font Awesome](https://fontawesome.com/).
 - About [JSON Web Tokens](https://jwt.io/).
-- How to integrate [SASS](https://sass-lang.com/) and [Bulma](https://bulma.io/).
+- How to integrate [SASS](https://sass-lang.com/), [Bulma](https://bulma.io/) and [Font Awesome](https://fontawesome.com/).
 - To define [Slash GraphQL](https://dgraph.io/slash-graphql) backend.
 - Setup and integrate [Auth0](https://auth0.com/).
 
