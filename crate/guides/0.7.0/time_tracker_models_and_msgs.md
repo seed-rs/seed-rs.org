@@ -248,6 +248,9 @@ enum Msg {
     DeleteTimeBlock(ClientId, TimeBlockId),
     SetTimeBlockStatus(ClientId, TimeBlockId, TimeBlockStatus),
 
+    TimeBlockNameChanged(ClientId, TimeBlockId, String),
+    SaveTimeBlockName(ClientId, TimeBlockId),
+
     TimeBlockDurationChanged(ClientId, TimeBlockId, String),
     SaveTimeBlockDuration(ClientId, TimeBlockId),
 

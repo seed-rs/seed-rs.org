@@ -431,12 +431,12 @@ pub fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         Msg::TimeEntryNameChanged(client_id, project_id, time_entry_id, name) => {},
         Msg::SaveTimeEntryName(client_id, project_id, time_entry_id) => {},
 
-        Msg::TimeEntryStartedChanged(client_id, project_id, time_entry_id, name) => {},
+        Msg::TimeEntryStartedChanged(client_id, project_id, time_entry_id, started) => {},
         Msg::SaveTimeEntryStarted(client_id, project_id, time_entry_id) => {},
 
-        Msg::TimeEntryDurationChanged(client_id, project_id, time_entry_id, name) => {},
+        Msg::TimeEntryDurationChanged(client_id, project_id, time_entry_id, duration) => {},
 
-        Msg::TimeEntryStoppedChanged(client_id, project_id, time_entry_id, name) => {},
+        Msg::TimeEntryStoppedChanged(client_id, project_id, time_entry_id, stopped) => {},
         Msg::SaveTimeEntryStopped(client_id, project_id, time_entry_id) => {},
 
         Msg::OnSecondTick => {},
@@ -547,6 +547,9 @@ pub enum Msg {
     DeleteTimeBlock(ClientId, TimeBlockId),
     SetTimeBlockStatus(ClientId, TimeBlockId, TimeBlockStatus),
 
+    TimeBlockNameChanged(ClientId, TimeBlockId, String),
+    SaveTimeBlockName(ClientId, TimeBlockId),
+
     TimeBlockDurationChanged(ClientId, TimeBlockId, String),
     SaveTimeBlockDuration(ClientId, TimeBlockId),
 
@@ -577,6 +580,9 @@ pub fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         Msg::AddTimeBlock(client_id) => {},
         Msg::DeleteTimeBlock(client_id, time_block_id) => {},
         Msg::SetTimeBlockStatus(client_id, time_block_id, time_block_status) => {},
+
+        Msg::TimeBlockNameChanged(client_id, time_block_id, name) => {},
+        Msg::SaveTimeBlockName(client_id, time_block_id) => {},
 
         Msg::TimeBlockDurationChanged(client_id, time_block_id, duration) => {},
         Msg::SaveTimeBlockDuration(client_id, time_block_id) => {},
