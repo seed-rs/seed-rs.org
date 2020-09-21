@@ -345,19 +345,17 @@ It's very similar to the previous page.
             projects
                 .into_iter()
                 .flat_map(|project| project.time_entries)
-                .filter_map(|time_entry| {
-                    if let Some(stopped) = time_entry.stopped {
-                        
-                        let started: DateTime<Local> = 
-                            time_entry.started.0.parse().expect("parse time_entry started");
-                        
-                        let stopped: DateTime<Local> = 
-                            stopped.0.parse().expect("parse time_entry stopped");
-                        
-                        Some(stopped - started)
+                .map(|time_entry| {
+                    let started: DateTime<Local> = 
+                        time_entry.started.0.parse().expect("parse time_entry started");
+                    
+                    let stopped: DateTime<Local> = if let Some(stopped) = time_entry.stopped {
+                        stopped.0.parse().expect("parse time_entry stopped")
                     } else {
-                        None
-                    }
+                        chrono::Local::now()
+                    };
+                    
+                    stopped - started
                 })
                 .fold(Duration::seconds(0), Duration::add)
         };
