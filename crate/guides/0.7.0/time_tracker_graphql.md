@@ -763,7 +763,7 @@ We will need 3 queries for our 3 main pages:
 
 Let's do a magic trick. Go to [generator.cynic-rs.dev](https://generator.cynic-rs.dev/), write your GraphQL endpoint url or paste your schema and then insert one of the queries above into the query builder window:
 
-![Cynic Generator](/static/images/timer_tracker_cynic_generator.png)
+![Cynic Generator](/static/images/time_tracker_cynic_generator.png)
 
 Notice especially the right panel "GENERATED RUST".
 
