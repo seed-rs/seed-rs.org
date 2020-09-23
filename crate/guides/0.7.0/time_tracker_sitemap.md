@@ -58,8 +58,6 @@ _Notes:_
 
 ![Design Clients & Projects](/static/images/design_clients_and_projects.png)
 
-- _Note:_ SPA frameworks usually don't like font libraries very much because those libraries often changes DOM elements by themselves. We'll leverage [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements) to eliminate this problem while we will be integrating [Font Awesome](https://fontawesome.com/).
-
 ---
 
 ## Time Tracker

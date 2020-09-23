@@ -178,6 +178,14 @@ _Note:_ `view` functions and their helpers are often pretty long because they co
     }
 
     impl<T> RemoteData<T> {
+        fn loaded(&self) -> Option<&T> {
+            if let Self::Loaded(data) = self {
+                Some(data)
+            } else {
+                None
+            }
+        }
+
         fn loaded_mut(&mut self) -> Option<&mut T> {
             if let Self::Loaded(data) = self {
                 Some(data)
@@ -437,6 +445,14 @@ _Note:_ `view` functions and their helpers are often pretty long because they co
     }
 
     impl<T> RemoteData<T> {
+        fn loaded(&self) -> Option<&T> {
+            if let Self::Loaded(data) = self {
+                Some(data)
+            } else {
+                None
+            }
+        }
+
         fn loaded_mut(&mut self) -> Option<&mut T> {
             if let Self::Loaded(data) = self {
                 Some(data)
@@ -968,6 +984,14 @@ _Note:_ `view` functions and their helpers are often pretty long because they co
     }
 
     impl<T> RemoteData<T> {
+        fn loaded(&self) -> Option<&T> {
+            if let Self::Loaded(data) = self {
+                Some(data)
+            } else {
+                None
+            }
+        }
+
         fn loaded_mut(&mut self) -> Option<&mut T> {
             if let Self::Loaded(data) = self {
                 Some(data)
