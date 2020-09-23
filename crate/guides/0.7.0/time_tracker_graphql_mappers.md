@@ -318,6 +318,7 @@ It's very similar to the previous page.
 
         let invoice_mapper = |invoice: query_mod::Invoice| {
             Invoice {
+                id: invoice.id.parse().expect("parse invoice Ulid"),
                 custom_id: invoice.custom_id,
                 url: invoice.url,
             }
@@ -325,9 +326,9 @@ It's very similar to the previous page.
 
         let status_mapper = |status: query_mod::TimeBlockStatus| {
             match status {
-                query_mod::TimeBlockStatus::NON_BILLABLE => TimeBlockStatus::NonBillable,
-                query_mod::TimeBlockStatus::UNPAID => TimeBlockStatus::Unpaid,
-                query_mod::TimeBlockStatus::PAID => TimeBlockStatus::Paid,
+                query_mod::TimeBlockStatus::NonBillable => TimeBlockStatus::NonBillable,
+                query_mod::TimeBlockStatus::Unpaid => TimeBlockStatus::Unpaid,
+                query_mod::TimeBlockStatus::Paid => TimeBlockStatus::Paid,
             }
         };
 

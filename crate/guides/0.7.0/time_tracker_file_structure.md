@@ -470,6 +470,7 @@ use ulid::Ulid;
 use std::collections::BTreeMap;
 
 type ClientId = Ulid;
+type InvoiceId = Ulid;
 type TimeBlockId = Ulid;
 
 // ------ ------
@@ -510,7 +511,7 @@ enum ChangesStatus {
 
 pub struct Client {
     name: String,
-    time_blocks: BTreeMap<Ulid, TimeBlock>,
+    time_blocks: BTreeMap<TimeBlockId, TimeBlock>,
     tracked: Duration,
 }
 
@@ -528,6 +529,7 @@ pub enum TimeBlockStatus {
 }
 
 struct Invoice {
+    id: InvoiceId,
     custom_id: Option<String>,
     url: Option<String>,
 }

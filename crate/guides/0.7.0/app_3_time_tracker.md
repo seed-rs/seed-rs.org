@@ -1,6 +1,6 @@
 # App 3: Time Tracker
 
-_NOTE:_ It's **WIP**! Routing, Auth0 authentication and GraphQL queries + Slash GraphQL backend are done (at the time of writing). The most of views, authorization, mutations and SCSS compilation are todos. But It should already give you an idea how to design, architect and write a relatively large app.
+_NOTE:_ It's **WIP**! Routing, Auth0 authentication and GraphQL queries/mutations + Slash GraphQL backend + most views are done (at the time of writing). Authorization, mutations and SCSS compilation are todos. But It should already give you an idea how to design, architect and write a relatively large app.
 
 ---
 
