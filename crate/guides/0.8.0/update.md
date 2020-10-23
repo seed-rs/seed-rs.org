@@ -133,7 +133,7 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
     match msg {
         // ------ A ------
         Msg::A1 => { .. },
-        Msg::A1 => { .. },
+        Msg::A2 => { .. },
         // ------ B ------
         Msg::B1 => { .. },
         Msg::B2 => { .. },
