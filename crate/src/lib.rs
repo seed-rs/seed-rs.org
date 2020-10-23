@@ -28,7 +28,7 @@ const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
 const DEFAULT_GUIDE_SLUG: &str = "about";
 const SEED_VERSIONS: &[SeedVersion] =
     &[SeedVersion::V0_6_0, SeedVersion::V0_7_0, SeedVersion::V0_8_0];
-const DEFAULT_SEED_VERSION: SeedVersion = SeedVersion::V0_7_0;
+const DEFAULT_SEED_VERSION: SeedVersion = SeedVersion::V0_8_0;
 const LEFT_ARROW_KEY: &str = "ArrowLeft";
 const RIGHT_ARROW_KEY: &str = "ArrowRight";
 
@@ -128,7 +128,7 @@ impl SeedVersion {
         match self {
             Self::V0_6_0 => "Feb 1, 2020",
             Self::V0_7_0 => "May 8, 2020",
-            Self::V0_8_0 => "Not released yet",
+            Self::V0_8_0 => "Soon",
         }
     }
 }
@@ -192,6 +192,7 @@ pub enum Page {
 }
 
 impl Page {
+    #[allow(clippy::option_if_let_else)]
     pub fn init(
         mut url: Url,
         guides: &[Guide],
