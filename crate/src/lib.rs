@@ -27,7 +27,7 @@ const STORAGE_KEY: &str = "seed";
 const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
 const DEFAULT_GUIDE_SLUG: &str = "about";
 const SEED_VERSIONS: &[SeedVersion] =
-    &[SeedVersion::V0_6_0, SeedVersion::V0_7_0, SeedVersion::V0_8_0];
+    &[SeedVersion::V0_8_0, SeedVersion::V0_7_0, SeedVersion::V0_6_0];
 const DEFAULT_SEED_VERSION: SeedVersion = SeedVersion::V0_8_0;
 const LEFT_ARROW_KEY: &str = "ArrowLeft";
 const RIGHT_ARROW_KEY: &str = "ArrowRight";
@@ -110,25 +110,25 @@ pub struct Model {
 
 #[derive(Copy, Clone, Eq, PartialEq)]
 pub enum SeedVersion {
-    V0_6_0,
-    V0_7_0,
     V0_8_0,
+    V0_7_0,
+    V0_6_0,
 }
 
 impl SeedVersion {
     pub const fn version(self) -> &'static str {
         match self {
-            Self::V0_6_0 => "0.6.0",
-            Self::V0_7_0 => "0.7.0",
             Self::V0_8_0 => "0.8.0",
+            Self::V0_7_0 => "0.7.0",
+            Self::V0_6_0 => "0.6.0",
         }
     }
 
     pub const fn date(self) -> &'static str {
         match self {
-            Self::V0_6_0 => "Feb 1, 2020",
+            Self::V0_8_0 => "Oct 23, 2020",
             Self::V0_7_0 => "May 8, 2020",
-            Self::V0_8_0 => "Soon",
+            Self::V0_6_0 => "Feb 1, 2020",
         }
     }
 }
