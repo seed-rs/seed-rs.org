@@ -74,12 +74,7 @@ fn view_guide_list_toggle(
     in_prerendering: bool,
     base_url: &Url,
 ) -> Node<Msg> {
-    let page_is_guide = match page {
-        Page::Guide {
-            ..
-        } => true,
-        _ => false,
-    };
+    let page_is_guide = matches!(page, Page::Guide { .. });
 
     let toggle = button![
         id!("view_guide_list_toggle"),
