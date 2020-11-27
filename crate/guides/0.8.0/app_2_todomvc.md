@@ -1,6 +1,6 @@
 # App 2: TodoMVC
 
-[Live Demo](https://seed-app-todomvc.netlify.app/) |  [Repository](https://github.com/MartinKavik/seed-app-todomvc)
+[Live Demo](https://seed-app-todomvc.netlify.app/) |  [Repository](https://github.com/MartinKavik/seed-app-todomvc) |  [Playground](https://ide.play-seed.dev/?github=MartinKavik/seed-app-todomvc)
 
 ## Intro
 
