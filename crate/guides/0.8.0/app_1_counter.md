@@ -2,7 +2,7 @@
 
 > When you click the button, the number is incremented.
 
-[Live Demo](https://seed-app-counter.netlify.app/) |  [Repository](https://github.com/MartinKavik/seed-app-counter)
+[Live Demo](https://seed-app-counter.netlify.app/) |  [Repository](https://github.com/MartinKavik/seed-app-counter) |  [Playground](https://ide.play-seed.dev/?github=MartinKavik/seed-app-counter)
 
 Counter example is the default example in the [basic quickstart](https://github.com/seed-rs/seed-quickstart) so you don't have to modify code at all.
 

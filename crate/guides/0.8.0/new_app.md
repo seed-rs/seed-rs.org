@@ -18,3 +18,4 @@ There are several ways to create your new Seed app:
 
 If you are learning Rust or Seed, we recommend to choose [Basic Rust-only quickstart](https://github.com/seed-rs/seed-quickstart) and follow steps in its README. Once you are able to start development server and see default quickstart's example, we are ready to continue.
 
+If you are interested to quickly try Seed out, you can also visit an online playground [Play Seed](https://ide.play-seed.dev), check out some default examples in there and experiment with changing them.
