@@ -48,7 +48,7 @@ fn view_content(
         content_control_panel::view(guide, Top, model),
         view_guide_html(guide.html),
         content_control_panel::view(guide, Bottom, model),
-        view_netlify_logo()
+        view_platform_logos()
     ]
 }
 
@@ -112,9 +112,7 @@ fn view_guide_html(content: &str) -> Node<Msg> {
 fn view_netlify_logo() -> Node<Msg> {
     a![
         C! {
-            C.flex,
-            C.mt_5,
-            C.justify_center,
+            C.mx_2,
         },
         attrs! {
             At::Href => "https://www.netlify.com",
@@ -127,6 +125,41 @@ fn view_netlify_logo() -> Node<Msg> {
                 At::Src => "https://www.netlify.com/img/global/badges/netlify-light.svg"
             }
         ],
+    ]
+}
+
+fn view_digitalocean_logo() -> Node<Msg> {
+    a![
+        C! {
+            C.mx_2,
+            C.w_40
+        },
+        attrs! {
+            // referral link from console
+            At::Href => "https://m.do.co/c/f02c252209c1" 
+        },
+        img![
+            C! {
+                C.z_auto,
+            },
+            attrs! {
+                At::Src => "https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_black.svg"
+            }
+        ],
+    ]
+}
+
+fn view_platform_logos() -> Node<Msg> {
+    div![
+        C! {
+            C.flex,
+            C.mt_5,
+            C.items_center,
+            C.justify_center,
+            C.flex_row,
+        },
+        view_netlify_logo(),
+        view_digitalocean_logo(),
     ]
 }
 
