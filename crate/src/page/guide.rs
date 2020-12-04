@@ -136,7 +136,7 @@ fn view_digitalocean_logo() -> Node<Msg> {
         },
         attrs! {
             // referral link from console
-            At::Href => "https://m.do.co/c/f02c252209c1" 
+            At::Href => "https://m.do.co/c/f02c252209c1"
         },
         img![
             C! {
