@@ -20,7 +20,7 @@ There are two ways to write Seed apps from scratch:
    - It's the cleanest and preferable way. 
 
 1. Write `view` first and then other items.
-   - It's useful for websites where the `Model` will be simple; for prototypes; and if you like rewriting a lot. Also it's useful when you are forced to do something like [Scrum](https://zenkit.com/en/blog/scrum-101-an-introduction-to-scrum-project-management/) and you want to show at least something on the demo.
+   - It's useful for websites where the `Model` will be simple, for prototypes, or if you like rewriting a lot. Also it's useful when you are forced to do something like [Scrum](https://zenkit.com/en/blog/scrum-101-an-introduction-to-scrum-project-management/) and you want to show at least something on the demo.
 
 Let's begin!
 
