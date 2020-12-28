@@ -10,7 +10,7 @@ Let's look at official [specs](https://github.com/tastejs/todomvc/blob/master/ap
 
 We don't need to create a special value to store `#main` and `#footer` visibility - we can derive it from the number of saved todos. _#single_source_of_truth_ 
 
-So we can just take a note that we'll need a todo container that is aware of number of its items - it should be able to told us if it's empty or not quickly because we would need the value for every render. Let's introduce the `Model` field `todos: Vec<Todo>` - it's the first and the simplest idea. We'll define `Todo` later.
+So we can just take a note that we'll need a todo container that is aware of number of its items - it should be able to tell us if it's empty or not quickly because we would need the value for every render. Let's introduce the `Model` field `todos: Vec<Todo>` - it's the first and the simplest idea. We'll define `Todo` later.
 
 ---
 
