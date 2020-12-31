@@ -569,7 +569,7 @@ type UpdateTimeEntryPayload {
 
     ```toml
     serde-wasm-bindgen ...
-    cynic = "0.10.0"
+    cynic = "0.11.0"
     ```
 
 1. Create a new empty file `/src/graphql.rs`. This module will contain our GraphQL queries.
@@ -595,23 +595,21 @@ use cynic;
 
 pub type Result<T> = std::result::Result<T, GraphQLError>;
 
-pub async fn send_query<'a, ResponseData: 'a, Root: cynic::QueryRoot>(
-    selection_set: cynic::SelectionSet<'a, ResponseData, Root>
+pub async fn send_operation<'a, ResponseData: 'a>(
+    operation: cynic::Operation<'a, ResponseData>
 ) -> Result<ResponseData> {
-    let query = cynic::Query::new(selection_set);
-
     let graphql_response = 
         // @TODO: Move url to a config file.
         Request::new("https://time-tracker.eu-central-1.aws.cloud.dgraph.io/graphql")
             .method(Method::Post)
-            .json(&query)?
+            .json(&operation)?
             .fetch()
             .await?
             .check_status()?
             .json()
             .await?;
 
-    let response_data = query.decode_response(graphql_response)?;
+    let response_data = operation.decode_response(graphql_response)?;
     if let Some(errors) = response_data.errors {
         Err(errors)?
     }
@@ -676,19 +674,19 @@ impl From<cynic::DecodeError> for GraphQLError {
     ```
     - The only purpose is to allow to use early returns (like `Err(error)?` or `.await?`) in functions that returns `graphql::Result<T>` - e.g. `send_query`.
 
-1. And finally `send_query`:
+1. And finally `send_operation`:
     ```rust
-    pub async fn send_query<'a, ResponseData: 'a, Root: cynic::QueryRoot>(
-        selection_set: cynic::SelectionSet<'a, ResponseData, Root>
+    pub async fn send_operation<'a, ResponseData: 'a>(
+        operation: cynic::Operation<'a, ResponseData>
     ) -> Result<ResponseData>
     ```
     - It looks a bit scary but those generic parameters allow us to pass all future queries into the function this way:
         ```rust
-        graphql::send_query(MyQuery::fragment(()))
+        graphql::send_operation(MyQuery::build(()))
         ```
-        And you can read about `cynic` types on [docs.rs](https://docs.rs/cynic/0.10.0/cynic/) or [cynic-rs.dev](https://cynic-rs.dev/).
+        And you can read about `cynic` types on [docs.rs](https://docs.rs/cynic/0.11.0/cynic/) or [cynic-rs.dev](https://cynic-rs.dev/).
 
-    - `send_request`'s body isn't very interesting - just one `POST` fetch request with basic error handling and some `cynic`-related calls that I've found in `cynic`'s docs.
+    - `send_operation`'s body isn't very interesting - just one `POST` fetch request with basic error handling and some `cynic`-related calls that I've found in `cynic`'s docs.
 
 ## Queries
 
