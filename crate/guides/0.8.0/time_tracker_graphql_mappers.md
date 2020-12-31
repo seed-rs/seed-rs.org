@@ -11,7 +11,7 @@ We can start with the simplest page - `src/page/clients_and_projects.rs`.
     ```rust
     use ulid::Ulid;
 
-    use cynic::QueryFragment; // <-- New
+    use cynic::QueryBuilder; // <-- New
 
     use std::collections::BTreeMap;
     use std::convert::identity;  // <-- New
@@ -21,7 +21,7 @@ We can start with the simplest page - `src/page/clients_and_projects.rs`.
     type ClientId = Ulid;
     ```
 
-    - We'll need trait `cynic::QueryFragment` to call the `fragment` function in `send_query(MyQuery::fragment(())`.
+    - We'll need trait `cynic::QueryBuilder` to call the `build` function in `send_operation(MyQuery::build(())`.
     - [std::convert::identity](https://doc.rust-lang.org/std/convert/fn.identity.html) is basically a named closure`|x| x`, however I recommend to read the docs to know the differences and where it's useful.
 
 1. Change `FetchError` to `GraphQLError` in `errors`:
@@ -94,7 +94,7 @@ We can start with the simplest page - `src/page/clients_and_projects.rs`.
         );
 
         Ok(
-            graphql::send_query(query_mod::Query::fragment(()))
+            graphql::send_operation(query_mod::Query::build(()))
                 .await?
                 .query_client
                 .expect("get clients")
@@ -108,7 +108,7 @@ We can start with the simplest page - `src/page/clients_and_projects.rs`.
     - The purpose of this function is to send a GraphQL request and then return response data to fill our `Model` later. However there is a problem - we can't just move the response data directly to our `Model` because they have different types. So we have to transform response data to `Model` data by `*_mapper` closures.
       - If you have tendency to delete mappers and use response data directly to remove some boilerplate, please fight the urge. It would mix two different application parts - business core and IO - and it usually doesn't end well. I recommend to read about [hexagonal architecture](https://madewithlove.com/hexagonal-architecture-demystified/).
 
-    - `query_mod::Query::fragment(())` creates a [SelectionSet](https://docs.rs/cynic/0.10.0/cynic/selection_set/struct.SelectionSet.html) with no [Arguments](https://docs.rs/cynic/0.10.0/cynic/struct.Argument.html) (represented by [unit](https://doc.rust-lang.org/std/primitive.unit.html) `()`).
+    - `query_mod::Query::build(())` creates an [Operation](https://docs.rs/cynic/0.11.0/cynic/struct.Operation.html) with no [Arguments](https://docs.rs/cynic/0.11.0/cynic/struct.Argument.html) (represented by [unit](https://doc.rust-lang.org/std/primitive.unit.html) `()`).
 
     - We need to call `.expect("get clients")` because `query_client` is `Option`. And it's `Option` because Slash GraphQL generated the function `queryClient` with optional array of `Client`s and then `cynic` forced us to respect that because of the `schema.graphql`.
 
@@ -125,7 +125,7 @@ It's very similar to the previous page.
     ```rust
     use ulid::Ulid;
 
-    use cynic::QueryFragment; // <-- New
+    use cynic::QueryBuilder; // <-- New
 
     use std::collections::BTreeMap;
     use std::convert::identity;  // <-- New
@@ -221,7 +221,7 @@ It's very similar to the previous page.
         );
 
         Ok(
-            graphql::send_query(query_mod::Query::fragment(()))
+            graphql::send_operation(query_mod::Query::build(()))
                 .await?
                 .query_client
                 .expect("get clients")
@@ -240,7 +240,7 @@ It's very similar to the previous page.
     ```rust
     use ulid::Ulid;
 
-    use cynic::QueryFragment; // <-- New
+    use cynic::QueryBuilder; // <-- New
 
     use std::collections::BTreeMap;
     use std::convert::identity;  // <-- New
@@ -371,7 +371,7 @@ It's very similar to the previous page.
         );
 
         Ok(
-            graphql::send_query(query_mod::Query::fragment(()))
+            graphql::send_operation(query_mod::Query::build(()))
                 .await?
                 .query_client
                 .expect("get clients")
