@@ -12,7 +12,7 @@ and our goal is something like:
 
 ![TodoMVC screen](/static/images/todomvc_screen.png)
 
-Fortunately official TodoMVC project contains [HTML template](https://github.com/tastejs/todomvc-app-template/blob/master/index.html):
+Fortunately the official TodoMVC project contains a [HTML template](https://github.com/tastejs/todomvc-app-template/blob/master/index.html):
 
 <details>
 <summary>Template <code>index.html</code></summary>
@@ -691,7 +691,7 @@ Let's integrate it into our app!
     }
     ```
 
-    _Note:_ Best practice is to add an element id, but we want to respect predefined template HTML in this case.
+    _Note:_ It's best practice is to add an element id, but in this case we want to respect the predefined template HTML.
 
 1. Let's include the remaining template HTML into our `view` function to test if everything works => Create a new file `/template.html` and include it during compilation into our `view` body.
 
@@ -758,14 +758,14 @@ Let's integrate it into our app!
         raw![include_str!("../template.html")]
     }
     ```
-    _Note:_ Notice change `Node<Msg>` to `Vec<Node<Msg>>`. We can't predict if `raw!` (or `md!`) contains one or multiple elements, so it always returns `Vec`.
+    _Note:_ Notice the change from `Node<Msg>` to `Vec<Node<Msg>>`. We can't predict if `raw!` (or `md!`) contains one or multiple elements, so it always returns `Vec`.
 
 1. Refresh you browser and you should see something like:
 
     ![TodoMVC template screen](/static/images/todomvc_template_screen.png)
 
 
-1. Let's rewrite `template.html` to Rust! Then you can delete `template.html`. And don't forget to manually test the code in your browser after this step and after all next ones.
+1. Let's rewrite `template.html` to Rust! Then you can delete `template.html`. And don't forget to manually test the code in your browser after this and the following steps.
 
     <details>
     <summary>Updated <code>view</code></summary>
@@ -949,8 +949,8 @@ Let's integrate it into our app!
     ```
     </details>
 
-1. We'll finally use `Model` data in our `view` and we'll try to implement some basic logic based on these data. Let's start with `view` function.
-    - `main` and `footer` should be hidden by default and shown when there are todos. So we can wrap `view_main()` and `view_footer()` into one condition by `IF!`:  
+1. We'll finally use `Model` data in our `view` and we'll try to implement some basic logic based on this data. Let's start with the `view` function.
+    - `main` and `footer` should be hidden by default and shown when there are todos. So we can wrap `view_main()` and `view_footer()` into one condition with `IF!`:  
 
     ```rust
     fn view(model: &Model) -> Vec<Node<Msg>> {
@@ -963,7 +963,7 @@ Let's integrate it into our app!
         ]
     }
     ```
-    - However it causes compilation errors because the root `vec![...]` expects only `Node<Msg>` as items but our `IF!` returns `Option<Vec<Node<Msg>>>`. Fortunately, there is macro `nodes!` that aligns all types to make the compiler happy:
+    - However, this causes compilation errors because the root  `vec![...]` expects only `Node<Msg>` as items but our `IF!` returns `Option<Vec<Node<Msg>>>`. Fortunately, there is macro `nodes!` that aligns all types to make the compiler happy:
 
     ```rust
     fn view(model: &Model) -> Vec<Node<Msg>> {
@@ -1060,9 +1060,9 @@ Let's integrate it into our app!
 
 1. Connect `view_filters` to `Model` data. 
    
-   - We would like to iterate all available filters and render them (like we did with todos). However there is no way how to do that now. The safest way is to use a macro that writes an iterator for us automatically from defined `Filter` variants. There are multiple crates that can do it, but we'll choose the most used one - [strum](https://crates.io/crates/strum). The interesting `strum` part for us is [EnumIter](https://github.com/Peternator7/strum/wiki/Derive-EnumIter).
-
-   - And we would like to compare `Filter` variants among each other so we can find out if the currently iterated variant is the selected one by the user. We don't need an external dependency for it, because Rust can derive the required traits [Eq](https://doc.rust-lang.org/std/cmp/trait.Eq.html) and [PartialEq](https://doc.rust-lang.org/std/cmp/trait.PartialEq.html).
+   - We would like to iterate over all available filters and render them (like we did with todos). This currently isn't possible without an additional crate. The safest way is to use a macro that automatically writes an iterator from defined `Filter` variants for us. There are multiple crates that implement this functionality, we'll choose the most used one - [strum](https://crates.io/crates/strum). [EnumIter](https://github.com/Peternator7/strum/wiki/Derive-EnumIter) is the part of `strum` that is interesting to us.
+   
+   - We would like to compare `Filter` variants among each other so we can find out if the currently iterated variant is the one, selected by the user. We don't need an external dependency for this, since Rust can derive the required traits [Eq](https://doc.rust-lang.org/std/cmp/trait.Eq.html) and [PartialEq](https://doc.rust-lang.org/std/cmp/trait.PartialEq.html).
 
    - While we are deriving traits, we can also add traits [Copy](https://doc.rust-lang.org/std/marker/trait.Copy.html) and [Clone](https://doc.rust-lang.org/std/clone/trait.Clone.html) - it's a best practice and it'll probably make some code parts easier to write.
 
@@ -1160,7 +1160,7 @@ Let's integrate it into our app!
     ```rust
     format!(" item{} left", if active_count == 1 { "" } else { "s" })
     ```
-    is simple but too naive solution for natural language problems. Imagine you would like to write it in Czech:
+    is simple but a too naive solution for natural language problems. Imagine you would like to write it in Czech:
     ```
     0 položek zbývá  (== 0 items left)
     1,2,3 položky zbývají
@@ -1186,7 +1186,7 @@ Let's integrate it into our app!
 
     This code associates the DOM input element with the field `input_element`. It allows us to safety access the DOM element in our `update` function (you'll see how in the next chapters). There are multiple examples leveraging element references, however the best demonstration is in the [canvas example](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/examples/canvas/src/lib.rs#L24).
 
-1. And the last thing is _element keys_. They are optional for the most cases but they'll help to optimize rendering and they are required when you want to animate your list items by CSS animations. We have only two lists in our `view` - filters and todos. I would recommend to add keys for todos because they are more "dynamic", their count will be often higher and there is a chance that we'll animate them in the future. Look at [el_key example](https://github.com/seed-rs/seed/tree/0a538f03d6aeb56b00d997c80a666e388279a727/examples/el_key) when you want to know more about element keys.
+1. And the last thing is _element keys_. They are optional in most cases but they'll help to optimize rendering and they are required when you want to animate your list items with CSS animations. We have only two lists in our `view` - filters and todos. I would recommend to add keys for todos because they are more "dynamic", their count will be often higher and there is a chance that we'll animate them in the future. Look at [el_key example](https://github.com/seed-rs/seed/tree/0a538f03d6aeb56b00d997c80a666e388279a727/examples/el_key) when you want to know more about element keys.
 
     ```rust
     fn view_todo_list(todos: &BTreeMap<Ulid, Todo>, selected_todo: Option<&SelectedTodo>) -> Node<Msg> {
@@ -1203,4 +1203,4 @@ We've done it! You should see something like:
 
 ![TodoMVC after view screen](/static/images/todomvc_after_view_screen.png)
 
-Perhaps you noticed that we haven't written any event handlers yet - we'll be writing them together with `update` function in the next chapter. And we'll finish filtering once we understand subscriptions, routing and link building.
+Perhaps you noticed that we haven't written any event handlers yet - we'll be writing them together with the `update` function in the next chapter. And we'll finish filtering once we understand subscriptions, routing and link building.

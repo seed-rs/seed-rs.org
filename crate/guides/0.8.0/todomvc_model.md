@@ -10,7 +10,7 @@ Let's look at official [specs](https://github.com/tastejs/todomvc/blob/master/ap
 
 We don't need to create a special value to store `#main` and `#footer` visibility - we can derive it from the number of saved todos. _#single_source_of_truth_ 
 
-So we can just take a note that we'll need a todo container that is aware of number of its items - it should be able to tell us if it's empty or not quickly because we would need the value for every render. Let's introduce the `Model` field `todos: Vec<Todo>` - it's the first and the simplest idea. We'll define `Todo` later.
+So we can just take a note, that we'll need a todo container that is aware of the number of its items. It should be able to tell us quickly whether it's empty or not, because we would need this information for every render. Let's introduce the `Model` field `todos: Vec<Todo>` - it's the first and the simplest idea. We'll define `Todo` later.
 
 ---
 
@@ -118,7 +118,7 @@ Button visibility will be derived from todos.
 >
 > Your app should dynamically persist the todos to localStorage. If the framework has capabilities for persisting data (e.g. Backbone.sync), use that. Otherwise, use vanilla localStorage. If possible, use the keys `id`, `title`, `completed` for each item. Make sure to use this format for the localStorage name: `todos-[framework]`. Editing mode should not be persisted.
 
-It means the part of our `Model` has to be JSON (de)serializable. The simplest way how to allow it is to just [derive `serde`'s traits](https://serde.rs/derive.html). We use only basic Rust types and some simple custom ones so serialization shouldn't force us to pick other types.
+It means the part of our `Model` has to be JSON (de)serializable. The easiest way to implement this, is to just [derive `serde`'s traits](https://serde.rs/derive.html). We use only basic Rust types and some simple custom ones so serialization shouldn't force us to pick other types.
 
 ---
 
@@ -136,7 +136,7 @@ enum Filter {
    Completed,
 }
 ```
-We will be building links - e.g. `https://example.com/seed/todomvc/#/active`. You'll learn about routing in next chapters, but we can already add `Model` field `base_url: Url`. This field will represent the url part `seed/todomvc` in case of the example url above.
+We will be building links - e.g. `https://example.com/seed/todomvc/#/active`. You'll learn about routing in next chapters, but we can already add the `base_url: Url` field to our `Model`. This field will represent the url part `seed/todomvc` in case of the example url above.
 
 ---
 
@@ -187,10 +187,10 @@ There is only one `bool` (field `completed`) and it doesn't make sense to rewrit
 ### `ID` and `todos`
 
 We need to discuss `ID` together with `todos: Vec<Todo>` because we will be doing many `todos` operations associated with chosen `ID`s. There are some known facts:
-- We have to be able to remove any todo from the list;
-- Push a new todo at the end;
+- We have to be able to remove any todo from the list.
+- Push a new todo at the end.
 - Filter according the `Todo` field `completed`.
-- Todos have to keep it's ordering (from the oldest).
+- Todos have to keep their ordering (from the oldest).
 
 Some options:
 1. todos: [BTreeMap](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html), ID: `u32` - where [u32](https://doc.rust-lang.org/std/primitive.u32.html) would be only incremented when adding a new todo.
@@ -208,13 +208,13 @@ Some options:
 1. todos: [BTreeMap](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html), ID: [Ulid](https://docs.rs/ulid/0.3.2/ulid/struct.Ulid.html).
    - `Ulid` ids are unique and sortable. Their ordering depends on timestamps so it's suitable for our use-case (ordering from the oldest).
 
-To respect [KISS principle](https://en.wikipedia.org/wiki/KISS_principle) I think we should choose either **4.** or **5.** option: 
+To respect the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle), I think we should choose either option **4** or **5**:
 
-- Both have some special features - e.g. manual reordering would be easier to implement with `IndexMap`; However to show datetime for each todo we would need just one simple call with `BTreeMap` + `Ulid`. But we shouldn't think about it too much to respect [YAGNI principle](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it).
+-  Both have some special features - e.g. manual reordering would be easier to implement with `IndexMap`. However, to show datetime for each todo we would need just one simple call with `BTreeMap` + `Ulid`. But we shouldn't think about it too much to respect [YAGNI principle](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it).
 
-- `IndexMap` and `BTreemap` have different performance and memory characteristics (see also [performance](https://doc.rust-lang.org/std/collections/index.html#performance) table for `std` collections), but both are pretty fast and Rust is one of the fastest language so it shouldn't be a problem in the most cases. Also it doesn't make sense to choose the right collection from the performance / memory point of view without benchmarks, user behavior patterns, etc. And keep in mind [_"premature optimization is the root of all evil"_](https://stackify.com/premature-optimization-evil/).
+- `IndexMap` and `BTreemap` have different performance and memory characteristics (see also [performance](https://doc.rust-lang.org/std/collections/index.html#performance) table for `std` collections), but both are pretty fast and Rust is one of the fastest language so it shouldn't be a problem in most cases. Also it doesn't make sense to choose the right collection from the performance / memory point of view without benchmarks, user behavior patterns, etc. And keep in mind [_"premature optimization is the root of all evil"_](https://stackify.com/premature-optimization-evil/).
 
-- So I would choose the option **5.**: `BTreeMap` + `Ulid`. You'll learn something about a standard Rust collection and we already have an older [TodoMVC example](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/examples/todomvc/src/lib.rs) with `IndexMap` in the Seed repo.
+- So I would choose option number **5.**: `BTreeMap` + `Ulid`. You'll learn something about a standard Rust collection and we already have an older [TodoMVC example](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/examples/todomvc/src/lib.rs) with `IndexMap` in the Seed repo.
 
 ---
 

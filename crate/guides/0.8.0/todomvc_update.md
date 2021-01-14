@@ -29,7 +29,7 @@ And don't forget to check that everything works after each step as usual.
                     ],
     ...
     ```
-    We can't write `move |_| Msg::ToggleTodo(todo.id)` because we can't close (and move) referenced `todo`. And we can't write `|_| Msg::ToggleTodo(id)` because without `move` we only close the reference to `id`. We need to `move` the value into the closure so the closure is `'static` and can be used inside a listener. Fortunately our `id` implements `Copy` so `move` isn't real move but copy - otherwise we would need to clone the `id`.
+    We can't write `move |_| Msg::ToggleTodo(todo.id)` because we can't close (and move) the referenced `todo`. And we can't write `|_| Msg::ToggleTodo(id)` because without `move` we only close the reference to `id`. We need to `move` the value into the closure so the closure is `'static` and can be used inside a listener. Fortunately our `id` implements `Copy` so `move` isn't a real move but copy - otherwise we would need to clone the `id`.
 
 1. `Msg::RemoveTodo(Ulid)`
     
@@ -73,7 +73,7 @@ And don't forget to check that everything works after each step as usual.
     ```rust
     input_ev(Ev::Input, Msg::NewTodoTitleChanged)
     ```
-    is almost the same like 
+    is almost the same as 
     ```rust
     input_ev(Ev::Input, |title| Msg::NewTodoTitleChanged(title))
     ```
@@ -267,9 +267,9 @@ And don't forget to check that everything works after each step as usual.
 
     - `input_element.get()` returns `Option<E>` where `E` is a specific DOM element reference like `web_sys::HtmlInputElement`. It returns `None` when the element doesn't exists in the DOM or has an incompatible type => all [ElRef](https://github.com/seed-rs/seed/blob/0a538f03d6aeb56b00d997c80a666e388279a727/src/virtual_dom/el_ref.rs) methods are safe to use.
 
-    - There are many `.expect(..)` calls because DOM operations are dangerous - any JS library or browser extension can modify DOM "under our hands", browsers have bugs and don't support all features in official specs, etc. So we want to get as much information as possible when the app panics because of such reasons. And descriptions inside `expect` calls help with readability.
+    - There are many `.expect(..)` calls because DOM operations are dangerous - any JS library or browser extension can modify the DOM "under our hands", browsers have bugs and don't support all features in official specs, etc. So we want to get as much information as possible when our app panics for one of these reasons. Descriptions inside `expect` calls help with readability.
 
-    - [as](https://doc.rust-lang.org/beta/std/keyword.as.html) for casting is an anti-pattern in the most cases. You should write `xx::from(yy)` or `xx::try_from(yy)` instead. E.g.
+    - [as](https://doc.rust-lang.org/beta/std/keyword.as.html) for casting is an anti-pattern in most cases. You should write `xx::from(yy)` or `xx::try_from(yy)` instead. E.g.
         ```rust
         u32::try_from(todo.title.len()))
         ```
@@ -338,8 +338,8 @@ And don't forget to check that everything works after each step as usual.
 1. `Msg::UrlChanged(subs::UrlChanged)`
    - It's the last one but we'll implement it once we know routing.
 
-1. We no longer need method `Model::add_mock_data`.
-    - Delete it and remove `.add_mock_data()` call from your `init` function, too.
+1. We no longer need the method `Model::add_mock_data`.
+    - Delete it and remove the `.add_mock_data()` call from your `init` function, too.
 
 ---
 

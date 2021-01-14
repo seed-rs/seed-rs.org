@@ -1,6 +1,6 @@
 # TodoMVC - Msg
 
-Our `Model` is ready so we can move to `Msg` now. We'll take the similar steps - go through [specifications](https://github.com/tastejs/todomvc/blob/master/app-spec.md#functionality), write draft `Msg` and then refactor it. 
+Our `Model` is ready so we can move to `Msg` now. We'll take similar steps - go through [specifications](https://github.com/tastejs/todomvc/blob/master/app-spec.md#functionality), write a draft `Msg` and then refactor it. 
 
 However we'll also try to imagine how each `Msg` affects our `Model`. It basically verifies our `Model` design and it'll help us to write a better `update` function later.
 
@@ -162,7 +162,7 @@ enum Msg {
 
 `NewTodoTitleChanged` and `SelectedTodoTitleChanged` are pretty long names but they will be used only on a few places and often on a standalone lines so the length is a good trade-off for expressiveness.
 
-`CheckOrUncheckAll` name is a bit strange but it says exactly what it does. I was thinking also about `ToggleAll` and `CheckAll` but they would be misinterpreted sooner or later.
+`CheckOrUncheckAll` name is a bit strange but it says exactly what it does. I was also thinking about `ToggleAll` and `CheckAll` but they would be misinterpreted sooner or later.
 
 ## Types
 
