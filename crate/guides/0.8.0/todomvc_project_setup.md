@@ -1,10 +1,10 @@
 # TodoMVC - Project Setup
 
-There are two reasons why we are creating the project now, when the `Model` and `Msg` are prepared:
+There are two reasons for creating our project after designing the `Model` and `Msg`:
 
-1. It forces us to think and design before we start to write code. It leads in the most cases to better architecture.
+1. It forces us to think and design before we start to write code. In most cases, it leads to a better architecture.
 
-1. `update` and especially `view` is better to write and test "live" because it's fun and fast feedback loop reveals design and implementation issues quickly.
+1. `update` and especially `view` are better to write and test "live" because it's fun and the fast feedback loop reveals design and implementation issues quickly.
 
 ## How to setup TodoMVC project
 
@@ -172,7 +172,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
     }
     ```
 
-1. Write `update` skeleton with all `match` arms. Each arm contains `log!` with `Msg` data - it'll help us to write and test `view`.
+1. Write an `update` skeleton with all `match` arms. Each arm contains `log!` with `Msg` data - it'll help us to write and test `view`.
     <details>
     <summary><code>update</code> skeleton</summary>
 
@@ -243,7 +243,7 @@ Please, create and start a new Seed app if you want to follow the steps below.
     #![allow(dead_code, unused_variables)]
     ```
 
-1. Implement `Model` method `add_mock_data`. It'll allow us to test `view` function until our `update` function is complete.
+1. Implement a `Model` method `add_mock_data`. It'll allow us to test the `view` function until our `update` function is complete.
     <details>
     <summary>Updated <code>init</code> and <code>add_mock_data</code></summary>
 

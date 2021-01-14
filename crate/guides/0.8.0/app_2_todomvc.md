@@ -7,7 +7,7 @@
 Well, I hope your head didn't explode due to the amount of information in the previous example. You should be ready for a real step-by-step tutorial now - how to write a classic [TodoMVC example](http://todomvc.com/) from scratch.
 
 You'll learn:
-- To design good `Model` and `Msg` according to specifications. 
+- To design a good `Model` and `Msg` according to specifications. 
 - Routing.
 - Link building.
 - Window event handling. 

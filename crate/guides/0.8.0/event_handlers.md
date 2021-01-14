@@ -11,7 +11,7 @@ becomes
 ```html
 <button>15</button>
 ```
-where click on the `button` invokes your `update` function with `Msg::Increment` as an argument.
+where a click on the `button` invokes your `update` function with `Msg::Increment` as an argument.
 
 # ev
 
@@ -23,7 +23,7 @@ ev(Ev::Click, |_| Msg::Increment)
 
 The first argument (`Ev::Click`) is called _event_ or _trigger_.
 
-It can be any `Ev` variant or you can write a custom one by `Ev::from("custom_event")`. Custom events may be useful in combination with custom elements.
+It can be any `Ev` variant or you can write a custom one with `Ev::from("custom_event")`. Custom events may be useful in combination with custom elements.
 
 ## Callback
 
@@ -41,7 +41,7 @@ ev(Ev::Click, |event| {
 <summary>What is <code>web_sys</code>?</summary>
 
 [web_sys](https://rustwasm.github.io/wasm-bindgen/api/web_sys/) crate is basically a Rust interface for Web APIs. You'll see it in many examples and docs. It's automatically imported from `seed`. 
-However the Seed's one doesn't cover all Web APIs - when the compiler can't find a method, but you are sure `web_sys` supports it, you'll have to enable corresponding `web_sys`'s features - see [Cargo.toml](https://github.com/seed-rs/seed/blob/a240eab1c69b21f9dbe07134f821546bdfbfb616/examples/user_media/Cargo.toml#L14-L21) in `user_media` example. You'll find required features in `web_sys` docs - e.g. [HtmlMediaElement](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.HtmlMediaElement.html).
+However the Seed's one doesn't cover all Web APIs - when the compiler can't find a method, but you are sure `web_sys` supports it, you'll have to enable corresponding `web_sys`'s features - see [Cargo.toml](https://github.com/seed-rs/seed/blob/a240eab1c69b21f9dbe07134f821546bdfbfb616/examples/user_media/Cargo.toml#L14-L21) in `user_media` example. You'll find the required features in `web_sys` docs - e.g. [HtmlMediaElement](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.HtmlMediaElement.html).
 
 </details>
 
@@ -64,11 +64,11 @@ ev(Ev::Click, |event| {
 })
 ```
 
-_Note_: The app panics when you try to return unsupported type. This runtime error will be turned into the compile-time one, once the required Rust feature is stabilized.
+_Note_: The app panics when you try to return an unsupported type. Once the required Rust feature is stabilized, this runtime error will be turned into a compile-time error.
 
 ## Event Casting & Helpers
 
-There are many specialized event types like [MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent) and [KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent). However we receive only `Event` in our `ev` callbacks - we need to cast the general `Event` to concrete event sub-type to use its associated methods:
+There are many specialized event types like [MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent) and [KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent). However, we receive only `Event` in our `ev` callbacks - we need to cast the general `Event` to a concrete event sub-type to use its associated methods:
 
 ```rust
 ev(Ev::Click, |event| {
@@ -91,7 +91,7 @@ To eliminate error-prone boilerplate introduced by casting, there are some `ev`-
 - `drag_ev` => [DragEvent](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.DragEvent.html)
 - `pointer_ev` => [PointerEvent](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.PointerEvent.html)
 
-There is one exception: `input_ev`. It doesn't cast `Event` into [InputEvent]() - it tries to get the value directly from the element, because in the most cases you just want to know the changed value and `InputEvent` doesn't contain it for some reasons. Example:
+There is one exception: `input_ev`. It doesn't cast `Event` into [InputEvent](https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.InputEvent.html) - it tries to get the value directly from the element, because in most cases you just want to know the changed value and `InputEvent` doesn't contain it for some reasons. Example:
 ```rust
 enum Msg {
     EmailChanged(String),
@@ -114,5 +114,5 @@ They will be discussed in other chapters, however you can take inspiration from 
 
 ## Future
 
-`*ev` functions will be replaced with `E` struct to eliminate boilerplate and improve safety and readability. You can find API drafts in [this issue](https://github.com/seed-rs/seed/issues/331#issuecomment-590956553).
+`*ev` functions will be replaced with an `E` struct to eliminate boilerplate and improve safety and readability. You can find API drafts in [this issue](https://github.com/seed-rs/seed/issues/331#issuecomment-590956553).
 
