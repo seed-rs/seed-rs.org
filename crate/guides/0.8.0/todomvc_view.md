@@ -8,7 +8,7 @@ fn view(model: &Model) -> Node<Msg> {
     ]
 }
 ```
-and are goal is something like:
+and our goal is something like:
 
 ![TodoMVC screen](/static/images/todomvc_screen.png)
 
