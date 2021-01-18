@@ -60,7 +60,7 @@ Fortunately official TodoMVC project contains [HTML template](https://github.com
 					</li>
 				</ul>
 			</section>
-			<!-- This footer should hidden by default and shown when there are todos -->
+			<!-- This footer should be hidden by default and shown when there are todos -->
 			<footer class="footer">
 				<!-- This should be `0 items left` by default -->
 				<span class="todo-count"><strong>0</strong> item left</span>
@@ -728,7 +728,7 @@ Let's integrate it into our app!
             </li>
         </ul>
     </section>
-    <!-- This footer should hidden by default and shown when there are todos -->
+    <!-- This footer should be hidden by default and shown when there are todos -->
     <footer class="footer">
         <!-- This should be `0 items left` by default -->
         <span class="todo-count"><strong>0</strong> item left</span>
@@ -804,7 +804,7 @@ Let's integrate it into our app!
                     ]
                 ]
             ],
-            // This footer should hidden by default and shown when there are todos
+            // This footer should be hidden by default and shown when there are todos
             footer![C!["footer"],
                 // This should be `0 items left` by default
                 span![C!["todo-count"],
@@ -852,7 +852,7 @@ Let's integrate it into our app!
             view_header(),
             // This section should be hidden by default and shown when there are todos
             view_main(),
-            // This footer should hidden by default and shown when there are todos
+            // This footer should be hidden by default and shown when there are todos
             view_footer(),
         ]
     }
