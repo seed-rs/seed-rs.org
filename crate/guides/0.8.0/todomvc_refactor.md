@@ -14,32 +14,6 @@ Finish him!
 
    - I don't think that basic language tools like linters and formatters should be configurable (and configured). However I plan to write a specific configuration file for Seed apps to mitigate formatter issues.
 
-    <details>
-    <summary>Formatter issue</summary>
-
-    When I run `cargo make fmt` in our project now, I see the `rustfmt` error:
-
-    ```
-    error[internal]: left behind trailing whitespace
-      --> \\?\C:\work\repos\seed-app-todomvc\src\lib.rs:310:310:61
-        |
-    310 |                         el_ref(&selected_todo.input_element),
-        |                                                              ^
-    ```
-    There are some related `rustfmt` issues - [#2916](https://github.com/rust-lang/rustfmt/issues/2916), [#3717](https://github.com/rust-lang/rustfmt/issues/3717), [#3904](https://github.com/rust-lang/rustfmt/issues/3904), [#4192](https://github.com/rust-lang/rustfmt/issues/4192). 
-
-    We can resolve it by adding a temporary `skip` attribute:
-    ```rust
-    // TODO: Remove once rustfmt is updated.
-    #[rustfmt::skip]
-    fn view_todo_list(
-    ```
-    or with `#![rustfmt::skip::macros]` once stable.
-
-
-    I hope it will be fixed in `rustfmt v2.0` ([releases](https://github.com/rust-lang/rustfmt/releases)). If not, we should create a new issue in the `rustfmt` repo.
-    </details>
-
 1. Run `cargo make test_h firefox`
    - Well, there are no tests in our project, so you shouldn't see any errors.
    - It's possible to write [tests](https://github.com/seed-rs/seed/blob/d514b2131a9e94f5ffe965f3d0ac74763a11aeb6/src/browser/dom/css_units.rs#L92-L144), however some important [helpers](https://github.com/seed-rs/seed/issues/294) for good integration tests are missing. See also [wasm-bindgen-test](https://rustwasm.github.io/wasm-bindgen/wasm-bindgen-test/index.html) docs.
