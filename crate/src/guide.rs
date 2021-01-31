@@ -134,6 +134,7 @@ pub fn guides() -> Vec<Guide> {
         guide!(seed_version: "0.8.0", slug: "time_tracker_views", menu_title: "Views", file_name: "time_tracker_views", prepend_menu_divider: false),
         guide!(seed_version: "0.8.0", slug: "time_tracker_updates", menu_title: "Updates", file_name: "time_tracker_updates", prepend_menu_divider: false),
         guide!(seed_version: "0.8.0", slug: "time_tracker_graphql_mutations", menu_title: "GraphQL Mutations", file_name: "time_tracker_graphql_mutations", prepend_menu_divider: false),
+        guide!(seed_version: "0.8.0", slug: "sponsors", menu_title: "Sponsors", file_name: "sponsors", prepend_menu_divider: true),
         guide!(seed_version: "0.8.0", slug: "support", menu_title: "Support", file_name: "support", prepend_menu_divider: true),
     ]
 }
