@@ -345,6 +345,14 @@ In this case, the problem is `Orders<Msg>`. However we can allow to pass it into
 _Note:_ The method is called `proxy` and not something like `map_msg` because we don't modify the original `orders` at all, we only create a "projection/proxy" that can transform all sub-module's `Msg`s into the parent's `Msg`s.
 
 ```rust
+enum Msg {
+    ...
+    ClientsAndProjectsMsg(page::clients_and_projects::Msg),
+    TimeTrackerMsg(page::time_tracker::Msg),
+    TimeBlocksMsg(page::time_blocks::Msg),
+    SettingsMsg(page::settings::Msg),
+}
+
 fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
         Msg::UrlChanged(subs::UrlChanged(url)) => model.page = Page::init(url, orders),
@@ -479,7 +487,7 @@ Let's experiment a bit and setup a custom base url for our app. It's useful when
 Edit `index.html`:
 ```html
 <head>
-    <base href="/ui/">/">
+    <base href="/ui/">
     ...
 ```
 
