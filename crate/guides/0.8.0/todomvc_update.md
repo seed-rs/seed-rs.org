@@ -309,8 +309,13 @@ And don't forget to check that everything works after each step as usual.
             ...
             Msg::SaveSelectedTodo => {
                 if let Some(selected_todo) = model.selected_todo.take() {
-                    if let Some(todo) = model.todos.get_mut(&selected_todo.id) {
-                        todo.title = selected_todo.title;
+                    let title = selected_todo.title.trim();
+                    if title.is_empty() {
+                        model.todos.remove(&selected_todo.id);
+                    } else {
+                        if let Some(todo) = model.todos.get_mut(&selected_todo.id) {
+                            todo.title = title.to_owned();
+                        }
                     }
                 }
             }
