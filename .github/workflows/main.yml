@@ -7,8 +7,7 @@ env:
 
 jobs:
   build_test_deploy:
-    # runs-on: ubuntu-latest
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     steps:
       - name: Checkout sources
@@ -42,7 +41,7 @@ jobs:
 
       - name: Install Netlify CLI
         if: github.ref == 'refs/heads/master'
-        run: sudo npm install netlify-cli -g
+        run: npm install netlify-cli -g
 
       - name: Deploy
         if: github.ref == 'refs/heads/master'
