@@ -166,7 +166,7 @@ enum Msg {
 
 ## Types
 
-They are 2 `String`s and 3 `Ulid`s but `String` always represent title  and `Ulid` always represents todo id. So there aren't any context/domain conflicts and we can leave it as is. 
+There are 2 `String`s and 3 `Ulid`s. As `String` always represents title and `Ulid` always represents todo id, there aren't any context/domain conflicts and we can leave it as is. 
 
 ## Grouping
 
