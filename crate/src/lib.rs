@@ -192,6 +192,9 @@ pub enum Page {
 }
 
 impl Page {
+  /// # Panics
+  ///
+  /// Will panic if the selected seed version does not match the guide version
     #[allow(clippy::option_if_let_else)]
     pub fn init(
         mut url: Url,
