@@ -15,6 +15,7 @@ fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
     Model::default()
 }
 
+#[derive(Default)]
 struct Model { counter: i32 }
 
 enum Msg {
@@ -23,7 +24,7 @@ enum Msg {
 
 fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
     match msg {
-        Msg::Increment => *model.counter += 1,
+        Msg::Increment => model.counter += 1,
     }
 }
 
