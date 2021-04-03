@@ -12,10 +12,9 @@ The entire code (`/src/lib.rs` content) without comments and extra items to sati
 use seed::{prelude::*, *};
 
 fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
-    Model::default()
+    Model { counter: 0 }
 }
 
-#[derive(Default)]
 struct Model { counter: i32 }
 
 enum Msg {

@@ -8,7 +8,7 @@ Counter example part:
 // ------ ------
 
 // `Model` describes our app state.
-type Model = i32;
+struct Model { counter: i32 }
 ```
 
 <details>
@@ -33,17 +33,17 @@ pub struct Model {
 
 ---
 
-- `Model` is the state (aka store, data, ..) of your application.
+- `Model` is the state (aka store, data, ...) of your application.
 
-- In our case it's only a [type alias](https://doc.rust-lang.org/book/ch19-04-advanced-types.html?highlight=alias#creating-type-synonyms-with-type-aliases) for [i32](https://doc.rust-lang.org/book/ch03-02-data-types.html#integer-types) because we only need to track one value - the number of clicks.
+- In our case, it's a struct with a single [i32](https://doc.rust-lang.org/book/ch03-02-data-types.html#integer-types) field because we only need to track one value - the number of clicks.
 
-- It can be almost anything - type alias, [enum](https://doc.rust-lang.org/book/ch06-00-enums.html), etc. However the most `Model`s are [structs](https://doc.rust-lang.org/book/ch05-00-structs.html) in real-world apps. And `Model` has to be `static` (it basically means that you can't save the most [references](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#references-and-borrowing) into it).
+- It can be almost anything - [type alias](https://doc.rust-lang.org/book/ch19-04-advanced-types.html?highlight=alias#creating-type-synonyms-with-type-aliases), [enum](https://doc.rust-lang.org/book/ch06-00-enums.html), etc. However, most `Model`s are [structs](https://doc.rust-lang.org/book/ch05-00-structs.html) in real-world apps. And `Model` has to be `static` (it basically means that you can't save the most [references](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#references-and-borrowing) into it).
 
 ## How to write a good `Model`
 
 - It should be as simple as possible. If there is a way how to derive data from the current `Model` instead of extending it (i.e. adding more fields), you should derive it, even at the cost of small reduction in performance.
 
-- Try to save only data into your `Model` - i.e. add field `students: Vec<Student>` instead of `manager: SchoolManager`, where `manager` contains `Vec<Student>` and thousand other things. Exceptions are Seed-related items like handles and DOM elements (we will discuss them in other chapters).
+- Try to save only data into your `Model` - i.e. add field `students: Vec<Student>` instead of `manager: SchoolManager`, where `manager` contains `Vec<Student>` and a thousand other things. Exceptions are Seed-related items like handles and DOM elements (we will discuss them in other chapters).
 
 - Don't make your life unnecessary hard.
   - Don't make your `Model` [generic](https://doc.rust-lang.org/book/ch10-00-generics.html).
@@ -54,10 +54,10 @@ pub struct Model {
 - Try to be as expressive as possible and make impossible business rules unrepresentable in code by encoding them with Rust type system.
 
    - Try to reduce the number of `bool`s and `Option`s to a minimum.
-   
+
    - When you see multiple fields with the same simple type (`bool`, `String`, `u32`, `Option`, etc.) in your `Model`, you should try to remodel it.
-   
-   - I recommend to read the book [Domain Modeling Made Functional](https://fsharpforfunandprofit.com/books/) or at least [The "Designing with types" series](https://fsharpforfunandprofit.com/series/designing-with-types.html).
+
+   - I recommend reading the book [Domain Modeling Made Functional](https://fsharpforfunandprofit.com/books/) or at least [The "Designing with types" series](https://fsharpforfunandprofit.com/series/designing-with-types.html).
 
 - When you need to create custom types that are used in the `Model`, write them below the `Model`. (The rule *"children below the parent"* is valid for all nested structures.) Example:
 ```rust
@@ -109,8 +109,7 @@ effectively work as checkpoints for the eyes.
 <details>
 <summary>Why don't implement <code>Default</code> and other standard traits</summary>
 
-Generally all implementations of standard traits (`From`, `Into`, `Default`, `Display`) are very useful if the item (`struct`, `enum`...) is used in multiple contexts or with multiple other items - then the generalization makes sense because it implies you are writing idiomatic Rust and it plays nicely with other standard traits and other items.
-However when you start to implement standard traits for many items, your code-base is slowly turning into the sea of `.into()`, `::default()`, `.to_string()`, etc. 
+Generally all implementations of standard traits (`From`, `Into`, `Default`, `Display`) are very useful if the item (`struct`, `enum`...) is used in multiple contexts or with multiple other items - then the generalization makes sense because it implies you are writing idiomatic Rust and it plays nicely with other standard traits and other items.  However, when you start to implement standard traits for many items, your code-base is slowly turning into the sea of `.into()`, `::default()`, `.to_string()`, etc.
 
 As the result:
 
