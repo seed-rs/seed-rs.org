@@ -95,7 +95,7 @@ I think the most important Rust features are:
 
 1. Write [tests](https://doc.rust-lang.org/book/ch11-01-writing-tests.html) and benchmarks (see e.g. [Criterion.rs](https://bheisler.github.io/criterion.rs/book/criterion_rs.html)).
 
-1. Experiment with function parameter types below to find out where there are useful (_Note:_ All of them are used on multiple places in the [Seed repo](https://github.com/seed-rs/seed)):
+1. Experiment with function parameter types below to find out where they are useful (_Note:_ All of them are used on multiple places in the [Seed repo](https://github.com/seed-rs/seed)):
     - `fn(text: impl AsRef<str>)` - [AsRef](https://doc.rust-lang.org/std/convert/trait.AsRef.html)
     - `fn(text: impl ToString)` - [ToString](https://doc.rust-lang.org/std/string/trait.ToString.html)
     - `fn(text: impl Into<Cow<'static, str>>)` - [Cow](https://doc.rust-lang.org/std/borrow/enum.Cow.html)
