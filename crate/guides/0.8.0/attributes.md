@@ -145,6 +145,6 @@ Corresponding HTML:
 
 ## Future
 
-Macro `attrs!` will be replaced with a safer and more readable API that consists struct `A` and associated methods. You can see drafts in [this issue](https://github.com/seed-rs/seed/issues/312#issuecomment-565832751).
+Macro `attrs!` will be replaced with a safer and more readable API that consists of a struct `A` and associated methods. You can see drafts in [this issue](https://github.com/seed-rs/seed/issues/312#issuecomment-565832751).
 
 
