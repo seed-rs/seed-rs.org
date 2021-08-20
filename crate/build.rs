@@ -165,7 +165,7 @@ where
 
                 events.push(Event::Html(
                     format!("<code-block{}></code-block>", attributes).into(),
-                ))
+                ));
             },
             _ => events.push(event),
         }
