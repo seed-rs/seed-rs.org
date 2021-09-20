@@ -4,9 +4,9 @@
 
 [Live Demo](https://seed-app-counter.netlify.app/) |  [Repository](https://github.com/MartinKavik/seed-app-counter) |  [Playground](https://ide.play-seed.dev/?github=MartinKavik/seed-app-counter)
 
-Counter example is the default example in the [basic quickstart](https://github.com/seed-rs/seed-quickstart) so you don't have to modify code at all.
+The counter example is the default example in the [basic quickstart](https://github.com/seed-rs/seed-quickstart), so you don't have to modify code in this tutorial at all.
 
-The entire code (`/src/lib.rs` content) without comments and extra items to satisfy linters:
+Below is the entire code (`/src/lib.rs` content) without comments and extra items to satisfy linters:
 
 ```rust
 use seed::{prelude::*, *};
@@ -41,4 +41,4 @@ pub fn start() {
 }
 ```
 
-You'll learn about individual parts (`Model`, `update`, etc.) in the next chapters. If you want to zoom out a bit before we'll jump into the rabbit hole, I recommend to read something about [The Elm Architecture (TEA)](https://guide.elm-lang.org/architecture/).
+You'll learn about individual parts (`Model`, `update`, etc.) in the next chapters. If you want to zoom out a bit before we jump into the rabbit hole, I recommend to read something about [The Elm Architecture (TEA)](https://guide.elm-lang.org/architecture/).

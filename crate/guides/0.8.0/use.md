@@ -49,25 +49,25 @@ div![
     ev(Ev::Click, |_| Msg::Save)
 ]
 ``` 
-Fortunately, `ev` and `Ev` are "hidden" behind the star (aka glob operator / asterisk wildcard) in `prelude::*`. Module `prelude` is a standard way in Rust world to group the most used items in your library so users can import them all at once.
+Fortunately, `ev` and `Ev` are "hidden" behind the star (aka glob operator / asterisk wildcard) in `prelude::*`. Module `prelude` is a standard way in the Rust world to group the most used items in your library so users can import them all at once.
 
 However [macros](https://doc.rust-lang.org/book/ch19-06-macros.html) live only in the root, so we can't import them through `prelude` - we have to include them from root => 2nd star in `use seed::{prelude::*, *};`. There are many macros in Seed library because all elements are macros - `div!`, `span!`, etc. So it's practical to include them at once, too.
 
-(_Note:_ Don't bother to learn about `ev`, `Ev`, elements and macros now, we will look at them in other chapters.)
+(_Note:_ Don't bother to learn about the `ev`, `Ev`, elements and macros now, we will look at them in later chapters.)
 
-Seed also automatically includes some [traits](https://doc.rust-lang.org/book/ch10-02-traits.html) and macro helpers through those stars - they are needed for user comfort and performance - it would be pain to include them manually.
+Seed also automatically includes some [traits](https://doc.rust-lang.org/book/ch10-02-traits.html) and macro helpers through those stars - they are needed for user comfort and performance - it would be a pain to include them manually.
 
 ## Rust Attributes [[docs]](https://doc.rust-lang.org/reference/attributes.html#attributes)
 
 > `#![allow(clippy::wildcard_imports)]`
 
-[Clippy](https://github.com/rust-lang/rust-clippy) is the official Rust linter. It has many useful rules that help you to write faster and more readable code. However programming is often more art than science so Clippy is sometimes annoying and doesn't let you to write cleaner code that breaks a rule.
+[Clippy](https://github.com/rust-lang/rust-clippy) is the official Rust linter. It has many useful rules that help you to write faster and more readable code. Programming is often more art than science, however, so Clippy is sometimes annoying and doesn't let you to write cleaner code that breaks a rule.
 
-One of these rules is [wildcard_imports](https://rust-lang.github.io/rust-clippy/stable/index.html#wildcard_imports). It's generally a good best practice, but it fights with our `use seed::{prelude::*, *};` - and we have good reasons for these wildcards (as we explained in the previous section). So we have to disable this rule. There are multiple ways but we need only two in practice:
+One of these rules is [wildcard_imports](https://rust-lang.github.io/rust-clippy/stable/index.html#wildcard_imports). It's generally a good best practice, but it fights with our `use seed::{prelude::*, *};` - and we have good reasons for these wildcards (as we explained in the previous section), so we have to disable this rule. There are multiple ways to accomplish this, but we only need two in practice:
 1. `#![allow(clippy::wildcard_imports)]` - with bang (`!`) - disable selected rule(s) for all items in the same scope / module.
 1. `#[allow(clippy::wildcard_imports)]` - without bang - disable selected rule(s) only for the item below.
 
-There are many more Rust Attributes, we will explain other ones when needed.
+There are many more Rust Attributes, and we will explain other ones when needed.
 
 ---
 

@@ -45,9 +45,9 @@ pub enum Msg {
 - All `Msg` variants should be as simple as possible and hold only data or ideally nothing.
    - Example: `enum Msg { MenuItemClicked(MenuItemId), Save }`
 
-- If you can choose the type for your ids (e.g. `MenuItemId`), pick rather [Uuid](https://docs.rs/uuid/0.8.1/uuid/struct.Uuid.html) than [String](https://doc.rust-lang.org/std/string/struct.String.html) or [u32](https://doc.rust-lang.org/std/primitive.u32.html). `Uuid` implements [Copy](https://doc.rust-lang.org/std/marker/trait.Copy.html) and allows you to create entities in your frontend app before they are sent to your server.
+- If you can choose the type for your ids (e.g. `MenuItemId`), pick [Uuid](https://docs.rs/uuid/0.8.1/uuid/struct.Uuid.html) rather than [String](https://doc.rust-lang.org/std/string/struct.String.html) or [u32](https://doc.rust-lang.org/std/primitive.u32.html). `Uuid` implements [Copy](https://doc.rust-lang.org/std/marker/trait.Copy.html) and allows you to create entities in your frontend app before they are sent to your server.
 
-- Don't make your life unnecessary hard.
+- Don't make your life unnecessarily hard.
    - Don't make your `Msg` [generic](https://doc.rust-lang.org/book/ch10-00-generics.html).
    - Don't implement any `Msg` methods.
 
@@ -61,9 +61,9 @@ pub enum Msg {
 
 > `#[derive(Copy, Clone)]`
 
-We already know attribute `allow` from the previous chapters. 
+We already know about the `allow` attribute from the previous chapters. 
 
-However the most used is probably attribute `derive`. I recommend to read official documentation, especially these parts:
+The most used attribute, however, is likely `derive`. I recommend reading the official documentation, particularly these parts:
 - [Adding Useful Functionality with Derived Traits](https://doc.rust-lang.org/book/ch05-02-example-structs.html#adding-useful-functionality-with-derived-traits)
 - [Appendix C: Derivable Traits](https://doc.rust-lang.org/book/appendix-03-derivable-traits.html#appendix-c-derivable-traits)
 - [Clone and Copy for Duplicating Values](https://doc.rust-lang.org/book/appendix-03-derivable-traits.html#clone-and-copy-for-duplicating-values)
@@ -71,16 +71,16 @@ However the most used is probably attribute `derive`. I recommend to read offici
 
 **Notes from the front line:**
 
-- Derive `Copy, Clone` for all items, where possible. It will make your life easier and your users and Clippy will appreciate it, too.
+- Derive `Copy` and `Clone` for all items, where possible. It will make your life easier, and both Clippy and your users will appreciate it.
   - Some `derive` values are order-sensitive because they are sequentially applied to the code below them. That's why the alphabetical order in `derive(..)` is not important and by convention `Copy` should be always before `Clone` for better code scannability.
 
-- There are edge-cases where you derive `Clone`, compiler is ok with it but you have still problems with calling `my_item.clone()`. In the most cases you can resolve it by implementing `Clone` manually. ([Related Rust issue](https://github.com/rust-lang/rust/issues/26925))
+- There are edge-cases where you derive `Clone` without any compilation issues, but you have still problems with calling `my_item.clone()`. In the most cases, you can resolve this by implementing `Clone` manually. ([Related Rust issue](https://github.com/rust-lang/rust/issues/26925))
 
-- Derive `Debug` at least for public items, if possible. Users will be able to fix the most of bugs in their apps and you'll receive more meaningful bug reports. Seed has macro `log!(item_a, item_b);` that you can use instead of `println!` to log things that implement `Debug` into the browser console log.
+- Derive `Debug` at for all public items, if possible. Users will be able to fix the most of the bugs in their apps, and you'll receive more meaningful bug reports. Seed has a `log!(item_a, item_b);` macro that you can use instead of `println!` to log things that implement `Debug` directly to the browser console.
 
-- Derive `Default` when you are sure it's really useful. If you decide to implement `Default` manually, make it super simple.
+- Only derive `Default` when you are sure it's really useful. If you decide to implement `Default` manually, make it as simple as possible.
 
-- `Eq` and `PartialEq` is often useful for simple enums. It allows you to use `==` as the more readable alternative to [pattern matching](https://doc.rust-lang.org/book/ch06-00-enums.html) and macros like [matches!](https://doc.rust-lang.org/beta/std/macro.matches.html). Example:
+- `Eq` and `PartialEq` are often useful for simple enums. They allow you to use the `==` operator, as opposed to things like [pattern matching](https://doc.rust-lang.org/book/ch06-00-enums.html) and the [matches!](https://doc.rust-lang.org/beta/std/macro.matches.html) macro, which are less readable. Example:
 
 ```rust
 #[derive(Clone, Copy, Eq, PartialEq)]
