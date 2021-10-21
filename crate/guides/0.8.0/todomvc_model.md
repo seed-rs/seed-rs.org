@@ -180,7 +180,7 @@ I can imagine somebody would rename `new_todo_title` to `new_title` or `new_todo
 
 ## Types
 
-There are 3 fields representing todo title with type `String`. We can apply [newtype pattern](https://github.com/rust-unofficial/patterns/blob/master/patterns/newtype.md) and create a new struct `TodoTitle(String)`, however this `String` is the only one in the entire `Model` so the trade-off for more complex code isn't worth it. An alternative would be a type alias `type TodoTitle = String`, however type aliases often don't play well with Rust `String`s because you often [coerce](https://doc.rust-lang.org/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods) them into `&str` and then aliases become cumbersome to work with - let's leave it as is until it's a problem.
+There are 3 fields representing todo title with type `String`. We can apply [newtype pattern](https://github.com/rust-unofficial/patterns/blob/main/patterns/behavioural/newtype.md) and create a new struct `TodoTitle(String)`, however this `String` is the only one in the entire `Model` so the trade-off for more complex code isn't worth it. An alternative would be a type alias `type TodoTitle = String`, however type aliases often don't play well with Rust `String`s because you often [coerce](https://doc.rust-lang.org/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods) them into `&str` and then aliases become cumbersome to work with - let's leave it as is until it's a problem.
 
 There is only one `bool` (field `completed`) and it doesn't make sense to rewrite it to `enum` here. Our only `Option` (field `selected_todo`) also has a suitable type in the context of our `Model`.
 
