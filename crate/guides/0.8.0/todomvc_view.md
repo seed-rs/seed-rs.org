@@ -646,8 +646,8 @@ Let's integrate it into our app!
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Template • TodoMVC</title>
-        <link rel="stylesheet" href="css/base.css">
-        <link rel="stylesheet" href="css/index.css">
+        <link data-trunk rel="css" href="css/base.css">
+        <link data-trunk rel="css" href="css/index.css">
     </head>
 
     <body>
@@ -681,7 +681,7 @@ Let's integrate it into our app!
     #[wasm_bindgen(start)]
     pub fn start() {
         console_error_panic_hook::set_once();
-        
+
         let root_element = document()
             .get_elements_by_class_name("todoapp")
             .item(0)
