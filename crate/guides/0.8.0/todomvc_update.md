@@ -145,11 +145,7 @@ And don't forget to check that everything works after each step as usual.
         match msg {
             ...
             Msg::ClearCompleted => {
-                // TODO: Refactor with `BTreeMap::drain_filter` once stable.
-                model.todos = mem::take(&mut model.todos)
-                    .into_iter()
-                    .filter(|(_, todo)| not(todo.completed))
-                    .collect();
+                model.todos.retain(|(_, todo)| not(todo.completed));
             }
     ...
 
