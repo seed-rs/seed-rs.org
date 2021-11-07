@@ -87,12 +87,12 @@ fn view_filters(selected_filter: Filter) -> Node<Msg> {
 
 ## 2. Standard link building
 
-The routing code and links are now good enough. 
+The routing code and links are now good enough.
 
 However it's not a standard way how to create links in Seed apps. Once you have a larger app with nested paths and pages, you don't want to know parent path parts - the only interesting ones are path parts related to the particular page.
 
 Example:
-  - Paths: 
+  - Paths:
      - `/admin/statistics/report/daily`
      - `/admin/statistics/report/weekly`
   - Pages: `admin`, `statistics`, `report`
@@ -189,7 +189,7 @@ We've moved field `base_url` at the top because:
    - The value is initiated by using `url`, so it has to be placed above `filter: Filter::from(url)` because `Filter::from` consumes `url` (i.e. takes ownership).
    - It's a common part of Seed apps - it allows a bit faster code scanning for experienced Seed users.
 
-`Url` method `to_hash_base_url()` deletes all path parts with index >= `next_hash_path_part_index` in the cloned url. In our case it removes all path parts because `next_hash_path_part_index` is always set to 0 in `url` in `init`. 
+`Url` method `to_hash_base_url()` deletes all path parts with index >= `next_hash_path_part_index` in the cloned url. In our case it removes all path parts because `next_hash_path_part_index` is always set to 0 in `url` in `init`.
 
 `to_hash_base_url()` returns the cloned url that will be used as a base url for our links as you'll see later.
 
@@ -252,7 +252,7 @@ impl<'a> Urls<'a> {
             base_url: base_url.into(),
         }
     }
-    pub fn base_url(self) ->Url {
+    pub fn base_url(self) -> Url {
         self.base_url.into_owned()
     }
 }
