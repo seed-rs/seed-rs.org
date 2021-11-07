@@ -158,8 +158,6 @@ And don't forget to check that everything works after each step as usual.
     ...
     ```
 
-    _Note:_ We could make the filter pipeline nicer with the help of [apply](https://crates.io/crates/apply) or a custom BTreeMap-[extending trait](http://xion.io/post/code/rust-extension-traits.html), but let's wait for [BTreeMap::drain_filter](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.drain_filter) stabilization.
-
 1. `Msg::CheckOrUncheckAll`
 
     ```rust
