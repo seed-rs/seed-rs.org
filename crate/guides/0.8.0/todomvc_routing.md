@@ -439,11 +439,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
             }
         }
         Msg::ClearCompleted => {
-            // TODO: Refactor with `BTreeMap::drain_filter` once stable.
-            model.todos = mem::take(&mut model.todos)
-                .into_iter()
-                .filter(|(_, todo)| not(todo.completed))
-                .collect();
+            model.todos.retain(|(_, todo)| not(todo.completed));
         }
         
         // ------ Selection ------
