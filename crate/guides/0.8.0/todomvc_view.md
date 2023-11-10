@@ -646,8 +646,8 @@ Let's integrate it into our app!
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Template • TodoMVC</title>
-        <link data-trunk rel="css" href="css/base.css">
-        <link data-trunk rel="css" href="css/index.css">
+        <link data-trunk rel="stylesheet" href="css/base.css">
+        <link data-trunk rel="stylesheet" href="css/index.css">
     </head>
 
     <body>
@@ -747,7 +747,6 @@ Let's integrate it into our app!
         <!-- Hidden if no completed items are left ↓ -->
         <button class="clear-completed">Clear completed</button>
     </footer>
-    </section>
     ```
     </details>
 
