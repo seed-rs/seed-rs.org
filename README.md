@@ -1,6 +1,9 @@
 ## Seed's official website
 
-- https://seed-rs.org/
+- `https://seed-rs.org/`
+
+> [!WARNING]
+> The link to seed-rs.org is temporally disabled because a third party may have acquired it (see https://github.com/seed-rs/seed-rs.org/issues/126)
 
 - Based on [Seed-quickstart-webpack](https://github.com/seed-rs/seed-quickstart-webpack).
 
