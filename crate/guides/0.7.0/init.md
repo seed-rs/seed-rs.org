@@ -64,7 +64,7 @@ That's why we decided to add parameter `url` - for your comfort (aka _developer 
 
 ## Parameter `orders: &mut impl Orders<Msg>`
 
-It's the way how you are "giving orders" to Seed. Do you want to send an HTTP request? Do you want to subscribe to Url changes? Do you want to do something after 5 seconds? Well, use `orders`.
+It's the way you tell Seed what to do immediately the app starts. Do you want to send an HTTP request? Do you want to subscribe to Url changes? Do you want to do something after 5 seconds? Well, use `orders`.
 
 `orders` has many useful methods, we will discuss them in other chapters. Example usage:
 
