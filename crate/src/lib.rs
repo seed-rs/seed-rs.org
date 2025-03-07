@@ -19,6 +19,7 @@ use page::partial::blender;
 use seed::{prelude::*, *};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::JsCast;
+use gloo_storage::{Storage, LocalStorage};
 
 use Visibility::{Hidden, Visible};
 
@@ -323,7 +324,7 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
             let config = Config {
                 mode: model.mode,
             };
-            LocalStorage::insert(STORAGE_KEY, &config)
+            LocalStorage::set(STORAGE_KEY, &config)
                 .expect("insert to local storage");
         },
         Msg::SwitchVersion(version) => {
