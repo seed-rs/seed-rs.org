@@ -79,7 +79,6 @@ Fortunately the official TodoMVC project contains a [HTML template](https://gith
 				<!-- Hidden if no completed items are left ↓ -->
 				<button class="clear-completed">Clear completed</button>
 			</footer>
-		</section>
 		<footer class="info">
 			<p>Double-click to edit a todo</p>
 			<!-- Remove the below line ↓ -->
@@ -747,7 +746,6 @@ Let's integrate it into our app!
         <!-- Hidden if no completed items are left ↓ -->
         <button class="clear-completed">Clear completed</button>
     </footer>
-    </section>
     ```
     </details>
 
